@@ -10,6 +10,7 @@ Pandocユーザーズガイド日本語版
    :maxdepth: 2
    :caption: Contents:
 
+   users-guide
    old-users-guide
 
 Indices and tables
