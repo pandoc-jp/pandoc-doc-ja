@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>翻訳の手引 for Pandocユーザーズガイド &#8212; pandoc-doc-ja 2018.12.12 ドキュメント</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="（新・工事中）Pandocユーザーズガイド 日本語版" href="users-guide.html" />
+    <link rel="prev" title="（新装工事中）Pandocユーザーズガイド日本語版 トップ" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="for-pandoc">
+<h1>翻訳の手引 for Pandocユーザーズガイド<a class="headerlink" href="#for-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>※ 順次書いていきます。</p>
+<p>Pandocユーザーズガイドの翻訳作業に参加される方向けに説明します。</p>
+<div class="section" id="id1">
+<h2>前提<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul>
+<li><p class="first"><strong>reStructuredText (reST)</strong> という、Markdownよりも高機能な記法を使います</p>
+<blockquote>
+<div><ul class="simple">
+<li>詳しくは <a class="reference external" href="https://quick-restructuredtext.readthedocs.io/en/latest/">早わかり reStructuredText</a> を参考にしてください</li>
+<li>なぜ？→ <a class="reference external" href="http://sphinx-users.jp/">Sphinx</a> というドキュメントビルダーの機能をフルに使いたいので（特に翻訳関係）</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">実際には <strong>Transifex</strong> というWebアプリを使って、翻訳作業を進めていただきます</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>参加方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference external" href="https://docs.google.com/forms/d/e/1FAIpQLScOdbrRWXKWAOHop7yyxrmq-D8DcwHo6u8aNAywRgfd3pX6dQ/viewform">Pandocユーザーズガイド日本語版 翻訳ボランティア 登録フォーム</a> よりご参加ください。</p>
+<p>管理者（藤原）が下記に登録します。</p>
+<ul>
+<li><p class="first">Transifex（翻訳用のWebアプリ）</p>
+<blockquote>
+<div><ul class="simple">
+<li>初めての方は、招待後に送られるリンクから、Transifexのアカウントを作成してください</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Pandocユーザ会 Slack</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>作業手順<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="transifex">
+<h3>Transifexのトップ（「翻訳」を選ぶ）<a class="headerlink" href="#transifex" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<img alt="_images/transifex-top.jpg" src="_images/transifex-top.jpg" />
+</div>
+<div class="section" id="id4">
+<h3>Transifexの開始時（言語を選ぶ）<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<img alt="_images/transifex-begin.jpg" src="_images/transifex-begin.jpg" />
+</div>
+<div class="section" id="id5">
+<h3>ケース1: 普通に翻訳する場合<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<img alt="_images/transifex-main1.jpg" src="_images/transifex-main1.jpg" />
+<ol class="arabic simple">
+<li>左側：訳したい文字列を選択（自分が訳せそうなもののみでOKです）</li>
+<li>右上：原文（英語）の文字列が出ているのを確認</li>
+<li>右下：訳文（日本語）の文字列を入力</li>
+<li>「変更を保存」をクリック（自信がない場合は「提案として保存」でもOK）</li>
+<li>1に戻る。 <strong>適当なところで切り上げる</strong> （キリがないので）</li>
+</ol>
+<p>※ 最終的に責任者（藤原）がレビューします</p>
+<ul>
+<li><p class="first">原文の <a class="reference external" href="https://pandoc.org/MANUAL.html">Pandoc User’s Guide</a> もあわせて確認してください</p>
+<blockquote>
+<div><ul class="simple">
+<li>文脈がよくわからなくなるので（余裕があれば、Transifexの「文脈」にメモを残してくれると嬉しいです）</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">よくわからないテキストは放置してください。</p>
+</li>
+<li><p class="first">訳したいけどわからない場合は、Slack <code class="docutils literal notranslate"><span class="pre">#users-guide-trans</span></code> で質問してください。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="rest">
+<h3>ケース2: reST記法を含む場合<a class="headerlink" href="#rest" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<img alt="_images/transifex-main2.jpg" src="_images/transifex-main2.jpg" />
+<ul>
+<li><p class="first">reST記法を含む場合は、 <strong>元のreST記法（特にリンク）を崩さないようにしてください</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>リンク（`` <a class="reference external" href="URL">リンク文字列</a> `` など、いくつか種類がある）</li>
+<li>コード（バッククォート2つで囲む）</li>
+<li>見出し（見出しの次の行に <code class="docutils literal notranslate"><span class="pre">=</span></code> または <code class="docutils literal notranslate"><span class="pre">-</span></code> をたくさん並べる。Transifexの文字列には現れないので注意）</li>
+<li>太字、リストは大体同じ（ただしリストの入れ子は空行必須）</li>
+<li>詳しくは: <a class="reference external" href="https://quick-restructuredtext.readthedocs.io/en/latest/">早わかり reStructuredText</a></li>
+<li>その他、よくわからない記号は基本的にいじらないようにしてください（レビューで修正します）</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>お礼について<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><strong>金銭的なお礼はありません。</strong> あらかじめご了承ください。</p>
+<p>翻訳・レビューにおいて貢献実績が確認された方には、お名前・Twitter ID・リンクなど（あれば）をサイトに掲載するようにします。
+（掲載時にお伺いします。「掲載しない」でも可能です）</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pandoc-doc-ja</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">翻訳の手引 for Pandocユーザーズガイド</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">前提</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">参加方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">作業手順</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">お礼について</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide.html">（新・工事中）Pandocユーザーズガイド 日本語版</a></li>
+<li class="toctree-l1"><a class="reference internal" href="old-users-guide.html">（旧）Pandocユーザーズガイド 日本語版</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="前の章へ">（新装工事中）Pandocユーザーズガイド日本語版 トップ</a></li>
+      <li>Next: <a href="users-guide.html" title="次の章へ">（新・工事中）Pandocユーザーズガイド 日本語版</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018 Japan Pandoc Users Group / 2006-2018 John MacFarlane.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/trans-intro.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

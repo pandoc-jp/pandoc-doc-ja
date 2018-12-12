@@ -32,6 +32,7 @@ Twitter
    :maxdepth: 2
    :caption: Contents:
 
+   trans-intro
    users-guide
    old-users-guide
 
