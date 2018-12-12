@@ -26,6 +26,8 @@ Twitter
 日本Pandocユーザ会 Slack（参加自由・お気軽にご参加ください）
    `Slack参加用リンク <https://join.slack.com/t/jpang/shared_invite/enQtNDUxMTY0NzU1ODc1LTMyYmFjNmY2NmI2ZDI0MDUwZTU2MzgyNzUzMGE4Y2E5M2QxN2RiYWE5NjNmNjhkNjE1MmI1NWY3ODc5MjQxZmQ>`_
 
+`Pandoc <https://pandoc.org/>`_ is free software, released under the GPL. Copyright 2006-2018 John MacFarlane.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

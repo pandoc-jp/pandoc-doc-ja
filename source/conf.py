@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'pandoc-doc-ja'
-copyright = '2018, Japan Pandoc Users Group'
+copyright = '2018 Japan Pandoc Users Group / 2006-2018 John MacFarlane'
 author = 'Japan Pandoc Users Group'
 
 # The short X.Y version
