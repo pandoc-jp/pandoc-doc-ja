@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-（新装工事中）Pandocユーザーズガイド日本語版
+（新装工事中）Pandocユーザーズガイド日本語版 トップ
 =======================================================
 
 注意：このサイトは工事中です。正式なものではありません。

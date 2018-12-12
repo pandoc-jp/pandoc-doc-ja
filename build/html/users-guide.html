@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Synopsis &#8212; pandoc-doc-ja 2018.12.12 ドキュメント</title>
+    <title>（新・工事中）Pandocユーザーズガイド 日本語版 &#8212; pandoc-doc-ja 2018.12.12 ドキュメント</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -17,7 +17,7 @@
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="next" title="（旧）Pandocユーザーズガイド 日本語版" href="old-users-guide.html" />
-    <link rel="prev" title="（新装工事中）Pandocユーザーズガイド日本語版" href="index.html" />
+    <link rel="prev" title="（新装工事中）Pandocユーザーズガイド日本語版 トップ" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,12 +34,14 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="synopsis">
-<h1>Synopsis<a class="headerlink" href="#synopsis" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="pandoc">
+<h1>（新・工事中）Pandocユーザーズガイド 日本語版<a class="headerlink" href="#pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> [<em>options</em>] [<em>input-file</em>]…</p>
 </div>
 <div class="section" id="description">
-<h1>Description<a class="headerlink" href="#description" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Description<a class="headerlink" href="#description" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc is a <a class="reference external" href="https://www.haskell.org">Haskell</a> library for converting
 from one markup format to another, and a command-line tool that uses
 this library.</p>
@@ -74,7 +76,7 @@ While conversions from pandoc’s Markdown to all formats aspire to be
 perfect, conversions from formats more expressive than pandoc’s Markdown
 can be expected to be lossy.</p>
 <div class="section" id="using-pandoc">
-<h2>Using pandoc<a class="headerlink" href="#using-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Using pandoc<a class="headerlink" href="#using-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>If no <em>input-files</em> are specified, input is read from <em>stdin</em>. Output
 goes to <em>stdout</em> by default. For output to a file, use the <code class="docutils literal notranslate"><span class="pre">-o</span></code>
 option:</p>
@@ -94,7 +96,7 @@ use the <code class="docutils literal notranslate"><span class="pre">-s</span></
 parse files individually.)</p>
 </div>
 <div class="section" id="specifying-formats">
-<h2>Specifying formats<a class="headerlink" href="#specifying-formats" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Specifying formats<a class="headerlink" href="#specifying-formats" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>The format of the input and output can be specified explicitly using
 command-line options. The input format can be specified using the
 <code class="docutils literal notranslate"><span class="pre">-f/--from</span></code> option, the output format using the <code class="docutils literal notranslate"><span class="pre">-t/--to</span></code> option.
@@ -124,7 +126,7 @@ input files’ extensions are unknown, the input format will be assumed to
 be Markdown.</p>
 </div>
 <div class="section" id="character-encoding">
-<h2>Character encoding<a class="headerlink" href="#character-encoding" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Character encoding<a class="headerlink" href="#character-encoding" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Pandoc uses the UTF-8 character encoding for both input and output. If
 your local character encoding is not UTF-8, you should pipe input and
 output through <code class="docutils literal notranslate"><span class="pre">`iconv</span></code> &lt;<a class="reference external" href="http://www.gnu.org/software/libiconv/">http://www.gnu.org/software/libiconv/</a>&gt;`__:</p>
@@ -137,7 +139,7 @@ included in the document header, which will only be included if you use
 the <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> option.</p>
 </div>
 <div class="section" id="creating-a-pdf">
-<h2>Creating a PDF<a class="headerlink" href="#creating-a-pdf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Creating a PDF<a class="headerlink" href="#creating-a-pdf" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>To produce a PDF, specify an output file with a <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> extension:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">o</span> <span class="n">test</span><span class="o">.</span><span class="n">pdf</span>
 </pre></div>
@@ -205,7 +207,7 @@ present in the template or included via <code class="docutils literal notranslat
 used for <a class="reference external" href="#citation-rendering">citation rendering</a>.</p>
 </div>
 <div class="section" id="reading-from-the-web">
-<h2>Reading from the Web<a class="headerlink" href="#reading-from-the-web" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Reading from the Web<a class="headerlink" href="#reading-from-the-web" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Instead of an input file, an absolute URI may be given. In this case
 pandoc will fetch the content using HTTP:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">html</span> <span class="o">-</span><span class="n">t</span> <span class="n">markdown</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">fsf</span><span class="o">.</span><span class="n">org</span>
@@ -220,9 +222,9 @@ requesting a document from a URL:</p>
 </div>
 </div>
 <div class="section" id="options">
-<h1>Options<a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Options<a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="general-options">
-<h2>General options<a class="headerlink" href="#general-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>General options<a class="headerlink" href="#general-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">-f</span></code> <em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">-r</span></code> <em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">--from=</span></code><em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">--read=</span></code><em>FORMAT</em></dt>
 <dd><p class="first">Specify input format. <em>FORMAT</em> can be:</p>
@@ -444,7 +446,7 @@ is not specified, defaults for pandoc’s Markdown are given.</dd>
 </dl>
 </div>
 <div class="section" id="reader-options">
-<h2>Reader options<a class="headerlink" href="#reader-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Reader options<a class="headerlink" href="#reader-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">--base-header-level=</span></code><em>NUMBER</em></dt>
 <dd>Specify the base level for headers (defaults to 1).</dd>
@@ -592,7 +594,7 @@ sentence-ending space in formats like LaTeX.</dd>
 </dl>
 </div>
 <div class="section" id="general-writer-options">
-<h2>General writer options<a class="headerlink" href="#general-writer-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>General writer options<a class="headerlink" href="#general-writer-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">--standalone</span></code></dt>
 <dd>Produce output with an appropriate header and footer (e.g.&nbsp;a
@@ -731,7 +733,7 @@ behind a proxy, you also need to set the environment variable
 </dl>
 </div>
 <div class="section" id="options-affecting-specific-writers">
-<h2>Options affecting specific writers<a class="headerlink" href="#options-affecting-specific-writers" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Options affecting specific writers<a class="headerlink" href="#options-affecting-specific-writers" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">--self-contained</span></code></dt>
 <dd>Produce a standalone HTML file with no external dependencies, using
@@ -998,7 +1000,7 @@ done.</dd>
 </dl>
 </div>
 <div class="section" id="citation-rendering">
-<h2>Citation rendering<a class="headerlink" href="#citation-rendering" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Citation rendering<a class="headerlink" href="#citation-rendering" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">--bibliography=</span></code><em>FILE</em></dt>
 <dd>Set the <code class="docutils literal notranslate"><span class="pre">bibliography</span></code> field in the document’s metadata to <em>FILE</em>,
@@ -1035,7 +1037,7 @@ LaTeX file that can be processed with
 </dl>
 </div>
 <div class="section" id="math-rendering-in-html">
-<h2>Math rendering in HTML<a class="headerlink" href="#math-rendering-in-html" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Math rendering in HTML<a class="headerlink" href="#math-rendering-in-html" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>The default is to render TeX math as far as possible using Unicode
 characters. Formulas are put inside a <code class="docutils literal notranslate"><span class="pre">span</span></code> with <code class="docutils literal notranslate"><span class="pre">class=&quot;math&quot;</span></code>, so
 that they may be styled differently from the surrounding text if needed.
@@ -1088,7 +1090,7 @@ the procedure is:</p>
 </dl>
 </div>
 <div class="section" id="options-for-wrapper-scripts">
-<h2>Options for wrapper scripts<a class="headerlink" href="#options-for-wrapper-scripts" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Options for wrapper scripts<a class="headerlink" href="#options-for-wrapper-scripts" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">--dump-args</span></code></dt>
 <dd>Print information about command-line arguments to <em>stdout</em>, then
@@ -1115,7 +1117,7 @@ pandoc options are not ignored. Thus, for example,</p>
 </div>
 </div>
 <div class="section" id="templates">
-<h1>Templates<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Templates<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>When the <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> option is used, pandoc uses a template to
 add header and footer material that is needed for a self-standing
 document. To see the default template that is used, just type</p>
@@ -1144,7 +1146,7 @@ be set using either <a class="reference external" href="#extension-yaml_metadata
 blocks</a> or with the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code>
 option.</p>
 <div class="section" id="variables-set-by-pandoc">
-<h2>Variables set by pandoc<a class="headerlink" href="#variables-set-by-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Variables set by pandoc<a class="headerlink" href="#variables-set-by-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Some variables are set automatically by pandoc. These vary somewhat
 depending on the output format, but include the following:</p>
 <dl class="docutils">
@@ -1214,7 +1216,7 @@ are transformed to the selected output format.</dd>
 </dl>
 </div>
 <div class="section" id="language-variables">
-<h2>Language variables<a class="headerlink" href="#language-variables" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Language variables<a class="headerlink" href="#language-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">lang</span></code></dt>
 <dd><p class="first">identifies the main language of the document, using a code according
@@ -1243,7 +1245,7 @@ engine is fully supported (use <code class="docutils literal notranslate"><span 
 </dl>
 </div>
 <div class="section" id="variables-for-slides">
-<h2>Variables for slides<a class="headerlink" href="#variables-for-slides" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Variables for slides<a class="headerlink" href="#variables-for-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Variables are available for <a class="reference external" href="#producing-slide-shows-with-pandoc">producing slide shows with
 pandoc</a>, including all <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js
 configuration
@@ -1284,7 +1286,7 @@ for 16:9, <code class="docutils literal notranslate"><span class="pre">149</span
 </dl>
 </div>
 <div class="section" id="variables-for-latex">
-<h2>Variables for LaTeX<a class="headerlink" href="#variables-for-latex" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Variables for LaTeX<a class="headerlink" href="#variables-for-latex" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>LaTeX variables are used when <a class="reference external" href="#creating-a-pdf">creating a PDF</a>.</p>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt>
@@ -1390,7 +1392,7 @@ section titles in the header.</dd>
 </dl>
 </div>
 <div class="section" id="variables-for-context">
-<h2>Variables for ConTeXt<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Variables for ConTeXt<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt>
 <dd>paper size, e.g.&nbsp;<code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">A4</span></code>, <code class="docutils literal notranslate"><span class="pre">landscape</span></code> (see <a class="reference external" href="https://wiki.contextgarden.net/PaperSetup">ConTeXt
@@ -1451,7 +1453,7 @@ details.</dd>
 </dl>
 </div>
 <div class="section" id="variables-for-man-pages">
-<h2>Variables for man pages<a class="headerlink" href="#variables-for-man-pages" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Variables for man pages<a class="headerlink" href="#variables-for-man-pages" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">section</span></code></dt>
 <dd>section number in man pages</dd>
@@ -1467,7 +1469,7 @@ details.</dd>
 </dl>
 </div>
 <div class="section" id="variables-for-ms">
-<h2>Variables for ms<a class="headerlink" href="#variables-for-ms" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Variables for ms<a class="headerlink" href="#variables-for-ms" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">pointsize</span></code></dt>
 <dd>point size (e.g.&nbsp;<code class="docutils literal notranslate"><span class="pre">10p</span></code>)</dd>
@@ -1480,7 +1482,7 @@ details.</dd>
 </dl>
 </div>
 <div class="section" id="using-variables-in-templates">
-<h2>Using variables in templates<a class="headerlink" href="#using-variables-in-templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Using variables in templates<a class="headerlink" href="#using-variables-in-templates" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Variable names are sequences of alphanumerics, <code class="docutils literal notranslate"><span class="pre">-</span></code>, and <code class="docutils literal notranslate"><span class="pre">_</span></code>,
 starting with a letter. A variable name surrounded by <code class="docutils literal notranslate"><span class="pre">$</span></code> signs will
 be replaced by its value. For example, the string <code class="docutils literal notranslate"><span class="pre">$title$</span></code> in</p>
@@ -1541,7 +1543,7 @@ treated as a comment and ignored.</p>
 </div>
 </div>
 <div class="section" id="extensions">
-<h1>Extensions<a class="headerlink" href="#extensions" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Extensions<a class="headerlink" href="#extensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>The behavior of some of the readers and writers can be adjusted by
 enabling or disabling various extensions.</p>
 <p>An extension can be enabled by adding <code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> to the format name
@@ -1555,9 +1557,9 @@ Extensions only used by them are therefore covered in the section
 variants</a> for <code class="docutils literal notranslate"><span class="pre">commonmark</span></code> and <code class="docutils literal notranslate"><span class="pre">gfm</span></code>.) In the
 following, extensions that also work for other formats are covered.</p>
 <div class="section" id="typography">
-<h2>Typography<a class="headerlink" href="#typography" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Typography<a class="headerlink" href="#typography" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-smart">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">smart</span></code><a class="headerlink" href="#extension-smart" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">smart</span></code><a class="headerlink" href="#extension-smart" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Interpret straight quotes as curly quotes, <code class="docutils literal notranslate"><span class="pre">---</span></code> as em-dashes, <code class="docutils literal notranslate"><span class="pre">--</span></code>
 as en-dashes, and <code class="docutils literal notranslate"><span class="pre">...</span></code> as ellipses. Nonbreaking spaces are inserted
 after certain abbreviations, such as “Mr.”</p>
@@ -1585,9 +1587,9 @@ mark and dash characters.</p>
 </div>
 </div>
 <div class="section" id="headers-and-sections">
-<h2>Headers and sections<a class="headerlink" href="#headers-and-sections" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Headers and sections<a class="headerlink" href="#headers-and-sections" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-auto-identifiers">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">auto_identifiers</span></code><a class="headerlink" href="#extension-auto-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">auto_identifiers</span></code><a class="headerlink" href="#extension-auto-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>A header without an explicitly specified identifier will be
 automatically assigned a unique identifier based on the header text.</p>
 <p>This extension can be enabled/disabled for the following formats:</p>
@@ -1665,13 +1667,13 @@ sections to be manipulated using JavaScript or treated differently in
 CSS.</p>
 </div>
 <div class="section" id="extension-ascii-identifiers">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">ascii_identifiers</span></code><a class="headerlink" href="#extension-ascii-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">ascii_identifiers</span></code><a class="headerlink" href="#extension-ascii-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Causes the identifiers produced by <code class="docutils literal notranslate"><span class="pre">auto_identifiers</span></code> to be pure
 ASCII. Accents are stripped off of accented Latin letters, and non-Latin
 letters are omitted.</p>
 </div>
 <div class="section" id="extension-gfm-auto-identifiers">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">gfm_auto_identifiers</span></code><a class="headerlink" href="#extension-gfm-auto-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">gfm_auto_identifiers</span></code><a class="headerlink" href="#extension-gfm-auto-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Changes the algorithm used by <code class="docutils literal notranslate"><span class="pre">auto_identifiers</span></code> to conform to
 GitHub’s method. Spaces are converted to dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>), uppercase
 characters to lowercase characters, and punctuation characters other
@@ -1679,7 +1681,7 @@ than <code class="docutils literal notranslate"><span class="pre">-</span></code
 </div>
 </div>
 <div class="section" id="math-input">
-<h2>Math Input<a class="headerlink" href="#math-input" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Math Input<a class="headerlink" href="#math-input" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>The extensions <code class="docutils literal notranslate"><span class="pre">`tex_math_dollars</span></code> &lt;#extension-tex_math_dollars&gt;`__,
 <code class="docutils literal notranslate"><span class="pre">`tex_math_single_backslash</span></code> &lt;#extension-tex_math_single_backslash&gt;`__,
 and
@@ -1689,18 +1691,18 @@ are described in the section about Pandoc’s Markdown.</p>
 reading web pages formatted using MathJax, for example.</p>
 </div>
 <div class="section" id="raw-html-tex">
-<h2>Raw HTML/TeX<a class="headerlink" href="#raw-html-tex" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Raw HTML/TeX<a class="headerlink" href="#raw-html-tex" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>The following extensions (especially how they affect Markdown
 input/output) are also described in more detail in their respective
 sections of <a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a>.</p>
 <div class="section" id="extension-raw-html">
-<span id="raw-html"></span><h3>Extension: <code class="docutils literal notranslate"><span class="pre">raw_html</span></code><a class="headerlink" href="#extension-raw-html" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="raw-html"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_html</span></code><a class="headerlink" href="#extension-raw-html" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>When converting from HTML, parse elements to raw HTML which are not
 representable in pandoc’s AST. By default, this is disabled for HTML
 input.</p>
 </div>
 <div class="section" id="extension-raw-tex">
-<span id="raw-tex"></span><h3>Extension: <code class="docutils literal notranslate"><span class="pre">raw_tex</span></code><a class="headerlink" href="#extension-raw-tex" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="raw-tex"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_tex</span></code><a class="headerlink" href="#extension-raw-tex" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allows raw LaTeX, TeX, and ConTeXt to be included in a document.</p>
 <p>This extension can be enabled/disabled for the following formats (in
 addition to <code class="docutils literal notranslate"><span class="pre">markdown</span></code>):</p>
@@ -1713,7 +1715,7 @@ and <code class="docutils literal notranslate"><span class="pre">\eqref</span></
 </dl>
 </div>
 <div class="section" id="extension-native-divs">
-<span id="native-divs"></span><h3>Extension: <code class="docutils literal notranslate"><span class="pre">native_divs</span></code><a class="headerlink" href="#extension-native-divs" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="native-divs"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_divs</span></code><a class="headerlink" href="#extension-native-divs" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>This extension is enabled by default for HTML input. This means that
 <code class="docutils literal notranslate"><span class="pre">div</span></code>s are parsed to pandoc native elements. (Alternatively, you can
 parse them to raw HTML using <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">html-native_divs+raw_html</span></code>.)</p>
@@ -1724,14 +1726,14 @@ parse them to raw HTML using <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="section" id="extension-native-spans">
-<span id="native-spans"></span><h3>Extension: <code class="docutils literal notranslate"><span class="pre">native_spans</span></code><a class="headerlink" href="#extension-native-spans" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="native-spans"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_spans</span></code><a class="headerlink" href="#extension-native-spans" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Analogous to <code class="docutils literal notranslate"><span class="pre">native_divs</span></code> above.</p>
 </div>
 </div>
 <div class="section" id="literate-haskell-support">
-<h2>Literate Haskell support<a class="headerlink" href="#literate-haskell-support" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Literate Haskell support<a class="headerlink" href="#literate-haskell-support" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-literate-haskell">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">literate_haskell</span></code><a class="headerlink" href="#extension-literate-haskell" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">literate_haskell</span></code><a class="headerlink" href="#extension-literate-haskell" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Treat the document as literate Haskell source.</p>
 <p>This extension can be enabled/disabled for the following formats:</p>
 <dl class="docutils">
@@ -1783,9 +1785,9 @@ picked up by the Haskell compiler.</p>
 </div>
 </div>
 <div class="section" id="other-extensions">
-<h2>Other extensions<a class="headerlink" href="#other-extensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Other extensions<a class="headerlink" href="#other-extensions" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-empty-paragraphs">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">empty_paragraphs</span></code><a class="headerlink" href="#extension-empty-paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">empty_paragraphs</span></code><a class="headerlink" href="#extension-empty-paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allows empty paragraphs. By default empty paragraphs are omitted.</p>
 <p>This extension can be enabled/disabled for the following formats:</p>
 <dl class="docutils">
@@ -1796,7 +1798,7 @@ picked up by the Haskell compiler.</p>
 </dl>
 </div>
 <div class="section" id="extension-styles">
-<span id="ext-styles"></span><h3>Extension: <code class="docutils literal notranslate"><span class="pre">styles</span></code><a class="headerlink" href="#extension-styles" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="ext-styles"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">styles</span></code><a class="headerlink" href="#extension-styles" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Read all docx styles as divs (for paragraph styles) and spans (for
 character styles) regardless of whether pandoc understands the meaning
 of these styles. This can be used with <a class="reference external" href="#custom-styles-in-docx">docx custom
@@ -1807,17 +1809,17 @@ styles</a>. Disabled by default.</p>
 </dl>
 </div>
 <div class="section" id="extension-amuse">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">amuse</span></code><a class="headerlink" href="#extension-amuse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">amuse</span></code><a class="headerlink" href="#extension-amuse" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In the <code class="docutils literal notranslate"><span class="pre">muse</span></code> input format, this enables Text::Amuse extensions to
 Emacs Muse markup.</p>
 </div>
 <div class="section" id="extension-citations">
-<span id="org-citations"></span><h3>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#extension-citations" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="org-citations"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#extension-citations" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Some aspects of <a class="reference external" href="#citations">Pandoc’s Markdown citation syntax</a> are
 also accepted in <code class="docutils literal notranslate"><span class="pre">org</span></code> input.</p>
 </div>
 <div class="section" id="extension-ntb">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">ntb</span></code><a class="headerlink" href="#extension-ntb" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">ntb</span></code><a class="headerlink" href="#extension-ntb" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In the <code class="docutils literal notranslate"><span class="pre">context</span></code> output format this enables the use of <a class="reference external" href="http://wiki.contextgarden.net/TABLE">Natural Tables
 (TABLE)</a> instead of the default
 <a class="reference external" href="http://wiki.contextgarden.net/xtables">Extreme Tables (xtables)</a>.
@@ -1827,7 +1829,7 @@ a performance penalty compared to extreme tables.</p>
 </div>
 </div>
 <div class="section" id="pandocs-markdown">
-<h1>Pandoc’s Markdown<a class="headerlink" href="#pandocs-markdown" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Pandoc’s Markdown<a class="headerlink" href="#pandocs-markdown" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc understands an extended and slightly revised version of John
 Gruber’s <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>
 syntax. This document explains the syntax, noting differences from
@@ -1838,7 +1840,7 @@ behavior more granularly. They are described in the following. See also
 <a class="reference external" href="#extensions">Extensions</a> above, for extensions that work also on
 other formats.</p>
 <div class="section" id="philosophy">
-<h2>Philosophy<a class="headerlink" href="#philosophy" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Philosophy<a class="headerlink" href="#philosophy" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Markdown is designed to be easy to write, and, even more importantly,
 easy to read:</p>
 <blockquote>
@@ -1857,20 +1859,20 @@ important document elements like definition lists, tables, mathematics,
 and footnotes.</p>
 </div>
 <div class="section" id="paragraphs">
-<h2>Paragraphs<a class="headerlink" href="#paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Paragraphs<a class="headerlink" href="#paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>A paragraph is one or more lines of text followed by one or more blank
 lines. Newlines are treated as spaces, so you can reflow your paragraphs
 as you like. If you need a hard line break, put two or more spaces at
 the end of a line.</p>
 <div class="section" id="extension-escaped-line-breaks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">escaped_line_breaks</span></code><a class="headerlink" href="#extension-escaped-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">escaped_line_breaks</span></code><a class="headerlink" href="#extension-escaped-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>A backslash followed by a newline is also a hard line break. Note: in
 multiline and grid table cells, this is the only way to create a hard
 line break, since trailing spaces in the cells are ignored.</p>
 </div>
 </div>
 <div class="section" id="headers">
-<h2>Headers<a class="headerlink" href="#headers" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Headers<a class="headerlink" href="#headers" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>There are two kinds of headers: Setext and ATX.</p>
 <p>A setext-style header is a line of text “underlined” with a row of <code class="docutils literal notranslate"><span class="pre">=</span></code>
 signs (for a level one header) or <code class="docutils literal notranslate"><span class="pre">-</span></code> signs (for a level two header):</p>
@@ -1896,7 +1898,7 @@ text, optionally followed by any number of <code class="docutils literal notrans
 </pre></div>
 </div>
 <div class="section" id="extension-blank-before-header">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">blank_before_header</span></code><a class="headerlink" href="#extension-blank-before-header" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">blank_before_header</span></code><a class="headerlink" href="#extension-blank-before-header" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Standard Markdown syntax does not require a blank line before a header.
 Pandoc does require this (except, of course, at the beginning of the
 document). The reason for the requirement is that it is all too easy for
@@ -1908,19 +1910,19 @@ through line wrapping). Consider, for example:</p>
 </div>
 </div>
 <div class="section" id="extension-space-in-atx-header">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">space_in_atx_header</span></code><a class="headerlink" href="#extension-space-in-atx-header" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">space_in_atx_header</span></code><a class="headerlink" href="#extension-space-in-atx-header" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Many Markdown implementations do not require a space between the opening
 <code class="docutils literal notranslate"><span class="pre">#</span></code>s of an ATX header and the header text, so that <code class="docutils literal notranslate"><span class="pre">#5</span> <span class="pre">bolt</span></code> and
 <code class="docutils literal notranslate"><span class="pre">#hashtag</span></code> count as headers. With this extension, pandoc does require
 the space.</p>
 <div class="section" id="header-identifiers">
-<h4>Header identifiers<a class="headerlink" href="#header-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Header identifiers<a class="headerlink" href="#header-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>See also the <code class="docutils literal notranslate"><span class="pre">`auto_identifiers</span></code>
 extension &lt;#extension-auto_identifiers&gt;`__ above.</p>
 </div>
 </div>
 <div class="section" id="extension-header-attributes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">header_attributes</span></code><a class="headerlink" href="#extension-header-attributes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">header_attributes</span></code><a class="headerlink" href="#extension-header-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Headers can be assigned attributes using this syntax at the end of the
 line containing the header text:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="c1">#identifier .class .class key=value key=value}</span>
@@ -1957,7 +1959,7 @@ non-English documents. So,</p>
 </div>
 </div>
 <div class="section" id="extension-implicit-header-references">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">implicit_header_references</span></code><a class="headerlink" href="#extension-implicit-header-references" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">implicit_header_references</span></code><a class="headerlink" href="#extension-implicit-header-references" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandoc behaves as if reference links have been defined for each header.
 So, to link to a header</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Header identifiers in HTML</span>
@@ -1997,7 +1999,7 @@ header references. So, in the following example, the link will point to
 </div>
 </div>
 <div class="section" id="block-quotations">
-<h2>Block quotations<a class="headerlink" href="#block-quotations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Block quotations<a class="headerlink" href="#block-quotations" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Markdown uses email conventions for quoting blocks of text. A block
 quotation is one or more paragraphs or other block elements (such as
 lists or headers), with each line preceded by a <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> character and an
@@ -2034,7 +2036,7 @@ block quote, you need five spaces after the <code class="docutils literal notran
 </pre></div>
 </div>
 <div class="section" id="extension-blank-before-blockquote">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">blank_before_blockquote</span></code><a class="headerlink" href="#extension-blank-before-blockquote" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">blank_before_blockquote</span></code><a class="headerlink" href="#extension-blank-before-blockquote" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Standard Markdown syntax does not require a blank line before a block
 quote. Pandoc does require this (except, of course, at the beginning of
 the document). The reason for the requirement is that it is all too easy
@@ -2048,7 +2050,7 @@ used, the following does not produce a nested block quote in pandoc:</p>
 </div>
 </div>
 <div class="section" id="verbatim-code-blocks">
-<h2>Verbatim (code) blocks<a class="headerlink" href="#verbatim-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Verbatim (code) blocks<a class="headerlink" href="#verbatim-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>A block of text indented four spaces (or one tab) is treated as verbatim
 text: that is, special characters do not trigger special formatting, and
 all spaces and line breaks are preserved. For example,</p>
@@ -2061,7 +2063,7 @@ all spaces and line breaks are preserved. For example,</p>
 of the verbatim text, and is removed in the output.</p>
 <p>Note: blank lines in the verbatim text need not begin with four spaces.</p>
 <div class="section" id="extension-fenced-code-blocks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_code_blocks</span></code><a class="headerlink" href="#extension-fenced-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_code_blocks</span></code><a class="headerlink" href="#extension-fenced-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In addition to standard indented code blocks, pandoc supports <em>fenced</em>
 code blocks. These begin with a row of three or more tildes (<code class="docutils literal notranslate"><span class="pre">~</span></code>) and
 end with a row of tildes that must be at least as long as the starting
@@ -2087,12 +2089,12 @@ longer row of tildes or backticks at the start and end:</p>
 </div>
 </div>
 <div class="section" id="extension-backtick-code-blocks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">backtick_code_blocks</span></code><a class="headerlink" href="#extension-backtick-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">backtick_code_blocks</span></code><a class="headerlink" href="#extension-backtick-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Same as <code class="docutils literal notranslate"><span class="pre">fenced_code_blocks</span></code>, but uses backticks (<code class="docutils literal notranslate"><span class="pre">`</span></code>)
 instead of tildes (<code class="docutils literal notranslate"><span class="pre">~</span></code>).</p>
 </div>
 <div class="section" id="extension-fenced-code-attributes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_code_attributes</span></code><a class="headerlink" href="#extension-fenced-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_code_attributes</span></code><a class="headerlink" href="#extension-fenced-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Optionally, you may attach attributes to fenced or backtick code block
 using this syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~~~~</span> <span class="p">{</span><span class="c1">#mycode .haskell .numberLines startFrom=&quot;100&quot;}</span>
@@ -2144,9 +2146,9 @@ highlighting, see <a class="reference external" href="#syntax-highlighting">Synt
 </div>
 </div>
 <div class="section" id="line-blocks">
-<h2>Line blocks<a class="headerlink" href="#line-blocks" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Line blocks<a class="headerlink" href="#line-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-line-blocks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">line_blocks</span></code><a class="headerlink" href="#extension-line-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">line_blocks</span></code><a class="headerlink" href="#extension-line-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>A line block is a sequence of lines beginning with a vertical bar
 (<code class="docutils literal notranslate"><span class="pre">|</span></code>) followed by a space. The division into lines will be preserved
 in the output, as will any leading spaces; otherwise, the lines will be
@@ -2174,7 +2176,7 @@ begin with a space.</p>
 </div>
 </div>
 <div class="section" id="lists">
-<h2>Lists<a class="headerlink" href="#lists" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Lists<a class="headerlink" href="#lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>A bullet list is a list of bulleted list items. A bulleted list item
 begins with a bullet (<code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, or <code class="docutils literal notranslate"><span class="pre">-</span></code>). Here is a simple example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">one</span>
@@ -2275,7 +2277,7 @@ difference between this list:</p>
 </pre></div>
 </div>
 <div class="section" id="extension-fancy-lists">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">fancy_lists</span></code><a class="headerlink" href="#extension-fancy-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">fancy_lists</span></code><a class="headerlink" href="#extension-fancy-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Unlike standard Markdown, pandoc allows ordered list items to be marked
 with uppercase and lowercase letters and roman numerals, in addition to
 Arabic numerals. List markers may be enclosed in parentheses or followed
@@ -2290,7 +2292,7 @@ ordered list marker in place of a numeral:</p>
 </div>
 </div>
 <div class="section" id="extension-startnum">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">startnum</span></code><a class="headerlink" href="#extension-startnum" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">startnum</span></code><a class="headerlink" href="#extension-startnum" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandoc also pays attention to the type of list marker used, and to the
 starting number, and both of these are preserved where possible in the
 output format. Thus, the following yields a list with numbers followed
@@ -2319,11 +2321,11 @@ is used. So, the following will create three lists:</p>
 </pre></div>
 </div>
 <div class="section" id="definition-lists">
-<h4>Definition lists<a class="headerlink" href="#definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Definition lists<a class="headerlink" href="#definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
 </div>
 </div>
 <div class="section" id="extension-definition-lists">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">definition_lists</span></code><a class="headerlink" href="#extension-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">definition_lists</span></code><a class="headerlink" href="#extension-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandoc supports definition lists, using the syntax of <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown
 Extra</a> with some
 extensions. <a class="footnote-reference" href="#id14" id="id3">[3]</a></p>
@@ -2377,11 +2379,11 @@ variant that loosens this requirement, but disallows “lazy” hard
 wrapping, can be activated with <code class="docutils literal notranslate"><span class="pre">compact_definition_lists</span></code>: see
 <a class="reference external" href="#non-pandoc-extensions">Non-pandoc extensions</a>, below.)</p>
 <div class="section" id="numbered-example-lists">
-<h4>Numbered example lists<a class="headerlink" href="#numbered-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Numbered example lists<a class="headerlink" href="#numbered-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
 </div>
 </div>
 <div class="section" id="extension-example-lists">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">example_lists</span></code><a class="headerlink" href="#extension-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">example_lists</span></code><a class="headerlink" href="#extension-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>The special list marker <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> can be used for sequentially numbered
 examples. The first list item with a <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> marker will be numbered ‘1’,
 the next ‘2’, and so on, throughout the document. The numbered examples
@@ -2411,7 +2413,7 @@ set. This is because example labels tend to be long, and indenting
 content to the first non-space character after the label would be
 awkward.</p>
 <div class="section" id="compact-and-loose-lists">
-<h4>Compact and loose lists<a class="headerlink" href="#compact-and-loose-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Compact and loose lists<a class="headerlink" href="#compact-and-loose-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>Pandoc behaves differently from <code class="docutils literal notranslate"><span class="pre">Markdown.pl</span></code> on some “edge cases”
 involving lists. Consider this source:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+</span>   <span class="n">First</span>
@@ -2436,7 +2438,7 @@ with the official Markdown syntax description, even though it is
 different from that of <code class="docutils literal notranslate"><span class="pre">Markdown.pl</span></code>.)</p>
 </div>
 <div class="section" id="ending-a-list">
-<h4>Ending a list<a class="headerlink" href="#ending-a-list" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Ending a list<a class="headerlink" href="#ending-a-list" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>What if you want to put an indented code block after a list?</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span>   <span class="n">item</span> <span class="n">one</span>
 <span class="o">-</span>   <span class="n">item</span> <span class="n">two</span>
@@ -2475,7 +2477,7 @@ one big list:</p>
 </div>
 </div>
 <div class="section" id="horizontal-rules">
-<h2>Horizontal rules<a class="headerlink" href="#horizontal-rules" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Horizontal rules<a class="headerlink" href="#horizontal-rules" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>A line containing a row of three or more <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, or <code class="docutils literal notranslate"><span class="pre">_</span></code>
 characters (optionally separated by spaces) produces a horizontal rule:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span>  <span class="o">*</span>  <span class="o">*</span>  <span class="o">*</span>
@@ -2485,20 +2487,20 @@ characters (optionally separated by spaces) produces a horizontal rule:</p>
 </div>
 </div>
 <div class="section" id="tables">
-<h2>Tables<a class="headerlink" href="#tables" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Tables<a class="headerlink" href="#tables" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Four kinds of tables may be used. The first three kinds presuppose the
 use of a fixed-width font, such as Courier. The fourth kind can be used
 with proportionally spaced fonts, as it does not require lining up
 columns.</p>
 <div class="section" id="extension-table-captions">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">table_captions</span></code><a class="headerlink" href="#extension-table-captions" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">table_captions</span></code><a class="headerlink" href="#extension-table-captions" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>A caption may optionally be provided with all 4 kinds of tables (as
 illustrated in the examples below). A caption is a paragraph beginning
 with the string <code class="docutils literal notranslate"><span class="pre">Table:</span></code> (or just <code class="docutils literal notranslate"><span class="pre">:</span></code>), which will be stripped off.
 It may appear either before or after the table.</p>
 </div>
 <div class="section" id="extension-simple-tables">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">simple_tables</span></code><a class="headerlink" href="#extension-simple-tables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">simple_tables</span></code><a class="headerlink" href="#extension-simple-tables" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Simple tables look like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Right</span>     <span class="n">Left</span>     <span class="n">Center</span>     <span class="n">Default</span>
 <span class="o">-------</span>     <span class="o">------</span> <span class="o">----------</span>   <span class="o">-------</span>
@@ -2538,7 +2540,7 @@ of the first line of the table body. So, in the tables above, the
 columns would be right, left, center, and right aligned, respectively.</p>
 </div>
 <div class="section" id="extension-multiline-tables">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">multiline_tables</span></code><a class="headerlink" href="#extension-multiline-tables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">multiline_tables</span></code><a class="headerlink" href="#extension-multiline-tables" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Multiline tables allow headers and table rows to span multiple lines of
 text (but cells that span multiple columns or rows of the table are not
 supported). Here is an example:</p>
@@ -2587,7 +2589,7 @@ should be followed by a blank line (and then the row of dashes that ends
 the table), or the table may be interpreted as a simple table.</p>
 </div>
 <div class="section" id="extension-grid-tables">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">grid_tables</span></code><a class="headerlink" href="#extension-grid-tables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">grid_tables</span></code><a class="headerlink" href="#extension-grid-tables" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Grid tables look like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>: Sample grid table.
 
@@ -2632,7 +2634,7 @@ tables</a>
 will not render as expected with Pandoc.</p>
 </div>
 <div class="section" id="extension-pipe-tables">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">pipe_tables</span></code><a class="headerlink" href="#extension-pipe-tables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">pipe_tables</span></code><a class="headerlink" href="#extension-pipe-tables" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pipe tables look like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">Right</span> <span class="o">|</span> <span class="n">Left</span> <span class="o">|</span> <span class="n">Default</span> <span class="o">|</span> <span class="n">Center</span> <span class="o">|</span>
 <span class="o">|------</span><span class="p">:</span><span class="o">|</span><span class="p">:</span><span class="o">-----|---------|</span><span class="p">:</span><span class="o">------</span><span class="p">:</span><span class="o">|</span>
@@ -2683,9 +2685,9 @@ alignment, you’ll need to add colons as above.</p>
 </div>
 </div>
 <div class="section" id="metadata-blocks">
-<h2>Metadata blocks<a class="headerlink" href="#metadata-blocks" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Metadata blocks<a class="headerlink" href="#metadata-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-pandoc-title-block">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">pandoc_title_block</span></code><a class="headerlink" href="#extension-pandoc-title-block" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">pandoc_title_block</span></code><a class="headerlink" href="#extension-pandoc-title-block" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>If the file begins with a title block</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">title</span>
 <span class="o">%</span> <span class="n">author</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">separated</span> <span class="n">by</span> <span class="n">semicolons</span><span class="p">)</span>
@@ -2757,7 +2759,7 @@ should be used to separate the footer text from the header text. Thus,</p>
 <p>will also have “Version 4.0” in the header.</p>
 </div>
 <div class="section" id="extension-yaml-metadata-block">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">yaml_metadata_block</span></code><a class="headerlink" href="#extension-yaml-metadata-block" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">yaml_metadata_block</span></code><a class="headerlink" href="#extension-yaml-metadata-block" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>A YAML metadata block is a valid YAML object, delimited by a line of
 three hyphens (<code class="docutils literal notranslate"><span class="pre">---</span></code>) at the top and a line of three hyphens (<code class="docutils literal notranslate"><span class="pre">---</span></code>)
 or three dots (<code class="docutils literal notranslate"><span class="pre">...</span></code>) at the bottom. A YAML metadata block may occur
@@ -2855,9 +2857,9 @@ markdown. For example:</p>
 </div>
 </div>
 <div class="section" id="backslash-escapes">
-<h2>Backslash escapes<a class="headerlink" href="#backslash-escapes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Backslash escapes<a class="headerlink" href="#backslash-escapes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-all-symbols-escapable">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">all_symbols_escapable</span></code><a class="headerlink" href="#extension-all-symbols-escapable" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">all_symbols_escapable</span></code><a class="headerlink" href="#extension-all-symbols-escapable" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Except inside a code block or inline code, any punctuation or space
 character preceded by a backslash will be treated literally, even if it
 would normally indicate formatting. Thus, for example, if one writes</p>
@@ -2891,7 +2893,7 @@ trailing spaces on a line.</p>
 </div>
 </div>
 <div class="section" id="inline-formatting">
-<h2>Inline formatting<a class="headerlink" href="#inline-formatting" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Inline formatting<a class="headerlink" href="#inline-formatting" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>To <em>emphasize</em> some text, surround it with <code class="docutils literal notranslate"><span class="pre">*</span></code>s or <code class="docutils literal notranslate"><span class="pre">_</span></code>, like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">text</span> <span class="ow">is</span> <span class="n">_emphasized</span> <span class="k">with</span> <span class="n">underscores_</span><span class="p">,</span> <span class="ow">and</span> <span class="n">this</span>
 <span class="ow">is</span> <span class="o">*</span><span class="n">emphasized</span> <span class="k">with</span> <span class="n">asterisks</span><span class="o">*.</span>
@@ -2907,7 +2909,7 @@ will not trigger emphasis:</p>
 </pre></div>
 </div>
 <div class="section" id="extension-intraword-underscores">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">intraword_underscores</span></code><a class="headerlink" href="#extension-intraword-underscores" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">intraword_underscores</span></code><a class="headerlink" href="#extension-intraword-underscores" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Because <code class="docutils literal notranslate"><span class="pre">_</span></code> is sometimes used inside words and identifiers, pandoc
 does not interpret a <code class="docutils literal notranslate"><span class="pre">_</span></code> surrounded by alphanumeric characters as an
 emphasis marker. If you want to emphasize just part of a word, use
@@ -2916,22 +2918,22 @@ emphasis marker. If you want to emphasize just part of a word, use
 </pre></div>
 </div>
 <div class="section" id="strikeout">
-<h4>Strikeout<a class="headerlink" href="#strikeout" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Strikeout<a class="headerlink" href="#strikeout" title="このヘッドラインへのパーマリンク">¶</a></h5>
 </div>
 </div>
 <div class="section" id="extension-strikeout">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">strikeout</span></code><a class="headerlink" href="#extension-strikeout" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">strikeout</span></code><a class="headerlink" href="#extension-strikeout" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>To strikeout a section of text with a horizontal line, begin and end it
 with <code class="docutils literal notranslate"><span class="pre">~~</span></code>. Thus, for example,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="o">~~</span><span class="ow">is</span> <span class="n">deleted</span> <span class="n">text</span><span class="o">.~~</span>
 </pre></div>
 </div>
 <div class="section" id="superscripts-and-subscripts">
-<h4>Superscripts and subscripts<a class="headerlink" href="#superscripts-and-subscripts" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Superscripts and subscripts<a class="headerlink" href="#superscripts-and-subscripts" title="このヘッドラインへのパーマリンク">¶</a></h5>
 </div>
 </div>
 <div class="section" id="extension-superscript-subscript">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">superscript</span></code>, <code class="docutils literal notranslate"><span class="pre">subscript</span></code><a class="headerlink" href="#extension-superscript-subscript" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">superscript</span></code>, <code class="docutils literal notranslate"><span class="pre">subscript</span></code><a class="headerlink" href="#extension-superscript-subscript" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Superscripts may be written by surrounding the superscripted text by
 <code class="docutils literal notranslate"><span class="pre">^</span></code> characters; subscripts may be written by surrounding the
 subscripted text by <code class="docutils literal notranslate"><span class="pre">~</span></code> characters. Thus, for example,</p>
@@ -2944,7 +2946,7 @@ superscripting and subscripting through the ordinary use of <code class="docutil
 <code class="docutils literal notranslate"><span class="pre">^</span></code>.) Thus, if you want the letter P with ‘a cat’ in subscripts, use
 <code class="docutils literal notranslate"><span class="pre">P~a\</span> <span class="pre">cat~</span></code>, not <code class="docutils literal notranslate"><span class="pre">P~a</span> <span class="pre">cat~</span></code>.</p>
 <div class="section" id="verbatim">
-<h4>Verbatim<a class="headerlink" href="#verbatim" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Verbatim<a class="headerlink" href="#verbatim" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>To make a short span of text verbatim, put it inside backticks:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>What is the difference between `&gt;&gt;=` and `&gt;&gt;`?
 </pre></div>
@@ -2966,14 +2968,14 @@ in verbatim contexts:</p>
 </div>
 </div>
 <div class="section" id="extension-inline-code-attributes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">inline_code_attributes</span></code><a class="headerlink" href="#extension-inline-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">inline_code_attributes</span></code><a class="headerlink" href="#extension-inline-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Attributes can be attached to verbatim text, just as with <a class="reference external" href="#fenced-code-blocks">fenced code
 blocks</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`&lt;$&gt;`{.haskell}
 </pre></div>
 </div>
 <div class="section" id="small-caps">
-<h4>Small caps<a class="headerlink" href="#small-caps" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Small caps<a class="headerlink" href="#small-caps" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>To write small caps, use the <code class="docutils literal notranslate"><span class="pre">smallcaps</span></code> class:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Small</span> <span class="n">caps</span><span class="p">]{</span><span class="o">.</span><span class="n">smallcaps</span><span class="p">}</span>
 </pre></div>
@@ -2991,9 +2993,9 @@ blocks</a>:</p>
 </div>
 </div>
 <div class="section" id="math">
-<h2>Math<a class="headerlink" href="#math" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Math<a class="headerlink" href="#math" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-tex-math-dollars">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">tex_math_dollars</span></code><a class="headerlink" href="#extension-tex-math-dollars" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">tex_math_dollars</span></code><a class="headerlink" href="#extension-tex-math-dollars" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Anything between two <code class="docutils literal notranslate"><span class="pre">$</span></code> characters will be treated as TeX math. The
 opening <code class="docutils literal notranslate"><span class="pre">$</span></code> must have a non-space character immediately to its right,
 while the closing <code class="docutils literal notranslate"><span class="pre">$</span></code> must have a non-space character immediately to
@@ -3046,9 +3048,9 @@ HTML</a> above.</dd>
 </div>
 </div>
 <div class="section" id="id5">
-<h2>Raw HTML<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Raw HTML<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="id6">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">raw_html</span></code><a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_html</span></code><a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Markdown allows you to insert raw HTML (or DocBook) anywhere in a
 document (except verbatim contexts, where <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> are
 interpreted literally). (Technically this is not an extension, since
@@ -3064,7 +3066,7 @@ Otherwise, plain-text fallbacks will be used. Note that even if
 they cannot use pipe syntax.</p>
 </div>
 <div class="section" id="extension-markdown-in-html-blocks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">markdown_in_html_blocks</span></code><a class="headerlink" href="#extension-markdown-in-html-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">markdown_in_html_blocks</span></code><a class="headerlink" href="#extension-markdown-in-html-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Standard Markdown allows you to include HTML “blocks”: blocks of HTML
 between balanced tags that are separated from the surrounding text with
 blank lines, and start and end at the left margin. Within these blocks,
@@ -3099,21 +3101,21 @@ of Markdown text with <code class="docutils literal notranslate"><span class="pr
 interpreted as Markdown.</p>
 </div>
 <div class="section" id="id7">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">native_divs</span></code><a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_divs</span></code><a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Use native pandoc <code class="docutils literal notranslate"><span class="pre">Div</span></code> blocks for content inside <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> tags. For
 the most part this should give the same output as
 <code class="docutils literal notranslate"><span class="pre">markdown_in_html_blocks</span></code>, but it makes it easier to write pandoc
 filters to manipulate groups of blocks.</p>
 </div>
 <div class="section" id="id8">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">native_spans</span></code><a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_spans</span></code><a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Use native pandoc <code class="docutils literal notranslate"><span class="pre">Span</span></code> blocks for content inside <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> tags.
 For the most part this should give the same output as <code class="docutils literal notranslate"><span class="pre">raw_html</span></code>, but
 it makes it easier to write pandoc filters to manipulate groups of
 inlines.</p>
 </div>
 <div class="section" id="id9">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">raw_tex</span></code><a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_tex</span></code><a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In addition to raw HTML, pandoc allows raw LaTeX, TeX, and ConTeXt to be
 included in a document. Inline TeX commands will be preserved and passed
 unchanged to the LaTeX and ConTeXt writers. Thus, for example, you can
@@ -3135,11 +3137,11 @@ LaTeX, not as Markdown.</p>
 <p>Inline LaTeX is ignored in output formats other than Markdown, LaTeX,
 Emacs Org mode, and ConTeXt.</p>
 <div class="section" id="generic-raw-attribute">
-<h4>Generic raw attribute<a class="headerlink" href="#generic-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Generic raw attribute<a class="headerlink" href="#generic-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h5>
 </div>
 </div>
 <div class="section" id="extension-raw-attribute">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">raw_attribute</span></code><a class="headerlink" href="#extension-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_attribute</span></code><a class="headerlink" href="#extension-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Inline spans and fenced code blocks with a special kind of attribute
 will be parsed as raw content with the designated format. For example,
 the following produces a raw roff <code class="docutils literal notranslate"><span class="pre">ms</span></code> block:</p>
@@ -3177,9 +3179,9 @@ with a backtick code block, <code class="docutils literal notranslate"><span cla
 </div>
 </div>
 <div class="section" id="latex-macros">
-<h2>LaTeX macros<a class="headerlink" href="#latex-macros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>LaTeX macros<a class="headerlink" href="#latex-macros" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-latex-macros">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">latex_macros</span></code><a class="headerlink" href="#extension-latex-macros" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">latex_macros</span></code><a class="headerlink" href="#extension-latex-macros" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>When this extension is enabled, pandoc will parse LaTeX macro
 definitions and apply the resulting macros to all LaTeX math and raw
 LaTeX. So, for example, the following will work in all output formats,
@@ -3200,7 +3202,7 @@ still be passed through as raw LaTeX.</p>
 </div>
 </div>
 <div class="section" id="links">
-<h2>Links<a class="headerlink" href="#links" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Links<a class="headerlink" href="#links" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Markdown allows links to be specified in several ways.</p>
 <p>If you enclose a URL or email address in pointy brackets, it will become
 a link:</p>
@@ -3273,7 +3275,7 @@ other implementations:</p>
 </pre></div>
 </div>
 <div class="section" id="extension-shortcut-reference-links">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">shortcut_reference_links</span></code><a class="headerlink" href="#extension-shortcut-reference-links" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">shortcut_reference_links</span></code><a class="headerlink" href="#extension-shortcut-reference-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In a <em>shortcut</em> reference link, the second pair of brackets may be
 omitted entirely:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">See</span> <span class="p">[</span><span class="n">my</span> <span class="n">website</span><span class="p">]</span><span class="o">.</span>
@@ -3282,7 +3284,7 @@ omitted entirely:</p>
 </pre></div>
 </div>
 <div class="section" id="internal-links">
-<h4>Internal links<a class="headerlink" href="#internal-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h5>Internal links<a class="headerlink" href="#internal-links" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>To link to another section of the same document, use the automatically
 generated identifier (see <a class="reference external" href="#header-identifiers">Header identifiers</a>).
 For example:</p>
@@ -3301,7 +3303,7 @@ slide shows and EPUB), LaTeX, and ConTeXt.</p>
 </div>
 </div>
 <div class="section" id="images">
-<h2>Images<a class="headerlink" href="#images" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Images<a class="headerlink" href="#images" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>A link immediately preceded by a <code class="docutils literal notranslate"><span class="pre">!</span></code> will be treated as an image. The
 link text will be used as the image’s alt text:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>![la lune](lalune.jpg &quot;Voyage to the moon&quot;)
@@ -3312,7 +3314,7 @@ link text will be used as the image’s alt text:</p>
 </pre></div>
 </div>
 <div class="section" id="extension-implicit-figures">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">implicit_figures</span></code><a class="headerlink" href="#extension-implicit-figures" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">implicit_figures</span></code><a class="headerlink" href="#extension-implicit-figures" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>An image with nonempty alt text, occurring by itself in a paragraph,
 will be rendered as a figure with a caption. The image’s alt text will
 be used as the caption.</p>
@@ -3333,7 +3335,7 @@ that has the <code class="docutils literal notranslate"><span class="pre">stretc
 figure tags will be omitted.</p>
 </div>
 <div class="section" id="extension-link-attributes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">link_attributes</span></code><a class="headerlink" href="#extension-link-attributes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">link_attributes</span></code><a class="headerlink" href="#extension-link-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Attributes can be set on links and images:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>An inline ![image](foo.jpg){#id .class width=30 height=20px}
 and a reference ![image][ref] with attributes.
@@ -3380,14 +3382,14 @@ embedded in the image file.</li>
 </div>
 </div>
 <div class="section" id="divs-and-spans">
-<h2>Divs and Spans<a class="headerlink" href="#divs-and-spans" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Divs and Spans<a class="headerlink" href="#divs-and-spans" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">native_divs</span></code> and <code class="docutils literal notranslate"><span class="pre">native_spans</span></code> extensions (see
 <a class="reference external" href="#extension-native_divs">above</a>), HTML syntax can be used as part of
 markdown to create native <code class="docutils literal notranslate"><span class="pre">Div</span></code> and <code class="docutils literal notranslate"><span class="pre">Span</span></code> elements in the pandoc
 AST (as opposed to raw HTML). However, there is also nicer syntax
 available:</p>
 <div class="section" id="extension-fenced-divs">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_divs</span></code><a class="headerlink" href="#extension-fenced-divs" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_divs</span></code><a class="headerlink" href="#extension-fenced-divs" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allow special fenced syntax for native <code class="docutils literal notranslate"><span class="pre">Div</span></code> blocks. A Div starts with
 a fence containing at least three consecutive colons plus some
 attributes. The attributes may optionally be followed by another string
@@ -3425,7 +3427,7 @@ clarity to use fences of different lengths to distinguish nested divs
 from their parents.</p>
 </div>
 <div class="section" id="extension-bracketed-spans">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">bracketed_spans</span></code><a class="headerlink" href="#extension-bracketed-spans" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">bracketed_spans</span></code><a class="headerlink" href="#extension-bracketed-spans" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>A bracketed sequence of inlines, as one would use to begin a link, will
 be treated as a <code class="docutils literal notranslate"><span class="pre">Span</span></code> with attributes if it is followed immediately
 by attributes:</p>
@@ -3435,9 +3437,9 @@ by attributes:</p>
 </div>
 </div>
 <div class="section" id="footnotes">
-<h2>Footnotes<a class="headerlink" href="#footnotes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Footnotes<a class="headerlink" href="#footnotes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-footnotes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">footnotes</span></code><a class="headerlink" href="#extension-footnotes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">footnotes</span></code><a class="headerlink" href="#extension-footnotes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandoc’s Markdown allows footnotes, using the following syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Here</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">footnote</span> <span class="n">reference</span><span class="p">,[</span><span class="o">^</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">another</span><span class="o">.</span><span class="p">[</span><span class="o">^</span><span class="n">longnote</span><span class="p">]</span>
 
@@ -3468,7 +3470,7 @@ block quotes, tables, etc.). Each footnote should be separated from
 surrounding content (including other footnotes) by blank lines.</p>
 </div>
 <div class="section" id="extension-inline-notes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">inline_notes</span></code><a class="headerlink" href="#extension-inline-notes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">inline_notes</span></code><a class="headerlink" href="#extension-inline-notes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Inline footnotes are also allowed (though, unlike regular notes, they
 cannot contain multiple paragraphs). The syntax is as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Here</span> <span class="ow">is</span> <span class="n">an</span> <span class="n">inline</span> <span class="n">note</span><span class="o">.^</span><span class="p">[</span><span class="n">Inlines</span> <span class="n">notes</span> <span class="n">are</span> <span class="n">easier</span> <span class="n">to</span> <span class="n">write</span><span class="p">,</span> <span class="n">since</span>
@@ -3480,9 +3482,9 @@ cannot contain multiple paragraphs). The syntax is as follows:</p>
 </div>
 </div>
 <div class="section" id="citations">
-<h2>Citations<a class="headerlink" href="#citations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Citations<a class="headerlink" href="#citations" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="id10">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Using an external filter, <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code>, pandoc can automatically
 generate citations and a bibliography in a number of styles. Basic usage
 is</p>
@@ -3710,36 +3712,36 @@ page</a>.</p>
 </div>
 </div>
 <div class="section" id="non-pandoc-extensions">
-<h2>Non-pandoc extensions<a class="headerlink" href="#non-pandoc-extensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Non-pandoc extensions<a class="headerlink" href="#non-pandoc-extensions" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>The following Markdown syntax extensions are not enabled by default in
 pandoc, but may be enabled by adding <code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> to the format name,
 where <code class="docutils literal notranslate"><span class="pre">EXTENSION</span></code> is the name of the extension. Thus, for example,
 <code class="docutils literal notranslate"><span class="pre">markdown+hard_line_breaks</span></code> is Markdown with hard line breaks.</p>
 <div class="section" id="extension-old-dashes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">old_dashes</span></code><a class="headerlink" href="#extension-old-dashes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">old_dashes</span></code><a class="headerlink" href="#extension-old-dashes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Selects the pandoc &lt;= 1.8.2.1 behavior for parsing smart dashes: <code class="docutils literal notranslate"><span class="pre">-</span></code>
 before a numeral is an en-dash, and <code class="docutils literal notranslate"><span class="pre">--</span></code> is an em-dash. This option
 only has an effect if <code class="docutils literal notranslate"><span class="pre">smart</span></code> is enabled. It is selected automatically
 for <code class="docutils literal notranslate"><span class="pre">textile</span></code> input.</p>
 </div>
 <div class="section" id="extension-angle-brackets-escapable">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">angle_brackets_escapable</span></code><a class="headerlink" href="#extension-angle-brackets-escapable" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">angle_brackets_escapable</span></code><a class="headerlink" href="#extension-angle-brackets-escapable" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allow <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> to be backslash-escaped, as they can be in GitHub
 flavored Markdown but not original Markdown. This is implied by pandoc’s
 default <code class="docutils literal notranslate"><span class="pre">all_symbols_escapable</span></code>.</p>
 </div>
 <div class="section" id="extension-lists-without-preceding-blankline">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">lists_without_preceding_blankline</span></code><a class="headerlink" href="#extension-lists-without-preceding-blankline" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">lists_without_preceding_blankline</span></code><a class="headerlink" href="#extension-lists-without-preceding-blankline" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allow a list to occur right after a paragraph, with no intervening blank
 space.</p>
 </div>
 <div class="section" id="extension-four-space-rule">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">four_space_rule</span></code><a class="headerlink" href="#extension-four-space-rule" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">four_space_rule</span></code><a class="headerlink" href="#extension-four-space-rule" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Selects the pandoc &lt;= 2.0 behavior for parsing lists, so that four
 spaces indent are needed for list item continuation paragraphs.</p>
 </div>
 <div class="section" id="extension-spaced-reference-links">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">spaced_reference_links</span></code><a class="headerlink" href="#extension-spaced-reference-links" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">spaced_reference_links</span></code><a class="headerlink" href="#extension-spaced-reference-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allow whitespace between the two components of a reference link, for
 example,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">foo</span><span class="p">]</span> <span class="p">[</span><span class="n">bar</span><span class="p">]</span><span class="o">.</span>
@@ -3747,19 +3749,19 @@ example,</p>
 </div>
 </div>
 <div class="section" id="extension-hard-line-breaks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">hard_line_breaks</span></code><a class="headerlink" href="#extension-hard-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">hard_line_breaks</span></code><a class="headerlink" href="#extension-hard-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Causes all newlines within a paragraph to be interpreted as hard line
 breaks instead of spaces.</p>
 </div>
 <div class="section" id="extension-ignore-line-breaks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">ignore_line_breaks</span></code><a class="headerlink" href="#extension-ignore-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">ignore_line_breaks</span></code><a class="headerlink" href="#extension-ignore-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Causes newlines within a paragraph to be ignored, rather than being
 treated as spaces or as hard line breaks. This option is intended for
 use with East Asian languages where spaces are not used between words,
 but text is divided into lines for readability.</p>
 </div>
 <div class="section" id="extension-east-asian-line-breaks">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">east_asian_line_breaks</span></code><a class="headerlink" href="#extension-east-asian-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">east_asian_line_breaks</span></code><a class="headerlink" href="#extension-east-asian-line-breaks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Causes newlines within a paragraph to be ignored, rather than being
 treated as spaces or as hard line breaks, when they occur between two
 East Asian wide characters. This is a better choice than
@@ -3767,31 +3769,31 @@ East Asian wide characters. This is a better choice than
 characters and other characters.</p>
 </div>
 <div class="section" id="extension-emoji">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">emoji</span></code><a class="headerlink" href="#extension-emoji" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">emoji</span></code><a class="headerlink" href="#extension-emoji" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Parses textual emojis like <code class="docutils literal notranslate"><span class="pre">:smile:</span></code> as Unicode emoticons.</p>
 </div>
 <div class="section" id="extension-tex-math-single-backslash">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">tex_math_single_backslash</span></code><a class="headerlink" href="#extension-tex-math-single-backslash" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">tex_math_single_backslash</span></code><a class="headerlink" href="#extension-tex-math-single-backslash" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Causes anything between <code class="docutils literal notranslate"><span class="pre">\(</span></code> and <code class="docutils literal notranslate"><span class="pre">\)</span></code> to be interpreted as inline
 TeX math, and anything between <code class="docutils literal notranslate"><span class="pre">\[</span></code> and <code class="docutils literal notranslate"><span class="pre">\]</span></code> to be interpreted as
 display TeX math. Note: a drawback of this extension is that it
 precludes escaping <code class="docutils literal notranslate"><span class="pre">(</span></code> and <code class="docutils literal notranslate"><span class="pre">[</span></code>.</p>
 </div>
 <div class="section" id="extension-tex-math-double-backslash">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">tex_math_double_backslash</span></code><a class="headerlink" href="#extension-tex-math-double-backslash" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">tex_math_double_backslash</span></code><a class="headerlink" href="#extension-tex-math-double-backslash" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Causes anything between <code class="docutils literal notranslate"><span class="pre">\\(</span></code> and <code class="docutils literal notranslate"><span class="pre">\\)</span></code> to be interpreted as inline
 TeX math, and anything between <code class="docutils literal notranslate"><span class="pre">\\[</span></code> and <code class="docutils literal notranslate"><span class="pre">\\]</span></code> to be interpreted as
 display TeX math.</p>
 </div>
 <div class="section" id="extension-markdown-attribute">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">markdown_attribute</span></code><a class="headerlink" href="#extension-markdown-attribute" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">markdown_attribute</span></code><a class="headerlink" href="#extension-markdown-attribute" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>By default, pandoc interprets material inside block-level tags as
 Markdown. This extension changes the behavior so that Markdown is only
 parsed inside block-level tags if the tags have the attribute
 <code class="docutils literal notranslate"><span class="pre">markdown=1</span></code>.</p>
 </div>
 <div class="section" id="extension-mmd-title-block">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_title_block</span></code><a class="headerlink" href="#extension-mmd-title-block" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_title_block</span></code><a class="headerlink" href="#extension-mmd-title-block" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Enables a <a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>
 style title block at the top of the document, for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Title</span><span class="p">:</span>   <span class="n">My</span> <span class="n">title</span>
@@ -3806,7 +3808,7 @@ style title block at the top of the document, for example:</p>
 take precedence over <code class="docutils literal notranslate"><span class="pre">mmd_title_block</span></code>.</p>
 </div>
 <div class="section" id="extension-abbreviations">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">abbreviations</span></code><a class="headerlink" href="#extension-abbreviations" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">abbreviations</span></code><a class="headerlink" href="#extension-abbreviations" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Parses PHP Markdown Extra abbreviation keys, like</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="p">[</span><span class="n">HTML</span><span class="p">]:</span> <span class="n">Hypertext</span> <span class="n">Markup</span> <span class="n">Language</span>
 </pre></div>
@@ -3816,12 +3818,12 @@ if this extension is enabled, abbreviation keys are simply skipped (as
 opposed to being parsed as paragraphs).</p>
 </div>
 <div class="section" id="extension-autolink-bare-uris">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">autolink_bare_uris</span></code><a class="headerlink" href="#extension-autolink-bare-uris" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">autolink_bare_uris</span></code><a class="headerlink" href="#extension-autolink-bare-uris" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Makes all absolute URIs into links, even when not surrounded by pointy
 braces <code class="docutils literal notranslate"><span class="pre">&lt;...&gt;</span></code>.</p>
 </div>
 <div class="section" id="extension-mmd-link-attributes">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_link_attributes</span></code><a class="headerlink" href="#extension-mmd-link-attributes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_link_attributes</span></code><a class="headerlink" href="#extension-mmd-link-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Parses multimarkdown style key-value attributes on link and image
 references. This extension should not be confused with the
 <code class="docutils literal notranslate"><span class="pre">`link_attributes</span></code> &lt;#extension-link_attributes&gt;`__ extension.</p>
@@ -3833,12 +3835,12 @@ references. This extension should not be confused with the
 </div>
 </div>
 <div class="section" id="extension-mmd-header-identifiers">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_header_identifiers</span></code><a class="headerlink" href="#extension-mmd-header-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_header_identifiers</span></code><a class="headerlink" href="#extension-mmd-header-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Parses multimarkdown style header identifiers (in square brackets, after
 the header but before any trailing <code class="docutils literal notranslate"><span class="pre">#</span></code>s in an ATX header).</p>
 </div>
 <div class="section" id="extension-compact-definition-lists">
-<h3>Extension: <code class="docutils literal notranslate"><span class="pre">compact_definition_lists</span></code><a class="headerlink" href="#extension-compact-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">compact_definition_lists</span></code><a class="headerlink" href="#extension-compact-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Activates the definition list syntax of pandoc 1.12.x and earlier. This
 syntax differs from the one described above under <a class="reference external" href="#definition-lists">Definition
 lists</a> in several respects:</p>
@@ -3854,7 +3856,7 @@ must be indented four spaces. <a class="footnote-reference" href="#id16" id="id1
 </div>
 </div>
 <div class="section" id="markdown-variants">
-<h2>Markdown variants<a class="headerlink" href="#markdown-variants" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Markdown variants<a class="headerlink" href="#markdown-variants" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>In addition to pandoc’s extended Markdown, the following Markdown
 variants are supported:</p>
 <dl class="docutils">
@@ -3903,7 +3905,7 @@ work. The extensions can, however, all be individually disabled. Also,
 </div>
 </div>
 <div class="section" id="producing-slide-shows-with-pandoc">
-<h1>Producing slide shows with pandoc<a class="headerlink" href="#producing-slide-shows-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Producing slide shows with pandoc<a class="headerlink" href="#producing-slide-shows-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>You can use pandoc to produce an HTML + JavaScript slide presentation
 that can be viewed via a web browser. There are five ways to do this,
 using <a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a>,
@@ -3979,7 +3981,7 @@ printing it to a file from the browser.</p>
 </pre></div>
 </div>
 <div class="section" id="structuring-the-slide-show">
-<h2>Structuring the slide show<a class="headerlink" href="#structuring-the-slide-show" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Structuring the slide show<a class="headerlink" href="#structuring-the-slide-show" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>By default, the <em>slide level</em> is the highest header level in the
 hierarchy that is followed immediately by content, and not another
 header, somewhere in the document. In the example above, level 1 headers
@@ -4011,7 +4013,7 @@ level 2 headers building vertically. It is not recommended that you use
 deeper nesting of section levels with reveal.js.</p>
 </div>
 <div class="section" id="incremental-lists">
-<h2>Incremental lists<a class="headerlink" href="#incremental-lists" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Incremental lists<a class="headerlink" href="#incremental-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>By default, these writers produce lists that display “all at once.” If
 you want your lists to display incrementally (one item at a time), use
 the <code class="docutils literal notranslate"><span class="pre">-i</span></code> option. If you want a particular list to depart from the
@@ -4048,7 +4050,7 @@ without the <code class="docutils literal notranslate"><span class="pre">-i</spa
 single document.</p>
 </div>
 <div class="section" id="inserting-pauses">
-<h2>Inserting pauses<a class="headerlink" href="#inserting-pauses" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Inserting pauses<a class="headerlink" href="#inserting-pauses" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>You can add “pauses” within a slide by including a paragraph containing
 three dots, separated by spaces:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slide with a pause</span>
@@ -4062,7 +4064,7 @@ three dots, separated by spaces:</p>
 </div>
 </div>
 <div class="section" id="styling-the-slides">
-<h2>Styling the slides<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Styling the slides<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>You can change the style of HTML slides by putting customized CSS files
 in <code class="docutils literal notranslate"><span class="pre">$DATADIR/s5/default</span></code> (for S5), <code class="docutils literal notranslate"><span class="pre">$DATADIR/slidy</span></code> (for Slidy), or
 <code class="docutils literal notranslate"><span class="pre">$DATADIR/slideous</span></code> (for Slideous), where <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> is the user
@@ -4098,7 +4100,7 @@ bibliographies:</p>
 </div>
 </div>
 <div class="section" id="speaker-notes">
-<h2>Speaker notes<a class="headerlink" href="#speaker-notes" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Speaker notes<a class="headerlink" href="#speaker-notes" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Speaker notes are supported in reveal.js and PowerPoint (pptx) output.
 You can add notes to your Markdown document thus:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:::</span> <span class="n">notes</span>
@@ -4118,7 +4120,7 @@ in handouts and presenter view.</p>
 not appear on the slides themselves.</p>
 </div>
 <div class="section" id="columns">
-<h2>Columns<a class="headerlink" href="#columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Columns<a class="headerlink" href="#columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>To put material in side by side columns, you can use a native div
 container with class <code class="docutils literal notranslate"><span class="pre">columns</span></code>, containing two or more div containers
 with class <code class="docutils literal notranslate"><span class="pre">column</span></code> and a <code class="docutils literal notranslate"><span class="pre">width</span></code> attribute:</p>
@@ -4134,7 +4136,7 @@ with class <code class="docutils literal notranslate"><span class="pre">column</
 </div>
 </div>
 <div class="section" id="frame-attributes-in-beamer">
-<h2>Frame attributes in beamer<a class="headerlink" href="#frame-attributes-in-beamer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Frame attributes in beamer<a class="headerlink" href="#frame-attributes-in-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Sometimes it is necessary to add the LaTeX <code class="docutils literal notranslate"><span class="pre">[fragile]</span></code> option to a
 frame in beamer (for example, when using the <code class="docutils literal notranslate"><span class="pre">minted</span></code> environment).
 This can be forced by adding the <code class="docutils literal notranslate"><span class="pre">fragile</span></code> class to the header
@@ -4150,7 +4152,7 @@ may also be used: <code class="docutils literal notranslate"><span class="pre">a
 <code class="docutils literal notranslate"><span class="pre">standout</span></code>, <code class="docutils literal notranslate"><span class="pre">noframenumbering</span></code>.</p>
 </div>
 <div class="section" id="background-in-reveal-js-and-beamer">
-<h2>Background in reveal.js and beamer<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Background in reveal.js and beamer<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Background images can be added to self-contained reveal.js slideshows
 and to beamer slideshows.</p>
 <p>For the same image on every slide, use the configuration option
@@ -4192,9 +4194,9 @@ for more details.</p>
 </div>
 </div>
 <div class="section" id="creating-epubs-with-pandoc">
-<h1>Creating EPUBs with pandoc<a class="headerlink" href="#creating-epubs-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Creating EPUBs with pandoc<a class="headerlink" href="#creating-epubs-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="epub-metadata">
-<h2>EPUB Metadata<a class="headerlink" href="#epub-metadata" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>EPUB Metadata<a class="headerlink" href="#epub-metadata" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>EPUB metadata may be specified using the <code class="docutils literal notranslate"><span class="pre">--epub-metadata</span></code> option, but
 if the source document is Markdown, it is better to use a <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata
 block</a>. Here is an example:</p>
@@ -4286,7 +4288,7 @@ element &lt;<a class="reference external" href="http://idpf.org/epub/301/spec/ep
 </dl>
 </div>
 <div class="section" id="the-epub-type-attribute">
-<h2>The <code class="docutils literal notranslate"><span class="pre">epub:type</span></code> attribute<a class="headerlink" href="#the-epub-type-attribute" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>The <code class="docutils literal notranslate"><span class="pre">epub:type</span></code> attribute<a class="headerlink" href="#the-epub-type-attribute" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>For <code class="docutils literal notranslate"><span class="pre">epub3</span></code> output, you can mark up the header that corresponds to an
 EPUB chapter using the <code class="docutils literal notranslate"><span class="pre">`epub:type</span></code>
 attribute &lt;<a class="reference external" href="http://www.idpf.org/epub/31/spec/epub-contentdocs.html#sec-epub-type-attribute">http://www.idpf.org/epub/31/spec/epub-contentdocs.html#sec-epub-type-attribute</a>&gt;`__.
@@ -4367,7 +4369,7 @@ of the following values, in which case either <code class="docutils literal notr
 </table>
 </div>
 <div class="section" id="linked-media">
-<h2>Linked media<a class="headerlink" href="#linked-media" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Linked media<a class="headerlink" href="#linked-media" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>By default, pandoc will download media referenced from any <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> element present in the
 generated EPUB, and include it in the EPUB container, yielding a
@@ -4385,7 +4387,7 @@ example:</p>
 </div>
 </div>
 <div class="section" id="syntax-highlighting">
-<h1>Syntax highlighting<a class="headerlink" href="#syntax-highlighting" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Syntax highlighting<a class="headerlink" href="#syntax-highlighting" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc will automatically highlight syntax in <a class="reference external" href="#fenced-code-blocks">fenced code
 blocks</a> that are marked with a language name.
 The Haskell library <a class="reference external" href="https://github.com/jgm/skylighting">skylighting</a>
@@ -4419,9 +4421,9 @@ definitions</a>.</p>
 <p>To disable highlighting, use the <code class="docutils literal notranslate"><span class="pre">--no-highlight</span></code> option.</p>
 </div>
 <div class="section" id="custom-styles-in-docx">
-<h1>Custom Styles in Docx<a class="headerlink" href="#custom-styles-in-docx" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Custom Styles in Docx<a class="headerlink" href="#custom-styles-in-docx" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="input">
-<h2>Input<a class="headerlink" href="#input" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Input<a class="headerlink" href="#input" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>The docx reader, by default, only reads those styles that it can convert
 into pandoc elements, either by direct conversion or interpreting the
 derivation of the input document’s styles.</p>
@@ -4465,7 +4467,7 @@ reference-doc while creating docx output (see below), and maintain the
 same styles in your input and output files.</p>
 </div>
 <div class="section" id="output">
-<h2>Output<a class="headerlink" href="#output" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h3>Output<a class="headerlink" href="#output" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>By default, pandoc’s docx output applies a predefined set of styles for
 blocks such as paragraphs and block quotes, and uses largely default
 formatting (italics, bold) for inlines. This will work for most
@@ -4503,7 +4505,7 @@ inlines within an <code class="docutils literal notranslate"><span class="pre">E
 </div>
 </div>
 <div class="section" id="custom-writers">
-<h1>Custom writers<a class="headerlink" href="#custom-writers" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Custom writers<a class="headerlink" href="#custom-writers" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc can be extended with custom writers written in
 <a class="reference external" href="http://www.lua.org">lua</a>. (Pandoc includes a lua interpreter, so lua
 need not be installed separately.)</p>
@@ -4520,7 +4522,7 @@ you can modify according to your needs, do</p>
 </div>
 </div>
 <div class="section" id="a-note-on-security">
-<h1>A note on security<a class="headerlink" href="#a-note-on-security" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>A note on security<a class="headerlink" href="#a-note-on-security" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>If you use pandoc to convert user-contributed content in a web
 application, here are some things to keep in mind:</p>
 <ol class="arabic simple">
@@ -4550,7 +4552,7 @@ sanitizer.</li>
 </ol>
 </div>
 <div class="section" id="authors">
-<h1>Authors<a class="headerlink" href="#authors" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h2>Authors<a class="headerlink" href="#authors" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Copyright 2006-2017 John MacFarlane (<a class="reference external" href="mailto:jgm&#37;&#52;&#48;berkeley&#46;edu">jgm<span>&#64;</span>berkeley<span>&#46;</span>edu</a>). Released under
 the <a class="reference external" href="http://www.gnu.org/copyleft/gpl.html">GPL</a>, version 2 or
 greater. This software carries no warranty of any kind. (See COPYRIGHT
@@ -4626,6 +4628,7 @@ line between list items.</p>
 </tbody>
 </table>
 </div>
+</div>
 
 
           </div>
@@ -4646,96 +4649,22 @@ line between list items.</p>
 <h3>ナビゲーション</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Synopsis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#description">Description</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#using-pandoc">Using pandoc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#specifying-formats">Specifying formats</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#character-encoding">Character encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-a-pdf">Creating a PDF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reading-from-the-web">Reading from the Web</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">（新・工事中）Pandocユーザーズガイド 日本語版</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#templates">Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extensions">Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pandocs-markdown">Pandoc’s Markdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#producing-slide-shows-with-pandoc">Producing slide shows with pandoc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-epubs-with-pandoc">Creating EPUBs with pandoc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#syntax-highlighting">Syntax highlighting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-styles-in-docx">Custom Styles in Docx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-writers">Custom writers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-note-on-security">A note on security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authors">Authors</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#options">Options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#general-options">General options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reader-options">Reader options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#general-writer-options">General writer options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#options-affecting-specific-writers">Options affecting specific writers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#citation-rendering">Citation rendering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#math-rendering-in-html">Math rendering in HTML</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#options-for-wrapper-scripts">Options for wrapper scripts</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#templates">Templates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#variables-set-by-pandoc">Variables set by pandoc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#language-variables">Language variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#variables-for-slides">Variables for slides</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#variables-for-latex">Variables for LaTeX</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#variables-for-context">Variables for ConTeXt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#variables-for-man-pages">Variables for man pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#variables-for-ms">Variables for ms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#using-variables-in-templates">Using variables in templates</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#extensions">Extensions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#typography">Typography</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#headers-and-sections">Headers and sections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#math-input">Math Input</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#raw-html-tex">Raw HTML/TeX</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#literate-haskell-support">Literate Haskell support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#other-extensions">Other extensions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#pandocs-markdown">Pandoc’s Markdown</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#philosophy">Philosophy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#paragraphs">Paragraphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#headers">Headers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#block-quotations">Block quotations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#verbatim-code-blocks">Verbatim (code) blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#line-blocks">Line blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lists">Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#horizontal-rules">Horizontal rules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tables">Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#metadata-blocks">Metadata blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#backslash-escapes">Backslash escapes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#inline-formatting">Inline formatting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#math">Math</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">Raw HTML</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#latex-macros">LaTeX macros</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#links">Links</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#images">Images</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#divs-and-spans">Divs and Spans</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#footnotes">Footnotes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#citations">Citations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#non-pandoc-extensions">Non-pandoc extensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#markdown-variants">Markdown variants</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#producing-slide-shows-with-pandoc">Producing slide shows with pandoc</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#structuring-the-slide-show">Structuring the slide show</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#incremental-lists">Incremental lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#inserting-pauses">Inserting pauses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#styling-the-slides">Styling the slides</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#speaker-notes">Speaker notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#columns">Columns</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#frame-attributes-in-beamer">Frame attributes in beamer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#background-in-reveal-js-and-beamer">Background in reveal.js and beamer</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#creating-epubs-with-pandoc">Creating EPUBs with pandoc</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#epub-metadata">EPUB Metadata</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-epub-type-attribute">The <code class="docutils literal notranslate"><span class="pre">epub:type</span></code> attribute</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#linked-media">Linked media</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#syntax-highlighting">Syntax highlighting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#custom-styles-in-docx">Custom Styles in Docx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#input">Input</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#custom-writers">Custom writers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#a-note-on-security">A note on security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#authors">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="old-users-guide.html">（旧）Pandocユーザーズガイド 日本語版</a></li>
 </ul>
 
@@ -4743,7 +4672,7 @@ line between list items.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="前の章へ">（新装工事中）Pandocユーザーズガイド日本語版</a></li>
+      <li>Previous: <a href="index.html" title="前の章へ">（新装工事中）Pandocユーザーズガイド日本語版 トップ</a></li>
       <li>Next: <a href="old-users-guide.html" title="次の章へ">（旧）Pandocユーザーズガイド 日本語版</a></li>
   </ul></li>
 </ul>
