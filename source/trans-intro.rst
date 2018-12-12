@@ -77,6 +77,14 @@ Transifexの開始時（言語を選ぶ）
    - 詳しくは: `早わかり reStructuredText <https://quick-restructuredtext.readthedocs.io/en/latest/>`_ 
    - その他、よくわからない記号は基本的にいじらないようにしてください（レビューで修正します）
 
+Q&A
+=====
+
+Q: Issueを見つけた。どうしたらいい？
+
+   `Issues · pandoc-jp/pandoc-doc-ja <https://github.com/pandoc-jp/pandoc-doc-ja/issues>`_ にまとめています。
+   必要であれば、Issueを追加してください。また、過去のIssueも少しあるので参考にしてください。
+
 お礼について
 ==============
 
