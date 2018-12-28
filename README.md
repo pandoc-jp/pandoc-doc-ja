@@ -27,6 +27,7 @@ TODO: 以下、書きかけです。間違ってるかもしれません。
 $ cd pandoc-doc-ja
 $ . bin/activate
 $ pip install -r requiments.txt
+$ npm install  # textlintのインストール
 $ git submodule update
 ```
 

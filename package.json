@@ -1,0 +1,27 @@
+{
+  "name": "pandoc-doc-ja",
+  "version": "1.0.0",
+  "description": "## 翻訳するバージョン",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandoc-jp/pandoc-doc-ja.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pandoc-jp/pandoc-doc-ja/issues"
+  },
+  "homepage": "https://github.com/pandoc-jp/pandoc-doc-ja#readme",
+  "devDependencies": {
+    "textlint": "^11.0.2",
+    "textlint-plugin-rst": "^0.1.1",
+    "textlint-rule-preset-ja-technical-writing": "^3.1.0"
+  }
+}
