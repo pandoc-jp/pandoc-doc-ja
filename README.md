@@ -25,11 +25,13 @@ TODO: 以下、書きかけです。間違ってるかもしれません。
 
 ```
 $ cd pandoc-doc-ja
-$ . bin/activate
+$ . bin/activate                  # Python venv環境に入る
 $ pip install -r requiments.txt
 $ npm install  # textlintのインストール
 $ git submodule update
 ```
+
+※ 作業終了時は `$ deactivate` で、Python venv環境から抜ける
 
 ## ビルド
 
