@@ -5,10 +5,10 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 # 
 # Translators:
-# べこ <becolomochi@gmail.com>, 2018
-# Yuki Fujiwara <sky.y.0079@gmail.com>, 2018
 # niszet <niszet0016@gmail.com>, 2018
-# makotosan <makotokanamoto@yahoo.co.jp>, 2018
+# べこ <becolomochi@gmail.com>, 2019
+# Yuki Fujiwara <sky.y.0079@gmail.com>, 2019
+# makotosan <makotokanamoto@yahoo.co.jp>, 2019
 # 
 #, fuzzy
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-12 16:12+0900\n"
 "PO-Revision-Date: 2018-12-12 07:17+0000\n"
-"Last-Translator: makotosan <makotokanamoto@yahoo.co.jp>, 2018\n"
+"Last-Translator: makotosan <makotokanamoto@yahoo.co.jp>, 2019\n"
 "Language-Team: Japanese (Japan) (https://www.transifex.com/jpang/teams/72012/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,13 +59,13 @@ msgid ""
 "<https://www.adobe.com/pdf/>`__ output: see `creating a PDF "
 "<#creating-a-pdf>`__, below."
 msgstr ""
-"Pandocは、`Markdown <http://daringfireball.net/projects/markdown/>`__、`HTML "
-"<http://www.w3.org/html/>`__、`LaTeX <http://latex-project.org>`__、`Word docx"
-" "
-"<https://en.wikipedia.org/wiki/Office_Open_XML>`__ など、これに限定されない多数のマークアップとワープロ形式の間で変換することができます。"
-" 入力および出力形式の完全なリストについては、以下の`--fromおよび--toオプション <#general-"
-"options>`__を参照してください。 Pandocは `PDF <https://www.adobe.com/pdf/>`__ "
-"出力を生成することもできます。以下の `PDFの作成<#creating-a-pdf>`__ を参照してください。"
+"Pandoc は、 `Markdown <http://daringfireball.net/projects/markdown/>`__ 、 "
+"`HTML <http://www.w3.org/html/>`__ 、 `LaTeX <http://latex-project.org>`__ 、 "
+"`Word docx <https://en.wikipedia.org/wiki/Office_Open_XML>`__ "
+"など、これに限定されない多数のマークアップとワープロ形式の間で変換することができます。入力および出力形式の完全なリストについては、下記の "
+"`--fromおよび--toオプション<#general-options>`__ を参照してください。 Pandoc は "
+"`PDF<https://www.adobe.com/pdf/>`__ 出力を生成することもできます。下記の "
+"`PDFの作成<#creating-a-pdf>`__ を参照してください。"
 
 #: ../../source/users-guide.rst:23
 msgid ""
@@ -75,10 +75,10 @@ msgid ""
 "<#citations>`__, `math <#math>`__, and much more. See below under `Pandoc’s "
 "Markdown <#pandocs-markdown>`__."
 msgstr ""
-"Markdown の Pandoc 拡張バージョンには、`テーブル<#tables>` __、 `定義リスト<＃定義リスト>` __、 "
-"'メタデータブロック<＃metadata-blocks> `__、`脚注<#footnotes>` __、 `引用<#citations>` __、 "
-"`数式<#math>` __をはじめ多数の構文を含みます。下記の `Pandocによる拡張Markdown<＃pandocs-markdown>` "
-"__を参照してください。"
+"Markdown の Pandoc 拡張バージョンには、 `テーブル<#tables>`__ 、 `定義リスト<＃definition-"
+"lists>`__ 、 `メタデータブロック<＃metadata-blocks>`__ 、 `脚注<#footnotes>`__ 、 "
+"`引用<#citations>`__ 、 `数式<#math>`__ をはじめ多数の構文を含みます。下記の `Pandoc 拡張 Markdown"
+"<＃pandocs-markdown>`__ を参照してください。"
 
 #: ../../source/users-guide.rst:29
 msgid ""
@@ -90,11 +90,12 @@ msgid ""
 "`pandoc filters <http://pandoc.org/filters.html>`__ to modify the "
 "intermediate AST."
 msgstr ""
-"Pandocはモジュール設計されています。Pandocは、与えられた形式のテキストをパースして文書のネイティブ表現（*抽象構文木*またはAST）に変換する"
-" Reader 群、およびネイティブ表現をターゲットの出力形式に変換する Writer "
-"群で構成されています。つまり、入力または出力形式を追加するには、ReaderまたはWriterを追加するだけで済みます。ユーザは、カスタムの "
-"`pandocフィルタ<http://pandoc.org/filters.html>` __を実行することで、中間の AST "
-"を改変することもできます。"
+"Pandoc はモジュール設計されています。 Pandoc "
+"は、与えられた形式のテキストをパースして文書のネイティブ表現（*抽象構文木*またはAST）に変換する Reader "
+"群、およびネイティブ表現をターゲットの出力形式に変換する Writer 群で構成されています。つまり、入力または出力形式を追加するには、 Reader "
+"または Writer を追加するだけで済みます。ユーザは、カスタムの "
+"`pandocフィルタ<http://pandoc.org/filters.html>`__ を実行することで、中間の AST "
+"を書き換えることもできます。"
 
 #: ../../source/users-guide.rst:37
 msgid ""
@@ -108,7 +109,12 @@ msgid ""
 "conversions from formats more expressive than pandoc’s Markdown can be "
 "expected to be lossy."
 msgstr ""
-"Pandocでの文書の中間表現は、変換するほとんどの形式より表現力が劣りることから、すべての形式と他の形式との間で、完全に変換できるわけではありません。Pandocは、文書の構造要素を保とうとしますが、マージンサイズのような緻密なフォーマッティングは行いません。また、複雑なテーブルなどの一部の文書要素は、Pandocの単純な文書モデルにフィットしない場合があります。Pandocによる拡張Markdownからは、他のすべての形式へ完全に変換されることを目指していますが、Pandocによる拡張Markdownよりも表現力が豊富な形式から変換する場合は、表現が劣化することは否めません。"
+"Pandoc での文書の中間表現は、変換するほとんどの形式より表現力が劣ることから、すべての形式と他の形式との間で、完全に変換できるわけではありません。"
+" Pandoc "
+"は、文書の構造要素を保とうとしますが、マージンサイズのような緻密なフォーマッティングは行いません。また、複雑なテーブルなどの一部の文書要素は、 "
+"Pandoc の単純な文書モデルにフィットしない場合があります。 Pandoc 拡張 Markdown "
+"からは、他のすべての形式へ完全に変換されることを目指していますが、 Pandoc 拡張 Markdown "
+"よりも表現力が豊富な形式から変換する場合は、表現が劣化することは否めません。"
 
 #: ../../source/users-guide.rst:48
 msgid "Using pandoc"
@@ -128,14 +134,14 @@ msgid ""
 "document (e.g. a valid HTML file including ``<head>`` and ``<body>``), use "
 "the ``-s`` or ``--standalone`` flag:"
 msgstr ""
-"既定では、Pandocは分割された文書群を生成します。スタンドアロン文書（例えば、 `` <head>``と "
-"``<body>``を含む有効なHTMLファイル）を生成するには、 `` -s``または `` -standalone``フラグを使います："
+"既定では、 Pandoc は分割された文書群を生成します。スタンドアロン文書（例えば、 ``<head>`` と ``<body>`` を含む有効な "
+"HTML ファイル）を生成するには、 ``-s`` または ``-standalone`` フラグを使います:"
 
 #: ../../source/users-guide.rst:66
 msgid ""
 "For more information on how standalone documents are produced, see "
 "`Templates <#templates>`__ below."
-msgstr "スタンドアロン文書がどのように生成されるかについての詳細は、下記の `テンプレート <#templates>` __を参照してください。"
+msgstr "スタンドアロン文書がどのように生成されるかについての詳細は、下記の `テンプレート<#templates>`__ を参照してください。"
 
 #: ../../source/users-guide.rst:69
 msgid ""
@@ -143,7 +149,7 @@ msgid ""
 "(with blank lines between them) before parsing. (Use ``--file-scope`` to "
 "parse files individually.)"
 msgstr ""
-"複数のファイルが入力された場合、 Pandoc はそれらを解析する前に（それらの間に空白行を入れて）連結します。 （ファイルを個別に解析するには "
+"複数のファイルが入力された場合、 Pandoc はそれらを解析する前に（それらの間に空白行を入れて）連結します。（ファイルを個別に解析するには "
 "``--file-scope`` を使います。）"
 
 #: ../../source/users-guide.rst:74
@@ -172,7 +178,7 @@ msgid ""
 "You can also use ``pandoc --list-input-formats`` and ``pandoc --list-output-"
 "formats`` to print lists of supported formats."
 msgstr ""
-"サポートされている入出力の形式は `Options <#options>`__ に掲載されています。（入力形式の ``-f`` と 出力形式の "
+"サポートされている入出力の形式は、下記の `Options <#options>`__ に掲載されています。（入力形式の ``-f`` と 出力形式の "
 "``-t`` を見てください）または、 ``pandoc --list-input-formats`` や ``pandoc --list-"
 "output-formats`` でサポートされている形式の一覧が表示されます。"
 
@@ -206,7 +212,7 @@ msgid ""
 "through ```iconv`` <http://www.gnu.org/software/libiconv/>`__:"
 msgstr ""
 "Pandoc は入力と出力の両方に UTF-8 文字コードを使用します。あなたのローカルの文字コードが UTF-8 ではない場合、 "
-"```iconv``<http://www.gnu.org/software/libiconv/>` __ を通して入力と出力をパイプすべきです："
+"```iconv``<http://www.gnu.org/software/libiconv/>`__ を通して入力と出力をパイプすべきです:"
 
 #: ../../source/users-guide.rst:122
 msgid ""
@@ -215,8 +221,9 @@ msgid ""
 "in the document header, which will only be included if you use the "
 "``-s/--standalone`` option."
 msgstr ""
-"いくつかの出力フォーマット(HTML、LaTeX、ConTeXt、RTF、OPML、DocBook、Texinfoなど)の中には、文字コードに関する情報が文書のヘッダに含まれているものがあり、その場合は"
-" ``-s/ --standalone``オプションを使用するだけでヘッダを挿入することができます。"
+"いくつかの出力フォーマット(HTML 、 LaTeX 、 ConTeXt 、 RTF 、 OPML 、 DocBook 、 Texinfo "
+"など)の中には、文字コードに関する情報が文書のヘッダに含まれているものがあり、その場合は ``-s/ --standalone`` "
+"オプションを使用するだけでヘッダを挿入することができます。"
 
 #: ../../source/users-guide.rst:128
 msgid "Creating a PDF"
@@ -246,13 +253,13 @@ msgid ""
 "ms`` to the command line (``-t html`` defaults to ``--pdf-"
 "engine=wkhtmltopdf``)."
 msgstr ""
-"あるいは、Pandocは `ConTeXt <http://www.contextgarden.net/>` __、 `` "
-"pdfroff``、または以下のHTML / CSSからのPDF変換エンジンのいずれかを使用してPDFを作成することができます。 "
-"`wkhtmltopdf`` <https://wkhtmltopdf.org>` __、 `` `weasyprint`` "
-"<http://weasyprint.org>` __または `` `prince`` <https://www.princexml.com/> "
-"`__。これを行うには、前と同じように拡張子 `` .pdf``を付けて出力ファイルを指定しますが、 `` --pdf-engine``オプションまたは"
-" `` -t context``、 `` -t html``を追加、もしくは、コマンドラインに `` -t ms``を付けます（ `` -t "
-"html``のデフォルトは `` --pdf-engine = wkhtmltopdf``です）。"
+"あるいは、 Pandoc は `ConTeXt <http://www.contextgarden.net/>`__ 、 `` pdfroff`` "
+"、または次の HTML / CSS からの PDF 変換エンジンのいずれかを使用して PDF を作成することができます。 "
+"```wkhtmltopdf`` <https://wkhtmltopdf.org>`__ 、 ```weasyprint`` "
+"<http://weasyprint.org>`__ または ```prince`` <https://www.princexml.com/>`__ "
+"。これを行うには、同じように拡張子 ``.pdf`` を付けて出力ファイルを指定しますが、 `` --pdf-engine``オプションまたは `` "
+"-t context`` 、 ``-t html`` を追加、もしくは、コマンドラインに ``-t ms`` を付けます（ `` -t html`` "
+"のデフォルトは `` --pdf-engine = wkhtmltopdf`` です）。"
 
 #: ../../source/users-guide.rst:149
 msgid ""
@@ -263,11 +270,11 @@ msgid ""
 " ``margin-left``, ``margin-right``, ``margin-top``, ``margin-bottom``, "
 "``footer-html``, ``header-html`` and ``papersize`` will affect the output."
 msgstr ""
-"PDF出力は、 `LaTeX変数<#variables-for-latex>` __（LaTeXが使用されている場合）と `ConTeXt変数"
-"<#variables-for-context> __（ConTeXtが使用されている場合）を使うことで制御できます。HTML / CSSからの PDF"
-" 変換エンジンを使うとき、 `` --css``で出力を調整することができます。 ``wkhtmltopdf`` を使う場合、変数 ``margin-"
-"left``、 ``margin-right``、 ``margin-top``、 ``margin-bottom``、 ``footer-html"
-"``、``header-html``および``papersize``は出力に対して有効です。"
+"PDF 出力は、 `LaTeX 変数<#variables-for-latex>`__ (LaTeX が使用されている場合)と `ConTeXt 変数"
+"<#variables-for-context>`__ (ConTeXt が使用されている場合)を使うことで制御できます。HTML / CSS からの "
+"PDF 変換エンジンを使うとき、 ``--css`` で出力を調整することができます。 ``wkhtmltopdf`` を使う場合、変数 "
+"``margin-left`` 、 ``margin-right`` 、 ``margin-top`` 、 ``margin-bottom`` 、 "
+"``footer-html`` 、 ``header-html`` および ``papersize`` は出力に対して有効です。"
 
 #: ../../source/users-guide.rst:157
 msgid ""
@@ -276,8 +283,8 @@ msgid ""
 "test.tex`` to output the generated LaTeX. You can then test it with "
 "``pdflatex test.tex``."
 msgstr ""
-"PDF作成におけるデバッグを行うには、中間生成物を確認することが有効です。 例えば ``-o test.pdf``の代わりに、`` -s -o "
-"test.tex``を使って生成されたLaTeX出力で確認することができます。その後、 ``pdflatex "
+"PDF 作成におけるデバッグを行うには、中間生成物を確認することが有効です。 例えば ``-o test.pdf``の代わりに、`` -s -o "
+"test.tex``を使って生成された LaTeX 出力で確認することができます。その後、 ``pdflatex "
 "test.tex``でテストすることができます。"
 
 #: ../../source/users-guide.rst:162
@@ -321,6 +328,41 @@ msgid ""
 "<https://ctan.org/pkg/biber>`__ packages can optionally be used for "
 "`citation rendering <#citation-rendering>`__."
 msgstr ""
+"LaTeX を使用する場合、以下のパッケージが利用可能であるひつようがあります（それらは`TeX Live "
+"<http://www.tug.org/texlive/>`__の最近のすべてのバージョンに含まれています）。```amsfonts`` "
+"<https://ctan.org/pkg/amsfonts>`__, ```amsmath`` "
+"<https://ctan.org/pkg/amsmath>`__, ```lm`` <https://ctan.org/pkg/lm>`__, "
+"```unicode-math`` <https://ctan.org/pkg/unicode-math>`__, ```ifxetex`` "
+"<https://ctan.org/pkg/ifxetex>`__, ```ifluatex`` "
+"<https://ctan.org/pkg/ifluatex>`__, ```listings`` "
+"<https://ctan.org/pkg/listings>`__ ( ``--listings`` オプションが使われている場合), "
+"```fancyvrb`` <https://ctan.org/pkg/fancyvrb>`__, ```longtable`` "
+"<https://ctan.org/pkg/longtable>`__, ```booktabs`` "
+"<https://ctan.org/pkg/booktabs>`__, ```graphicx`` "
+"<https://ctan.org/pkg/graphicx>`__ そして ```grffile`` "
+"<https://ctan.org/pkg/grffile>`__ (ドキュメントに画像が含まれている場合), ```hyperref`` "
+"<https://ctan.org/pkg/hyperref>`__, ```xcolor`` "
+"<https://ctan.org/pkg/xcolor>`__ (with ``colorlinks``), ```ulem`` "
+"<https://ctan.org/pkg/ulem>`__, ```geometry`` "
+"<https://ctan.org/pkg/geometry>`__ (``geometry`` 変数を使用), ```setspace`` "
+"<https://ctan.org/pkg/setspace>`__ (``linestretch`` を使用), and ```babel`` "
+"<https://ctan.org/pkg/babel>`__ (``lang`` を使用)。 LaTeX エンジンとしての ``xelatex`` "
+"または ``lualatex`` の使用は ```fontspec`` <https://ctan.org/pkg/fontspec>`__が必須です。"
+" ``xelatex`` は ```polyglossia`` <https://ctan.org/pkg/polyglossia>`__ "
+"(``lang`` を使用), ```xecjk`` <https://ctan.org/pkg/xecjk>`__, そして ```bidi`` "
+"<https://ctan.org/pkg/bidi>`__ (``dir`` 変数を使用)を使います。もし ``mathspec`` "
+"変数がある場合、``xelatex`` は ```unicode-math`` <https://ctan.org/pkg/unicode-"
+"math>`__の代わりに ```mathspec`` <https://ctan.org/pkg/mathspec>`__ "
+"を使います。利用可能であれば ```upquote`` <https://ctan.org/pkg/upquote>`__ と "
+"```microtype`` <https://ctan.org/pkg/microtype>`__ パッケージが使われ、 "
+"``\\usepackage{csquotes}`` がテンプレートに存在するか ``/H/--include-in-header`` "
+"を介してインクルードされている場合、```csquotes`` <https://ctan.org/pkg/csquotes>`__ は "
+"`タイポグラフィ <#typography>`__ が使われます。```natbib`` "
+"<https://ctan.org/pkg/natbib>`__, ```biblatex`` "
+"<https://ctan.org/pkg/biblatex>`__, ```bibtex`` "
+"<https://ctan.org/pkg/bibtex>`__, そして ```biber`` "
+"<https://ctan.org/pkg/biber>`__ パッケージは `引用のレンダリング <#citation-rendering>`__ "
+"に任意で使うことができます。"
 
 #: ../../source/users-guide.rst:203
 msgid "Reading from the Web"
@@ -336,7 +378,7 @@ msgstr "入力ファイルの代わりに絶対URIを指定しても良い。こ
 msgid ""
 "It is possible to supply a custom User-Agent string or other header when "
 "requesting a document from a URL:"
-msgstr ""
+msgstr "URL から文書を要求するときに、カスタム User-Agent 文字列または他のヘッダーを指定することができます :"
 
 #: ../../source/users-guide.rst:221
 msgid "Options"
@@ -534,6 +576,10 @@ msgid ""
 "<#extensions>`__ below, for a list of extensions and their names. See "
 "``--list-input-formats`` and ``--list-extensions``, below."
 msgstr ""
+"Markdown拡張は``+EXTENSION`` か ``-EXTENSION`` "
+"をフォーマット名に追加することで個別に有効または無効化することができます。拡張とその名前のリストは下記の `Extensions "
+"<#extensions>`__ を参照してください。下記の ``--list-input-formats`` と ``--list-"
+"extensions`` を参照してください。"
 
 #: ../../source/users-guide.rst:384
 msgid ""
@@ -728,7 +774,7 @@ msgid ""
 "``--list-output-formats`` and ``--list-extensions``, below."
 msgstr ""
 "Markdown拡張は ``+EXTENSION`` か ``-EXTENSION`` "
-"をフォーマット名に加えることで個別に有効または無効にすることができる。拡張のリストとその名前については下記の `Extensions "
+"をフォーマット名に加えることで個別に有効または無効にすることができます。拡張のリストとその名前については下記の `Extensions "
 "<#extensions>`__ を参照してください。下記の ``--list-output-formats`` と ``--list-"
 "extensions`` を参照してください。"
 
@@ -742,8 +788,8 @@ msgid ""
 "go to *stdout*, even if a non-textual format (``docx``, ``odt``, ``epub2``, "
 "``epub3``) is specified."
 msgstr ""
-"出力を標準出力 *stdout* の代わりに *FILE* に書き出す。*FILE* が ``-`` の場合は、テキスト的でない形式 "
-"(``docx``, ``odt``, ``epub2``, ``epub3``) が指定されていても、出力は標準出力 *stdout* になる。"
+"出力を標準出力 *stdout* の代わりに *FILE* に書き出します。*FILE* が ``-`` の場合は、テキスト的でない形式 "
+"(``docx``, ``odt``, ``epub2``, ``epub3``) が指定されていても、出力は標準出力 *stdout* になります。"
 
 #: ../../source/users-guide.rst:416
 msgid "``--data-dir=``\\ *DIRECTORY*"
@@ -755,7 +801,7 @@ msgid ""
 "option is not specified, the default user data directory will be used. This "
 "is, in UNIX:"
 msgstr ""
-"Pandocのデータファイルを探すためにユーザーデータディレクトリを指定する。このオプションが指定されていない場合、既定のユーザーディレクトリが使われる。これは、UNIXの場合は"
+"Pandocのデータファイルを探すためにユーザーデータディレクトリを指定します。このオプションが指定されていない場合、既定のユーザーディレクトリが使われます。これは、UNIXの場合は"
 
 #: ../../source/users-guide.rst:400
 msgid "in Windows XP:"
@@ -772,6 +818,10 @@ msgid ""
 " ``epub.css``, ``templates``, ``slidy``, ``slideous``, or ``s5`` directory "
 "placed in this directory will override pandoc’s normal defaults."
 msgstr ""
+"``pandoc --version`` "
+"の出力にあなたのシステム上の既定のユーザデータディレクトリを見つけることが出来ます。このディレクトリ内に置かれた ``reference.odt``, "
+"``reference.docx``, ``epub.css``, ``templates``, ``slidy``, ``slideous``, "
+"または ``s5`` ディレクトリはPandocの通常のデフォルトを上書きします。"
 
 #: ../../source/users-guide.rst:424
 msgid "``--bash-completion``"
@@ -782,6 +832,7 @@ msgid ""
 "Generate a bash completion script. To enable bash completion with pandoc, "
 "add this to your ``.bashrc``:"
 msgstr ""
+"bash 補完スクリプトを生成します。Pandoc の bash 補完を有効にするために、これをあなたの ``.bashrc`` に加えます。"
 
 #: ../../source/users-guide.rst:428
 msgid "``--verbose``"
@@ -791,7 +842,7 @@ msgstr "``--verbose``"
 msgid ""
 "Give verbose debugging output. Currently this only has an effect with PDF "
 "output."
-msgstr ""
+msgstr "冗長（verbose）なデバッグの出力を与えます。現在これはPDF出力にのみ影響を与えます。"
 
 #: ../../source/users-guide.rst:431
 msgid "``--quiet``"
@@ -799,7 +850,7 @@ msgstr "``--quiet``"
 
 #: ../../source/users-guide.rst:431
 msgid "Suppress warning messages."
-msgstr "警告メッセージを抑制する。"
+msgstr "警告メッセージを抑制します。"
 
 #: ../../source/users-guide.rst:434
 msgid "``--fail-if-warnings``"
@@ -807,7 +858,7 @@ msgstr "``--fail-if-warnings``"
 
 #: ../../source/users-guide.rst:434
 msgid "Exit with error status if there are any warnings."
-msgstr "警告があった場合、エラーステータスとともに終了する。"
+msgstr "警告があった場合、エラーステータスとともに終了します。"
 
 #: ../../source/users-guide.rst:439
 msgid "``--log=``\\ *FILE*"
@@ -819,6 +870,8 @@ msgid ""
 "above DEBUG level will be written, regardless of verbosity settings "
 "(``--verbose``, ``--quiet``)."
 msgstr ""
+"機械可読(machine-readable) JSON 形式で *FILE* にログメッセージを書きます。DEBUG "
+"レベルより上のすべてのメッセージが冗長設定 (``--verbose``, ``--quiet``) に関わらず書かれます。"
 
 #: ../../source/users-guide.rst:442
 msgid "``--list-input-formats``"
@@ -826,7 +879,7 @@ msgstr "``--list-input-formats``"
 
 #: ../../source/users-guide.rst:442
 msgid "List supported input formats, one per line."
-msgstr "サポートしている入力形式を１行に１つずつ表示する。"
+msgstr "サポートしている入力形式を１行に１つずつ表示します。"
 
 #: ../../source/users-guide.rst:445
 msgid "``--list-output-formats``"
@@ -834,7 +887,7 @@ msgstr "``--list-output-formats``"
 
 #: ../../source/users-guide.rst:445
 msgid "List supported output formats, one per line."
-msgstr "サポートしている出力形式を１行に１つずつ表示する。"
+msgstr "サポートしている出力形式を１行に１つずつ表示します。"
 
 #: ../../source/users-guide.rst:450
 msgid "``--list-extensions``\\ [``=``\\ *FORMAT*]"
@@ -846,6 +899,8 @@ msgid ""
 "indicating whether it is enabled by default in *FORMAT*. If *FORMAT* is not "
 "specified, defaults for pandoc’s Markdown are given."
 msgstr ""
+"サポートしている拡張を*FORMAT* の規定で有効化されているかどうかで``+`` or ``-`` "
+"を前につけて１行に１つずつ表示します。*FORMAT* が指定されていない場合、Pandoc の Markdown が既定で与えられます。"
 
 #: ../../source/users-guide.rst:453
 msgid "``--list-highlight-languages``"
@@ -853,7 +908,7 @@ msgstr "``--list-highlight-languages``"
 
 #: ../../source/users-guide.rst:453
 msgid "List supported languages for syntax highlighting, one per line."
-msgstr "シンタックスハイライトをサポートしている言語を１行に１つずつ表示する。"
+msgstr "シンタックスハイライトをサポートしている言語を１行に１つずつ表示します。"
 
 #: ../../source/users-guide.rst:457
 msgid "``--list-highlight-styles``"
@@ -872,7 +927,7 @@ msgstr "``-v``, ``--version``"
 
 #: ../../source/users-guide.rst:460
 msgid "Print version."
-msgstr "バージョンを表示する。"
+msgstr "バージョンを表示します。"
 
 #: ../../source/users-guide.rst:463
 msgid "``-h``, ``--help``"
@@ -880,7 +935,7 @@ msgstr "``-h``, ``--help``"
 
 #: ../../source/users-guide.rst:463
 msgid "Show usage message."
-msgstr "使い方のメッセージを表示する。"
+msgstr "使い方のメッセージを表示します。"
 
 #: ../../source/users-guide.rst:466
 msgid "Reader options"
@@ -892,7 +947,7 @@ msgstr "``--base-header-level=``\\ *NUMBER*"
 
 #: ../../source/users-guide.rst:469
 msgid "Specify the base level for headers (defaults to 1)."
-msgstr ""
+msgstr "ヘッダのベースレベルを指定します（デフォルトは１）。"
 
 #: ../../source/users-guide.rst:475
 msgid "``--strip-empty-paragraphs``"
@@ -905,6 +960,8 @@ msgid ""
 "processing documents where users have used empty paragraphs to create inter-"
 "paragraph space."
 msgstr ""
+"*非推奨です。代わりに ``+empty_paragraphs`` 拡張を使用してください。*  "
+"中身のない段落を無視します。このオプションは段落間の空白を作るために空白の段落を使用したワードプロセッシング文書を変換するのに便利です。"
 
 #: ../../source/users-guide.rst:480
 msgid "``--indented-code-classes=``\\ *CLASSES*"
@@ -916,10 +973,12 @@ msgid ""
 "``perl,numberLines`` or ``haskell``. Multiple classes may be separated by "
 "spaces or commas."
 msgstr ""
+"インデントされたコードブロックに使うクラスを指定します。例としては ``perl,numberLines`` や ``haskell`` "
+"です。複数のクラスを空白（スペース）かカンマ（,）で区切って与えることが出来ます。"
 
 #: ../../source/users-guide.rst:486
 msgid "``--default-image-extension=``\\ *EXTENSION*"
-msgstr ""
+msgstr "``--default-image-extension=``\\ *EXTENSION*"
 
 #: ../../source/users-guide.rst:483
 msgid ""
@@ -928,10 +987,12 @@ msgid ""
 "kinds of images. Currently this option only affects the Markdown and LaTeX "
 "readers."
 msgstr ""
+"画像のパスまたはURLが拡張子を持たないときに使うデフォルトの拡張子を指定します。同じソースをから異なる種類の画像を要求するフォーマットを使えるようになります。現在このオプションはMarkdown"
+" と LaTeX Readerにのみ影響を与えます。"
 
 #: ../../source/users-guide.rst:493
 msgid "``--file-scope``"
-msgstr ""
+msgstr "``--file-scope``"
 
 #: ../../source/users-guide.rst:489
 msgid ""
@@ -940,6 +1001,8 @@ msgid ""
 " expected. If this option is set, footnotes and links will not work across "
 "files. Reading binary files (docx, odt, epub) implies ``--file-scope``."
 msgstr ""
+"複数のファイルからなるドキュメントを結合する前にそれぞれのファイルは個別に解釈されます。これによって、異なるファイルにある同じ識別子を持つの脚注が期待通りに機能します。このオプションを指定した場合、ファイルをまたいだ脚注とリンクは機能しなくなります"
+"。``--file-scope`` はバイナリファイル(docx, odt, epub)を読むことを含みます。"
 
 #: ../../source/users-guide.rst:535
 msgid "``-F`` *PROGRAM*, ``--filter=``\\ *PROGRAM*"
@@ -953,14 +1016,17 @@ msgid ""
 "formatted like pandoc’s own JSON input and output. The name of the output "
 "format will be passed to the filter as the first argument. Hence,"
 msgstr ""
+"入力が解析され出力が書かれる前にPandoc ASTを変換するフィルタとして使用する実行可能ファイルを指定します。実行可能ファイルは標準入力 stdin"
+" からJSONを読み、標準出力 stdout "
+"に出力するべきです。JSONはPandocのJSON入力と出力の形式にしなければなりません。出力形式の名前は第一引数としてフィルタに送られます。ここで、"
 
 #: ../../source/users-guide.rst:507 ../../source/users-guide.rst:1206
 msgid "is equivalent to"
-msgstr ""
+msgstr "は以下と等しい"
 
 #: ../../source/users-guide.rst:513
 msgid "The latter form may be useful for debugging filters."
-msgstr ""
+msgstr "後者の形式はフィルターのデバッグに便利です。"
 
 #: ../../source/users-guide.rst:515
 msgid ""
@@ -984,31 +1050,33 @@ msgstr ""
 
 #: ../../source/users-guide.rst:524
 msgid "In order of preference, pandoc will look for filters in"
-msgstr ""
+msgstr "Pandocはフィルターを以下の優先順で探します。"
 
 #: ../../source/users-guide.rst:526 ../../source/users-guide.rst:564
 msgid "a specified full or relative path (executable or non-executable)"
-msgstr ""
+msgstr "指定された絶対パスか相対パス（実行可能または実行不能）"
 
 #: ../../source/users-guide.rst:528 ../../source/users-guide.rst:566
 msgid ""
 "``$DATADIR/filters`` (executable or non-executable) where ``$DATADIR`` is "
 "the user data directory (see ``--data-dir``, above)."
 msgstr ""
+"``$DATADIR/filters`` (実行可能または実行不能) ここで ``$DATADIR`` はユーザデータディレクトリです。 (前記の "
+"``--data-dir`` を参照してください)。"
 
 #: ../../source/users-guide.rst:532
 msgid "``$PATH`` (executable only)"
-msgstr ""
+msgstr "``$PATH`` (実行可能なものだけ)"
 
 #: ../../source/users-guide.rst:534
 msgid ""
 "Filters and lua-filters are applied in the order specified on the command "
 "line."
-msgstr ""
+msgstr "フィルターとLuaフィルターはコマンドライン上で指定された順に適用されます。"
 
 #: ../../source/users-guide.rst:568
 msgid "``--lua-filter=``\\ *SCRIPT*"
-msgstr ""
+msgstr "``--lua-filter=``\\ *SCRIPT*"
 
 #: ../../source/users-guide.rst:538
 msgid ""
@@ -1019,24 +1087,29 @@ msgid ""
 "by the name of the AST element on which the filter function should be "
 "applied."
 msgstr ""
+"JSON フィルタと同様に文書を変換(``--filter`` を参照)しますが、 Pandoc に内蔵された lua "
+"フィルタリングシステムを使用してください。与えられた lua スクリプトは、適用される順に並べられた lua "
+"フィルタリストが返されることを期待されています。各 lua フィルタには、フィルタ関数を適用する AST "
+"要素名でインデックスされた要素変換関数を含めなければなりません。"
 
 #: ../../source/users-guide.rst:545
 msgid ""
 "The ``pandoc`` lua module provides helper functions for element creation. It"
 " is always loaded into the script’s lua environment."
 msgstr ""
+"``Pandoc`` の Lua モジュールは要素の作成のためのヘルパー関数を供給します。これは常にスクリプトのLua環境中にロードされます。"
 
 #: ../../source/users-guide.rst:548
 msgid "The following is an example lua script for macro-expansion:"
-msgstr ""
+msgstr "以下はマクロ展開のためのLuaスクリプト例です。"
 
 #: ../../source/users-guide.rst:562
 msgid "In order of preference, pandoc will look for lua filters in"
-msgstr ""
+msgstr "PandocはLuaフィルターを以下の優先順で探します。"
 
 #: ../../source/users-guide.rst:580
 msgid "``-M`` *KEY*\\ [``=``\\ *VAL*], ``--metadata=``\\ *KEY*\\ [``:``\\ *VAL*]"
-msgstr ""
+msgstr "``-M`` *KEY*\\ [``=``\\ *VAL*], ``--metadata=``\\ *KEY*\\ [``:``\\ *VAL*]"
 
 #: ../../source/users-guide.rst:571
 msgid ""
@@ -1050,10 +1123,15 @@ msgid ""
 "filters and may be printed in some output formats) and metadata values will "
 "be escaped when inserted into the template."
 msgstr ""
+"メタデータフィールド *KEY* を値 *VAL* に設定します。コマンドラインで指定された値は `YAMLメタデータブロック<＃extension-"
+"yaml_metadata_block>`__ を使用して文書で指定された値を上書きしてしまいます。値は YAML "
+"論理値または文字列値としてパースされます。値が指定されていない場合は、値は論理値 true として扱われます。``--variable`` のように、 "
+"``--metadata`` はテンプレート変数を設定します。しかし、 ``--variable`` とは異なり、 ``--metadata`` "
+"は基になる文書中のメタデータ（フィルタからアクセス可能で、一部の出力書式で印刷されるかもしれません）に影響し、メタデータの値はテンプレートに挿入されるとエスケープされます。"
 
 #: ../../source/users-guide.rst:589
 msgid "``--metadata-file=``\\ *FILE*"
-msgstr ""
+msgstr "``--metadata-file=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:583
 msgid ""
@@ -1064,10 +1142,14 @@ msgid ""
 "specified inside the document, or by using ``-M``, overwrite values "
 "specified with this option."
 msgstr ""
+"与えられたYAML（またはJSON）ファイルからメタデータを読みます。このオプションはすべての入力形式で使うことが出来ますが、YAMLファイル中の "
+"string scalar は常にMarkdownとして解釈されます。一般的に、入力は `YAML メタデータブロック <#extension-"
+"yaml_metadata_block>`__ と同様に扱われます。メタデータの値はドキュメント中で指定、または ``-M`` "
+"オプションを使用することで、オプションで指定された値で上書きできます。"
 
 #: ../../source/users-guide.rst:594
 msgid "``-p``, ``--preserve-tabs``"
-msgstr ""
+msgstr "``-p``, ``--preserve-tabs``"
 
 #: ../../source/users-guide.rst:592
 msgid ""
@@ -1075,18 +1157,19 @@ msgid ""
 "this will only affect tabs in literal code spans and code blocks; tabs in "
 "regular text will be treated as spaces."
 msgstr ""
+"タブをスペースに変換する（デフォルトの挙動）せずにそのまま残します。リテラルコードSPANとコードブロック中のタブにのみ影響を与えることに注意が必要です。通常のテキスト中のタブはスペースとして扱われます。"
 
 #: ../../source/users-guide.rst:597
 msgid "``--tab-stop=``\\ *NUMBER*"
-msgstr ""
+msgstr "``--tab-stop=``\\ *NUMBER*"
 
 #: ../../source/users-guide.rst:597
 msgid "Specify the number of spaces per tab (default is 4)."
-msgstr ""
+msgstr "タブあたりのスペースの数を指定します（既定は4）"
 
 #: ../../source/users-guide.rst:612
 msgid "``--track-changes=accept``\\ \\|\\ ``reject``\\ \\|\\ ``all``"
-msgstr ""
+msgstr "``--track-changes=accept``\\ \\|\\ ``reject``\\ \\|\\ ``all``"
 
 #: ../../source/users-guide.rst:600
 msgid ""
@@ -1103,10 +1186,19 @@ msgid ""
 "``/``paragraph-deletion`` before the affected paragraph break. This option "
 "only affects the docx reader."
 msgstr ""
+"MS Word の「変更履歴の記録」機能によって生成された「挿入」、「削除」、および「コメント」の処理方法を指定します。 ``accept`` "
+"(既定)は全ての「挿入」を挿入し、全ての「削除」を無視します。 ``reject`` は全ての「削除」を挿入し、「挿入」は無視します。 "
+"``accept`` と ``reject`` はどちらも「コメント」は無視します。 ``all`` "
+"は「挿入」、「削除」、そして「コメント」について、それぞれ ``insert`` 、 ``deleted`` 、``comment-start`` "
+"、そして ``comment-end`` クラスの span で囲んで配置します。作成者と更新日が含まれます。``all`` "
+"はスクリプトを書くのに便利です: "
+"例えば、ある特定の校閲者からの、あるいは特定の日付以前の変更のみを受け入れる場合。段落が「挿入」または「削除」された場合、 ``track-"
+"changes=all`` は影響を受けた段落の改行の前に ``paragraph-insert`` / ``paragraph-deletion`` "
+"クラスの span を挿入します。このオプションは docx Readerにのみ影響します。"
 
 #: ../../source/users-guide.rst:622
 msgid "``--extract-media=``\\ *DIR*"
-msgstr ""
+msgstr "``--extract-media=``\\ *DIR*"
 
 #: ../../source/users-guide.rst:615
 msgid ""
@@ -1118,10 +1210,15 @@ msgid ""
 "the media is read from the file system or downloaded, and new filenames are "
 "constructed based on SHA1 hashes of the contents."
 msgstr ""
+"元の文書に含まれている、または元の文書からリンクされている画像やその他のメディアをパス *DIR* "
+"に抽出し、必要に応じて作成し、抽出されたファイルを指定するように文書内の画像参照を調整します。ソース形式がバイナリコンテナ (docx 、 epub "
+"、または odt) "
+"の場合、メディアはコンテナから抽出され、元のファイル名が使用されます。それ以外の場合、メディアはファイルシステムから読み取られるかダウンロードされ、コンテンツの"
+" SHA1 ハッシュに基づいて新しいファイル名が構築されます。"
 
 #: ../../source/users-guide.rst:633
 msgid "``--abbreviations=``\\ *FILE*"
-msgstr ""
+msgstr "``--abbreviations=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:625
 msgid ""
@@ -1134,14 +1231,20 @@ msgid ""
 " be followed by a nonbreaking space, so that the period will not produce "
 "sentence-ending space in formats like LaTeX."
 msgstr ""
+"1行に1つの省略形を付けて、カスタム省略形ファイルを指定します。このオプションが指定されていない場合、 pandoc "
+"はユーザデータディレクトリからデータファイル ``abbreviations`` "
+"を読み込むか、またはシステムの既定に戻ります。システムの既定を見るには、 ``pandoc --print-default-data-"
+"file=abbreviations`` を使用します。 Markdown Reader にだけ、 pandoc "
+"はこのリストを作成します。このリストにあるピリオドで終わる文字列の後には、改行なしのスペースが続きます。そのため、ピリオドでは LaTeX "
+"のような形式の文末スペースは生成されません。"
 
 #: ../../source/users-guide.rst:636
 msgid "General writer options"
-msgstr ""
+msgstr "一般的な Writer のオプション"
 
 #: ../../source/users-guide.rst:644
 msgid "``-s``, ``--standalone``"
-msgstr ""
+msgstr "``-s``, ``--standalone``"
 
 #: ../../source/users-guide.rst:639
 msgid ""
@@ -1151,10 +1254,14 @@ msgid ""
 "``odt`` output. For ``native`` output, this option causes metadata to be "
 "included; otherwise, metadata is suppressed."
 msgstr ""
+"適切なヘッダーとフッター (例えば、フラグメントではなく、スタンドアロンの HTML 、 LaTeX 、 TEI 、または RTF ファイル) "
+"を使用して出力を生成します。このオプションは ``pdf`` 、 ``epub`` 、 ``epub3`` 、 ``fb2`` 、 ``docx`` "
+"、および ``odt`` 出力に対して自動的に設定されます。``native`` "
+"出力の場合、このオプションはメタデータを含めます。それ以外の場合、メタデータは抑制されます。"
 
 #: ../../source/users-guide.rst:656
 msgid "``--template=``\\ *FILE*\\ \\|\\ *URL*"
-msgstr ""
+msgstr "``--template=``\\ *FILE*\\ \\|\\ *URL*"
 
 #: ../../source/users-guide.rst:647
 msgid ""
@@ -1168,10 +1275,17 @@ msgid ""
 "template appropriate for the output format will be used (see ``-D/--print-"
 "default-template``)."
 msgstr ""
+"指定したファイルを生成文書のためのカスタムテンプレートとして使用します。``--standalone`` "
+"を意味します。テンプレートの文法については、以下の `Templates <#templates>`__ "
+"を参照してください。拡張子が指定されていない場合は、 Writer に対応する拡張子が追加されるので、 ``--template=special`` は"
+" HTML出力用に ``special.html`` を検索します。テンプレートが見つからない場合、 pandoc はユーザーデータディレクトリの "
+"``templates`` サブディレクトリで検索します (``--data-dir`` "
+"を参照してください)。このオプションが使われていない場合は、出力フォーマットに適した既定のテンプレートが使用されます (``-D/--print-"
+"default-template`` を参照してください)。"
 
 #: ../../source/users-guide.rst:664
 msgid "``-V`` *KEY*\\ [``=``\\ *VAL*], ``--variable=``\\ *KEY*\\ [``:``\\ *VAL*]"
-msgstr ""
+msgstr "``-V`` *KEY*\\ [``=``\\ *VAL*], ``--variable=``\\ *KEY*\\ [``:``\\ *VAL*]"
 
 #: ../../source/users-guide.rst:659
 msgid ""
@@ -1181,10 +1295,14 @@ msgid ""
 "automatically sets the variables used in the default templates. If no *VAL* "
 "is specified, the key will be given the value ``true``."
 msgstr ""
+"文書をスタンドアロンモードでレンダリングするときは、テンプレート変数 *KEY* を値 *VAL* に設定します。 pandoc "
+"は既定のテンプレートで使用される変数を自動的に設定するので、これは一般的に ``--template`` "
+"オプションでカスタムテンプレートを指定するために使われる場合にのみ役に立ちます。 *VAL* が指定されていない場合、キーには値 ``true`` "
+"が設定されます。"
 
 #: ../../source/users-guide.rst:669
 msgid "``-D`` *FORMAT*, ``--print-default-template=``\\ *FORMAT*"
-msgstr ""
+msgstr "``-D`` *FORMAT*, ``--print-default-template=``\\ *FORMAT*"
 
 #: ../../source/users-guide.rst:667
 msgid ""
@@ -1192,20 +1310,22 @@ msgid ""
 "list of possible *FORMAT*\\ s.) Templates in the user data directory are "
 "ignored."
 msgstr ""
+"出力 *FORMAT* のために、システムで既定のテンプレートを出力します。(可能な *FORMAT*\\\\s のリストについては ``-t`` "
+"を参照してください。) ユーザデータディレクトリ内のテンプレートは無視されます。"
 
 #: ../../source/users-guide.rst:673
 msgid "``--print-default-data-file=``\\ *FILE*"
-msgstr ""
+msgstr "``--print-default-data-file=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:672
 msgid ""
 "Print a system default data file. Files in the user data directory are "
 "ignored."
-msgstr ""
+msgstr "システムデフォルトのデータファイルを表示します。ユーザーディレクトリ中のファイルは無視されます。"
 
 #: ../../source/users-guide.rst:678
 msgid "``--eol=crlf``\\ \\|\\ ``lf``\\ \\|\\ ``native``"
-msgstr ""
+msgstr "``--eol=crlf``\\ \\|\\ ``lf``\\ \\|\\ ``native``"
 
 #: ../../source/users-guide.rst:676
 msgid ""
@@ -1213,10 +1333,12 @@ msgid ""
 "(macOS/Linux/UNIX), or ``native`` (line endings appropriate to the OS on "
 "which pandoc is being run). The default is ``native``."
 msgstr ""
+"手動で改行コードを指定してください: ``crlf`` (Windows) 、 ``lf`` (macOS/Linux/UNIX) 、または "
+"``native`` (pandoc が実行されているOSに適した改行コード)。既定は ``native`` です。"
 
 #: ../../source/users-guide.rst:683
 msgid "``--dpi``\\ =\\ *NUMBER*"
-msgstr ""
+msgstr "``--dpi``\\ =\\ *NUMBER*"
 
 #: ../../source/users-guide.rst:681
 msgid ""
@@ -1224,10 +1346,12 @@ msgid ""
 "inch/centimeters and vice versa. The default is 96dpi. Technically, the "
 "correct term would be ppi (pixels per inch)."
 msgstr ""
+"ピクセルからインチ/センチメートルへの変換、および逆変換のためにdpi 値(ドット/インチ)を指定します。既定は 96 dpi "
+"です。技術的には、正しい用語はppi (ピクセル数/インチ)です。"
 
 #: ../../source/users-guide.rst:693
 msgid "``--wrap=auto``\\ \\|\\ ``none``\\ \\|\\ ``preserve``"
-msgstr ""
+msgstr "``--wrap=auto``\\ \\|\\ ``none``\\ \\|\\ ``preserve``"
 
 #: ../../source/users-guide.rst:686
 msgid ""
@@ -1240,10 +1364,14 @@ msgid ""
 "newlines in the output as well). Automatic wrapping does not currently work "
 "in HTML output."
 msgstr ""
+"テキストが出力でどのように折り返されるかを決定します(レンダリングされたバージョンではなくソースコード)。 ``auto`` (既定)の場合、 "
+"pandoc は ``--columns`` （既定では72)で指定された列幅に行を折り返そうとします。 ``none`` を指定すると、 "
+"pandocはいっさい折り返しません。 ``preserve`` を指定すると、 pandoc は元の文書からの折り返しを保護しようとします "
+"(つまり、ソースに意味のない改行がある場合、出力にも意味のない改行が含まれます)。現在、自動折り返しは HTML 出力には機能しません。"
 
 #: ../../source/users-guide.rst:699
 msgid "``--columns=``\\ *NUMBER*"
-msgstr ""
+msgstr "``--columns=``\\ *NUMBER*"
 
 #: ../../source/users-guide.rst:696
 msgid ""
@@ -1251,10 +1379,12 @@ msgid ""
 "generated source code (see ``--wrap``). It also affects calculation of "
 "column widths for plain text tables (see `Tables <#tables>`__ below)."
 msgstr ""
+"行の長さは文字数で指定してください。これは生成されたソースコードでのテキストの折り返しに反映されます (``--wrap`` "
+"を参照)。これはプレーンテキストでの表の列幅計算にも反映されます (下記の `Tables<#tables>`__ を参照してください)。"
 
 #: ../../source/users-guide.rst:707
 msgid "``--toc``, ``--table-of-contents``"
-msgstr ""
+msgstr "``--toc``, ``--table-of-contents``"
 
 #: ../../source/users-guide.rst:702
 msgid ""
@@ -1264,10 +1394,14 @@ msgid ""
 "has no effect unless ``-s/--standalone`` is used, and it has no effect on "
 "``man``, ``docbook4``, ``docbook5``, or ``jats`` output."
 msgstr ""
+"出力文書に自動生成された目次を含めます（あるいは、 ``latex`` 、 ``context`` 、 ``docx`` 、 ``odt`` 、 "
+"``opendocument`` 、 ``rst`` 、または ``ms`` の場合) 。このオプションは ``-s/--standalone`` "
+"を使わない限り影響がなく、 ``man`` 、 ``docbook4`` 、 ``docbook5`` 、 ``jats`` "
+"の出力にも影響がありません。"
 
 #: ../../source/users-guide.rst:712
 msgid "``--toc-depth=``\\ *NUMBER*"
-msgstr ""
+msgstr "``--toc-depth=``\\ *NUMBER*"
 
 #: ../../source/users-guide.rst:710
 msgid ""
@@ -1275,10 +1409,11 @@ msgid ""
 "The default is 3 (which means that level 1, 2, and 3 headers will be listed "
 "in the contents)."
 msgstr ""
+"目次に含めるセクションレベル数を指定します。既定は3です(つまり、レベル 1 、 2 、および 3 の見出しがコンテンツに表示されます) 。"
 
 #: ../../source/users-guide.rst:718
 msgid "``--strip-comments``"
-msgstr ""
+msgstr "``--strip-comments``"
 
 #: ../../source/users-guide.rst:715
 msgid ""
@@ -1287,20 +1422,23 @@ msgid ""
 "not apply to HTML comments inside raw HTML blocks when the "
 "``markdown_in_html_blocks`` extension is not set."
 msgstr ""
+"Markdown または Textile ソース内の HTML コメントは、生 (raw) の HTML として Markdown 、 Textile "
+"、または HTML 出力に渡さずに取り除きます。 ``markdown_in_html_blocks`` 拡張が設定されていない場合、これは生 "
+"(raw) の HTML ブロック内の HTML コメントには適用されません。"
 
 #: ../../source/users-guide.rst:722
 msgid "``--no-highlight``"
-msgstr ""
+msgstr "``--no-highlight``"
 
 #: ../../source/users-guide.rst:721
 msgid ""
 "Disables syntax highlighting for code blocks and inlines, even when a "
 "language attribute is given."
-msgstr ""
+msgstr "言語属性が指定されている場合でも、コードブロックとインラインのシンタックスハイライトを無効にします。"
 
 #: ../../source/users-guide.rst:737
 msgid "``--highlight-style=``\\ *STYLE*\\ \\|\\ *FILE*"
-msgstr ""
+msgstr "``--highlight-style=``\\ *STYLE*\\ \\|\\ *FILE*"
 
 #: ../../source/users-guide.rst:725
 msgid ""
@@ -1310,6 +1448,10 @@ msgid ""
 "on syntax highlighting in pandoc, see `Syntax highlighting <#syntax-"
 "highlighting>`__, below. See also ``--list-highlight-styles``."
 msgstr ""
+"ソースコードのシンタックスハイライトに用いる色のスタイルを指定します。オプションは ``pygments`` (既定)、 ``kate`` 、 "
+"``monochrome`` 、 ``breezeDark`` 、 ``espresso`` 、 ``zenburn`` 、 ``haddock`` "
+"、そして ``tango`` です。 pandocでのシンタックスハイライトの詳細については、下記の `Syntax highlighting "
+"<#syntax-highlighting>`__ を参照してください。``--list-highlight-styles`` も参照してください。"
 
 #: ../../source/users-guide.rst:732
 msgid ""
@@ -1317,16 +1459,18 @@ msgid ""
 "supplied. This will be parsed as a KDE syntax highlighting theme and (if "
 "valid) used as the highlighting style."
 msgstr ""
+" *STYLE* 名の代わりに、拡張子が ``.theme`` の JSON ファイルを指定することもできます。これは、 KDE "
+"シンタックスハイライトのテーマとしてパースされ、 (有効な場合) シンタックスハイライトのスタイルとして使用されます。"
 
 #: ../../source/users-guide.rst:736
 msgid ""
 "To generate the JSON version of an existing style, use ``--print-highlight-"
 "style``."
-msgstr ""
+msgstr "既存スタイルの JSON バージョンを生成するには、 ``--print-highlight-style`` を使用します。"
 
 #: ../../source/users-guide.rst:742
 msgid "``--print-highlight-style=``\\ *STYLE*\\ \\|\\ *FILE*"
-msgstr ""
+msgstr "``--print-highlight-style=``\\ *STYLE*\\ \\|\\ *FILE*"
 
 #: ../../source/users-guide.rst:740
 msgid ""
@@ -1336,7 +1480,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:748
 msgid "``--syntax-definition=``\\ *FILE*"
-msgstr ""
+msgstr "``--syntax-definition=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:745
 msgid ""
@@ -1348,7 +1492,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:755
 msgid "``-H`` *FILE*, ``--include-in-header=``\\ *FILE*"
-msgstr ""
+msgstr "``-H`` *FILE*, ``--include-in-header=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:751
 msgid ""
@@ -1360,7 +1504,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:763
 msgid "``-B`` *FILE*, ``--include-before-body=``\\ *FILE*"
-msgstr ""
+msgstr "``-B`` *FILE*, ``--include-before-body=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:758
 msgid ""
@@ -1373,7 +1517,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:770
 msgid "``-A`` *FILE*, ``--include-after-body=``\\ *FILE*"
-msgstr ""
+msgstr "``-A`` *FILE*, ``--include-after-body=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:766
 msgid ""
@@ -1385,7 +1529,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:785
 msgid "``--resource-path=``\\ *SEARCHPATH*"
-msgstr ""
+msgstr "``--resource-path=``\\ *SEARCHPATH*"
 
 #: ../../source/users-guide.rst:773
 msgid ""
@@ -1407,7 +1551,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:792
 msgid "``--request-header=``\\ *NAME*\\ ``:``\\ *VAL*"
-msgstr ""
+msgstr "``--request-header=``\\ *NAME*\\ ``:``\\ *VAL*"
 
 #: ../../source/users-guide.rst:788
 msgid ""
@@ -1423,7 +1567,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:815
 msgid "``--self-contained``"
-msgstr ""
+msgstr "``--self-contained``"
 
 #: ../../source/users-guide.rst:798
 msgid ""
@@ -1448,7 +1592,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:818
 msgid "``--html-q-tags``"
-msgstr ""
+msgstr "``--html-q-tags``"
 
 #: ../../source/users-guide.rst:818
 msgid "Use ``<q>`` tags for quotes in HTML."
@@ -1456,7 +1600,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:826
 msgid "``--ascii``"
-msgstr ""
+msgstr "``--ascii``"
 
 #: ../../source/users-guide.rst:821
 msgid ""
@@ -1470,7 +1614,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:832
 msgid "``--reference-links``"
-msgstr ""
+msgstr "``--reference-links``"
 
 #: ../../source/users-guide.rst:829
 msgid ""
@@ -1481,7 +1625,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:838
 msgid "``--reference-location = block``\\ \\|\\ ``section``\\ \\|\\ ``document``"
-msgstr ""
+msgstr "``--reference-location = block``\\ \\|\\ ``section``\\ \\|\\ ``document``"
 
 #: ../../source/users-guide.rst:835
 msgid ""
@@ -1493,7 +1637,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:843
 msgid "``--atx-headers``"
-msgstr ""
+msgstr "``--atx-headers``"
 
 #: ../../source/users-guide.rst:841
 msgid ""
@@ -1504,7 +1648,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:856
 msgid "``--top-level-division=[default|section|chapter|part]``"
-msgstr ""
+msgstr "``--top-level-division=[default|section|chapter|part]``"
 
 #: ../../source/users-guide.rst:846
 msgid ""
@@ -1522,7 +1666,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:862
 msgid "``-N``, ``--number-sections``"
-msgstr ""
+msgstr "``-N``, ``--number-sections``"
 
 #: ../../source/users-guide.rst:859
 msgid ""
@@ -1533,7 +1677,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:872
 msgid "``--number-offset=``\\ *NUMBER*\\ [``,``\\ *NUMBER*\\ ``,``\\ *…*]"
-msgstr ""
+msgstr "``--number-offset=``\\ *NUMBER*\\ [``,``\\ *NUMBER*\\ ``,``\\ *…*]"
 
 #: ../../source/users-guide.rst:865
 msgid ""
@@ -1548,7 +1692,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:880
 msgid "``--listings``"
-msgstr ""
+msgstr "``--listings``"
 
 #: ../../source/users-guide.rst:875
 msgid ""
@@ -1561,7 +1705,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:884
 msgid "``-i``, ``--incremental``"
-msgstr ""
+msgstr "``-i``, ``--incremental``"
 
 #: ../../source/users-guide.rst:883
 msgid ""
@@ -1571,7 +1715,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:894
 msgid "``--slide-level=``\\ *NUMBER*"
-msgstr ""
+msgstr "``--slide-level=``\\ *NUMBER*"
 
 #: ../../source/users-guide.rst:887
 msgid ""
@@ -1586,7 +1730,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:900
 msgid "``--section-divs``"
-msgstr ""
+msgstr "``--section-divs``"
 
 #: ../../source/users-guide.rst:897
 msgid ""
@@ -1610,7 +1754,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:913
 msgid "``--id-prefix=``\\ *STRING*"
-msgstr ""
+msgstr "``--id-prefix=``\\ *STRING*"
 
 #: ../../source/users-guide.rst:910
 msgid ""
@@ -1622,7 +1766,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:918
 msgid "``-T`` *STRING*, ``--title-prefix=``\\ *STRING*"
-msgstr ""
+msgstr "``-T`` *STRING*, ``--title-prefix=``\\ *STRING*"
 
 #: ../../source/users-guide.rst:916
 msgid ""
@@ -1633,7 +1777,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:928
 msgid "``-c`` *URL*, ``--css=``\\ *URL*"
-msgstr ""
+msgstr "``-c`` *URL*, ``--css=``\\ *URL*"
 
 #: ../../source/users-guide.rst:921
 msgid ""
@@ -1651,7 +1795,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:994
 msgid "``--reference-doc=``\\ *FILE*"
-msgstr ""
+msgstr "``--reference-doc=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:931
 msgid ""
@@ -1672,6 +1816,10 @@ msgid ""
 "``reference.docx`` in the user data directory (see ``--data-dir``). If this "
 "is not found either, sensible defaults will be used."
 msgstr ""
+"最良の結果を得るためには、参照する docx は、 Pandoc を使用して作成された docx ファイルを修正したものを使うべきです。参照する "
+"docx の中身は無視されますが、そのスタイルシートと文書プロパティ（余白、ページサイズ、ヘッダー、フッターなど）は新しい docx "
+"で使用されます。コマンドラインで参照する docx が指定されていない場合、 Pandoc はユーザーデータディレクトリでファイル "
+"``reference.docx`` を探します (``--data-dir`` を参照)。それでも見つからない場合は、気の利いた既定が使用されます。"
 
 #: ../../source/users-guide.rst:944
 msgid ""
@@ -1713,7 +1861,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:994
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #: ../../source/users-guide.rst:975
 msgid ""
@@ -1721,34 +1869,38 @@ msgid ""
 "with ``.pptx`` or ``.potx`` extension) should work, as will most templates "
 "derived from these."
 msgstr ""
+"最近インストールされた Microsoft PowerPoint (``.pptx`` または ``.potx`` "
+"のいずれかを含む)に含まれているテンプレートは、これらから派生したほとんどのテンプレートと同じように動作するはずです。"
 
 #: ../../source/users-guide.rst:979
 msgid ""
 "The specific requirement is that the template should contain the following "
 "four layouts as its first four layouts:"
-msgstr ""
+msgstr "具体的な要件は、テンプレートの最初の4つのレイアウトとして次の4つのレイアウトを含まれていることです:"
 
 #: ../../source/users-guide.rst:982
 msgid "Title Slide"
-msgstr ""
+msgstr "タイトル スライド"
 
 #: ../../source/users-guide.rst:983
 msgid "Title and Content"
-msgstr ""
+msgstr "タイトルとコンテンツ"
 
 #: ../../source/users-guide.rst:984
 msgid "Section Header"
-msgstr ""
+msgstr "セクション見出し"
 
 #: ../../source/users-guide.rst:985
 msgid "Two Content"
-msgstr ""
+msgstr "2 つのコンテンツ"
 
 #: ../../source/users-guide.rst:987
 msgid ""
 "All templates included with a recent version of MS PowerPoint will fit these"
 " criteria. (You can click on ``Layout`` under the ``Home`` menu to check.)"
 msgstr ""
+"最近のバージョンの MS PowerPoint に含まれているすべてのテンプレートは、これらの基準に適合します。 "
+"(``ホーム``メニューの下にある``レイアウト``をクリックして確認できます。)"
 
 #: ../../source/users-guide.rst:991
 msgid ""
@@ -1757,10 +1909,13 @@ msgid ""
 " modify ``custom-reference.pptx`` in MS PowerPoint (pandoc will use the "
 "first four layout slides, as mentioned above)."
 msgstr ""
+"既定の ``reference.pptx`` を修正することもできます:最初に ``pandoc --print-default-data-file "
+"reference.pptx > custom-reference.pptx`` を実行してから MS PowerPointで ``custom-"
+"reference.pptx`` を修正します (前述のように、Pandoc は最初の4つのレイアウトスライドを使います）。"
 
 #: ../../source/users-guide.rst:1000
 msgid "``--epub-cover-image=``\\ *FILE*"
-msgstr ""
+msgstr "``--epub-cover-image=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:997
 msgid ""
@@ -1772,7 +1927,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1023
 msgid "``--epub-metadata=``\\ *FILE*"
-msgstr ""
+msgstr "``--epub-metadata=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:1003
 msgid ""
@@ -1801,7 +1956,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1060
 msgid "``--epub-embed-font=``\\ *FILE*"
-msgstr ""
+msgstr "``--epub-embed-font=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:1026
 msgid ""
@@ -1845,6 +2000,9 @@ msgid ""
 "``wkhtmltopdf``\\ \\|\\ ``weasyprint``\\ \\|\\ ``prince``\\ \\|\\ "
 "``context``\\ \\|\\ ``pdfroff``"
 msgstr ""
+"``--pdf-engine=pdflatex``\\ \\|\\ ``lualatex``\\ \\|\\ ``xelatex``\\ \\|\\ "
+"``wkhtmltopdf``\\ \\|\\ ``weasyprint``\\ \\|\\ ``prince``\\ \\|\\ "
+"``context``\\ \\|\\ ``pdfroff``"
 
 #: ../../source/users-guide.rst:1077
 msgid ""
@@ -1855,7 +2013,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1085
 msgid "``--pdf-engine-opt=``\\ *STRING*"
-msgstr ""
+msgstr "``--pdf-engine-opt=``\\ *STRING*"
 
 #: ../../source/users-guide.rst:1082
 msgid ""
@@ -1870,7 +2028,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1098
 msgid "``--bibliography=``\\ *FILE*"
-msgstr ""
+msgstr "``--bibliography=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:1091
 msgid ""
@@ -1896,7 +2054,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1110
 msgid "``--citation-abbreviations=``\\ *FILE*"
-msgstr ""
+msgstr "``--citation-abbreviations=``\\ *FILE*"
 
 #: ../../source/users-guide.rst:1107
 msgid ""
@@ -1908,7 +2066,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1117
 msgid "``--natbib``"
-msgstr ""
+msgstr "``--natbib``"
 
 #: ../../source/users-guide.rst:1113
 msgid ""
@@ -2169,7 +2327,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1299
 msgid "``header-includes``"
-msgstr ""
+msgstr "``header-includes``"
 
 #: ../../source/users-guide.rst:1299
 msgid ""
@@ -2179,25 +2337,25 @@ msgstr ""
 #: ../../source/users-guide.rst:1301 ../../source/users-guide.rst:1472
 #: ../../source/users-guide.rst:1541
 msgid "``toc``"
-msgstr ""
+msgstr "``toc``"
 
 #: ../../source/users-guide.rst:1302
 msgid "non-null value if ``--toc/--table-of-contents`` was specified"
-msgstr ""
+msgstr "``--toc/--table-of-contents`` が指定されていた場合、非ヌルの値"
 
 #: ../../source/users-guide.rst:1304
 msgid "``toc-title``"
-msgstr ""
+msgstr "``toc-title``"
 
 #: ../../source/users-guide.rst:1304
 msgid ""
 "title of table of contents (works only with EPUB, opendocument, odt, docx, "
 "pptx, beamer, LaTeX)"
-msgstr ""
+msgstr "目次のタイトル (EPUB, opendocument, odt, docx, pptx, beamer, LaTeXでのみ働きます)"
 
 #: ../../source/users-guide.rst:1307
 msgid "``include-before``"
-msgstr ""
+msgstr "``include-before``"
 
 #: ../../source/users-guide.rst:1307
 msgid ""
@@ -2216,11 +2374,11 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1312
 msgid "``body``"
-msgstr ""
+msgstr "``body``"
 
 #: ../../source/users-guide.rst:1313
 msgid "body of document"
-msgstr ""
+msgstr "文書の本文(body)"
 
 #: ../../source/users-guide.rst:1316
 msgid "``meta-json``"
@@ -3028,7 +3186,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1679
 msgid "Extension: ``smart``"
-msgstr ""
+msgstr "拡張: ``smart``"
 
 #: ../../source/users-guide.rst:1681
 msgid ""
@@ -3512,7 +3670,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:1980
 msgid "Pandoc’s Markdown"
-msgstr ""
+msgstr "Pandoc’s Markdown"
 
 #: ../../source/users-guide.rst:1982
 msgid ""
@@ -3574,7 +3732,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:2023
 msgid "Extension: ``escaped_line_breaks``"
-msgstr ""
+msgstr "拡張: ``escaped_line_breaks``"
 
 #: ../../source/users-guide.rst:2025
 msgid ""
@@ -3782,7 +3940,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:2260
 msgid "Verbatim (code) blocks"
-msgstr ""
+msgstr "文字通りのブロック (コードブロック)"
 
 #: ../../source/users-guide.rst:2265
 msgid ""
@@ -3804,7 +3962,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:2284
 msgid "Extension: ``fenced_code_blocks``"
-msgstr ""
+msgstr "拡張: ``fenced_code_blocks``"
 
 #: ../../source/users-guide.rst:2286
 msgid ""
@@ -3814,6 +3972,9 @@ msgid ""
 "Everything between these lines is treated as code. No indentation is "
 "necessary:"
 msgstr ""
+"通常のインデントによるコードブロックに加えて、Pandocでは *囲い* (*fenced*) "
+"コードブロックもサポートします。これは始まりの行に3つ以上のチルダ (``~``) "
+"を並べ、同様に終わりの行に、始まりと同じ数のチルダを並べるものです。この2行の間にあるすべてのテキストが、コード行として扱われます。インデントは不要です:"
 
 #: ../../source/users-guide.rst:2300
 msgid ""
@@ -3829,13 +3990,15 @@ msgstr ""
 
 #: ../../source/users-guide.rst:2315
 msgid "Extension: ``backtick_code_blocks``"
-msgstr ""
+msgstr "拡張: ``backtick_code_blocks``"
 
 #: ../../source/users-guide.rst:2317
 msgid ""
 "Same as ``fenced_code_blocks``, but uses backticks (:literal:`\\``) instead "
 "of tildes (``~``)."
 msgstr ""
+"``fenced_code_blocks`` と同様ですが、バッククォート (:literal:`\\``) をチルダ (``~``) "
+"の代わりに使います。"
 
 #: ../../source/users-guide.rst:2321
 msgid "Extension: ``fenced_code_attributes``"
@@ -5917,7 +6080,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:4351
 msgid "Extension: ``abbreviations``"
-msgstr "拡張: abbreviations"
+msgstr "拡張: ``abbreviations``"
 
 #: ../../source/users-guide.rst:4353
 msgid "Parses PHP Markdown Extra abbreviation keys, like"
@@ -6069,7 +6232,7 @@ msgstr ""
 
 #: ../../source/users-guide.rst:4454
 msgid "Producing slide shows with pandoc"
-msgstr ""
+msgstr "スライドショーをPandocで生成する"
 
 #: ../../source/users-guide.rst:4456
 msgid ""
@@ -6084,20 +6247,31 @@ msgid ""
 " Microsoft `PowerPoint "
 "<https://en.wikipedia.org/wiki/Microsoft_PowerPoint>`__ format."
 msgstr ""
+"Pandocを使うと、HTML + JavaScript のスライドプレゼンテーション (Webブラウザで閲覧可能) "
+"を生成できます。5つの形式があります:  `S5 <http://meyerweb.com/eric/tools/s5/>`__ 、 `DZSlides"
+" <http://paulrouget.com/dzslides/>`__ 、 `Slidy "
+"<http://www.w3.org/Talks/Tools/Slidy/>`__ 、 `Slideous "
+"<http://goessner.net/articles/slideous/>`__ 、 `reveal.js "
+"<http://lab.hakim.se/reveal-js/>`__ 。あるいは、LaTeX  ```beamer`` "
+"<https://ctan.org/pkg/beamer>`__ や Microsoft  `PowerPoint "
+"<https://en.wikipedia.org/wiki/Microsoft_PowerPoint>`__ 形式によって、 "
+"PDFスライドショーを生成することもできます。"
 
 #: ../../source/users-guide.rst:4468
 msgid "Here’s the Markdown source for a simple slide show, ``habits.txt``:"
-msgstr ""
+msgstr "シンプルなスライドショーを作成するMarkdownソース  ``habits.txt`` の例を示します:"
 
 #: ../../source/users-guide.rst:4504
 msgid "To produce an HTML/JavaScript slide show, simply type"
-msgstr ""
+msgstr "HTML/JavaScript スライドショーを得るには、単に次のように実行します。"
 
 #: ../../source/users-guide.rst:4510
 msgid ""
 "where ``FORMAT`` is either ``s5``, ``slidy``, ``slideous``, ``dzslides``, or"
 " ``revealjs``."
 msgstr ""
+"ここで ``FORMAT`` は ``s5`` 、 ``slidy`` 、 ``slideous`` 、 ``dzslides`` または "
+"``revealjs`` のいずれかです。"
 
 #: ../../source/users-guide.rst:4513
 msgid ""
@@ -6111,6 +6285,12 @@ msgid ""
 " DZSlides, the (relatively short) JavaScript and CSS are included in the "
 "file by default."
 msgstr ""
+"Slidy、Slideous、reveal.js、またはS5の場合、 ``-s/--standalone`` "
+"オプション付きで出力されたファイルには、JavaScriptおよびCSSファイルへのリンクが埋め込まれます。既定では、それらのファイルはそれぞれ次の相対パスにおいて有効とみなされます:"
+" ``s5/default`` (S5の場合) 、 ``slideous`` (Slideousの場合) 、 ``reveal.js`` "
+"(reveal.jsの場合) 、 ``w3.org`` 上のSlidyのWebサイト (for Slidy) (これらのパスは、それぞれ変数 "
+"``s5-url`` 、 ``slideous-url`` 、  ``revealjs-url`` 、 ``slidy-url`` "
+"にて変更できます)。DZSlidesについては、既定では（比較的短い）JavaScriptとCSSが出力ファイルに含まれます。"
 
 #: ../../source/users-guide.rst:4523
 msgid ""
@@ -6118,24 +6298,27 @@ msgid ""
 "produce a single file that contains all of the data necessary to display the"
 " slide show, including linked scripts, stylesheets, images, and videos."
 msgstr ""
+"すべてのHTMLスライド形式において、 ``--self-contained`` "
+"オプションを用いることで、画面にスライドショーを表示するためのすべてのデータ (スクリプト、スタイルシート、画像および動画) "
+"を含めて、単一ファイルとして出力できます。"
 
 #: ../../source/users-guide.rst:4528
 msgid "To produce a PDF slide show using beamer, type"
-msgstr ""
+msgstr "beamerでPDFスライドショーを出力するには、次のように実行します。"
 
 #: ../../source/users-guide.rst:4534
 msgid ""
 "Note that a reveal.js slide show can also be converted to a PDF by printing "
 "it to a file from the browser."
-msgstr ""
+msgstr "補足: reveal.js スライドショーは、ブラウザを用いてPDFとして印刷することも可能です。"
 
 #: ../../source/users-guide.rst:4537
 msgid "To produce a Powerpoint slide show, type"
-msgstr ""
+msgstr "PowerPoint スライドショーを出力するには、次を実行します。"
 
 #: ../../source/users-guide.rst:4544
 msgid "Structuring the slide show"
-msgstr ""
+msgstr "スライドショーの構造をつくる"
 
 #: ../../source/users-guide.rst:4546
 msgid ""
@@ -6145,25 +6328,30 @@ msgid ""
 "by level 2 headers, which are followed by content, so 2 is the slide level. "
 "This default can be overridden using the ``--slide-level`` option."
 msgstr ""
+"既定では、 *スライドレベル (slide level)* は、文書中のどこかの位置において、(他のヘッダではなく) "
+"コンテンツが直ちに次に現れるような、ヘッダ階層の中で最も高いレベルのヘッダです。上記の例では (訳注: ``habits.txt`` )、常にレベル 1"
+" ヘッダ (訳注: `# ` で始まる) に続いて、レベル 2 ヘッダ (訳注: `## ` で始まる) が置かれます。そのレベル 2 "
+"ヘッダに続いて、コンテンツが置かれます。つまり、いまは 2 がスライドレベルです。この既定動作は ``--slide-level``  "
+"オプションで変更できます。"
 
 #: ../../source/users-guide.rst:4553
 msgid ""
 "The document is carved up into slides according to the following rules:"
-msgstr ""
+msgstr "1つの文書は、次のルールによっていくつかのスライドに分割されます:"
 
 #: ../../source/users-guide.rst:4555
 msgid "A horizontal rule always starts a new slide."
-msgstr ""
+msgstr "水平線は、常に新しいスライドを開始する。"
 
 #: ../../source/users-guide.rst:4557
 msgid "A header at the slide level always starts a new slide."
-msgstr ""
+msgstr "スライドレベルのヘッダは、常に新しいスライドを開始する。"
 
 #: ../../source/users-guide.rst:4559
 msgid ""
 "Headers *below* the slide level in the hierarchy create headers *within* a "
 "slide."
-msgstr ""
+msgstr "スライドレベルよりも、ヘッダ階層において *下位の* (訳注: レベルを表す数字が大きい) ヘッダは、スライドの *中に* ヘッダを作る。"
 
 #: ../../source/users-guide.rst:4562
 msgid ""
@@ -6171,10 +6359,12 @@ msgid ""
 "which just contain the section title and help to break the slide show into "
 "sections."
 msgstr ""
+"スライドレベルよりも、ヘッダ階層において *上位の* (訳注: レベルを表す数字が小さい) "
+"ヘッダは、単にセクションタイトルを表示するだけの「タイトルスライド」を作る。スライドショーを複数のセクションに分割するのに便利。"
 
 #: ../../source/users-guide.rst:4566
 msgid "Content *above* the slide level will not appear in the slide show."
-msgstr ""
+msgstr "スライドレベルのヘッダよりも *上に* あるコンテンツは、スライドショーに表示されない。"
 
 #: ../../source/users-guide.rst:4568
 msgid ""
@@ -6182,6 +6372,8 @@ msgid ""
 "if present. (In the case of beamer, this can be disabled by commenting out "
 "some lines in the default template.)"
 msgstr ""
+"タイトルページは、(もし存在すれば) 文書のタイトルブロックから自動的に生成される (beamer "
+"の場合、デフォルトテンプレートのいくつかの行をコメントアウトすることで無効にできる)。"
 
 #: ../../source/users-guide.rst:4572
 msgid ""
@@ -6191,6 +6383,9 @@ msgid ""
 "will be the slide level.) But you can also structure the slide show into "
 "sections, as in the example above."
 msgstr ""
+"これらのルールは、さまざまなスライドショーのスタイルに対応するために設計されています。スライドをセクションやサブセクションに分ける必要がなければ、単にレベル"
+" 1 ヘッダをすべてのスライドで使用してもかまいません (この場合、レベル 1 "
+"がスライドレベルとなります)。一方、スライドショーをいくつかのセクションに分けたい場合には、上記の例のように構成してもよいでしょう。"
 
 #: ../../source/users-guide.rst:4578
 msgid ""
@@ -6199,10 +6394,13 @@ msgid ""
 "level 2 headers building vertically. It is not recommended that you use "
 "deeper nesting of section levels with reveal.js."
 msgstr ""
+"補足: reveal.js スライドショーでは、スライドレベルが 2 の場合は、2次元レイアウトとして出力されます。レベル 1 "
+"ヘッダは水平方向に、レベル 2 ヘッダは垂直方向にスライドショーを構成します。reveal.jsでは、これ以上セクションレベルを深く入れ子 "
+"(nesting) にすることは推奨されません。"
 
 #: ../../source/users-guide.rst:4584
 msgid "Incremental lists"
-msgstr ""
+msgstr "インクリメンタルリスト"
 
 #: ../../source/users-guide.rst:4586
 msgid ""
@@ -6213,6 +6411,11 @@ msgid ""
 " for example, using the ``fenced div`` syntax, the following would be "
 "incremental regardless of the document default:"
 msgstr ""
+"既定では、スライドショーはリストを「すべて一気に (all at once)」見せるように出力されます。もしリストを徐々に増やすように "
+"(incrementally)、 一度に1アイテム (one item at a time) として見せたい場合には、 ``-i`` "
+"オプションを使用します (訳注: このような動作を「インクリメンタル」と呼びます)。既定動作から離れて特定のリストだけを見せたい場合には、 "
+"``div`` ブロックを作り、classとして ``incremental`` または ``nonincremental`` "
+"を指定してください。たとえば ``fenced div`` 拡張記法を使えば、文書の既定動作にかかわらず、下記はインクリメンタルに動作します:"
 
 #: ../../source/users-guide.rst:4613
 msgid ""
@@ -6222,22 +6425,25 @@ msgid ""
 "document default (that is, it will display incrementally without the ``-i`` "
 "option and all at once with the ``-i`` option):"
 msgstr ""
+"``incremental`` と ``nonincremental`` は、一時的に (on a per-case basis) "
+"インクリメンタルリストを設定する方法として推奨されています。一方で、次のような古い方法もサポートしています: 引用中のリストは、文書の既定動作に反します"
+" (これは  ``-i`` オプションがなくてもインクリメンタルに表示されますし、 ``-i`` を付けても一気に表示されます)"
 
 #: ../../source/users-guide.rst:4624
 msgid ""
 "Both methods allow incremental and nonincremental lists to be mixed in a "
 "single document."
-msgstr ""
+msgstr "いずれの方法でも、1つの文書の中にインクリメンタルリストとそうでないリストを混在できます。"
 
 #: ../../source/users-guide.rst:4628
 msgid "Inserting pauses"
-msgstr ""
+msgstr "ポーズの挿入"
 
 #: ../../source/users-guide.rst:4630
 msgid ""
 "You can add “pauses” within a slide by including a paragraph containing "
 "three dots, separated by spaces:"
-msgstr ""
+msgstr "半角スペースで区切られた3つのピリオドを段落に含めることで、スライドに「ポーズ」を追加できます:"
 
 #: ../../source/users-guide.rst:4644
 msgid "Styling the slides"
@@ -6402,11 +6608,11 @@ msgstr ""
 
 #: ../../source/users-guide.rst:4800
 msgid "Creating EPUBs with pandoc"
-msgstr ""
+msgstr "EPUB を Pandoc でつくる"
 
 #: ../../source/users-guide.rst:4803
 msgid "EPUB Metadata"
-msgstr ""
+msgstr "EPUB メタデータ"
 
 #: ../../source/users-guide.rst:4805
 msgid ""
@@ -6414,14 +6620,16 @@ msgid ""
 "the source document is Markdown, it is better to use a `YAML metadata block "
 "<#extension-yaml_metadata_block>`__. Here is an example:"
 msgstr ""
+"EPUB メタデータは ``--epub-metadata`` オプションを使うことで指定できます。しかし、ソース文書が  Markdown の場合は、"
+" `YAML メタデータブロック <#extension-yaml_metadata_block>`__ を使うとよいでしょう。例を示します："
 
 #: ../../source/users-guide.rst:4831
 msgid "The following fields are recognized:"
-msgstr ""
+msgstr "以下の項目が認識されます："
 
 #: ../../source/users-guide.rst:4837
 msgid "``identifier``"
-msgstr ""
+msgstr "``identifier`` (訳注: 識別子)"
 
 #: ../../source/users-guide.rst:4834
 msgid ""
@@ -6430,10 +6638,12 @@ msgid ""
 "``ISMN-10``, ``DOI``, ``LCCN``, ``GTIN-14``, ``ISBN-13``, ``Legal deposit "
 "number``, ``URN``, ``OCLC``, ``ISMN-13``, ``ISBN-A``, ``JP``, ``OLCC``."
 msgstr ""
+"文字列値またはフィールド ``text`` および ``scheme`` のオブジェクト。\n"
+"``scheme`` の有効な値は ``ISBN-10`` 、 ``GTIN-13`` 、 ``UPC`` 、 ``ISMN-10`` 、 ``DOI`` 、 ``LCCN`` 、 ``GTIN-14`` 、 ``ISBN-13`` 、 ``Legal deposit number`` 、 ``URN`` 、 ``OCLC`` 、 ``ISMN-13`` 、 ``ISBN-A`` 、 ``JP`` 、 ``OLCC`` 。"
 
 #: ../../source/users-guide.rst:4842
 msgid "``title``"
-msgstr ""
+msgstr "``title``"
 
 #: ../../source/users-guide.rst:4840
 msgid ""
@@ -6441,10 +6651,13 @@ msgid ""
 " a list of such objects. Valid values for ``type`` are ``main``, "
 "``subtitle``, ``short``, ``collection``, ``edition``, ``extended``."
 msgstr ""
+"文字列値、またはフィールド  ``file-as`` および ``type`` のオブジェクト、またはこのようなオブジェクトのリスト。``type`` "
+"の有効な値は ``main`` 、 ``subtitle`` 、 ``short`` 、 ``collection`` 、 ``edition`` 、 "
+"``extended`` 。"
 
 #: ../../source/users-guide.rst:4849
 msgid "``creator``"
-msgstr ""
+msgstr "``creator``"
 
 #: ../../source/users-guide.rst:4845
 msgid ""
@@ -6454,92 +6667,100 @@ msgid ""
 "attempt to translate the human-readable versions (like “author” and "
 "“editor”) to the appropriate marc relators."
 msgstr ""
+"文字列値、または フィールド ``role`` 、 ``file-as`` および ``text`` "
+"のオブジェクト、またはこのようなオブジェクトのリスト。 ``role`` として有効な値は `MARC relators "
+"<http://loc.gov/marc/relators/relaterm.html>`__ を参照。しかし Pandoc は human-"
+"readable なバージョン ( “author” や “editor” など) を、適切な MARC relatorsに変換しようとします。"
 
 #: ../../source/users-guide.rst:4851
 msgid "``contributor``"
-msgstr ""
+msgstr "``contributor``"
 
 #: ../../source/users-guide.rst:4852
 msgid "Same format as ``creator``."
-msgstr ""
+msgstr "``creator`` と同じ形式。"
 
 #: ../../source/users-guide.rst:4854
 msgid "``date``"
-msgstr ""
+msgstr "``date``"
 
 #: ../../source/users-guide.rst:4854
 msgid ""
 "A string value in ``YYYY-MM-DD`` format. (Only the year is necessary.) "
 "Pandoc will attempt to convert other common date formats."
 msgstr ""
+"``YYYY-MM-DD`` 形式の文字列 (年 ``YYYY`` は必要な場合のみ)。 Pandoc "
+"は他の一般的な日時フォーマットを変換しようとします。"
 
 #: ../../source/users-guide.rst:4858
 msgid "``lang`` (or legacy: ``language``)"
-msgstr ""
+msgstr "``lang`` (古い形式: ``language``)"
 
 #: ../../source/users-guide.rst:4857
 msgid ""
 "A string value in `BCP 47 <https://tools.ietf.org/html/bcp47>`__ format. "
 "Pandoc will default to the local language if nothing is specified."
 msgstr ""
+"`BCP 47 <https://tools.ietf.org/html/bcp47>`__ 形式の文字列. "
+"これが指定されていない場合、Pandocはローカルの言語を既定とします。"
 
 #: ../../source/users-guide.rst:4860
 msgid "``subject``"
-msgstr ""
+msgstr "``subject``"
 
 #: ../../source/users-guide.rst:4861
 msgid "A string value or a list of such values."
-msgstr ""
+msgstr "文字列値、またはその値のリスト。"
 
 #: ../../source/users-guide.rst:4862
 msgid "``description``"
-msgstr ""
+msgstr "``description``"
 
 #: ../../source/users-guide.rst:4863 ../../source/users-guide.rst:4865
 #: ../../source/users-guide.rst:4867 ../../source/users-guide.rst:4869
 #: ../../source/users-guide.rst:4871 ../../source/users-guide.rst:4873
 msgid "A string value."
-msgstr ""
+msgstr "文字列値。"
 
 #: ../../source/users-guide.rst:4864
 msgid "``type``"
-msgstr ""
+msgstr "``type``"
 
 #: ../../source/users-guide.rst:4866
 msgid "``format``"
-msgstr ""
+msgstr "``format``"
 
 #: ../../source/users-guide.rst:4868
 msgid "``relation``"
-msgstr ""
+msgstr "``relation``"
 
 #: ../../source/users-guide.rst:4870
 msgid "``coverage``"
-msgstr ""
+msgstr "``coverage``"
 
 #: ../../source/users-guide.rst:4872
 msgid "``rights``"
-msgstr ""
+msgstr "``rights``"
 
 #: ../../source/users-guide.rst:4874
 msgid "``cover-image``"
-msgstr ""
+msgstr "``cover-image``"
 
 #: ../../source/users-guide.rst:4875
 msgid "A string value (path to cover image)."
-msgstr ""
+msgstr "文字列値（カバー画像へのパス）。"
 
 #: ../../source/users-guide.rst:4876
 msgid "``css`` (or legacy: ``stylesheet``)"
-msgstr ""
+msgstr "``css`` (古い形式: ``stylesheet``)"
 
 #: ../../source/users-guide.rst:4877
 msgid "A string value (path to CSS stylesheet)."
-msgstr ""
+msgstr "文字列値（CSSスタイルシートへのパス）"
 
 #: ../../source/users-guide.rst:4880
 msgid "``page-progression-direction``"
-msgstr ""
+msgstr "``page-progression-direction``"
 
 #: ../../source/users-guide.rst:4879
 msgid ""
@@ -6547,42 +6768,45 @@ msgid ""
 "attribute for the ```spine`` element <http://idpf.org/epub/301/spec/epub-"
 "publications.html#sec-spine-elem>`__."
 msgstr ""
+"``ltr`` (left-to-right) もしくは ``rtl`` (right-to-left) 。```spine`` 要素 "
+"<http://idpf.org/epub/301/spec/epub-publications.html#sec-spine-elem>`__ "
+"に対する ``page-progression-direction`` 属性を指定。"
 
 #: ../../source/users-guide.rst:4892
 msgid "``ibooks``"
-msgstr ""
+msgstr "``ibooks``"
 
 #: ../../source/users-guide.rst:4883
 msgid "iBooks-specific metadata, with the following fields:"
-msgstr ""
+msgstr "iBooks 特有のメタデータ。下記のフィールドが有効："
 
 #: ../../source/users-guide.rst:4885
 msgid "``version``: (string)"
-msgstr ""
+msgstr "``version``: (文字列)"
 
 #: ../../source/users-guide.rst:4886
 msgid "``specified-fonts``: ``true``\\ \\|\\ ``false`` (default ``false``)"
-msgstr ""
+msgstr "``specified-fonts``: ``true``\\ \\|\\ ``false`` (既定は ``false``)"
 
 #: ../../source/users-guide.rst:4887
 msgid "``ipad-orientation-lock``: ``portrait-only``\\ \\|\\ ``landscape-only``"
-msgstr ""
+msgstr "``ipad-orientation-lock``: ``portrait-only``\\ \\|\\ ``landscape-only``"
 
 #: ../../source/users-guide.rst:4889
 msgid "``iphone-orientation-lock``: ``portrait-only``\\ \\|\\ ``landscape-only``"
-msgstr ""
+msgstr "``iphone-orientation-lock``: ``portrait-only``\\ \\|\\ ``landscape-only``"
 
 #: ../../source/users-guide.rst:4891
 msgid "``binding``: ``true``\\ \\|\\ ``false`` (default ``true``)"
-msgstr ""
+msgstr "``binding``: ``true``\\ \\|\\ ``false`` (既定は ``true``)"
 
 #: ../../source/users-guide.rst:4892
 msgid "``scroll-axis``: ``vertical``\\ \\|\\ ``horizontal``\\ \\|\\ ``default``"
-msgstr ""
+msgstr "``scroll-axis``: ``vertical``\\ \\|\\ ``horizontal``\\ \\|\\ ``default``"
 
 #: ../../source/users-guide.rst:4895
 msgid "The ``epub:type`` attribute"
-msgstr ""
+msgstr "``epub:type`` 属性"
 
 #: ../../source/users-guide.rst:4897
 msgid ""
@@ -6592,10 +6816,15 @@ msgid ""
 "attribute>`__. For example, to set the attribute to the value ``prologue``, "
 "use this markdown:"
 msgstr ""
+"``epub3`` 出力向けに、ユーザは ```epub:type`` 属性 <http://www.idpf.org/epub/31/spec"
+"/epub-contentdocs.html#sec-epub-type-attribute>`__ を使って、EPUB "
+"チャプターに対応するヘッダをマークアップできます (訳注: `EPUBのナビゲーションを理解しよう "
+"<https://www.slideshare.net/lost_and_found/epub-16332538>`__ "
+"も参照)。たとえば、この属性に値 ``prologue`` をセットするには、下記のようなMarkdownを記述します："
 
 #: ../../source/users-guide.rst:4907
 msgid "Which will result in:"
-msgstr ""
+msgstr "次のような結果が得られます："
 
 #: ../../source/users-guide.rst:4915
 msgid ""
@@ -6603,18 +6832,21 @@ msgid ""
 "of the following values, in which case either ``frontmatter`` or "
 "``backmatter`` will be output."
 msgstr ""
+"Pandoc は  ``<body epub:type=\"bodymatter\">`` を出力します。ただし下記の値のうち  "
+"``frontmatter`` (訳注: 目次や献辞など、コンテンツ本体の予備的な資料など)もしくは ``backmatter`` (訳注: "
+"索引や付録など、文書の後にある補助的な資料)が出力されるケースでは、その値が使用されます。"
 
 #: ../../source/users-guide.rst:4920
 msgid "``epub:type`` of first section"
-msgstr ""
+msgstr "section 最初の ``epub:type``"
 
 #: ../../source/users-guide.rst:4920
 msgid "``epub:type`` of body"
-msgstr ""
+msgstr "body の ``epub:type`` "
 
 #: ../../source/users-guide.rst:4922
 msgid "prologue"
-msgstr ""
+msgstr "prologue (訳注: 序章)"
 
 #: ../../source/users-guide.rst:4922 ../../source/users-guide.rst:4923
 #: ../../source/users-guide.rst:4924 ../../source/users-guide.rst:4925
@@ -6623,77 +6855,77 @@ msgstr ""
 #: ../../source/users-guide.rst:4930 ../../source/users-guide.rst:4931
 #: ../../source/users-guide.rst:4932
 msgid "frontmatter"
-msgstr ""
+msgstr "frontmatter"
 
 #: ../../source/users-guide.rst:4923
 msgid "abstract"
-msgstr ""
+msgstr "abstract"
 
 #: ../../source/users-guide.rst:4924
 msgid "acknowledgments"
-msgstr ""
+msgstr "acknowledgments (訳注: 謝辞)"
 
 #: ../../source/users-guide.rst:4925
 msgid "copyright-page"
-msgstr ""
+msgstr "copyright-page (訳注: 著作権のページ)"
 
 #: ../../source/users-guide.rst:4926
 msgid "dedication"
-msgstr ""
+msgstr "dedication (訳注: 献辞)"
 
 #: ../../source/users-guide.rst:4927
 msgid "foreword"
-msgstr ""
+msgstr "foreword (訳注: 前書き)"
 
 #: ../../source/users-guide.rst:4928
 msgid "halftitle,"
-msgstr ""
+msgstr "halftitle (訳注: 作品の最初のページまたはテキストの直前にあるタイトル)"
 
 #: ../../source/users-guide.rst:4929
 msgid "introduction"
-msgstr ""
+msgstr "introduction"
 
 #: ../../source/users-guide.rst:4930
 msgid "preface"
-msgstr ""
+msgstr "preface  (訳注: 序)"
 
 #: ../../source/users-guide.rst:4931
 msgid "seriespage"
-msgstr ""
+msgstr "seriespage"
 
 #: ../../source/users-guide.rst:4932
 msgid "titlepage"
-msgstr ""
+msgstr "titlepage (訳注: 作品の標題紙・タイトルページ)"
 
 #: ../../source/users-guide.rst:4933
 msgid "afterword"
-msgstr ""
+msgstr "afterword (訳注: 後書き)"
 
 #: ../../source/users-guide.rst:4933 ../../source/users-guide.rst:4934
 #: ../../source/users-guide.rst:4935 ../../source/users-guide.rst:4936
 #: ../../source/users-guide.rst:4937
 msgid "backmatter"
-msgstr ""
+msgstr "backmatter"
 
 #: ../../source/users-guide.rst:4934
 msgid "appendix"
-msgstr ""
+msgstr "appendix (訳注: 補足情報・付録)"
 
 #: ../../source/users-guide.rst:4935
 msgid "colophon"
-msgstr "奥付"
+msgstr "colophon (訳注: 奥付)"
 
 #: ../../source/users-guide.rst:4936
 msgid "conclusion"
-msgstr ""
+msgstr "conclusion"
 
 #: ../../source/users-guide.rst:4937
 msgid "epigraph"
-msgstr ""
+msgstr "epigraph (訳注: 題辞・エピグラフ)"
 
 #: ../../source/users-guide.rst:4941
 msgid "Linked media"
-msgstr ""
+msgstr "リンクされたメディア"
 
 #: ../../source/users-guide.rst:4943
 msgid ""
@@ -6704,10 +6936,15 @@ msgid ""
 " raw HTML in your source and add ``data-external=\"1\"`` to the tag with the"
 " ``src`` attribute. For example:"
 msgstr ""
+"通常、Pandoc は生成された EPUB に現れる  ``<img>`` 、 ``<audio>`` 、 ``<video>`` または "
+"``<source>`` のいずれかから参照されたメディアをダウンロードし、EPUB コンテナに格納しようとします。これにより完全に独立した "
+"(self-contained) EPUBを得られます。もしユーザが替わりに外部のメディアリソースへのリンクを望む場合には、生の (raw) "
+"HTMLとして source を記述し、``src`` 属性のあるタグに ``data-external=\"1\"`` "
+"をつけ加えてください。たとえば："
 
 #: ../../source/users-guide.rst:4960
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "シンタックスハイライト"
 
 #: ../../source/users-guide.rst:4962
 msgid ""
@@ -6718,6 +6955,11 @@ msgid ""
 " Ms, and LaTeX/PDF output. To see a list of language names that pandoc will "
 "recognize, type ``pandoc --list-highlight-languages``."
 msgstr ""
+"Pandocは `囲いコードブロック <#fenced-code-blocks>`__ "
+"に対して、指定された言語名に応じたシンタックスハイライトを自動的に適用します。シンタックスハイライトには、Haskell ライブラリ "
+"`skylighting <https://github.com/jgm/skylighting>`__ が使用されます。現在、シンタックスハイライトは"
+" HTML 、 EPUB 、 docx 、 ms 、および LaTeX/PDF 出力に適用されます。Pandocが認識する言語名の一覧を見るには、 "
+"``pandoc --list-highlight-languages`` を実行します。"
 
 #: ../../source/users-guide.rst:4970
 msgid ""
@@ -6727,6 +6969,10 @@ msgid ""
 "used to do the highlighting). To see a list of highlight styles, type "
 "``pandoc --list-highlight-styles``."
 msgstr ""
+"カラースキームは ``--highlight-style`` オプションによって選択できます。既定のカラースキームは ``pygments`` "
+"で、これはPythonライブラリの pygments を真似たものです (ただしPandocの中では、実際の pygments "
+"はシンタックスハイライトに利用されません)。ハイライトスタイルの一覧を見るには、 ``pandoc --list-highlight-styles`` "
+"を実行してください。"
 
 #: ../../source/users-guide.rst:4976
 msgid ""
@@ -6735,10 +6981,13 @@ msgid ""
 "and used as the argument to ``--highlight-style``. To get a JSON version of "
 "the ``pygments`` style, for example:"
 msgstr ""
+"既定のハイライトスタイルに満足できない場合には、 ``--print-highlight-style`` によってJSON形式の ``.theme`` "
+"ファイルを出力することで、ハイライトスタイルを変更して ``--highlight-style`` "
+"の引数として与えることで、カスタマイズが可能です。たとえば、 ``pygments`` スタイルのJSONファイルを得るには、次を実行します:"
 
 #: ../../source/users-guide.rst:4985
 msgid "Then edit ``my.theme`` and use it like this:"
-msgstr ""
+msgstr "そして ``my.theme`` を編集し、次のように利用します:"
 
 #: ../../source/users-guide.rst:4991
 msgid ""
@@ -6750,18 +6999,24 @@ msgid ""
 "definitions <https://github.com/KDE/syntax-"
 "highlighting/tree/master/data/syntax>`__."
 msgstr ""
+"それでも内蔵のハイライトに満足できない場合や、サポートされていない言語に対するハイライトが必要な場合には、 ``--syntax-"
+"definition`` オプションを使って `KDE-style XML syntax definition file "
+"<https://docs.kde.org/stable5/en/applications/katepart/highlight.html>`__ "
+"を読み込むことも可能です。自分でファイルを書く前に、KDEの `repository of syntax definitions "
+"<https://github.com/KDE/syntax-highlighting/tree/master/data/syntax>`__ "
+"もご覧ください。"
 
 #: ../../source/users-guide.rst:4999
 msgid "To disable highlighting, use the ``--no-highlight`` option."
-msgstr ""
+msgstr "シンタックスハイライトを無効にするには、 ``--no-highlight`` オプションを使います。"
 
 #: ../../source/users-guide.rst:5002
 msgid "Custom Styles in Docx"
-msgstr ""
+msgstr "docx ファイルにおけるカスタムスタイル"
 
 #: ../../source/users-guide.rst:5005
 msgid "Input"
-msgstr ""
+msgstr "入力"
 
 #: ../../source/users-guide.rst:5007
 msgid ""
@@ -6769,6 +7024,8 @@ msgid ""
 "into pandoc elements, either by direct conversion or interpreting the "
 "derivation of the input document’s styles."
 msgstr ""
+"通常、docx "
+"Readerはスタイルの読み込みにおいて、Pandocの要素に直接変換できるもの、または入力文書のスタイルの派生として解釈できるもののみを読み込みます。"
 
 #: ../../source/users-guide.rst:5011
 msgid ""
@@ -6777,6 +7034,9 @@ msgid ""
 "the input document, using the ``custom-style`` class. Paragraph styles are "
 "interpreted as divs, while character styles are interpreted as spans."
 msgstr ""
+"docx Reader  (``-f docx+styles``) において ```styles`` 拡張 <#ext-styles>`__ "
+"を有効にすることで、入力文書のスタイルを ``custom-style`` class として保持した出力を得られます。段落スタイルは div "
+"として解釈され、文字スタイルは span として解釈されます。"
 
 #: ../../source/users-guide.rst:5017
 msgid ""
@@ -6787,11 +7047,11 @@ msgstr ""
 
 #: ../../source/users-guide.rst:5020
 msgid "Without the ``+styles`` extension:"
-msgstr ""
+msgstr "``+styles`` 拡張がない場合:"
 
 #: ../../source/users-guide.rst:5032
 msgid "And with the extension:"
-msgstr ""
+msgstr "``+styles`` 拡張がある場合:"
 
 #: ../../source/users-guide.rst:5052
 msgid ""
@@ -6799,10 +7059,12 @@ msgid ""
 " while creating docx output (see below), and maintain the same styles in "
 "your input and output files."
 msgstr ""
+"このようなカスタムスタイルを用いることで、出力文書として docx を作成する場合においても (下記参照)、入力文書 (docx) "
+"をリファレンス文書としても同時に利用でき、入力および出力ファイルの両方で同じスタイルが保持されるようになります。"
 
 #: ../../source/users-guide.rst:5057
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
 #: ../../source/users-guide.rst:5059
 msgid ""
@@ -6814,6 +7076,11 @@ msgid ""
 "pandoc allows you to define custom styles for blocks and text using "
 "``div``\\ s and ``span``\\ s, respectively."
 msgstr ""
+"通常、Pandocの docx "
+"出力は事前に定義されたスタイルの集まりを適用します。ブロックについては段落や引用などを、インラインについてはおおむね斜体や太字など既定の書式を使用します。この動作は、特に"
+" ``reference.docx`` "
+"ファイルを用いる場合には、大半の用途でうまくいきます。しかし、ブロックに対して独自のスタイルを適用したい場合や、既存のスタイルの集まりとマッチさせたい場合には、Pandocにおいてカスタムスタイルを定義することも可能です。ブロックに対しては"
+" ``div`` を、インラインテキストに対しては ``span`` をそれぞれ定義できます。"
 
 #: ../../source/users-guide.rst:5067
 msgid ""
@@ -6821,17 +7088,22 @@ msgid ""
 "pandoc will apply your specified style to the contained elements. So, for "
 "example using the ``bracketed_spans`` syntax,"
 msgstr ""
+"``div`` または ``span`` を ``custom-style`` "
+"属性とともに定義したい場合は、Pandocはユーザが指定したスタイルを、対応する要素に適用します。たとえば ``bracketed_spans`` "
+"拡張記法を使う場合には、"
 
 #: ../../source/users-guide.rst:5075
 msgid ""
 "would produce a docx file with “Get out” styled with character style "
 "``Emphatically``. Similarly, using the ``fenced_divs`` syntax,"
 msgstr ""
+"は、「Get out」に文字スタイル ``Emphatically`` を適用した docx ファイルを出力します。同様に、  "
+"``fenced_divs`` 拡張記法を用いると、"
 
 #: ../../source/users-guide.rst:5087
 msgid ""
 "would style the two contained lines with the ``Poetry`` paragraph style."
-msgstr ""
+msgstr "は、段落スタイル ``Poetry`` をその中の2行に適用します。"
 
 #: ../../source/users-guide.rst:5089
 msgid ""
@@ -6839,6 +7111,8 @@ msgid ""
 "the output file as inheriting from normal text. If they are already defined,"
 " pandoc will not alter the definition."
 msgstr ""
+"あるスタイルが reference.docx "
+"の中で見つからない場合は、そのスタイルは出力ファイルの中で、通常のテキストから継承された形で定義されます。すでにスタイルが定義されている場合は、Pandocはその定義を変更しません。"
 
 #: ../../source/users-guide.rst:5093
 msgid ""
@@ -6850,6 +7124,10 @@ msgid ""
 "a filter which will transform all italicized inlines to inlines within an "
 "``Emphasis`` custom-style ``span``."
 msgstr ""
+"この機能と `Pandoc フィルタ <http://pandoc.org/filters.html>`__ "
+"を併用することで、すばらしいカスタマイズを実現できます。たとえば、引用の後に続くすべての段落をインデントしたい場合には、必要なスタイルを適用するフィルタを書けばよいのです。また、すべての斜体を"
+" ``Emphasis`` 文字スタイルに変換したい場合には (もしかしたら文字色が変わるかもしれません)、斜体となっているすべてのインラインを "
+"custom-style ``Emphasis`` が適用された ``span`` に変換するフィルタを書けばよいでしょう。"
 
 #: ../../source/users-guide.rst:5102
 msgid "Custom writers"
@@ -6909,6 +7187,9 @@ msgid ""
 "the ``PandocPure`` monad. See the document `Using the pandoc API "
 "<http://pandoc.org/using-the-pandoc-api.html>`__ for more details."
 msgstr ""
+"自身のアプリケーションにおいてPandocを（実行ファイルとしてではなく）Haskellライブラリとしてを利用する場合は、 ``PandocPure``"
+"  モナドの中でPandocの操作を行うことで、ファイルシステムから完全に隔離された環境でPandocを実行できます。詳しくは `Using the "
+"pandoc API <http://pandoc.org/using-the-pandoc-api.html>`__ をご覧ください。"
 
 #: ../../source/users-guide.rst:5143
 msgid ""
@@ -6918,6 +7199,8 @@ msgid ""
 "you can add the command line options ``+RTS -M512M -RTS`` (for example) to "
 "limit the heap size to 512MB."
 msgstr ""
+"Pandocのパーサは、めったに起こらないいくつかの厄介なケースにおいて、病的な振る舞いをすることがあります。セキュリティ上の穴を悪用するDOS攻撃を防ぐために、Pandocにおけるあらゆる操作は一定時間内に終わらせる方がよいでしょう。実行ファイルのPandocを利用する場合は、コマンドラインオプションとしてたとえば"
+" ``+RTS -M512M -RTS`` （ヒープサイズを512MBに制限する）といったものを指定できます。"
 
 #: ../../source/users-guide.rst:5149
 msgid ""
@@ -6927,10 +7210,13 @@ msgid ""
 "for headers, spans, and code blocks. To be safe, you should run all the "
 "generated HTML through an HTML sanitizer."
 msgstr ""
+"Pandocが出力するHTMLは、安全であることを保証しません。Markdown入力時において ``raw_html`` "
+"が有効になっている場合、ユーザは任意のHTMLを挿入できます。 ``raw_html`` "
+"が無効の場合でさえ、ユーザはヘッダ、span、およびコードブロックの属性に、危険なコンテンツを含めることが可能です。安全のために、出力されるすべてのHTMLはHTMLサニタイザを通してください。"
 
 #: ../../source/users-guide.rst:5157
 msgid "Authors"
-msgstr ""
+msgstr "原文の著者について"
 
 #: ../../source/users-guide.rst:5159
 msgid ""
@@ -6940,6 +7226,11 @@ msgid ""
 "and warranty notices.) For a full list of contributors, see the file "
 "AUTHORS.md in the pandoc source code."
 msgstr ""
+"Copyright 2006-2017 John MacFarlane (jgm@berkeley.edu). Released under the "
+"`GPL <http://www.gnu.org/copyleft/gpl.html>`__, version 2 or greater. This "
+"software carries no warranty of any kind. (See COPYRIGHT for full copyright "
+"and warranty notices.) For a full list of contributors, see the file "
+"AUTHORS.md in the pandoc source code."
 
 #: ../../source/users-guide.rst:5166
 msgid ""

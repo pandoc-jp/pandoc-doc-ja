@@ -38,3 +38,17 @@ $ git submodule update
 ```
 $ make html
 ```
+
+## Transifexのpoファイルを入れてビルドする
+
+- 事前に、Transifexからpoファイルをダウンロードする（今のところ手動管理）。
+    - Transifexでリソース「users-guide.po (Japanese (Japan))」を選択
+    - 「利用のためにダウンロード」をクリック
+    - `for_use_pandoc-users-guide_users-guidepo_ja_JP.po` がダウンロードされる
+    - `for_use_pandoc-users-guide_users-guidepo_ja_JP.po` を `users-guide.po` にリネーム
+    - ディレクトリ `source/locale/ja/LC_MESSAGES/` にコピー
+
+```
+$ make gettext
+$ sphinx-intl update -p build/gettext -l ja
+```
