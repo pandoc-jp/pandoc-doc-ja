@@ -62,10 +62,10 @@ msgstr ""
 "Pandocは、`Markdown <http://daringfireball.net/projects/markdown/>`__、`HTML "
 "<http://www.w3.org/html/>`__、`LaTeX <http://latex-project.org>`__、`Word docx"
 " "
-"<https://en.wikipedia.org/wiki/Office_Open_XML>`__など、これに限定されない多数のマークアップとワープロ形式の間で変換することができます。"
+"<https://en.wikipedia.org/wiki/Office_Open_XML>`__ など、これに限定されない多数のマークアップとワープロ形式の間で変換することができます。"
 " 入力および出力形式の完全なリストについては、以下の`--fromおよび--toオプション <#general-"
-"options>`__を参照してください。 Pandocは`PDF <https://www.adobe.com/pdf/>`__ "
-"出力を生成することもできます。以下の`PDFの作成<#creating-a-pdf>`__を参照してください。"
+"options>`__を参照してください。 Pandocは `PDF <https://www.adobe.com/pdf/>`__ "
+"出力を生成することもできます。以下の `PDFの作成<#creating-a-pdf>`__ を参照してください。"
 
 #: ../../source/users-guide.rst:23
 msgid ""
