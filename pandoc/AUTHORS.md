@@ -11,9 +11,11 @@
 - Alexander Sulfrian
 - Alexander V Vershilov
 - Alfred Wechselberger
+- Anders Waldenborg
 - Andreas Lööw
 - Andrew Dunning
 - Antoine Latter
+- Antonio Terceiro
 - Arata Mizuki
 - Arlo O'Keeffe
 - Artyom Kazak
@@ -26,6 +28,7 @@
 - Bjorn Buckwalter
 - Bradley Kuhn
 - Brent Yorgey
+- Brian Leung
 - Bryan O'Sullivan
 - Caleb McDaniel
 - Calvin Beck
@@ -71,8 +74,11 @@
 - Henrik Tramberend
 - Henry de Valence
 - Hubert Plociniczak
+- Igor Khorlo
 - Ilya V. Portnov
+- Ivan Trubach
 - Ivo Clarysse
+- J. B. Rainsberger
 - J. Lewis Muir
 - Jaime Marquínez Ferrándiz
 - Jakob Voß
@@ -92,8 +98,10 @@
 - John Muccigrosso
 - John Luke Bentley
 - Jonas Smedegaard
+- Jonas Scholl
 - Jonathan Daugherty
 - Jose Luis Duran
+- José de Mattos Neto
 - Josef Svenningsson
 - Julien Cretel
 - Juliusz Gonera
@@ -114,6 +122,7 @@
 - Masayoshi Takahashi
 - Matej Kollar
 - Mathias Schenner
+- Mathias Walter
 - Mathieu Duponchelle
 - Matthew Eddey
 - Matthew Pickering
@@ -131,8 +140,10 @@
 - Nathan Gass
 - Neil Mayhew
 - Nick Bart
+- Nick Fleisher
 - Nicolas Kaiser
 - Nikolay Yakimov
+- Nils Carlson
 - Nokome Bentley
 - Oliver Matthews
 - Ophir Lifshitz
@@ -148,6 +159,7 @@
 - Puneeth Chaganti
 - Ralf Stephan
 - Raniere Silva
+- Raymond Ehlers
 - Recai Oktaş
 - Roland Hieber
 - RyanGlScott
@@ -182,6 +194,8 @@
 - Waldir Pimenta
 - Wikiwide
 - Xavier Olive
+- Yan Pashkovsky
+- Yoan Blanc
 - Yuchen Pei
 - bucklereed
 - bumper314
@@ -189,6 +203,8 @@
 - d-dorazio
 - iandol
 - infinity0x
+- kaizshang91
+- lux-lth
 - lwolfsonkin
 - nkalvi
 - oltolm
@@ -202,3 +218,4 @@
 - takahashim
 - tgkokk
 - thsutton
+- wiefling

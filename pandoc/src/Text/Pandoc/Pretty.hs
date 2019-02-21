@@ -239,7 +239,7 @@ render linelen doc = fromString . mconcat . reverse . output $
 
 renderDoc :: (IsString a, Monoid a)
           => Doc -> DocState a
-renderDoc = renderList . toList . unDoc
+renderDoc = renderList . dropWhile (== BreakingSpace) . toList . unDoc
 
 data IsBlock = IsBlock Int [String]
 
@@ -280,6 +280,9 @@ renderList [BlankLines _] = return ()
 renderList (BlankLines m : BlankLines n : xs) =
   renderList (BlankLines (max m n) : xs)
 
+renderList (BlankLines num : BreakingSpace : xs) =
+  renderList (BlankLines num : xs)
+
 renderList (BlankLines num : xs) = do
   st <- get
   case output st of
@@ -289,6 +292,9 @@ renderList (BlankLines num : xs) = do
 
 renderList (CarriageReturn : BlankLines m : xs) =
   renderList (BlankLines m : xs)
+
+renderList (CarriageReturn : BreakingSpace : xs) =
+  renderList (CarriageReturn : xs)
 
 renderList (CarriageReturn : xs) = do
   st <- get
@@ -302,7 +308,8 @@ renderList (NewLine : xs) = do
   outp (-1) "\n"
   renderList xs
 
-renderList (BreakingSpace : CarriageReturn : xs) = renderList (CarriageReturn:xs)
+renderList (BreakingSpace : CarriageReturn : xs) =
+  renderList (CarriageReturn:xs)
 renderList (BreakingSpace : NewLine : xs) = renderList (NewLine:xs)
 renderList (BreakingSpace : BlankLines n : xs) = renderList (BlankLines n:xs)
 renderList (BreakingSpace : BreakingSpace : xs) = renderList (BreakingSpace:xs)
@@ -432,15 +439,13 @@ nowrap doc = Doc $ mapWithIndex replaceSpace $ unDoc doc
         replaceSpace _ x             = x
 
 -- | Content to print only if it comes at the beginning of a line,
--- to be used e.g. for escaping line-initial `.` in groff man.
+-- to be used e.g. for escaping line-initial `.` in roff man.
 afterBreak :: String -> Doc
 afterBreak s = Doc $ singleton (AfterBreak s)
 
 -- | Returns the width of a 'Doc'.
 offset :: Doc -> Int
-offset d = case map realLength . lines . render Nothing $ d of
-                [] -> 0
-                os -> maximum os
+offset d = maximum (0: map realLength (lines $ render Nothing d))
 
 -- | Returns the minimal width of a 'Doc' when reflowed at breakable spaces.
 minOffset :: Doc -> Int

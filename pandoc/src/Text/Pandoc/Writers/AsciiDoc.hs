@@ -40,14 +40,11 @@ AsciiDoc:  <http://www.methods.co.nz/asciidoc/>
 module Text.Pandoc.Writers.AsciiDoc (writeAsciiDoc) where
 import Prelude
 import Control.Monad.State.Strict
-import Data.Aeson (Result (..), Value (String), fromJSON, toJSON)
-import Data.Char (isPunctuation, isSpace)
+import Data.Char (isPunctuation, isSpace, toLower)
 import Data.List (intercalate, intersperse, stripPrefix)
-import qualified Data.Map as M
-import Data.Maybe (fromMaybe, isJust)
+import Data.Maybe (fromMaybe, isJust, listToMaybe)
 import qualified Data.Set as Set
 import Data.Text (Text)
-import qualified Data.Text as T
 import Text.Pandoc.Class (PandocMonad, report)
 import Text.Pandoc.Definition
 import Text.Pandoc.ImageSize
@@ -93,23 +90,24 @@ pandocToAsciiDoc opts (Pandoc meta blocks) = do
               (fmap render' . blockListToAsciiDoc opts)
               (fmap render' . inlineListToAsciiDoc opts)
               meta
-  let addTitleLine (String t) = String $
-         t <> "\n" <> T.replicate (T.length t) "="
-      addTitleLine x = x
-  let metadata' = case fromJSON metadata of
-                        Success m  -> toJSON $ M.adjust addTitleLine
-                                                 ("title" :: T.Text) m
-                        _          -> metadata
-  body <- blockListToAsciiDoc opts blocks
+  body <- vcat <$> mapM (elementToAsciiDoc 1 opts) (hierarchicalize blocks)
   let main = render colwidth body
   let context  = defField "body" main
                $ defField "toc"
                   (writerTableOfContents opts &&
                    isJust (writerTemplate opts))
-               $defField "titleblock" titleblock metadata'
+               $defField "titleblock" titleblock metadata
   case writerTemplate opts of
        Nothing  -> return main
        Just tpl -> renderTemplate' tpl context
+
+elementToAsciiDoc :: PandocMonad m
+                  => Int -> WriterOptions -> Element -> ADW m Doc
+elementToAsciiDoc _ opts (Blk b) = blockToAsciiDoc opts b
+elementToAsciiDoc nestlevel opts (Sec _lvl _num attr label children) = do
+  hdr <- blockToAsciiDoc opts (Header nestlevel attr label)
+  rest <- vcat <$> mapM (elementToAsciiDoc (nestlevel + 1) opts) children
+  return $ hdr $$ rest
 
 -- | Escape special characters for AsciiDoc.
 escapeString :: String -> String
@@ -126,11 +124,16 @@ olMarker = do (start, style', delim) <- anyOrderedListMarker
                           else spaceChar
 
 -- | True if string begins with an ordered list marker
-beginsWithOrderedListMarker :: String -> Bool
-beginsWithOrderedListMarker str =
-  case runParser olMarker defaultParserState "para start" (take 10 str) of
-         Left  _ -> False
-         Right _ -> True
+-- or would be interpreted as an AsciiDoc option command
+needsEscaping :: String -> Bool
+needsEscaping s = beginsWithOrderedListMarker s || isBracketed s
+  where
+    beginsWithOrderedListMarker str =
+      case runParser olMarker defaultParserState "para start" (take 10 str) of
+             Left  _ -> False
+             Right _ -> True
+    isBracketed ('[':cs) = listToMaybe (reverse cs) == Just ']'
+    isBracketed _ = False
 
 -- | Convert Pandoc block element to asciidoc.
 blockToAsciiDoc :: PandocMonad m
@@ -146,8 +149,8 @@ blockToAsciiDoc opts (Para [Image attr alt (src,'f':'i':'g':':':tit)]) =
 blockToAsciiDoc opts (Para inlines) = do
   contents <- inlineListToAsciiDoc opts inlines
   -- escape if para starts with ordered list marker
-  let esc = if beginsWithOrderedListMarker (render Nothing contents)
-               then text "\\"
+  let esc = if needsEscaping (render Nothing contents)
+               then text "{empty}"
                else empty
   return $ esc <> contents <> blankline
 blockToAsciiDoc opts (LineBlock lns) = do
@@ -166,27 +169,17 @@ blockToAsciiDoc _ HorizontalRule =
   return $ blankline <> text "'''''" <> blankline
 blockToAsciiDoc opts (Header level (ident,_,_) inlines) = do
   contents <- inlineListToAsciiDoc opts inlines
-  let len = offset contents
-  -- ident seem to be empty most of the time and asciidoc will generate them automatically
-  -- so lets make them not show up when null
   ids <- gets autoIds
-  let autoId = uniqueIdent inlines ids
+  let autoId = uniqueIdent (writerExtensions opts) inlines ids
   modify $ \st -> st{ autoIds = Set.insert autoId ids }
-  let identifier = if null ident || (isEnabled Ext_auto_identifiers opts && ident == autoId)
-                     then empty else "[[" <> text ident <> "]]"
-  let setext = writerSetextHeaders opts
-  return
-         (if setext
-            then
-              identifier $$ contents $$
-              (case level of
-               1 -> text $ replicate len '-'
-               2 -> text $ replicate len '~'
-               3 -> text $ replicate len '^'
-               4 -> text $ replicate len '+'
-               _ -> empty) <> blankline
-            else
-              identifier $$ text (replicate level '=') <> space <> contents <> blankline)
+  let identifier = if null ident ||
+                      (isEnabled Ext_auto_identifiers opts && ident == autoId)
+                      then empty
+                      else "[[" <> text ident <> "]]"
+  return $ identifier $$
+           nowrap (text (replicate (level + 1) '=') <> space <> contents) <>
+           blankline
+
 blockToAsciiDoc _ (CodeBlock (_,classes,_) str) = return $ flush (
   if null classes
      then "...." $$ text str $$ "...."
@@ -265,22 +258,23 @@ blockToAsciiDoc opts (Table caption aligns widths headers rows) =  do
 blockToAsciiDoc opts (BulletList items) = do
   contents <- mapM (bulletListItemToAsciiDoc opts) items
   return $ cat contents <> blankline
-blockToAsciiDoc opts (OrderedList (_start, sty, _delim) items) = do
-  let sty' = case sty of
-                  UpperRoman -> UpperAlpha
-                  LowerRoman -> LowerAlpha
-                  x          -> x
-  let markers  = orderedListMarkers (1, sty', Period)  -- start num not used
-  let markers' = map (\m -> if length m < 3
-                               then m ++ replicate (3 - length m) ' '
-                               else m) markers
-  contents <- zipWithM (orderedListItemToAsciiDoc opts) markers' items
-  return $ cat contents <> blankline
+blockToAsciiDoc opts (OrderedList (start, sty, _delim) items) = do
+  let listStyle = case sty of
+                       DefaultStyle -> []
+                       Decimal      -> ["arabic"]
+                       Example      -> []
+                       _            -> [map toLower (show sty)]
+  let listStart = if start == 1 then [] else ["start=" ++ show start]
+  let listoptions = case intercalate ", " (listStyle ++ listStart) of
+                          [] -> empty
+                          x  -> brackets (text x)
+  contents <- mapM (orderedListItemToAsciiDoc opts) items
+  return $ listoptions $$ cat contents <> blankline
 blockToAsciiDoc opts (DefinitionList items) = do
   contents <- mapM (definitionListItemToAsciiDoc opts) items
   return $ cat contents <> blankline
 blockToAsciiDoc opts (Div (ident,_,_) bs) = do
-  let identifier = if null ident then empty else ("[[" <> text ident <> "]]")
+  let identifier = if null ident then empty else "[[" <> text ident <> "]]"
   contents <- blockListToAsciiDoc opts bs
   return $ identifier $$ contents
 
@@ -288,40 +282,34 @@ blockToAsciiDoc opts (Div (ident,_,_) bs) = do
 bulletListItemToAsciiDoc :: PandocMonad m
                          => WriterOptions -> [Block] -> ADW m Doc
 bulletListItemToAsciiDoc opts blocks = do
-  let addBlock :: PandocMonad m => Doc -> Block -> ADW m Doc
-      addBlock d b | isEmpty d    = chomp `fmap` blockToAsciiDoc opts b
-      addBlock d b@(BulletList _) = do x <- blockToAsciiDoc opts b
-                                       return $ d <> cr <> chomp x
-      addBlock d b@(OrderedList _ _) = do x <- blockToAsciiDoc opts b
-                                          return $ d <> cr <> chomp x
-      addBlock d b = do x <- blockToAsciiDoc opts b
-                        return $ d <> cr <> text "+" <> cr <> chomp x
   lev <- gets bulletListLevel
   modify $ \s -> s{ bulletListLevel = lev + 1 }
-  contents <- foldM addBlock empty blocks
+  contents <- foldM (addBlock opts) empty blocks
   modify $ \s -> s{ bulletListLevel = lev }
   let marker = text (replicate lev '*')
   return $ marker <> text " " <> contents <> cr
 
+addBlock :: PandocMonad m => WriterOptions -> Doc -> Block -> ADW m Doc
+addBlock opts d b | isEmpty d    = chomp `fmap` blockToAsciiDoc opts b
+addBlock opts d b@(BulletList _) = do x <- blockToAsciiDoc opts b
+                                      return $ d <> cr <> chomp x
+addBlock opts d b@(OrderedList _ _) = do x <- blockToAsciiDoc opts b
+                                         return $ d <> cr <> chomp x
+addBlock opts d b = do x <- blockToAsciiDoc opts b
+                       return $ d <> cr <> text "+" <> cr <> chomp x
+
 -- | Convert ordered list item (a list of blocks) to asciidoc.
 orderedListItemToAsciiDoc :: PandocMonad m
                           => WriterOptions -- ^ options
-                          -> String        -- ^ list item marker
                           -> [Block]       -- ^ list item (list of blocks)
                           -> ADW m Doc
-orderedListItemToAsciiDoc opts marker blocks = do
-  let addBlock d b | isEmpty d    = chomp `fmap` blockToAsciiDoc opts b
-      addBlock d b@(BulletList _) = do x <- blockToAsciiDoc opts b
-                                       return $ d <> cr <> chomp x
-      addBlock d b@(OrderedList _ _) = do x <- blockToAsciiDoc opts b
-                                          return $ d <> cr <> chomp x
-      addBlock d b = do x <- blockToAsciiDoc opts b
-                        return $ d <> cr <> text "+" <> cr <> chomp x
+orderedListItemToAsciiDoc opts blocks = do
   lev <- gets orderedListLevel
   modify $ \s -> s{ orderedListLevel = lev + 1 }
-  contents <- foldM addBlock empty blocks
+  contents <- foldM (addBlock opts) empty blocks
   modify $ \s -> s{ orderedListLevel = lev }
-  return $ text marker <> text " " <> contents <> cr
+  let marker = text (replicate lev '.')
+  return $ marker <> text " " <> contents <> cr
 
 -- | Convert definition list item (label, list of blocks) to asciidoc.
 definitionListItemToAsciiDoc :: PandocMonad m
@@ -486,7 +474,11 @@ inlineToAsciiDoc opts (Note [Plain inlines]) = do
   return $ text "footnote:[" <> contents <> "]"
 -- asciidoc can't handle blank lines in notes
 inlineToAsciiDoc _ (Note _) = return "[multiblock footnote omitted]"
-inlineToAsciiDoc opts (Span (ident,_,_) ils) = do
-  let identifier = if null ident then empty else ("[[" <> text ident <> "]]")
+inlineToAsciiDoc opts (Span (ident,classes,_) ils) = do
   contents <- inlineListToAsciiDoc opts ils
-  return $ identifier <> contents
+  if null ident && null classes
+     then return contents
+     else do
+       let modifier = brackets $ text $ unwords $
+            [ '#':ident | not (null ident)] ++ map ('.':) classes
+       return $ modifier <> "#" <> contents <> "#"

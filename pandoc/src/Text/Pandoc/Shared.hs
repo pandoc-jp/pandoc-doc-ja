@@ -6,6 +6,8 @@
 
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE ViewPatterns          #-}
+{-# LANGUAGE FlexibleInstances  #-}
+{-# LANGUAGE TypeSynonymInstances  #-}
 {-
 Copyright (C) 2006-2018 John MacFarlane <jgm@berkeley.edu>
 
@@ -43,12 +45,14 @@ module Text.Pandoc.Shared (
                      substitute,
                      ordNub,
                      -- * Text processing
+                     ToString (..),
                      backslashEscapes,
                      escapeStringUsing,
                      stripTrailingNewlines,
                      trim,
                      triml,
                      trimr,
+                     trimMath,
                      stripFirstAndLast,
                      camelCaseToHyphenated,
                      toRomanNumeral,
@@ -79,6 +83,7 @@ module Text.Pandoc.Shared (
                      makeMeta,
                      eastAsianLineBreakFilter,
                      underlineSpan,
+                     splitSentences,
                      -- * TagSoup HTML handling
                      renderTags',
                      -- * File handling
@@ -94,6 +99,8 @@ module Text.Pandoc.Shared (
                      -- * for squashing blocks
                      blocksToInlines,
                      blocksToInlines',
+                     blocksToInlinesWithSep,
+                     defaultBlocksSeparator,
                      -- * Safe read
                      safeRead,
                      -- * Temp directory
@@ -108,8 +115,10 @@ import qualified Control.Exception as E
 import Control.Monad (MonadPlus (..), msum, unless)
 import qualified Control.Monad.State.Strict as S
 import qualified Data.ByteString.Lazy as BL
-import Data.Char (isAlpha, isDigit, isLetter, isLower, isSpace, isUpper,
-                  toLower)
+import qualified Data.Bifunctor as Bifunctor
+import Data.Char (isAlpha, isLower, isSpace, isUpper, toLower, isAlphaNum,
+                  generalCategory, GeneralCategory(NonSpacingMark,
+                  SpacingCombiningMark, EnclosingMark, ConnectorPunctuation))
 import Data.Data (Data, Typeable)
 import Data.List (find, intercalate, intersperse, stripPrefix)
 import qualified Data.Map as M
@@ -129,7 +138,9 @@ import Text.HTML.TagSoup (RenderOptions (..), Tag (..), renderOptions,
 import Text.Pandoc.Builder (Blocks, Inlines, ToMetaValue (..))
 import qualified Text.Pandoc.Builder as B
 import Data.Time
+import Text.Pandoc.Asciify (toAsciiChar)
 import Text.Pandoc.Definition
+import Text.Pandoc.Extensions (Extensions, Extension(..), extensionEnabled)
 import Text.Pandoc.Generic (bottomUp)
 import Text.Pandoc.Pretty (charWidth)
 import Text.Pandoc.Walk
@@ -188,6 +199,15 @@ ordNub l = go Set.empty l
 -- Text processing
 --
 
+class ToString a where
+  toString :: a -> String
+
+instance ToString String where
+  toString = id
+
+instance ToString T.Text where
+  toString = T.unpack
+
 -- | Returns an association list of backslash escapes for the
 -- designated characters.
 backslashEscapes :: [Char]    -- ^ list of special characters to escape
@@ -219,6 +239,15 @@ triml = dropWhile (`elem` " \r\n\t")
 -- | Remove trailing space (including newlines) from string.
 trimr :: String -> String
 trimr = reverse . triml . reverse
+
+-- | Trim leading space and trailing space unless after \.
+trimMath :: String -> String
+trimMath = triml . reverse . stripspace . reverse
+  where
+  stripspace (c1:c2:cs)
+    | c1  `elem` [' ','\t','\n','\r']
+    , c2 /= '\\' = stripspace (c2:cs)
+  stripspace cs = cs
 
 -- | Strip leading and trailing characters from string
 stripFirstAndLast :: String -> String
@@ -457,18 +486,32 @@ instance Walkable Block Element where
   query f (Blk x)              = query f x
   query f (Sec _ _ _ ils elts) = query f ils `mappend` query f elts
 
-
 -- | Convert Pandoc inline list to plain text identifier.  HTML
 -- identifiers must start with a letter, and may contain only
 -- letters, digits, and the characters _-.
-inlineListToIdentifier :: [Inline] -> String
-inlineListToIdentifier =
-  dropWhile (not . isAlpha) . intercalate "-" . words .
-    map (nbspToSp . toLower) .
-    filter (\c -> isLetter c || isDigit c || c `elem` "_-. ") .
-    stringify
- where nbspToSp '\160' =  ' '
-       nbspToSp x      =  x
+inlineListToIdentifier :: Extensions -> [Inline] -> String
+inlineListToIdentifier exts =
+  dropNonLetter . filterAscii . toIdent . stringify
+  where
+    dropNonLetter
+      | extensionEnabled Ext_gfm_auto_identifiers exts = id
+      | otherwise = dropWhile (not . isAlpha)
+    filterAscii
+      | extensionEnabled Ext_ascii_identifiers exts
+        = mapMaybe toAsciiChar
+      | otherwise = id
+    toIdent
+      | extensionEnabled Ext_gfm_auto_identifiers exts =
+        filterPunct . spaceToDash . map toLower
+      | otherwise = intercalate "-" . words . filterPunct . map toLower
+    filterPunct = filter (\c -> isSpace c || isAlphaNum c || isAllowedPunct c)
+    isAllowedPunct c
+      | extensionEnabled Ext_gfm_auto_identifiers exts
+        = c == '-' || c == '_' ||
+          generalCategory c `elem` [NonSpacingMark, SpacingCombiningMark,
+                                    EnclosingMark, ConnectorPunctuation]
+      | otherwise = c == '_' || c == '-' || c == '.'
+    spaceToDash = map (\c -> if isSpace c then '-' else c)
 
 -- | Convert list of Pandoc blocks into (hierarchical) list of Elements
 hierarchicalize :: [Block] -> [Element]
@@ -489,10 +532,10 @@ hierarchicalizeWithIds (Header level attr@(_,classes,_) title':xs) = do
   sectionContents' <- hierarchicalizeWithIds sectionContents
   rest' <- hierarchicalizeWithIds rest
   return $ Sec level newnum attr title' sectionContents' : rest'
-hierarchicalizeWithIds (Div ("",["references"],[])
+hierarchicalizeWithIds (Div ("refs",classes',kvs')
                          (Header level (ident,classes,kvs) title' : xs):ys) =
   hierarchicalizeWithIds (Header level (ident,"references":classes,kvs)
-                           title' : (xs ++ ys))
+                           title' : Div ("refs",classes',kvs') xs : ys)
 hierarchicalizeWithIds (x:rest) = do
   rest' <- hierarchicalizeWithIds rest
   return $ Blk x : rest'
@@ -504,17 +547,20 @@ headerLtEq _ _                                                   = False
 
 -- | Generate a unique identifier from a list of inlines.
 -- Second argument is a list of already used identifiers.
-uniqueIdent :: [Inline] -> Set.Set String -> String
-uniqueIdent title' usedIdents
-  =  let baseIdent = case inlineListToIdentifier title' of
-                        "" -> "section"
-                        x  -> x
-         numIdent n = baseIdent ++ "-" ++ show n
-     in  if baseIdent `Set.member` usedIdents
-           then case find (\x -> not $ numIdent x `Set.member` usedIdents) ([1..60000] :: [Int]) of
-                  Just x  -> numIdent x
-                  Nothing -> baseIdent   -- if we have more than 60,000, allow repeats
-           else baseIdent
+uniqueIdent :: Extensions -> [Inline] -> Set.Set String -> String
+uniqueIdent exts title' usedIdents =
+  if baseIdent `Set.member` usedIdents
+     then case find (\x -> not $ numIdent x `Set.member` usedIdents)
+               ([1..60000] :: [Int]) of
+            Just x  -> numIdent x
+            Nothing -> baseIdent
+            -- if we have more than 60,000, allow repeats
+     else baseIdent
+  where
+    baseIdent = case inlineListToIdentifier exts title' of
+                     "" -> "section"
+                     x  -> x
+    numIdent n = baseIdent ++ "-" ++ show n
 
 -- | True if block is a Header block.
 isHeaderBlock :: Block -> Bool
@@ -580,6 +626,31 @@ eastAsianLineBreakFilter = bottomUp go
 underlineSpan :: Inlines -> Inlines
 underlineSpan = B.spanWith ("", ["underline"], [])
 
+-- | Returns the first sentence in a list of inlines, and the rest.
+breakSentence :: [Inline] -> ([Inline], [Inline])
+breakSentence [] = ([],[])
+breakSentence xs =
+  let isSentenceEndInline (Str ys@(_:_)) | last ys == '.' = True
+      isSentenceEndInline (Str ys@(_:_)) | last ys == '?' = True
+      isSentenceEndInline LineBreak      = True
+      isSentenceEndInline _              = False
+      (as, bs) = break isSentenceEndInline xs
+  in  case bs of
+           []             -> (as, [])
+           [c]            -> (as ++ [c], [])
+           (c:Space:cs)   -> (as ++ [c], cs)
+           (c:SoftBreak:cs) -> (as ++ [c], cs)
+           (Str ".":Str (')':ys):cs) -> (as ++ [Str ".", Str (')':ys)], cs)
+           (x@(Str ('.':')':_)):cs) -> (as ++ [x], cs)
+           (LineBreak:x@(Str ('.':_)):cs) -> (as ++[LineBreak], x:cs)
+           (c:cs)         -> (as ++ [c] ++ ds, es)
+              where (ds, es) = breakSentence cs
+
+-- | Split a list of inlines into sentences.
+splitSentences :: [Inline] -> [[Inline]]
+splitSentences xs =
+  let (sent, rest) = breakSentence xs
+  in  if null rest then [sent] else sent : splitSentences rest
 
 --
 -- TagSoup HTML handling
@@ -609,8 +680,7 @@ inDirectory path action = E.bracket
 --
 
 mapLeft :: (a -> b) -> Either a c -> Either b c
-mapLeft f (Left x)  = Left (f x)
-mapLeft _ (Right x) = Right x
+mapLeft = Bifunctor.first
 
 -- | Remove intermediate "." and ".." directories from a path.
 --
@@ -757,11 +827,18 @@ blocksToInlinesWithSep sep =
   mconcat . intersperse sep . map blockToInlines
 
 blocksToInlines' :: [Block] -> Inlines
-blocksToInlines' = blocksToInlinesWithSep parSep
-  where parSep = B.space <> B.str "¶" <> B.space
+blocksToInlines' = blocksToInlinesWithSep defaultBlocksSeparator
 
 blocksToInlines :: [Block] -> [Inline]
 blocksToInlines = B.toList . blocksToInlines'
+
+-- | Inline elements used to separate blocks when squashing blocks into
+-- inlines.
+defaultBlocksSeparator :: Inlines
+defaultBlocksSeparator =
+  -- This is used in the pandoc.utils.blocks_to_inlines function. Docs
+  -- there should be updated if this is changed.
+  B.space <> B.str "¶" <> B.space
 
 
 --

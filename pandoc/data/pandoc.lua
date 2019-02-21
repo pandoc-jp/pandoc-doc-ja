@@ -25,6 +25,7 @@ THIS SOFTWARE.
 local M = {}
 
 local List = require 'pandoc.List'
+local utils = require 'pandoc.utils'
 
 ------------------------------------------------------------------------
 -- Accessor objects
@@ -73,6 +74,39 @@ local function create_accessor_functions (fn_template, accessors)
   return res
 end
 
+--- Get list of top-level fields from field descriptor table.
+-- E.g.: `top_level_fields{'foo', {bar='baz'}, {'qux', 'quux'}}`
+-- gives {'foo, 'bar', 'qux', 'quux'}
+-- @local
+local function top_level_fields (fields)
+  local result = List:new{}
+  for _, v in ipairs(fields) do
+    if type(v) == 'string' then
+      table.insert(result, v)
+    elseif type(v) == 'table' and #v == 0 and next(v) then
+      table.insert(result, (next(v)))
+    else
+      result:extend(top_level_fields(v))
+    end
+  end
+  return result
+end
+
+--- Creates a function which behaves like next, but respects field names.
+-- @local
+local function make_next_function (fields)
+  local field_indices = {}
+  for i, f in ipairs(fields) do
+    field_indices[f] = i
+  end
+
+  return function (t, field)
+    local raw_idx = field == nil and 0 or field_indices[field]
+    local next_field = fields[raw_idx + 1]
+    return next_field, t[next_field]
+  end
+end
+
 --- Create a new table which allows to access numerical indices via accessor
 -- functions.
 -- @local
@@ -86,6 +120,7 @@ local function create_accessor_behavior (tag, accessors)
     'function (x, v) x.c%s = v end',
     accessors
   )
+  behavior.__eq = utils.equals
   behavior.__index = function(t, k)
     if getmetatable(t).getters[k] then
       return getmetatable(t).getters[k](t)
@@ -101,6 +136,15 @@ local function create_accessor_behavior (tag, accessors)
     else
       rawset(t, k, v)
     end
+  end
+  behavior.__pairs = function (t)
+    if accessors == nil then
+      return next, t
+    end
+    local iterable_fields = type(accessors) == 'string'
+      and {accessors}
+      or top_level_fields(accessors)
+    return make_next_function(iterable_fields), t
   end
   return behavior
 end
@@ -267,8 +311,16 @@ M.MetaInlines = M.MetaValue:create_constructor(
 -- @tparam {MetaValue,...} meta_values list of meta values
 M.MetaList = M.MetaValue:create_constructor(
   'MetaList',
-  function (content) return ensureList(content) end
+  function (content)
+    if content.tag == 'MetaList' then
+      return content
+    end
+    return ensureList(content)
+  end
 )
+for k, v in pairs(List) do
+  M.MetaList.behavior[k] = v
+end
 
 --- Meta map
 -- @function MetaMap
@@ -403,7 +455,7 @@ M.Null = M.Block:create_constructor(
 M.OrderedList = M.Block:create_constructor(
   "OrderedList",
   function(items, listAttributes)
-    listAttributes = listAttributes or {1, M.DefaultStyle, M.DefaultDelim}
+    listAttributes = listAttributes or M.ListAttributes()
     return {c = {listAttributes, ensureList(items)}}
   end,
   {{listAttributes = {"start", "style", "delimiter"}}, "content"}
@@ -487,7 +539,7 @@ M.Cite = M.Inline:create_constructor(
 
 --- Creates a Code inline element
 -- @function Code
--- @tparam      string      text        brief image description
+-- @tparam      string      text  code string
 -- @tparam[opt] Attr        attr  additional attributes
 -- @treturn Inline code element
 M.Code = M.Inline:create_constructor(
@@ -823,6 +875,7 @@ function M.Attr:new (identifier, classes, attributes)
   return {identifier, classes, attributes}
 end
 M.Attr.behavior._field_names = {identifier = 1, classes = 2, attributes = 3}
+M.Attr.behavior.__eq = utils.equals
 M.Attr.behavior.__index = function(t, k)
   return rawget(t, getmetatable(t)._field_names[k]) or
     getmetatable(t)[k]
@@ -833,6 +886,14 @@ M.Attr.behavior.__newindex = function(t, k, v)
   else
     rawset(t, k, v)
   end
+end
+M.Attr.behavior.__pairs = function(t)
+  local field_names = M.Attr.behavior._field_names
+  local fields = {}
+  for name, i in pairs(field_names) do
+    fields[i] = name
+  end
+  return make_next_function(fields), t, nil
 end
 
 -- Citation
@@ -855,6 +916,43 @@ function M.Citation:new (id, mode, prefix, suffix, note_num, hash)
     note_num = note_num or 0,
     hash = hash or 0,
   }
+end
+
+-- ListAttributes
+M.ListAttributes = AstElement:make_subtype 'ListAttributes'
+
+--- Creates a set of list attributes.
+-- @function ListAttributes
+-- @tparam[opt] integer start number of the first list item
+-- @tparam[opt] string  style style used for list numbering
+-- @tparam[opt] DefaultDelim|Period|OneParen|TwoParens delimiter delimiter of list numbers
+-- @treturn table list attributes table
+function M.ListAttributes:new (start, style, delimiter)
+  start = start or 1
+  style = style or 'DefaultStyle'
+  delimiter = delimiter or 'DefaultDelim'
+  return {start, style, delimiter}
+end
+M.ListAttributes.behavior._field_names = {start = 1, style = 2, delimiter = 3}
+M.ListAttributes.behavior.__eq = utils.equals
+M.ListAttributes.behavior.__index = function (t, k)
+  return rawget(t, getmetatable(t)._field_names[k]) or
+    getmetatable(t)[k]
+end
+M.ListAttributes.behavior.__newindex = function (t, k, v)
+  if getmetatable(t)._field_names[k] then
+    rawset(t, getmetatable(t)._field_names[k], v)
+  else
+    rawset(t, k, v)
+  end
+end
+M.ListAttributes.behavior.__pairs = function(t)
+  local field_names = M.ListAttributes.behavior._field_names
+  local fields = {}
+  for name, i in pairs(field_names) do
+    fields[i] = name
+  end
+  return make_next_function(fields), t, nil
 end
 
 
@@ -939,7 +1037,6 @@ M.UpperAlpha = "UpperAlpha"
 
 ------------------------------------------------------------------------
 -- Functions which have moved to different modules
-local utils = require 'pandoc.utils'
 M.sha1 = utils.sha1
 
 return M

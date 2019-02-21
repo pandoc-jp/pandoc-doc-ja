@@ -199,13 +199,14 @@ where
 import Prelude
 import Control.Monad.Identity
 import Control.Monad.Reader
-import Data.Char (chr, isAlphaNum, isAscii, isAsciiUpper, isHexDigit,
+import Data.Char (chr, isAlphaNum, isAscii, isAsciiUpper,
                   isPunctuation, isSpace, ord, toLower, toUpper)
 import Data.Default
 import Data.List (intercalate, isSuffixOf, transpose)
 import qualified Data.Map as M
 import Data.Maybe (mapMaybe, fromMaybe)
 import qualified Data.Set as Set
+import Data.String
 import Data.Text (Text)
 import Text.HTML.TagSoup.Entity (lookupEntity)
 import Text.Pandoc.Asciify (toAsciiChar)
@@ -397,7 +398,7 @@ spaceChar = satisfy $ \c -> c == ' ' || c == '\t'
 
 -- | Parses a nonspace, nonnewline character.
 nonspaceChar :: Stream s m Char => ParserT s st m Char
-nonspaceChar = satisfy $ flip notElem ['\t', '\n', ' ', '\r']
+nonspaceChar = noneOf ['\t', '\n', ' ', '\r']
 
 -- | Skips zero or more spaces or tabs.
 skipSpaces :: Stream s m Char => ParserT s st m ()
@@ -458,15 +459,15 @@ stringAnyCase (x:xs) = do
   return (firstChar:rest)
 
 -- | Parse contents of 'str' using 'parser' and return result.
-parseFromString :: Monad m
-                => ParserT [Char] st m a
+parseFromString :: (Monad m, Stream s m Char, IsString s)
+                => ParserT s st m r
                 -> String
-                -> ParserT [Char] st m a
+                -> ParserT s st m r
 parseFromString parser str = do
   oldPos <- getPosition
   setPosition $ initialPos "chunk"
   oldInput <- getInput
-  setInput str
+  setInput $ fromString str
   result <- parser
   spaces
   eof
@@ -476,10 +477,10 @@ parseFromString parser str = do
 
 -- | Like 'parseFromString' but specialized for 'ParserState'.
 -- This resets 'stateLastStrPos', which is almost always what we want.
-parseFromString' :: Monad m
-                 => ParserT String ParserState m a
+parseFromString' :: (Monad m, Stream s m Char, IsString s)
+                 => ParserT s ParserState m a
                  -> String
-                 -> ParserT String ParserState m a
+                 -> ParserT s ParserState m a
 parseFromString' parser str = do
   oldStrPos <- stateLastStrPos <$> getState
   res <- parseFromString parser str
@@ -514,33 +515,30 @@ charsInBalanced open close parser = try $ do
 
 -- Auxiliary functions for romanNumeral:
 
-lowercaseRomanDigits :: [Char]
-lowercaseRomanDigits = ['i','v','x','l','c','d','m']
-
-uppercaseRomanDigits :: [Char]
-uppercaseRomanDigits = map toUpper lowercaseRomanDigits
-
 -- | Parses a roman numeral (uppercase or lowercase), returns number.
 romanNumeral :: Stream s m Char => Bool                  -- ^ Uppercase if true
              -> ParserT s st m Int
 romanNumeral upperCase = do
-    let romanDigits = if upperCase
-                         then uppercaseRomanDigits
-                         else lowercaseRomanDigits
-    lookAhead $ oneOf romanDigits
-    let [one, five, ten, fifty, hundred, fivehundred, thousand] =
-          map char romanDigits
+    let rchar uc = char $ if upperCase then uc else toLower uc
+    let one         = rchar 'I'
+    let five        = rchar 'V'
+    let ten         = rchar 'X'
+    let fifty       = rchar 'L'
+    let hundred     = rchar 'C'
+    let fivehundred = rchar 'D'
+    let thousand    = rchar 'M'
+    lookAhead $ choice [one, five, ten, fifty, hundred, fivehundred, thousand]
     thousands <- ((1000 *) . length) <$> many thousand
     ninehundreds <- option 0 $ try $ hundred >> thousand >> return 900
     fivehundreds <- option 0 $ 500 <$ fivehundred
     fourhundreds <- option 0 $ try $ hundred >> fivehundred >> return 400
     hundreds <- ((100 *) . length) <$> many hundred
     nineties <- option 0 $ try $ ten >> hundred >> return 90
-    fifties <- option 0 $ (50 <$ fifty)
+    fifties <- option 0 (50 <$ fifty)
     forties <- option 0 $ try $ ten >> fifty >> return 40
     tens <- ((10 *) . length) <$> many ten
     nines <- option 0 $ try $ one >> ten >> return 9
-    fives <- option 0 $ (5 <$ five)
+    fives <- option 0 (5 <$ five)
     fours <- option 0 $ try $ one >> five >> return 4
     ones <- length <$> many one
     let total = thousands + ninehundreds + fivehundreds + fourhundreds +
@@ -582,7 +580,7 @@ uriScheme :: Stream s m Char => ParserT s st m String
 uriScheme = oneOfStringsCI (Set.toList schemes)
 
 -- | Parses a URI. Returns pair of original and URI-escaped version.
-uri :: Monad m => ParserT [Char] st m (String, String)
+uri :: Stream s m Char => ParserT s st m (String, String)
 uri = try $ do
   scheme <- uriScheme
   char ':'
@@ -593,25 +591,24 @@ uri = try $ do
   -- http://en.wikipedia.org/wiki/State_of_emergency_(disambiguation)
   -- as a URL, while NOT picking up the closing paren in
   -- (http://wikipedia.org). So we include balanced parens in the URL.
-  let isWordChar c = isAlphaNum c || c `elem` "#$%+/@\\_-&="
-  let wordChar = satisfy isWordChar
-  let percentEscaped = try $ char '%' >> skipMany1 (satisfy isHexDigit)
-  let entity = () <$ characterReference
-  let punct = skipMany1 (char ',')
-          <|> () <$ satisfy (\c -> not (isSpace c) && c /= '<' && c /= '>')
-  let uriChunk =  skipMany1 wordChar
-              <|> percentEscaped
-              <|> entity
-              <|> try (punct >>
-                    lookAhead (void (satisfy isWordChar) <|> percentEscaped))
-  str <- snd <$> withRaw (skipMany1 ( () <$
-                                         (enclosed (char '(') (char ')') uriChunk
-                                         <|> enclosed (char '{') (char '}') uriChunk
-                                         <|> enclosed (char '[') (char ']') uriChunk)
-                                         <|> uriChunk))
+  str <- concat <$> many1 (uriChunkBetween '(' ')'
+                       <|> uriChunkBetween '{' '}'
+                       <|> uriChunkBetween '[' ']'
+                       <|> uriChunk)
   str' <- option str $ char '/' >> return (str ++ "/")
   let uri' = scheme ++ ":" ++ fromEntities str'
   return (uri', escapeURI uri')
+  where
+    wordChar = alphaNum <|> oneOf "#$%+/@\\_-&="
+    percentEscaped = try $ (:) <$> char '%' <*> many1 hexDigit
+    entity = try $ pure <$> characterReference
+    punct = try $ many1 (char ',') <|> fmap pure (satisfy (\c -> not (isSpace c) && c /= '<' && c /= '>'))
+    uriChunk = many1 wordChar
+           <|> percentEscaped
+           <|> entity
+           <|> try (punct <* lookAhead (void wordChar <|> void percentEscaped))
+    uriChunkBetween l r = try $ do chunk <- between (char l) (char r) uriChunk
+                                   return ([l] ++ chunk ++ [r])
 
 mathInlineWith :: Stream s m Char  => String -> String -> ParserT s st m String
 mathInlineWith op cl = try $ do
@@ -630,7 +627,7 @@ mathInlineWith op cl = try $ do
                           return " "
                     ) (try $ string cl)
   notFollowedBy digit  -- to prevent capture of $5
-  return $ trim $ concat words'
+  return $ trimMath $ concat words'
  where
   inBalancedBraces :: Stream s m Char => Int -> String -> ParserT s st m String
   inBalancedBraces 0 "" = do
@@ -872,8 +869,7 @@ lineBlockLines = try $ do
 
 -- | Parse a table using 'headerParser', 'rowParser',
 -- 'lineParser', and 'footerParser'.
-tableWith :: (Stream s m Char, HasReaderOptions st,
-              Functor mf, Applicative mf, Monad mf)
+tableWith :: (Stream s m Char, HasReaderOptions st, Monad mf)
           => ParserT s st m (mf [Blocks], [Alignment], [Int])
           -> ([Int] -> ParserT s st m (mf [Blocks]))
           -> ParserT s st m sep
@@ -886,8 +882,7 @@ tableWith headerParser rowParser lineParser footerParser = try $ do
 
 type TableComponents mf = ([Alignment], [Double], mf [Blocks], mf [[Blocks]])
 
-tableWith' :: (Stream s m Char, HasReaderOptions st,
-               Functor mf, Applicative mf, Monad mf)
+tableWith' :: (Stream s m Char, HasReaderOptions st, Monad mf)
            => ParserT s st m (mf [Blocks], [Alignment], [Int])
            -> ([Int] -> ParserT s st m (mf [Blocks]))
            -> ParserT s st m sep
@@ -934,20 +929,18 @@ widthsFromIndices numColumns' indices =
 -- (which may be grid), then the rows,
 -- which may be grid, separated by blank lines, and
 -- ending with a footer (dashed line followed by blank line).
-gridTableWith :: (Monad m, HasReaderOptions st,
-                  Functor mf, Applicative mf, Monad mf)
-              => ParserT [Char] st m (mf Blocks)  -- ^ Block list parser
-              -> Bool                             -- ^ Headerless table
-              -> ParserT [Char] st m (mf Blocks)
+gridTableWith :: (Stream s m Char, HasReaderOptions st, Monad mf, IsString s)
+              => ParserT s st m (mf Blocks)  -- ^ Block list parser
+              -> Bool                        -- ^ Headerless table
+              -> ParserT s st m (mf Blocks)
 gridTableWith blocks headless =
   tableWith (gridTableHeader headless blocks) (gridTableRow blocks)
             (gridTableSep '-') gridTableFooter
 
-gridTableWith' :: (Monad m, HasReaderOptions st,
-                   Functor mf, Applicative mf, Monad mf)
-               => ParserT [Char] st m (mf Blocks)  -- ^ Block list parser
-               -> Bool                             -- ^ Headerless table
-               -> ParserT [Char] st m (TableComponents mf)
+gridTableWith' :: (Stream s m Char, HasReaderOptions st, Monad mf, IsString s)
+               => ParserT s st m (mf Blocks)  -- ^ Block list parser
+               -> Bool                        -- ^ Headerless table
+               -> ParserT s st m (TableComponents mf)
 gridTableWith' blocks headless =
   tableWith' (gridTableHeader headless blocks) (gridTableRow blocks)
              (gridTableSep '-') gridTableFooter
@@ -983,10 +976,10 @@ gridTableSep :: Stream s m Char => Char -> ParserT s st m Char
 gridTableSep ch = try $ gridDashedLines ch >> return '\n'
 
 -- | Parse header for a grid table.
-gridTableHeader :: (Monad m, Functor mf, Applicative mf, Monad mf)
+gridTableHeader :: (Stream s m Char, Monad mf, IsString s)
                 => Bool -- ^ Headerless table
-                -> ParserT [Char] st m (mf Blocks)
-                -> ParserT [Char] st m (mf [Blocks], [Alignment], [Int])
+                -> ParserT s st m (mf Blocks)
+                -> ParserT s st m (mf [Blocks], [Alignment], [Int])
 gridTableHeader headless blocks = try $ do
   optional blanklines
   dashes <- gridDashedLines '-'
@@ -1016,10 +1009,10 @@ gridTableRawLine indices = do
   return (gridTableSplitLine indices line)
 
 -- | Parse row of grid table.
-gridTableRow :: (Monad m, Functor mf, Applicative mf, Monad mf)
-             => ParserT [Char] st m (mf Blocks)
+gridTableRow :: (Stream s m Char, Monad mf, IsString s)
+             => ParserT s st m (mf Blocks)
              -> [Int]
-             -> ParserT [Char] st m (mf [Blocks])
+             -> ParserT s st m (mf [Blocks])
 gridTableRow blocks indices = do
   colLines <- many1 (gridTableRawLine indices)
   let cols = map ((++ "\n") . unlines . removeOneLeadingSpace) $
@@ -1045,14 +1038,13 @@ gridTableFooter = blanklines
 ---
 
 -- | Removes the ParsecT layer from the monad transformer stack
-readWithM :: Monad m
-          => ParserT [Char] st m a    -- ^ parser
-          -> st                       -- ^ initial state
-          -> String                   -- ^ input
+readWithM :: (Monad m, Stream s m Char, ToString s)
+          => ParserT s st m a    -- ^ parser
+          -> st                  -- ^ initial state
+          -> s                   -- ^ input
           -> m (Either PandocError a)
 readWithM parser state input =
-    mapLeft (PandocParsecError input) `liftM` runParserT parser state "source" input
-
+    mapLeft (PandocParsecError $ toString input) `liftM` runParserT parser state "source" input
 
 -- | Parse a string with a given parser and state
 readWith :: Parser [Char] st a
@@ -1299,7 +1291,7 @@ registerHeader (ident,classes,kvs) header' = do
   let insert' = M.insertWith (\_new old -> old)
   if null ident && Ext_auto_identifiers `extensionEnabled` exts
      then do
-       let id' = uniqueIdent (B.toList header') ids
+       let id' = uniqueIdent exts (B.toList header') ids
        let id'' = if Ext_ascii_identifiers `extensionEnabled` exts
                      then mapMaybe toAsciiChar id'
                      else id'
@@ -1334,18 +1326,16 @@ quoted inlineParser = doubleQuoted inlineParser <|> singleQuoted inlineParser
 singleQuoted :: (HasLastStrPosition st, HasQuoteContext st m, Stream s m Char)
              => ParserT s st m Inlines
              -> ParserT s st m Inlines
-singleQuoted inlineParser = try $ do
-  singleQuoteStart
-  withQuoteContext InSingleQuote $ many1Till inlineParser singleQuoteEnd >>=
-    return . B.singleQuoted . mconcat
+singleQuoted inlineParser = try $ B.singleQuoted . mconcat
+  <$  singleQuoteStart
+  <*> withQuoteContext InSingleQuote (many1Till inlineParser singleQuoteEnd)
 
 doubleQuoted :: (HasQuoteContext st m, Stream s m Char)
              => ParserT s st m Inlines
              -> ParserT s st m Inlines
-doubleQuoted inlineParser = try $ do
-  doubleQuoteStart
-  withQuoteContext InDoubleQuote $ manyTill inlineParser doubleQuoteEnd >>=
-    return . B.doubleQuoted . mconcat
+doubleQuoted inlineParser = try $ B.doubleQuoted . mconcat
+  <$  doubleQuoteStart
+  <*> withQuoteContext InDoubleQuote (manyTill inlineParser doubleQuoteEnd)
 
 failIfInQuoteContext :: (HasQuoteContext st m, Stream s m t)
                      => QuoteContext
@@ -1422,7 +1412,7 @@ citeKey :: (Stream s m Char, HasLastStrPosition st)
         => ParserT s st m (Bool, String)
 citeKey = try $ do
   guard =<< notAfterString
-  suppress_author <- option False (char '-' *> return True)
+  suppress_author <- option False (True <$ char '-')
   char '@'
   firstChar <- alphaNum <|> char '_' <|> char '*' -- @* for wildcard in nocite
   let regchar = satisfy (\c -> isAlphaNum c || c == '_')
@@ -1453,8 +1443,7 @@ extractIdClass (ident, cls, kvs) = (ident', cls', kvs')
                Nothing -> cls
     kvs'  = filter (\(k,_) -> k /= "id" || k /= "class") kvs
 
-insertIncludedFile' :: (PandocMonad m, HasIncludeFiles st,
-                        Functor mf, Applicative mf, Monad mf)
+insertIncludedFile' :: (PandocMonad m, HasIncludeFiles st, Monad mf)
                     => ParserT [a] st m (mf Blocks)
                     -> (String -> [a])
                     -> [FilePath] -> FilePath

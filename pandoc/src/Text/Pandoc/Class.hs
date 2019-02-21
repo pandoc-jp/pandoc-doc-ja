@@ -98,7 +98,6 @@ module Text.Pandoc.Class ( PandocMonad(..)
                          ) where
 
 import Prelude
-import Prelude hiding (readFile)
 import System.Random (StdGen, next, mkStdGen)
 import qualified System.Random as IO (newStdGen)
 import Codec.Archive.Zip
@@ -629,6 +628,7 @@ getDefaultReferenceDocx = do
                "_rels/.rels",
                "docProps/app.xml",
                "docProps/core.xml",
+               "docProps/custom.xml",
                "word/document.xml",
                "word/fontTable.xml",
                "word/footnotes.xml",

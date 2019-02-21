@@ -45,6 +45,8 @@ $(document).ready(function() {
          });
     };
     $("#convert").click(newpage);
+    $("#from").change(newpage);
+    $("#to").change(newpage);
 });
   </script>
   <style type="text/css">
@@ -64,7 +66,7 @@ $(document).ready(function() {
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <h1>Try <a href="http://pandoc.org">pandoc</a>!</h1>
+      <h1>Try pandoc!</h1>
     </div>
     <div class="col-md-6">
       <pre id="command"></pre>
@@ -81,15 +83,16 @@ $(document).ready(function() {
         <option value="commonmark">CommonMark</option>
         <option value="creole">Creole</option>
         <option value="docbook">DocBook</option>
-        <option value="gfm">GitHub-Flavored Markdown</option>
         <option value="haddock">Haddock markup</option>
         <option value="html">HTML</option>
         <option value="latex">LaTeX</option>
+        <option value="man">Man</option>
         <option value="markdown" selected>Markdown (pandoc)</option>
-        <option value="markdown_mmd">MultiMarkdown</option>
+        <option value="gfm">Markdown (GitHub-flavored)</option>
         <option value="markdown_phpextra">Markdown (PHP Markdown Extra)</option>
         <option value="markdown_strict">Markdown (strict)</option>
         <option value="mediawiki">MediaWiki</option>
+        <option value="markdown_mmd">MultiMarkdown</option>
         <option value="muse">Muse</option>
         <option value="native">Native (Pandoc AST)</option>
         <option value="opml">OPML</option>
@@ -119,20 +122,20 @@ $(document).ready(function() {
         <option value="dokuwiki">DokuWiki</option>
         <option value="dzslides">DZSlides</option>
         <option value="dzslides">dzslides</option>
-        <option value="gfm">GitHub-Flavored Markdown</option>
         <option value="haddock">Haddock markup</option>
-        <option value="html4" selected>HTML 4</option>
-        <option value="html5">HTML 5</option>
+        <option value="html4">HTML 4</option>
+        <option value="html5" selected>HTML 5</option>
         <option value="icml">ICML</option>
         <option value="json">JSON</option>
         <option value="latex">LaTeX</option>
-        <option value="man">Groff man</option>
-        <option value="ms">Groff ms</option>
+        <option value="man">Man</option>
+        <option value="ms">Ms</option>
         <option value="markdown">Markdown (pandoc)</option>
-        <option value="markdown_mmd">MultiMarkdown</option>
+        <option value="gfm">Markdown (GitHub-flavored)</option>
         <option value="markdown_phpextra">Markdown (PHP Markdown Extra)</option>
         <option value="markdown_strict">Markdown (strict)</option>
         <option value="mediawiki">MediaWiki</option>
+        <option value="markdown_mmd">MultiMarkdown</option>
         <option value="muse">Muse</option>
         <option value="native">Native (Pandoc AST)</option>
         <option value="opendocument">OpenDocument</option>
@@ -155,7 +158,7 @@ $(document).ready(function() {
 </div>
 <footer>
  <p class="version">pandoc <span id="version"></span></p>
- <p>&copy; 2013&ndash;2015 <a href="http://johnmacfarlane.net">John MacFarlane</a></p>
+ <p><a href="https://pandoc.org">https://pandoc.org</a></p>
 </footer>
 </body>
 </html>

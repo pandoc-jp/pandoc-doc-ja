@@ -231,7 +231,8 @@ blockToTexinfo (Header level _ lst)
     node <- inlineListForNode lst
     txt <- inlineListToTexinfo lst
     idsUsed <- gets stIdentifiers
-    let id' = uniqueIdent lst idsUsed
+    opts <- gets stOptions
+    let id' = uniqueIdent (writerExtensions opts) lst idsUsed
     modify $ \st -> st{ stIdentifiers = Set.insert id' idsUsed }
     sec <- seccmd level
     return $ if (level > 0) && (level <= 4)
@@ -328,7 +329,8 @@ blockListToTexinfo (x:xs) = do
       lines' <- mapM makeMenuLine menu
       let menu' = if null lines'
                     then empty
-                    else text "@menu" $$
+                    else blankline $$
+                         text "@menu" $$
                          vcat lines' $$
                          text "@end menu"
       after' <- blockListToTexinfo after
@@ -346,12 +348,9 @@ collectNodes :: Int -> [Block] -> [Block]
 collectNodes _ [] = []
 collectNodes level (x:xs) =
   case x of
-    (Header hl _ _) ->
-      if hl < level
-         then []
-         else if hl == level
-                 then x : collectNodes level xs
-                 else collectNodes level xs
+    (Header hl _ _) | hl < level -> []
+                    | hl == level -> x : collectNodes level xs
+                    | otherwise -> collectNodes level xs
     _ ->
       collectNodes level xs
 
@@ -389,7 +388,7 @@ defListItemToTexinfo (term, defs) = do
 inlineListToTexinfo :: PandocMonad m
                     => [Inline]  -- ^ Inlines to convert
                     -> TI m Doc
-inlineListToTexinfo lst = mapM inlineToTexinfo lst >>= return . hcat
+inlineListToTexinfo lst = hcat <$> mapM inlineToTexinfo lst
 
 -- | Convert list of inline elements to Texinfo acceptable for a node name.
 inlineListForNode :: PandocMonad m
@@ -411,10 +410,10 @@ inlineToTexinfo (Span _ lst) =
   inlineListToTexinfo lst
 
 inlineToTexinfo (Emph lst) =
-  inlineListToTexinfo lst >>= return . inCmd "emph"
+  inCmd "emph" <$> inlineListToTexinfo lst
 
 inlineToTexinfo (Strong lst) =
-  inlineListToTexinfo lst >>= return . inCmd "strong"
+  inCmd "strong" <$> inlineListToTexinfo lst
 
 inlineToTexinfo (Strikeout lst) = do
   modify $ \st -> st{ stStrikeout = True }
@@ -430,7 +429,7 @@ inlineToTexinfo (Subscript lst) = do
   return $ text "@sub{" <> contents <> char '}'
 
 inlineToTexinfo (SmallCaps lst) =
-  inlineListToTexinfo lst >>= return . inCmd "sc"
+  inCmd "sc" <$> inlineListToTexinfo lst
 
 inlineToTexinfo (Code _ str) =
   return $ text $ "@code{" ++ stringToTexinfo str ++ "}"

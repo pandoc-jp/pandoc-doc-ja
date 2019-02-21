@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[pandoc-users-guide.users-guidepo]
+file_filter = locale/<lang>/LC_MESSAGES/users-guide.po
+minimum_perc = 0
+source_file = _build/gettext/users-guide.pot
+source_lang = en
+type = PO

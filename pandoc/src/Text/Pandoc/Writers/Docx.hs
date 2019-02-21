@@ -41,19 +41,21 @@ import Control.Monad.Reader
 import Control.Monad.State.Strict
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as BL
-import Data.Char (isSpace, ord, toLower)
+import Data.Char (isSpace, ord, toLower, isLetter)
 import Data.List (intercalate, isPrefixOf, isSuffixOf)
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe, isNothing, mapMaybe, maybeToList)
 import qualified Data.Set as Set
 import qualified Data.Text as T
 import Data.Time.Clock.POSIX
+import Data.Digest.Pure.SHA (sha1, showDigest)
 import Skylighting
 import System.Random (randomR, StdGen, mkStdGen)
 import Text.Pandoc.BCP47 (getLang, renderLang)
 import Text.Pandoc.Class (PandocMonad, report, toLang)
 import qualified Text.Pandoc.Class as P
 import Data.Time
+import Text.Pandoc.UTF8 (fromStringLazy)
 import Text.Pandoc.Definition
 import Text.Pandoc.Generic
 import Text.Pandoc.Highlighting (highlight)
@@ -66,7 +68,7 @@ import Text.Pandoc.Readers.Docx.StyleMap
 import Text.Pandoc.Shared hiding (Element)
 import Text.Pandoc.Walk
 import Text.Pandoc.Writers.Math
-import Text.Pandoc.Writers.Shared (fixDisplayMath, metaValueToInlines)
+import Text.Pandoc.Writers.Shared
 import Text.Printf (printf)
 import Text.TeXMath
 import Text.XML.Light as XML
@@ -266,8 +268,9 @@ writeDocx opts doc@(Pandoc meta _) = do
   -- parse styledoc for heading styles
   let styleMaps = getStyleMaps styledoc
 
-  let tocTitle = fromMaybe (stTocTitle defaultWriterState) $
-                    metaValueToInlines <$> lookupMeta "toc-title" meta
+  let tocTitle = case lookupMetaInlines "toc-title" meta of
+                   [] -> stTocTitle defaultWriterState
+                   ls -> ls
 
   let initialSt = defaultWriterState {
           stStyleMaps  = styleMaps
@@ -348,6 +351,8 @@ writeDocx opts doc@(Pandoc meta _) = do
                     "application/vnd.openxmlformats-officedocument.extended-properties+xml")
                   ,("/docProps/core.xml",
                     "application/vnd.openxmlformats-package.core-properties+xml")
+                  ,("/docProps/custom.xml",
+                    "application/vnd.openxmlformats-officedocument.custom-properties+xml")
                   ,("/word/styles.xml",
                     "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml")
                   ,("/word/document.xml",
@@ -506,6 +511,19 @@ writeDocx opts doc@(Pandoc meta _) = do
                    ]) (formatTime defaultTimeLocale "%FT%XZ" utctime)
   let docPropsEntry = toEntry docPropsPath epochtime $ renderXml docProps
 
+  let customProperties :: [(String, String)]
+      customProperties = [] -- FIXME
+  let mkCustomProp (k, v) pid = mknode "property"
+         [("fmtid","{D5CDD505-2E9C-101B-9397-08002B2CF9AE}")
+         ,("pid", show pid)
+         ,("name", k)] $ mknode "vt:lpwstr" [] v
+  let customPropsPath = "docProps/custom.xml"
+  let customProps = mknode "Properties"
+          [("xmlns","http://schemas.openxmlformats.org/officeDocument/2006/custom-properties")
+          ,("xmlns:vt","http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes")
+          ] $ zipWith mkCustomProp customProperties [(2 :: Int)..]
+  let customPropsEntry = toEntry customPropsPath epochtime $ renderXml customProps
+
   let relsPath = "_rels/.rels"
   let rels = mknode "Relationships" [("xmlns", "http://schemas.openxmlformats.org/package/2006/relationships")]
         $ map (\attrs -> mknode "Relationship" attrs ())
@@ -518,6 +536,9 @@ writeDocx opts doc@(Pandoc meta _) = do
         , [("Id","rId3")
           ,("Type","http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties")
           ,("Target","docProps/core.xml")]
+        , [("Id","rId5")
+          ,("Type","http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties")
+          ,("Target","docProps/custom.xml")]
         ]
   let relsEntry = toEntry relsPath epochtime $ renderXml rels
 
@@ -557,7 +578,8 @@ writeDocx opts doc@(Pandoc meta _) = do
                   contentTypesEntry : relsEntry : contentEntry : relEntry :
                   footnoteRelEntry : numEntry : styleEntry : footnotesEntry :
                   commentsEntry :
-                  docPropsEntry : docPropsAppEntry : themeEntry :
+                  docPropsEntry : docPropsAppEntry : customPropsEntry :
+                  themeEntry :
                   fontTableEntry : settingsEntry : webSettingsEntry :
                   imageEntries ++ headerFooterEntries ++
                   miscRelEntries ++ otherMediaEntries
@@ -759,22 +781,9 @@ writeOpenXML opts (Pandoc meta blocks) = do
   let tit = docTitle meta
   let auths = docAuthors meta
   let dat = docDate meta
-  let abstract' = case lookupMeta "abstract" meta of
-                       Just (MetaBlocks bs)   -> bs
-                       Just (MetaInlines ils) -> [Plain ils]
-                       _                      -> []
-  let subtitle' = case lookupMeta "subtitle" meta of
-                       Just (MetaBlocks [Plain xs]) -> xs
-                       Just (MetaBlocks [Para  xs]) -> xs
-                       Just (MetaInlines xs)        -> xs
-                       _                            -> []
-  let includeTOC = writerTableOfContents opts ||
-                   case lookupMeta "toc" meta of
-                       Just (MetaBlocks _)     -> True
-                       Just (MetaInlines _)    -> True
-                       Just (MetaString (_:_)) -> True
-                       Just (MetaBool True)    -> True
-                       _                       -> False
+  let abstract' = lookupMetaBlocks "abstract" meta
+  let subtitle' = lookupMetaInlines "subtitle" meta
+  let includeTOC = writerTableOfContents opts || lookupMetaBool "toc" meta
   title <- withParaPropM (pStyleM "Title") $ blocksToOpenXML opts [Para tit | not (null tit)]
   subtitle <- withParaPropM (pStyleM "Subtitle") $ blocksToOpenXML opts [Para subtitle' | not (null subtitle')]
   authors <- withParaProp (pCustomStyle "Author") $ blocksToOpenXML opts $
@@ -852,7 +861,7 @@ blockToOpenXML opts blk = withDirection $ blockToOpenXML' opts blk
 
 blockToOpenXML' :: (PandocMonad m) => WriterOptions -> Block -> WS m [Element]
 blockToOpenXML' _ Null = return []
-blockToOpenXML' opts (Div (ident,classes,kvs) bs) = do
+blockToOpenXML' opts (Div (ident,_classes,kvs) bs) = do
   stylemod <- case lookup dynamicStyleKey kvs of
                    Just sty -> do
                       modify $ \s ->
@@ -864,22 +873,15 @@ blockToOpenXML' opts (Div (ident,classes,kvs) bs) = do
                  Just "rtl" -> return $ local (\env -> env { envRTL = True })
                  Just "ltr" -> return $ local (\env -> env { envRTL = False })
                  _ -> return id
-  let (hs, bs') = if "references" `elem` classes
+  let (hs, bs') = if ident == "refs"
                      then span isHeaderBlock bs
                      else ([], bs)
-  let bibmod = if "references" `elem` classes
+  let bibmod = if ident == "refs"
                   then withParaPropM (pStyleM "Bibliography")
                   else id
   header <- dirmod $ stylemod $ blocksToOpenXML opts hs
   contents <- dirmod $ bibmod $ stylemod $ blocksToOpenXML opts bs'
-  if null ident
-     then return $ header ++ contents
-     else do
-       id' <- getUniqueId
-       let bookmarkStart = mknode "w:bookmarkStart" [("w:id", id')
-                                                    ,("w:name",ident)] ()
-       let bookmarkEnd = mknode "w:bookmarkEnd" [("w:id", id')] ()
-       return $ bookmarkStart : header ++ contents ++ [bookmarkEnd]
+  wrapBookmark ident $ header ++ contents
 blockToOpenXML' opts (Header lev (ident,_,_) lst) = do
   setFirstPara
   paraProps <- withParaPropM (pStyleM ("Heading "++show lev)) $
@@ -891,12 +893,8 @@ blockToOpenXML' opts (Header lev (ident,_,_) lst) = do
        let bookmarkName = ident
        modify $ \s -> s{ stSectionIds = Set.insert bookmarkName
                                       $ stSectionIds s }
-       id' <- getUniqueId
-       let bookmarkStart = mknode "w:bookmarkStart" [("w:id", id')
-                                               ,("w:name",bookmarkName)] ()
-       let bookmarkEnd = mknode "w:bookmarkEnd" [("w:id", id')] ()
-       return [mknode "w:p" [] (paraProps ++
-               [bookmarkStart] ++ contents ++ [bookmarkEnd])]
+       bookmarkedContents <- wrapBookmark bookmarkName contents
+       return [mknode "w:p" [] (paraProps ++ bookmarkedContents)]
 blockToOpenXML' opts (Plain lst) = withParaProp (pCustomStyle "Compact")
   $ blockToOpenXML opts (Para lst)
 -- title beginning with fig: indicates that the image is a figure
@@ -915,9 +913,10 @@ blockToOpenXML' opts (Para lst)
   | null lst && not (isEnabled Ext_empty_paragraphs opts) = return []
   | otherwise = do
       isFirstPara <- gets stFirstPara
-      paraProps <- getParaProps $ case lst of
-                                   [Math DisplayMath _] -> True
-                                   _                    -> False
+      let displayMathPara = case lst of
+                                 [x] -> isDisplayMath x
+                                 _   -> False
+      paraProps <- getParaProps displayMathPara
       bodyTextStyle <- pStyleM "Body Text"
       let paraProps' = case paraProps of
             [] | isFirstPara -> [mknode "w:pPr" []
@@ -937,10 +936,10 @@ blockToOpenXML' opts (BlockQuote blocks) = do
   p <- withParaPropM (pStyleM "Block Text") $ blocksToOpenXML opts blocks
   setFirstPara
   return p
-blockToOpenXML' opts (CodeBlock attrs str) = do
+blockToOpenXML' opts (CodeBlock attrs@(ident, _, _) str) = do
   p <- withParaProp (pCustomStyle "SourceCode") (blockToOpenXML opts $ Para [Code attrs str])
   setFirstPara
-  return p
+  wrapBookmark ident p
 blockToOpenXML' _ HorizontalRule = do
   setFirstPara
   return [
@@ -956,8 +955,13 @@ blockToOpenXML' opts (Table caption aligns widths headers rows) = do
                  else withParaProp (pCustomStyle "TableCaption")
                       $ blockToOpenXML opts (Para caption)
   let alignmentFor al = mknode "w:jc" [("w:val",alignmentToString al)] ()
-  let cellToOpenXML (al, cell) = withParaProp (alignmentFor al)
-                                    $ blocksToOpenXML opts cell
+  -- Table cells require a <w:p> element, even an empty one!
+  -- Not in the spec but in Word 2007, 2010. See #4953.
+  let cellToOpenXML (al, cell) = do
+        es <- withParaProp (alignmentFor al) $ blocksToOpenXML opts cell
+        if any (\e -> qName (elName e) == "p") es
+           then return es
+           else return $ es ++ [mknode "w:p" [] ()]
   headers' <- mapM cellToOpenXML $ zip aligns headers
   rows' <- mapM (mapM cellToOpenXML . zip aligns) rows
   let borderProps = mknode "w:tcPr" []
@@ -1189,14 +1193,7 @@ inlineToOpenXML' opts (Span (ident,classes,kvs) ils) = do
                else return id
   contents <- insmod $ delmod $ dirmod $ stylemod $ pmod
                      $ inlinesToOpenXML opts ils
-  if null ident
-     then return contents
-     else do
-       id' <- getUniqueId
-       let bookmarkStart = mknode "w:bookmarkStart" [("w:id", id')
-                                                    ,("w:name",ident)] ()
-       let bookmarkEnd = mknode "w:bookmarkEnd" [("w:id", id')] ()
-       return $ bookmarkStart : contents ++ [bookmarkEnd]
+  wrapBookmark ident contents
 inlineToOpenXML' opts (Strong lst) =
   withTextProp (mknode "w:b" [] ()) $ inlinesToOpenXML opts lst
 inlineToOpenXML' opts (Emph lst) =
@@ -1273,7 +1270,8 @@ inlineToOpenXML' opts (Note bs) = do
 -- internal link:
 inlineToOpenXML' opts (Link _ txt ('#':xs,_)) = do
   contents <- withTextPropM (rStyleM "Hyperlink") $ inlinesToOpenXML opts txt
-  return [ mknode "w:hyperlink" [("w:anchor",xs)] contents ]
+  return
+    [ mknode "w:hyperlink" [("w:anchor", toBookmarkName xs)] contents ]
 -- external link:
 inlineToOpenXML' opts (Link _ txt (src,_)) = do
   contents <- withTextPropM (rStyleM "Hyperlink") $ inlinesToOpenXML opts txt
@@ -1286,7 +1284,7 @@ inlineToOpenXML' opts (Link _ txt (src,_)) = do
                         M.insert src i extlinks }
               return i
   return [ mknode "w:hyperlink" [("r:id",id')] contents ]
-inlineToOpenXML' opts (Image attr alt (src, title)) = do
+inlineToOpenXML' opts (Image attr@(imgident, _, _) alt (src, title)) = do
   pageWidth <- asks envPrintWidth
   imgs <- gets stImages
   let
@@ -1348,7 +1346,7 @@ inlineToOpenXML' opts (Image attr alt (src, title)) = do
       in
         imgElt
 
-  case stImage of
+  wrapBookmark imgident =<< case stImage of
     Just imgData -> return [generateImgElt imgData]
     Nothing -> ( do --try
       (img, mt) <- P.fetchItem src
@@ -1427,3 +1425,23 @@ withDirection x = do
     else flip local x $ \env -> env { envParaProperties = paraProps'
                                     , envTextProperties = textProps'
                                     }
+
+wrapBookmark :: (PandocMonad m) => String -> [Element] -> WS m [Element]
+wrapBookmark [] contents = return contents
+wrapBookmark ident contents = do
+  id' <- getUniqueId
+  let bookmarkStart = mknode "w:bookmarkStart"
+                       [("w:id", id')
+                       ,("w:name", toBookmarkName ident)] ()
+      bookmarkEnd = mknode "w:bookmarkEnd" [("w:id", id')] ()
+  return $ bookmarkStart : contents ++ [bookmarkEnd]
+
+-- Word imposes a 40 character limit on bookmark names and requires
+-- that they begin with a letter.  So we just use a hash of the
+-- identifer when otherwise we'd have an illegal bookmark name.
+toBookmarkName :: String -> String
+toBookmarkName s =
+  case s of
+    (c:_) | isLetter c
+          , length s <= 40 -> s
+    _     -> 'X' : drop 1 (showDigest (sha1 (fromStringLazy s)))

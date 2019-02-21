@@ -11,6 +11,9 @@
     a zip file that contains pandoc's binaries and
     documentation.  Simply unzip this file and move the binaries
     to a directory of your choice.
+    
+  - Alternatively, you can install pandoc using
+    [chocolatey](https://chocolatey.org): `choco install pandoc`.
 
   - For PDF output, you'll also need to install LaTeX.
     We recommend [MiKTeX](http://miktex.org/).
@@ -36,7 +39,8 @@
   - For PDF output, you'll also need LaTeX.  Because a full [MacTeX]
     installation takes more than a gigabyte of disk space, we recommend
     installing [BasicTeX](http://www.tug.org/mactex/morepackages.html)
-    (64M) and using the `tlmgr` tool to install additional packages
+    (64M) or [TinyTeX](https://yihui.name/tinytex/)
+    and using the `tlmgr` tool to install additional packages
     as needed.  If you get errors warning of fonts not found, try
 
         tlmgr install collection-fontsrecommended
@@ -89,6 +93,19 @@
     [TeX Live](http://www.tug.org/texlive/) via your package
     manager.  (On Debian/Ubuntu, `apt-get install texlive`.)
 
+## Chrome OS
+
+On Chrome OS, pandoc can be installed using the
+[chromebrew](https://github.com/skycocker/chromebrew) package manager
+with the command:
+
+```sh
+crew install pandoc
+```
+
+This will automatically build and configure pandoc for the specific
+device you are using.
+
 ## BSD
 
   - Pandoc is in the [NetBSD] and [FreeBSD ports] repositories.
@@ -140,13 +157,21 @@ The easiest way to build pandoc from source is to use [stack]:
 
 1.  Install the [Haskell platform].  This will give you [GHC] and
     the [cabal-install] build tool.  Note that pandoc requires
-    GHC >= 7.10.
+    GHC >= 7.10 and cabal >= 2.0.
 
 2.  Update your package database:
 
         cabal update
 
-3.  Use `cabal` to install pandoc and its dependencies:
+3.  Check your cabal version with
+
+        cabal --version
+
+    If you have a version less than 2.0, install the latest with:
+
+        cabal install cabal-install
+
+4.  Use `cabal` to install pandoc and its dependencies:
 
         cabal install pandoc
 
@@ -159,7 +184,7 @@ The easiest way to build pandoc from source is to use [stack]:
 
         cabal install
 
-4.  Make sure the `$CABALDIR/bin` directory is in your path.  You should
+5.  Make sure the `$CABALDIR/bin` directory is in your path.  You should
     now be able to run `pandoc`:
 
         pandoc --help
@@ -203,6 +228,7 @@ over the build and installation.  Most users should use the
 quick install, but this information may be of use to packagers.
 For more details, see the [Cabal User's Guide].  These instructions
 assume that the pandoc source directory is your working directory.
+You will need cabal version 2.0 or higher.
 
 1.  Install dependencies:  in addition to the [Haskell platform],
     you will need a number of additional libraries.  You can install
@@ -334,5 +360,5 @@ To run just the markdown benchmarks:
 [openSUSE]: https://software.opensuse.org/package/pandoc
 [source tarball]: http://hackage.haskell.org/package/pandoc
 [stack]: http://docs.haskellstack.org/en/stable/install_and_upgrade.html
-[cabal-install]: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
+[cabal-install]: http://hackage.haskell.org/package/cabal-install
 [uninstaller]: https://raw.githubusercontent.com/jgm/pandoc/master/macos/uninstall-pandoc.pl

@@ -1,6 +1,6 @@
 % Pandoc User's Guide
 % John MacFarlane
-% May 10, 2018
+% November 25, 2018
 
 Synopsis
 ========
@@ -40,8 +40,8 @@ model.  While conversions from pandoc's Markdown to all formats aspire
 to be perfect, conversions from formats more expressive than pandoc's
 Markdown can be expected to be lossy.
 
-Using `pandoc`
---------------
+Using pandoc
+------------
 
 If no *input-files* are specified, input is read from *stdin*.
 Output goes to *stdout* by default. For output to a file,
@@ -155,9 +155,10 @@ the LaTeX engine requires [`fontspec`].  `xelatex` uses
 `xelatex` will use [`mathspec`] instead of [`unicode-math`].
 The [`upquote`] and [`microtype`] packages are used if
 available, and [`csquotes`] will be used for [typography]
-if added to the template or included in any header file. The
-[`natbib`], [`biblatex`], [`bibtex`], and [`biber`] packages can
-optionally be used for [citation rendering].
+if `\usepackage{csquotes}` is present in the template or
+included via `/H/--include-in-header`.  The [`natbib`],
+[`biblatex`], [`bibtex`], and [`biber`] packages can optionally
+be used for [citation rendering].
 
 [`amsfonts`]: https://ctan.org/pkg/amsfonts
 [`amsmath`]: https://ctan.org/pkg/amsmath
@@ -210,7 +211,7 @@ header when requesting a document from a URL:
 Options
 =======
 
-General options
+General options {.options}
 ---------------
 
 `-f` *FORMAT*, `-r` *FORMAT*, `--from=`*FORMAT*, `--read=`*FORMAT*
@@ -225,9 +226,9 @@ General options
     - `epub` ([EPUB])
     - `fb2` ([FictionBook2] e-book)
     - `gfm` ([GitHub-Flavored Markdown]),
-      or `markdown_github`, which provides deprecated and less accurate
-      support for Github-Flavored Markdown; please use `gfm` instead,
-      unless you need to use extensions other than `smart`.
+      or the deprecated and less accurate `markdown_github`;
+      use [`markdown_github`](#markdown-variants) only
+      if you need extensions not supported in [`gfm`](#markdown-variants).
     - `haddock` ([Haddock markup])
     - `html` ([HTML])
     - `jats` ([JATS] XML)
@@ -238,6 +239,7 @@ General options
     - `markdown_phpextra` ([PHP Markdown Extra])
     - `markdown_strict` (original unextended [Markdown])
     - `mediawiki` ([MediaWiki markup])
+    - `man` ([roff man])
     - `muse` ([Muse])
     - `native` (native Haskell)
     - `odt` ([ODT])
@@ -274,9 +276,9 @@ General options
     - `epub2` (EPUB v2)
     - `fb2` ([FictionBook2] e-book)
     - `gfm` ([GitHub-Flavored Markdown]),
-      or `markdown_github`, which provides deprecated and less accurate
-      support for Github-Flavored Markdown; please use `gfm` instead,
-      unless you use extensions that do not work with `gfm`.
+      or the deprecated and less accurate `markdown_github`;
+      use [`markdown_github`](#markdown-variants) only
+      if you need extensions not supported in [`gfm`](#markdown-variants).
     - `haddock` ([Haddock markup])
     - `html` or `html5` ([HTML], i.e. [HTML5]/XHTML [polyglot markup])
     - `html4` ([XHTML] 1.0 Transitional)
@@ -284,13 +286,13 @@ General options
     - `jats` ([JATS] XML)
     - `json` (JSON version of native AST)
     - `latex` ([LaTeX])
-    - `man` ([groff man])
+    - `man` ([roff man])
     - `markdown` ([Pandoc's Markdown])
     - `markdown_mmd` ([MultiMarkdown])
     - `markdown_phpextra` ([PHP Markdown Extra])
     - `markdown_strict` (original unextended [Markdown])
     - `mediawiki` ([MediaWiki markup])
-    - `ms` ([groff ms])
+    - `ms` ([roff ms])
     - `muse` ([Muse]),
     - `native` (native Haskell),
     - `odt` ([OpenOffice text document][ODT])
@@ -441,8 +443,8 @@ General options
 [TikiWiki markup]: https://doc.tiki.org/Wiki-Syntax-Text#The_Markup_Language_Wiki-Syntax
 [Haddock markup]: https://www.haskell.org/haddock/doc/html/ch03s08.html
 [Creole 1.0]: http://www.wikicreole.org/wiki/Creole1.0
-[groff man]: http://man7.org/linux/man-pages/man7/groff_man.7.html
-[groff ms]: http://man7.org/linux/man-pages/man7/groff_ms.7.html
+[roff man]: http://man7.org/linux/man-pages/man7/groff_man.7.html
+[roff ms]: http://man7.org/linux/man-pages/man7/groff_ms.7.html
 [Haskell]: https://www.haskell.org
 [GNU Texinfo]: http://www.gnu.org/software/texinfo/
 [Emacs Org mode]: http://orgmode.org
@@ -458,7 +460,7 @@ General options
 [PowerPoint]: https://en.wikipedia.org/wiki/Microsoft_PowerPoint
 [Vimwiki]: https://vimwiki.github.io
 
-Reader options
+Reader options {.options}
 --------------
 
 `--base-header-level=`*NUMBER*
@@ -577,6 +579,16 @@ Reader options
     printed in some output formats) and metadata values will be escaped
     when inserted into the template.
 
+`--metadata-file=`*FILE*
+
+:   Read metadata from the supplied YAML (or JSON) file.
+    This option can be used with every input format, but string
+    scalars in the YAML file will always be parsed as Markdown.
+    Generally, the input will be handled the same as in
+    [YAML metadata blocks][Extension: `yaml_metadata_block`].
+    Metadata values specified inside the document, or by using `-M`,
+    overwrite values specified with this option.
+
 `-p`, `--preserve-tabs`
 
 :   Preserve tabs instead of converting them to spaces (the default).
@@ -634,7 +646,7 @@ Reader options
 [perl]: https://metacpan.org/pod/Pandoc::Filter
 [JavaScript/node.js]: https://github.com/mvhenderson/pandoc-filter-node
 
-General writer options
+General writer options {.options}
 ----------------------
 
 `-s`, `--standalone`
@@ -804,6 +816,11 @@ General writer options
     `--resource-path=.:test` will search the working directory
     and the `test` subdirectory, in that order.
 
+    `--resource-path` only has an effect if (a) the output
+    format embeds images (for example, `docx`, `pdf`, or `html`
+    with `--self-contained`) or (b) it is used together with
+    `--extract-media`.
+
 `--request-header=`*NAME*`:`*VAL*
 
 :   Set the request header *NAME* to the value *VAL* when making
@@ -812,7 +829,7 @@ General writer options
     downloaded). If you're behind a proxy, you also need to set
     the environment variable `http_proxy` to `http://...`.
 
-Options affecting specific writers
+Options affecting specific writers {.options}
 ----------------------------------
 
 `--self-contained`
@@ -842,10 +859,12 @@ Options affecting specific writers
 
 `--ascii`
 
-:   Use only ASCII characters in output.  Currently supported for
-    XML and HTML formats (which use numerical entities instead of
-    UTF-8 when this option is selected) and for groff ms and man
-    (which use hexadecimal escapes).
+:   Use only ASCII characters in output. Currently supported for XML
+    and HTML formats (which use entities instead of UTF-8 when this
+    option is selected), CommonMark, gfm, and Markdown (which use
+    entities), roff ms (which use hexadecimal escapes), and to a
+    limited degree LaTeX (which uses standard commands for accented
+    characters when possible). roff man output uses ASCII by default.
 
 `--reference-links`
 
@@ -863,7 +882,7 @@ Options affecting specific writers
 
 `--atx-headers`
 
-:   Use ATX-style headers in Markdown and AsciiDoc output. The default is
+:   Use ATX-style headers in Markdown output. The default is
     to use setext-style headers for levels 1-2, and then ATX headers.
     (Note: for `gfm` output, ATX headers are always used.)
 
@@ -900,7 +919,10 @@ Options affecting specific writers
 
 `--listings`
 
-:   Use the [`listings`] package for LaTeX code blocks
+:   Use the [`listings`] package for LaTeX code blocks. The package
+    does not support multi-byte encoding for source code. To handle UTF-8
+    you would need to use a custom template. This issue is fully 
+    documented here: [Encoding issue with the listings package].
 
 `-i`, `--incremental`
 
@@ -954,8 +976,8 @@ Options affecting specific writers
     include multiple files. They will be included in the order specified.
 
     A stylesheet is required for generating EPUB.  If none is
-    provided using this option (or the `stylesheet` metadata
-    field), pandoc will look for a file `epub.css` in the
+    provided using this option (or the `css` or `stylesheet`
+    metadata fields), pandoc will look for a file `epub.css` in the
     user data directory (see `--data-dir`).  If it is not
     found there, sensible defaults will be used.
 
@@ -1128,8 +1150,10 @@ Options affecting specific writers
 
 [Dublin Core elements]: http://dublincore.org/documents/dces/
 [ISO 8601 format]: http://www.w3.org/TR/NOTE-datetime
+[Encoding issue with the listings package]:
+  https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings#Encoding_issue
 
-Citation rendering
+Citation rendering {.options}
 ------------------
 
 `--bibliography=`*FILE*
@@ -1169,7 +1193,7 @@ Citation rendering
     with the `pandoc-citeproc` filter or with PDF output. It is intended for
     use in producing a LaTeX file that can be processed with [`bibtex`] or [`biber`].
 
-Math rendering in HTML
+Math rendering in HTML {.options}
 ----------------------
 
 The default is to render TeX math as far as possible using Unicode characters.
@@ -1210,14 +1234,9 @@ of the following options.
 `--katex`[`=`*URL*]
 
 :   Use [KaTeX] to display embedded TeX math in HTML output.
-    The *URL* is the base URL for the KaTeX library. If a *URL* is
-    not provided, a link to the KaTeX CDN will be inserted.
-
-`--katex-stylesheet=`*URL*
-
-:   The *URL* should point to the `katex.css` stylesheet. If this option is
-    not specified, a link to the KaTeX CDN will be inserted. Note that this
-    option does not imply `--katex`.
+    The *URL* is the base URL for the KaTeX library. That directory
+    should contain a `katex.min.js` and a `katex.min.css` file.
+    If a *URL* is not provided, a link to the KaTeX CDN will be inserted.
 
 `--gladtex`
 
@@ -1235,7 +1254,7 @@ of the following options.
 [KaTeX]: https://github.com/Khan/KaTeX
 [GladTeX]: http://humenda.github.io/GladTeX/
 
-Options for wrapper scripts
+Options for wrapper scripts {.options}
 ---------------------------
 
 `--dump-args`
@@ -1351,7 +1370,7 @@ depending on the output format, but include the following:
 
 `toc-title`
 :   title of table of contents (works only with EPUB,
-    opendocument, odt, docx, pptx)
+    opendocument, odt, docx, pptx, beamer, LaTeX)
 
 `include-before`
 :   contents specified by `-B/--include-before-body` (may have
@@ -1505,13 +1524,13 @@ LaTeX variables are used when [creating a PDF].
     `fontfamily` set to [`mathpazo`] provides Palatino with old-style
     figures and true small caps; may be repeated for multiple options
 
-`mainfont`, `sansfont`, `monofont`, `mathfont`, `CJKmainfont`
+`mainfont`, `romanfont`, `sansfont`, `monofont`, `mathfont`, `CJKmainfont`
 :   font families for use with `xelatex` or
     `lualatex`: take the name of any system font, using the
     [`fontspec`] package.  Note that if `CJKmainfont` is used,
     the [`xecjk`] package must be available.
 
-`mainfontoptions`, `sansfontoptions`, `monofontoptions`, `mathfontoptions`, `CJKoptions`
+`mainfontoptions`, `romanfontoptions`, `sansfontoptions`, `monofontoptions`, `mathfontoptions`, `CJKoptions`
 :   options to use with `mainfont`, `sansfont`, `monofont`, `mathfont`,
     `CJKmainfont` in `xelatex` and `lualatex`.  Allow for any choices
     available through [`fontspec`], such as the OpenType features
@@ -1525,12 +1544,14 @@ LaTeX variables are used when [creating a PDF].
 :    options to pass to the microtype package
 
 `colorlinks`
-:   add color to link text; automatically enabled if any of `linkcolor`, `citecolor`,
-    `urlcolor`, or `toccolor` are set
+:   add color to link text; automatically enabled if any of
+    `linkcolor`, `filecolor`, `citecolor`, `urlcolor`, or `toccolor` are set
 
-`linkcolor`, `citecolor`, `urlcolor`, `toccolor`
-:   color for internal links, citation links, external links, and links in table of contents:
-    uses options allowed by [`xcolor`], including the `dvipsnames`, `svgnames`, and `x11names` lists
+`linkcolor`, `filecolor`, `citecolor`, `urlcolor`, `toccolor`
+:   color for internal links, external links, citation links, linked
+    URLs, and links in table of contents, respectively: uses options
+    allowed by [`xcolor`], including the `dvipsnames`, `svgnames`, and
+    `x11names` lists
 
 `links-as-notes`
 :   causes links to be printed as footnotes
@@ -1648,17 +1669,17 @@ Variables for ConTeXt
     from [ConTeXt ICC Profiles].  See also [ConTeXt PDFA] for more
     details.
 
-[ConTeXt Paper Setup]: http://wiki.contextgarden.net/PaperSetup
-[ConTeXt Layout]: http://wiki.contextgarden.net/Layout
-[ConTeXt Font Switching]: http://wiki.contextgarden.net/Font_Switching
-[ConTeXt Color]: http://wiki.contextgarden.net/Color
-[ConTeXt Headers and Footers]: http://wiki.contextgarden.net/Headers_and_Footers
-[ConTeXt Indentation]: http://wiki.contextgarden.net/Indentation
-[ConTeXt ICC Profiles]: http://wiki.contextgarden.net/PDFX#ICC_profiles
-[ConTeXt PDFA]: http://wiki.contextgarden.net/PDF/A
-[`setupwhitespace`]: http://wiki.contextgarden.net/Command/setupwhitespace
-[`setupinterlinespace`]: http://wiki.contextgarden.net/Command/setupinterlinespace
-[`setuppagenumbering`]: http://wiki.contextgarden.net/Command/setuppagenumbering
+[ConTeXt Paper Setup]: https://wiki.contextgarden.net/PaperSetup
+[ConTeXt Layout]: https://wiki.contextgarden.net/Layout
+[ConTeXt Font Switching]: https://wiki.contextgarden.net/Font_Switching
+[ConTeXt Color]: https://wiki.contextgarden.net/Color
+[ConTeXt Headers and Footers]: https://wiki.contextgarden.net/Headers_and_Footers
+[ConTeXt Indentation]: https://wiki.contextgarden.net/Indentation
+[ConTeXt ICC Profiles]: https://wiki.contextgarden.net/PDFX#ICC_profiles
+[ConTeXt PDFA]: https://wiki.contextgarden.net/PDF/A
+[`setupwhitespace`]: https://wiki.contextgarden.net/Command/setupwhitespace
+[`setupinterlinespace`]: https://wiki.contextgarden.net/Command/setupinterlinespace
+[`setuppagenumbering`]: https://wiki.contextgarden.net/Command/setuppagenumbering
 
 Variables for man pages
 -----------------------
@@ -1831,7 +1852,8 @@ output formats
 enabled by default in
 :  `markdown`, `muse`
 
-The algorithm used to derive the identifier from the header text is:
+The default algorithm used to derive the identifier from the
+header text is:
 
   - Remove all formatting, links, etc.
   - Remove all footnotes.
@@ -1858,6 +1880,9 @@ same text; in this case, the first will get an identifier as described
 above; the second will get the same identifier with `-1` appended; the
 third with `-2`; and so on.
 
+(However, a different algorithm is used if
+`gfm_auto_identifiers` is enabled; see below.)
+
 These identifiers are used to provide link targets in the table of
 contents generated by the `--toc|--table-of-contents` option. They
 also make it easy to provide links from one section of a document to
@@ -1882,6 +1907,13 @@ Causes the identifiers produced by `auto_identifiers` to be pure ASCII.
 Accents are stripped off of accented Latin letters, and non-Latin
 letters are omitted.
 
+#### Extension: `gfm_auto_identifiers` ####
+
+Changes the algorithm used by `auto_identifiers` to conform to
+GitHub's method.  Spaces are converted to dashes (`-`),
+uppercase characters to lowercase characters, and punctuation
+characters other than `-` and `_` are removed.
+
 Math Input
 ----------
 
@@ -1900,13 +1932,13 @@ The following extensions (especially how they affect Markdown
 input/output) are also described in more detail in their respective
 sections of [Pandoc's Markdown].
 
-#### [Extension: `raw_html`] {#raw_html}
+#### Extension: `raw_html` {#raw_html}
 
 When converting from HTML, parse elements to raw HTML which are not
 representable in pandoc's AST.
 By default, this is disabled for HTML input.
 
-#### [Extension: `raw_tex`] {#raw_tex}
+#### Extension: `raw_tex` {#raw_tex}
 
 Allows raw LaTeX, TeX, and ConTeXt to be included in a document.
 
@@ -1914,12 +1946,13 @@ This extension can be enabled/disabled for the following formats
 (in addition to `markdown`):
 
 input formats
-:  `latex`, `org`, `textile`
+:  `latex`, `org`, `textile`, `html` (environments, `\ref`, and
+   `\eqref` only)
 
 output formats
-:  `textile`
+:  `textile`, `commonmark`
 
-#### [Extension: `native_divs`] {#native_divs}
+#### Extension: `native_divs` {#native_divs}
 
 This extension is enabled by default for HTML input. This means that
 `div`s are parsed to pandoc native elements. (Alternatively, you
@@ -1930,7 +1963,7 @@ When converting HTML to Markdown, for example, you may want to drop all
 
     pandoc -f html-native_divs-native_spans -t markdown
 
-#### [Extension: `native_spans`] {#native_spans}
+#### Extension: `native_spans` {#native_spans}
 
 Analogous to `native_divs` above.
 
@@ -3052,7 +3085,9 @@ and pass it to pandoc as an argument, along with your Markdown files:
     pandoc chap1.md chap2.md chap3.md metadata.yaml -s -o book.html
 
 Just be sure that the YAML file begins with `---` and ends with `---` or
-`...`.)
+`...`.) Alternatively, you can use the `--metadata-file` option. Using
+that approach however, you cannot reference content (like footnotes)
+from the main markdown input document.
 
 Metadata will be taken from the fields of the YAML object and added to any
 existing document metadata.  Metadata can contain lists and objects (nested
@@ -3082,7 +3117,7 @@ when the field contains blank lines or block-level formatting:
     author:
     - Author One
     - Author Two
-    tags: [nothing, nothingness]
+    keywords: [nothing, nothingness]
     abstract: |
       This is the abstract.
 
@@ -3310,7 +3345,7 @@ AsciiDoc
 Texinfo
   ~ It will be rendered inside a `@math` command.
 
-groff man
+roff man
   ~ It will be rendered verbatim without `$`'s.
 
 MediaWiki, DokuWiki
@@ -3358,8 +3393,14 @@ Markdown allows it, but it has been made an extension so that it can
 be disabled if desired.)
 
 The raw HTML is passed through unchanged in HTML, S5, Slidy, Slideous,
-DZSlides, EPUB, Markdown, Emacs Org mode, and Textile output, and suppressed
-in other formats.
+DZSlides, EPUB, Markdown, CommonMark, Emacs Org mode, and Textile
+output, and suppressed in other formats.
+
+In the CommonMark format, if `raw_html` is enabled, superscripts,
+subscripts, strikeouts and small capitals will be represented as HTML.
+Otherwise, plain-text fallbacks will be used. Note that even if
+`raw_html` is disabled, tables will be rendered with HTML syntax if
+they cannot use pipe syntax.
 
 #### Extension: `markdown_in_html_blocks` ####
 
@@ -3444,7 +3485,7 @@ Emacs Org mode, and ConTeXt.
 Inline spans and fenced code blocks with a special
 kind of attribute will be parsed as raw content with the
 designated format.  For example, the following produces a raw
-groff `ms` block:
+roff `ms` block:
 
     ```{=ms}
     .MYMACRO
@@ -3485,7 +3526,7 @@ LaTeX macros
 
 #### Extension: `latex_macros` ####
 
-For output formats other than LaTeX, pandoc will parse LaTeX
+When this extension is enabled, pandoc will parse LaTeX
 macro definitions and apply the resulting macros to all LaTeX
 math and raw LaTeX.  So, for example, the following will work in
 all output formats, not just LaTeX:
@@ -3681,10 +3722,12 @@ For example:
   formats.  Use the `--dpi` option to specify the number of pixels per
   inch.  The default is 96dpi.
 - The `%` unit is generally relative to some available space.
-  For example the above example will render to
-  `<img href="file.jpg" style="width: 50%;" />` (HTML),
-  `\includegraphics[width=0.5\textwidth]{file.jpg}` (LaTeX), or
-  `\externalfigure[file.jpg][width=0.5\textwidth]` (ConTeXt).
+  For example the above example will render to the following.
+  - HTML: `<img href="file.jpg" style="width: 50%;" />`
+  - LaTeX: `\includegraphics[width=0.5\textwidth,height=\textheight]{file.jpg}`
+    (If you're using a custom template, you need to configure `graphicx`
+    as in the default template.)
+  - ConTeXt: `\externalfigure[file.jpg][width=0.5\textwidth]`
 - Some output formats have a notion of a class
   ([ConTeXt](http://wiki.contextgarden.net/Using_Graphics#Multiple_Image_Settings))
   or a unique identifier (LaTeX `\caption`), or both (HTML).
@@ -3833,8 +3876,10 @@ use `.bibtex` to force BibTeX.
 Note that `pandoc-citeproc --bib2json` and `pandoc-citeproc --bib2yaml`
 can produce `.json` and `.yaml` files from any of the supported formats.
 
-In-field markup: In BibTeX and BibLaTeX databases, pandoc-citeproc parses
-a subset of LaTeX markup; in CSL YAML databases, pandoc Markdown; and in CSL JSON databases, an [HTML-like markup][CSL markup specs]:
+In-field markup: In BibTeX and BibLaTeX databases,
+pandoc-citeproc parses a subset of LaTeX markup; in CSL YAML
+databases, pandoc Markdown; and in CSL JSON databases, an
+[HTML-like markup][CSL markup specs]:
 
 `<i>...</i>`
 :   italics
@@ -3925,6 +3970,13 @@ as `book`, `bk.`/`bks.`; `chapter`, `chap.`/`chaps.`; `column`,
 `verse`, `v.`/`vv.`; `volume`, `vol.`/`vols.`; `¶`/`¶¶`; `§`/`§§`. If no
 locator term is used, "page" is assumed.
 
+`pandoc-citeproc` will use heuristics to distinguish the locator
+from the suffix. In complex cases, the locator can be enclosed
+in curly braces (using `pandoc-citeproc` 0.15 and higher only):
+
+    [@smith{ii, A, D-Z}, with a suffix]
+    [@smith, {pp. iv, vi-xi, (xv)-(xvii)} with suffix here]
+
 A minus sign (`-`) before the `@` will suppress mention of
 the author in the citation.  This can be useful when the
 author is already mentioned in the text:
@@ -3938,8 +3990,19 @@ You can also write an in-text citation, as follows:
     @smith04 [p. 33] says blah.
 
 If the style calls for a list of works cited, it will be placed
-at the end of the document.  Normally, you will want to end your
-document with an appropriate header:
+in a div with id `refs`, if one exists:
+
+    ::: #refs
+    :::
+
+Otherwise, it will be placed at the end of the document.
+Generation of the bibliography can be suppressed by setting
+`suppress-bibliography: true` in the YAML metadata.
+
+If you wish the bibliography to have a section header, you can
+set `reference-section-title` in the metadata, or put the header
+at the beginning of the div with id `refs` (if you are using it)
+or at the end of your document:
 
     last paragraph...
 
@@ -3972,11 +4035,12 @@ whether or not they appear in the document, by using a wildcard:
       @*
     ...
 
-For LaTeX or PDF output, you can also use [`natbib`] or [`biblatex`]
-to render bibliography. In order to do so, specify bibliography files as
-outlined above, and add `--natbib` or `--biblatex` argument to `pandoc`
-invocation. Bear in mind that bibliography files have to be in respective
-format (either BibTeX or BibLaTeX).
+For LaTeX output, you can also use [`natbib`] or [`biblatex`] to
+render the bibliography. In order to do so, specify bibliography
+files as outlined above, and add `--natbib` or `--biblatex`
+argument to `pandoc` invocation. Bear in mind that bibliography
+files have to be in respective format (either BibTeX or
+BibLaTeX).
 
 For more information, see the [pandoc-citeproc man page].
 
@@ -4156,10 +4220,11 @@ variants are supported:
     `shortcut_reference_links`, `spaced_reference_links`.
 
 `markdown_github` (deprecated GitHub-Flavored Markdown)
-:   `pipe_tables`, `raw_html`, `fenced_code_blocks`, `gfm_auto_identifiers`,
-    `ascii_identifiers`, `backtick_code_blocks`, `autolink_bare_uris`,
-    `space_in_atx_header`, `intraword_underscores`, `strikeout`,
-    `emoji`, `shortcut_reference_links`, `angle_brackets_escapable`,
+:   `pipe_tables`, `raw_html`, `fenced_code_blocks`, `auto_identifiers`,
+    `gfm_auto_identifiers`, `backtick_code_blocks`,
+    `autolink_bare_uris`, `space_in_atx_header`,
+    `intraword_underscores`, `strikeout`, `emoji`,
+    `shortcut_reference_links`, `angle_brackets_escapable`,
     `lists_without_preceding_blankline`.
 
 `markdown_mmd` (MultiMarkdown)
@@ -4187,9 +4252,12 @@ Also, `raw_tex` only affects `gfm` output, not input.
 
 `gfm` (GitHub-Flavored Markdown)
 :   `pipe_tables`, `raw_html`, `fenced_code_blocks`, `auto_identifiers`,
-    `ascii_identifiers`, `backtick_code_blocks`, `autolink_bare_uris`,
-    `intraword_underscores`, `strikeout`, `hard_line_breaks`, `emoji`,
-    `shortcut_reference_links`, `angle_brackets_escapable`.
+    `gfm_auto_identifiers`, `backtick_code_blocks`,
+    `autolink_bare_uris`, `space_in_atx_header`,
+    `intraword_underscores`, `strikeout`, `emoji`,
+    `shortcut_reference_links`, `angle_brackets_escapable`,
+    `lists_without_preceding_blankline`.
+
 
 Producing slide shows with pandoc
 =================================
@@ -4448,26 +4516,30 @@ the [Beamer User's Guide] may also be used: `allowdisplaybreaks`,
 `allowframebreaks`, `b`, `c`, `t`, `environment`, `label`, `plain`,
 `shrink`, `standout`, `noframenumbering`.
 
-Background in reveal.js
------------------------
+Background in reveal.js and beamer
+----------------------------------
 
-Background images can be added to self-contained reveal.js slideshows.
+Background images can be added to self-contained reveal.js slideshows and 
+to beamer slideshows.
 
-For the same image on every slide, use the reveal.js configuration
-option `parallaxBackgroundImage` either in the YAML metadata block
-or as a command-line variable. You can also set
-`parallaxBackgroundHorizontal` and `parallaxBackgroundVertical` the same
-way and must also set `parallaxBackgroundSize` to have your values
-take effect.
+For the same image on every slide, use the  configuration
+option `background-image` either in the YAML metadata block
+or as a command-line variable. (There are no other options in
+beamer and the rest of this section concerns reveal.js slideshows.)
 
-To set an image for a particular slide, add
+For reveal.js, you can instead use the reveal.js-native option 
+`parallaxBackgroundImage`. You can also set `parallaxBackgroundHorizontal` 
+and `parallaxBackgroundVertical` the same way and must also set 
+`parallaxBackgroundSize` to have your values take effect.
+
+To set an image for a particular reveal.js slide, add
 `{data-background-image="/path/to/image"}`
 to the first slide-level header on the slide (which may even be empty).
 
 In reveal.js's overview mode, the parallaxBackgroundImage will show up
 only on the first slide.
 
-Other background settings also work on individual slides, including
+Other reveal.js background settings also work on individual slides, including
 `data-background-size`, `data-background-repeat`, `data-background-color`,
 `data-transition`, and `data-transition-speed`.
 
@@ -4475,7 +4547,7 @@ See the [reveal.js
 documentation](https://github.com/hakimel/reveal.js#slide-backgrounds)
 for more details.
 
-For example:
+For example in reveal.js:
 
 ```
 ---
@@ -4578,7 +4650,7 @@ The following fields are recognized:
 `cover-image`
   ~ A string value (path to cover image).
 
-`stylesheet`
+`css` (or legacy: `stylesheet`)
   ~ A string value (path to CSS stylesheet).
 
 `page-progression-direction`
@@ -4598,11 +4670,52 @@ The following fields are recognized:
 [MARC relators]: http://loc.gov/marc/relators/relaterm.html
 [`spine` element]: http://idpf.org/epub/301/spec/epub-publications.html#sec-spine-elem
 
+The `epub:type` attribute
+-------------------------
+
+For `epub3` output, you can mark up the header that corresponds to an EPUB
+chapter using the [`epub:type` attribute][epub-type]. For example, to set
+the attribute to the value `prologue`, use this markdown:
+
+    # My chapter {epub:type=prologue}
+
+Which will result in:
+
+    <body epub:type="frontmatter">
+      <section epub:type="prologue">
+        <h1>My chapter</h1>
+
+Pandoc will output `<body epub:type="bodymatter">`, unless
+you use one of the following values, in which case either
+`frontmatter` or `backmatter` will be output.
+
+`epub:type` of first section      `epub:type` of body
+----------------------------      ------------------
+prologue                          frontmatter
+abstract                          frontmatter
+acknowledgments                   frontmatter
+copyright-page                    frontmatter
+dedication                        frontmatter
+foreword                          frontmatter
+halftitle,                        frontmatter
+introduction                      frontmatter
+preface                           frontmatter
+seriespage                        frontmatter
+titlepage                         frontmatter
+afterword                         backmatter
+appendix                          backmatter
+colophon                          backmatter
+conclusion                        backmatter
+epigraph                          backmatter
+
+[epub-type]: http://www.idpf.org/epub/31/spec/epub-contentdocs.html#sec-epub-type-attribute
+
 Linked media
 ------------
 
-By default, pandoc will download linked media (including audio and
-video) and include it in the EPUB container, yielding a completely
+By default, pandoc will download media referenced from any `<img>`, `<audio>`,
+`<video>` or `<source>` element present in the generated EPUB,
+and include it in the EPUB container, yielding a completely
 self-contained EPUB.  If you want to link to external media resources
 instead, use raw HTML in your source and add `data-external="1"` to the tag
 with the `src` attribute.  For example:
@@ -4618,15 +4731,33 @@ Syntax highlighting
 
 Pandoc will automatically highlight syntax in [fenced code blocks] that
 are marked with a language name.  The Haskell library [skylighting] is
-used for highlighting, which works in HTML, Docx, Ms, and LaTeX/PDF output.
-To see a list of language names that pandoc will recognize, type
-`pandoc --list-highlight-languages`.
+used for highlighting. Currently highlighting is supported only for
+HTML, EPUB, Docx, Ms, and LaTeX/PDF output. To see a list of language names
+that pandoc will recognize, type `pandoc --list-highlight-languages`.
 
 The color scheme can be selected using the `--highlight-style` option.
 The default color scheme is `pygments`, which imitates the default color
 scheme used by the Python library pygments (though pygments is not actually
 used to do the highlighting).  To see a list of highlight styles,
 type `pandoc --list-highlight-styles`.
+
+If you are not satisfied with the predefined styles, you can
+use `--print-highlight-style` to generate a JSON `.theme` file which
+can be modified and used as the argument to `--highlight-style`. To
+get a JSON version of the `pygments` style, for example:
+
+    pandoc --print-highlight-style pygments > my.theme
+
+Then edit `my.theme` and use it like this:
+
+    pandoc --highlight-style my.theme
+
+If you are not satisfied with the built-in highlighting, or you
+want highlight a language that isn't supported, you can use the
+`--syntax-definition` option to load a [KDE-style XML syntax definition
+file](https://docs.kde.org/stable5/en/applications/katepart/highlight.html).
+Before writing your own, have a look at KDE's [repository of syntax
+definitions](https://github.com/KDE/syntax-highlighting/tree/master/data/syntax).
 
 To disable highlighting, use the `--no-highlight` option.
 
@@ -4744,6 +4875,39 @@ which you can modify according to your needs, do
     pandoc --print-default-data-file sample.lua
 
 [lua]: http://www.lua.org
+
+A note on security
+==================
+
+If you use pandoc to convert user-contributed content in a web
+application, here are some things to keep in mind:
+
+1. Although pandoc itself will not create or modify any files other
+   than those you explicitly ask it create (with the exception
+   of temporary files used in producing PDFs), a filter or custom
+   writer could in principle do anything on your file system. Please
+   audit filters and custom writers very carefully before using them.
+
+2. If your application uses pandoc as a Haskell library (rather than
+   shelling out to the executable), it is possible to use it in a mode
+   that fully isolates pandoc from your file system, by running the
+   pandoc operations in the `PandocPure` monad. See the document
+   [Using the pandoc API](http://pandoc.org/using-the-pandoc-api.html)
+   for more details.
+
+3. Pandoc's parsers can exhibit pathological performance on some
+   corner cases.  It is wise to put any pandoc operations under
+   a timeout, to avoid DOS attacks that exploit these issues.
+   If you are using the pandoc executable, you can add the
+   command line options `+RTS -M512M -RTS` (for example) to limit
+   the heap size to 512MB.
+
+4. The HTML generated by pandoc is not guaranteed to be safe.
+   If `raw_html` is enabled for the Markdown input, users can
+   inject arbitrary HTML.  Even if `raw_html` is disabled,
+   users can include dangerous content in attributes for
+   headers, spans, and code blocks.  To be safe, you should
+   run all the generated HTML through an HTML sanitizer.
 
 Authors
 =======

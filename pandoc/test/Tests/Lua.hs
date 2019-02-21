@@ -17,7 +17,8 @@ import Text.Pandoc.Builder (bulletList, divWith, doc, doubleQuoted, emph,
 import Text.Pandoc.Class (runIOorExplode, setUserDataDir)
 import Text.Pandoc.Definition (Block (BlockQuote, Div, Para), Inline (Emph, Str),
                                Attr, Meta, Pandoc, pandocTypesVersion)
-import Text.Pandoc.Lua (runLuaFilter, runPandocLua)
+import Text.Pandoc.Filter (Filter (LuaFilter), applyFilters)
+import Text.Pandoc.Lua (runLua)
 import Text.Pandoc.Options (def)
 import Text.Pandoc.Shared (pandocVersion)
 
@@ -109,7 +110,8 @@ tests = map (localOption (QuickCheckTests 20))
     assertFilterConversion "pandoc.utils doesn't work as expected."
       "test-pandoc-utils.lua"
       (doc $ para "doesn't matter")
-      (doc $ mconcat [ plain (str "hierarchicalize: OK")
+      (doc $ mconcat [ plain (str "blocks_to_inlines: OK")
+                     , plain (str "hierarchicalize: OK")
                      , plain (str "normalize_date: OK")
                      , plain (str "pipe: OK")
                      , plain (str "failing pipe: OK")
@@ -126,7 +128,7 @@ tests = map (localOption (QuickCheckTests 20))
       (doc $ para "ignored")
       (doc $ para (str $ "lua" </> "script-name.lua"))
 
-  , testCase "Pandoc version is set" . runPandocLua' $ do
+  , testCase "Pandoc version is set" . runLua' $ do
       Lua.getglobal' "table.concat"
       Lua.getglobal "PANDOC_VERSION"
       Lua.push ("." :: String) -- separator
@@ -134,13 +136,13 @@ tests = map (localOption (QuickCheckTests 20))
       Lua.liftIO . assertEqual "pandoc version is wrong" pandocVersion
         =<< Lua.peek Lua.stackTop
 
-  , testCase "Pandoc types version is set" . runPandocLua' $ do
+  , testCase "Pandoc types version is set" . runLua' $ do
       let versionNums = versionBranch pandocTypesVersion
       Lua.getglobal "PANDOC_API_VERSION"
       Lua.liftIO . assertEqual "pandoc-types version is wrong" versionNums
         =<< Lua.peek Lua.stackTop
 
-  , testCase "Allow singleton inline in constructors" . runPandocLua' $ do
+  , testCase "Allow singleton inline in constructors" . runLua' $ do
       Lua.liftIO . assertEqual "Not the exptected Emph" (Emph [Str "test"])
         =<< Lua.callFunc "pandoc.Emph" (Str "test")
       Lua.liftIO . assertEqual "Unexpected element" (Para [Str "test"])
@@ -154,38 +156,36 @@ tests = map (localOption (QuickCheckTests 20))
           Lua.peek Lua.stackTop
         )
 
-  , testCase "Elements with Attr have `attr` accessor" . runPandocLua' $ do
+  , testCase "Elements with Attr have `attr` accessor" . runLua' $ do
       Lua.push (Div ("hi", ["moin"], [])
                 [Para [Str "ignored"]])
       Lua.getfield Lua.stackTop "attr"
       Lua.liftIO . assertEqual "no accessor" (("hi", ["moin"], []) :: Attr)
         =<< Lua.peek Lua.stackTop
 
-  , testCase "informative error messages" . runPandocLua' $ do
+  , testCase "informative error messages" . runLua' $ do
       Lua.pushboolean True
-      err <- Lua.peekEither Lua.stackTop :: Lua.Lua (Either String Pandoc)
-      case err of
+      err <- Lua.peekEither Lua.stackTop
+      case (err :: Either String Pandoc) of
         Left msg -> do
           let expectedMsg = "Could not get Pandoc value: "
-                            ++ "expected table but got boolean."
+                            <> "table expected, got boolean"
           Lua.liftIO $ assertEqual "unexpected error message" expectedMsg msg
         Right _ -> error "Getting a Pandoc element from a bool should fail."
   ]
 
 assertFilterConversion :: String -> FilePath -> Pandoc -> Pandoc -> Assertion
-assertFilterConversion msg filterPath docIn docExpected = do
-  docEither <- runIOorExplode $ do
+assertFilterConversion msg filterPath docIn expectedDoc = do
+  actualDoc <- runIOorExplode $ do
     setUserDataDir (Just "../data")
-    runLuaFilter def ("lua" </> filterPath) [] docIn
-  case docEither of
-    Left _       -> fail "lua filter failed"
-    Right docRes -> assertEqual msg docExpected docRes
+    applyFilters def [LuaFilter ("lua" </> filterPath)] ["HTML"] docIn
+  assertEqual msg expectedDoc actualDoc
 
-roundtripEqual :: (Eq a, Lua.FromLuaStack a, Lua.ToLuaStack a) => a -> IO Bool
+roundtripEqual :: (Eq a, Lua.Peekable a, Lua.Pushable a) => a -> IO Bool
 roundtripEqual x = (x ==) <$> roundtripped
  where
-  roundtripped :: (Lua.FromLuaStack a, Lua.ToLuaStack a) => IO a
-  roundtripped = runPandocLua' $ do
+  roundtripped :: (Lua.Peekable a, Lua.Pushable a) => IO a
+  roundtripped = runLua' $ do
     oldSize <- Lua.gettop
     Lua.push x
     size <- Lua.gettop
@@ -196,10 +196,10 @@ roundtripEqual x = (x ==) <$> roundtripped
       Left e -> error (show e)
       Right y -> return y
 
-runPandocLua' :: Lua.Lua a -> IO a
-runPandocLua' op = runIOorExplode $ do
+runLua' :: Lua.Lua a -> IO a
+runLua' op = runIOorExplode $ do
   setUserDataDir (Just "../data")
-  res <- runPandocLua op
+  res <- runLua op
   case res of
     Left e -> error (show e)
     Right x -> return x

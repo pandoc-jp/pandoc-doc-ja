@@ -27,14 +27,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
    Stability   : alpha
    Portability : portable
 
-Conversion of 'Pandoc' documents to groff man page format.
+Conversion of 'Pandoc' documents to roff man page format.
 
 -}
 module Text.Pandoc.Writers.Man ( writeMan) where
 import Prelude
 import Control.Monad.State.Strict
-import Data.List (intercalate, intersperse, sort, stripPrefix)
-import qualified Data.Map as Map
+import Data.List (intersperse, stripPrefix)
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -48,28 +47,15 @@ import Text.Pandoc.Shared
 import Text.Pandoc.Templates
 import Text.Pandoc.Writers.Math
 import Text.Pandoc.Writers.Shared
+import Text.Pandoc.Writers.Roff
 import Text.Printf (printf)
-
-type Notes = [[Block]]
-data WriterState = WriterState { stNotes        :: Notes
-                               , stFontFeatures :: Map.Map Char Bool
-                               , stHasTables    :: Bool }
-
-defaultWriterState :: WriterState
-defaultWriterState = WriterState { stNotes = []
-                                 , stFontFeatures  = Map.fromList [
-                                                       ('I',False)
-                                                     , ('B',False)
-                                                     , ('C',False)
-                                                     ]
-                                 , stHasTables  = False }
 
 -- | Convert Pandoc to Man.
 writeMan :: PandocMonad m => WriterOptions -> Pandoc -> m Text
 writeMan opts document =
   evalStateT (pandocToMan opts document) defaultWriterState
 
--- | Return groff man representation of document.
+-- | Return roff man representation of document.
 pandocToMan :: PandocMonad m => WriterOptions -> Pandoc -> StateT WriterState m Text
 pandocToMan opts (Pandoc meta blocks) = do
   let colwidth = if writerWrapText opts == WrapAuto
@@ -111,6 +97,9 @@ pandocToMan opts (Pandoc meta blocks) = do
        Nothing  -> return main
        Just tpl -> renderTemplate' tpl context
 
+escString :: WriterOptions -> String -> String
+escString _ = escapeString AsciiOnly -- for better portability
+
 -- | Return man representation of notes.
 notesToMan :: PandocMonad m => WriterOptions -> [[Block]] -> StateT WriterState m Doc
 notesToMan opts notes =
@@ -126,57 +115,9 @@ noteToMan opts num note = do
   let marker = cr <> text ".SS " <> brackets (text (show num))
   return $ marker $$ contents
 
--- | Association list of characters to escape.
-manEscapes :: [(Char, String)]
-manEscapes = [ ('\160', "\\ ")
-             , ('\'', "\\[aq]")
-             , ('’', "'")
-             , ('\x2014', "\\[em]")
-             , ('\x2013', "\\[en]")
-             , ('\x2026', "\\&...")
-             ] ++ backslashEscapes "-@\\"
-
--- | Escape special characters for Man.
-escapeString :: String -> String
-escapeString = escapeStringUsing manEscapes
-
--- | Escape a literal (code) section for Man.
-escapeCode :: String -> String
-escapeCode = intercalate "\n" . map escapeLine . lines  where
-  escapeLine codeline =
-    case escapeStringUsing (manEscapes ++ backslashEscapes "\t ") codeline of
-      a@('.':_) -> "\\&" ++ a
-      b         -> b
-
 -- We split inline lists into sentences, and print one sentence per
--- line.  groff/troff treats the line-ending period differently.
+-- line.  roff treats the line-ending period differently.
 -- See http://code.google.com/p/pandoc/issues/detail?id=148.
-
--- | Returns the first sentence in a list of inlines, and the rest.
-breakSentence :: [Inline] -> ([Inline], [Inline])
-breakSentence [] = ([],[])
-breakSentence xs =
-  let isSentenceEndInline (Str ys@(_:_)) | last ys == '.' = True
-      isSentenceEndInline (Str ys@(_:_)) | last ys == '?' = True
-      isSentenceEndInline LineBreak      = True
-      isSentenceEndInline _              = False
-      (as, bs) = break isSentenceEndInline xs
-  in  case bs of
-           []             -> (as, [])
-           [c]            -> (as ++ [c], [])
-           (c:Space:cs)   -> (as ++ [c], cs)
-           (c:SoftBreak:cs) -> (as ++ [c], cs)
-           (Str ".":Str (')':ys):cs) -> (as ++ [Str ".", Str (')':ys)], cs)
-           (x@(Str ('.':')':_)):cs) -> (as ++ [x], cs)
-           (LineBreak:x@(Str ('.':_)):cs) -> (as ++[LineBreak], x:cs)
-           (c:cs)         -> (as ++ [c] ++ ds, es)
-              where (ds, es) = breakSentence cs
-
--- | Split a list of inlines into sentences.
-splitSentences :: [Inline] -> [[Inline]]
-splitSentences xs =
-  let (sent, rest) = breakSentence xs
-  in  if null rest then [sent] else sent : splitSentences rest
 
 -- | Convert Pandoc block element to man.
 blockToMan :: PandocMonad m
@@ -204,13 +145,16 @@ blockToMan opts (Header level _ inlines) = do
   let heading = case level of
                   1 -> ".SH "
                   _ -> ".SS "
-  return $ text heading <> contents
-blockToMan _ (CodeBlock _ str) = return $
+  return $ nowrap $ text heading <> contents
+blockToMan opts (CodeBlock _ str) = return $
   text ".IP" $$
   text ".nf" $$
   text "\\f[C]" $$
-  text (escapeCode str) $$
-  text "\\f[]" $$
+  ((case str of
+    '.':_ -> text "\\&"
+    _     -> mempty) <>
+   text (escString opts str)) $$
+  text "\\f[R]" $$
   text ".fi"
 blockToMan opts (BlockQuote blocks) = do
   contents <- blockListToMan opts blocks
@@ -315,7 +259,9 @@ definitionListItemToMan opts (label, defs) = do
                             rest' <- liftM vcat $ mapM
                                         (\item -> blockToMan opts item) xs
                             return $ first' $$
-                                     text ".RS" $$ rest' $$ text ".RE"
+                                     if null xs
+                                        then empty
+                                        else text ".RS" $$ rest' $$ text ".RE"
                           [] -> return empty
   return $ text ".TP" $$ nowrap (text ".B " <> labelText) $$ contents
 
@@ -325,11 +271,11 @@ blockListToMan :: PandocMonad m
                -> [Block]       -- ^ List of block elements
                -> StateT WriterState m Doc
 blockListToMan opts blocks =
-  mapM (blockToMan opts) blocks >>= (return . vcat)
+  vcat <$> mapM (blockToMan opts) blocks
 
 -- | Convert list of Pandoc inline elements to man.
 inlineListToMan :: PandocMonad m => WriterOptions -> [Inline] -> StateT WriterState m Doc
-inlineListToMan opts lst = mapM (inlineToMan opts) lst >>= (return . hcat)
+inlineListToMan opts lst = hcat <$> mapM (inlineToMan opts) lst
 
 -- | Convert Pandoc inline element to man.
 inlineToMan :: PandocMonad m => WriterOptions -> Inline -> StateT WriterState m Doc
@@ -356,11 +302,11 @@ inlineToMan opts (Quoted DoubleQuote lst) = do
   return $ text "\\[lq]" <> contents <> text "\\[rq]"
 inlineToMan opts (Cite _ lst) =
   inlineListToMan opts lst
-inlineToMan _ (Code _ str) =
-  withFontFeature 'C' (return (text $ escapeCode str))
-inlineToMan _ (Str str@('.':_)) =
-  return $ afterBreak "\\&" <> text (escapeString str)
-inlineToMan _ (Str str) = return $ text $ escapeString str
+inlineToMan opts (Code _ str) =
+  withFontFeature 'C' (return (text $ escString opts str))
+inlineToMan opts (Str str@('.':_)) =
+  return $ afterBreak "\\&" <> text (escString opts str)
+inlineToMan opts (Str str) = return $ text $ escString opts str
 inlineToMan opts (Math InlineMath str) =
   lift (texMathToInlines InlineMath str) >>= inlineListToMan opts
 inlineToMan opts (Math DisplayMath str) = do
@@ -398,21 +344,3 @@ inlineToMan _ (Note contents) = do
   notes <- gets stNotes
   let ref = show (length notes)
   return $ char '[' <> text ref <> char ']'
-
-fontChange :: PandocMonad m => StateT WriterState m Doc
-fontChange = do
-  features <- gets stFontFeatures
-  let filling = sort [c | (c,True) <- Map.toList features]
-  return $ text $ "\\f[" ++ filling ++ "]"
-
-withFontFeature :: PandocMonad m
-                => Char
-                -> StateT WriterState m Doc
-                -> StateT WriterState m Doc
-withFontFeature c action = do
-  modify $ \st -> st{ stFontFeatures = Map.adjust not c $ stFontFeatures st }
-  begin <- fontChange
-  d <- action
-  modify $ \st -> st{ stFontFeatures = Map.adjust not c $ stFontFeatures st }
-  end <- fontChange
-  return $ begin <> d <> end

@@ -1,6 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RelaxedPolyRec      #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TupleSections #-}
 
 {-
 Copyright (C) 2006-2018 John MacFarlane <jgm@berkeley.edu>
@@ -31,11 +32,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Conversion of markdown-formatted plain text to 'Pandoc' document.
 -}
-module Text.Pandoc.Readers.Markdown ( readMarkdown ) where
+module Text.Pandoc.Readers.Markdown ( readMarkdown, yamlToMeta ) where
 
 import Prelude
 import Control.Monad
 import Control.Monad.Except (throwError)
+import qualified Data.ByteString.Lazy as BS
 import Data.Char (isAlphaNum, isPunctuation, isSpace, toLower)
 import Data.List (intercalate, sortBy, transpose, elemIndex)
 import qualified Data.Map as M
@@ -51,7 +53,7 @@ import Text.Pandoc.Builder (Blocks, Inlines)
 import qualified Text.Pandoc.Builder as B
 import Text.Pandoc.Class (PandocMonad (..), report)
 import Text.Pandoc.Definition
-import Text.Pandoc.Emoji (emojis)
+import Text.Pandoc.Emoji (emojiToInline)
 import Text.Pandoc.Error
 import Text.Pandoc.Logging
 import Text.Pandoc.Options
@@ -230,11 +232,9 @@ pandocTitleBlock = try $ do
                    $ nullMeta
   updateState $ \st -> st{ stateMeta' = stateMeta' st <> meta' }
 
-
 yamlMetaBlock :: PandocMonad m => MarkdownParser m (F Blocks)
 yamlMetaBlock = try $ do
   guardEnabled Ext_yaml_metadata_block
-  pos <- getPosition
   string "---"
   blankline
   notFollowedBy blankline  -- if --- is followed by a blank it's an HRULE
@@ -242,43 +242,44 @@ yamlMetaBlock = try $ do
   -- by including --- and ..., we allow yaml blocks with just comments:
   let rawYaml = unlines ("---" : (rawYamlLines ++ ["..."]))
   optional blanklines
-  case YAML.decodeStrict (UTF8.fromString rawYaml) of
-       Right (YAML.Mapping _ hashmap : _) -> do
-         let alist = M.toList hashmap
-         mapM_ (\(key, v) ->
-           case YAML.parseEither (YAML.parseYAML key) of
-                Left e  -> fail e
-                Right k -> do
-                  if ignorable k
-                     then return ()
-                     else do
-                       v' <- yamlToMeta v
-                       let k' = T.unpack k
-                       updateState $ \st -> st{ stateMeta' =
-                          do m <- stateMeta' st
-                             -- if there's already a value, leave it unchanged
-                             case lookupMeta k' m of
-                                  Just _ -> return m
-                                  Nothing -> do
-                                    v'' <- v'
-                                    return $ B.setMeta (T.unpack k) v'' m}
-           ) alist
-       Right [] -> return ()
-       Right (YAML.Scalar YAML.SNull:_) -> return ()
+  newMetaF <- yamlBsToMeta $ UTF8.fromStringLazy rawYaml
+  -- Since `<>` is left-biased, existing values are not touched:
+  updateState $ \st -> st{ stateMeta' = (stateMeta' st) <> newMetaF }
+  return mempty
+
+-- | Read a YAML string and convert it to pandoc metadata.
+-- String scalars in the YAML are parsed as Markdown.
+yamlToMeta :: PandocMonad m => BS.ByteString -> m Meta
+yamlToMeta bstr = do
+  let parser = do
+        meta <- yamlBsToMeta bstr
+        return $ runF meta defaultParserState
+  parsed <- readWithM parser def ""
+  case parsed of
+    Right result -> return result
+    Left e       -> throwError e
+
+yamlBsToMeta :: PandocMonad m => BS.ByteString -> MarkdownParser m (F Meta)
+yamlBsToMeta bstr = do
+  pos <- getPosition
+  case YAML.decodeNode' YAML.failsafeSchemaResolver False False bstr of
+       Right ((YAML.Doc (YAML.Mapping _ o)):_) -> (fmap Meta) <$> yamlMap o
+       Right [] -> return . return $ mempty
+       Right [YAML.Doc (YAML.Scalar YAML.SNull)] -> return . return $ mempty
        Right _ -> do
                   logMessage $
                      CouldNotParseYamlMetadata "not an object"
                      pos
-                  return ()
+                  return . return $ mempty
        Left err' -> do
                     logMessage $ CouldNotParseYamlMetadata
                                  err' pos
-                    return ()
-  return mempty
+                    return . return $ mempty
 
--- ignore fields ending with _
-ignorable :: Text -> Bool
-ignorable t = (T.pack "_") `T.isSuffixOf` t
+nodeToKey :: Monad m => YAML.Node -> m Text
+nodeToKey (YAML.Scalar (YAML.SStr t))       = return t
+nodeToKey (YAML.Scalar (YAML.SUnknown _ t)) = return t
+nodeToKey _                                 = fail "Non-string key in YAML mapping"
 
 toMetaValue :: PandocMonad m
             => Text -> MarkdownParser m (F MetaValue)
@@ -299,37 +300,51 @@ toMetaValue x =
         -- not end in a newline, but a "block" set off with
         -- `|` or `>` will.
 
-yamlToMeta :: PandocMonad m
-           => YAML.Node -> MarkdownParser m (F MetaValue)
-yamlToMeta (YAML.Scalar x) =
+checkBoolean :: Text -> Maybe Bool
+checkBoolean t =
+  if t == T.pack "true" || t == T.pack "True" || t == T.pack "TRUE"
+     then Just True
+     else if t == T.pack "false" || t == T.pack "False" || t == T.pack "FALSE"
+             then Just False
+             else Nothing
+
+yamlToMetaValue :: PandocMonad m
+                => YAML.Node -> MarkdownParser m (F MetaValue)
+yamlToMetaValue (YAML.Scalar x) =
   case x of
-       YAML.SStr t   -> toMetaValue t
-       YAML.SBool b  -> return $ return $ MetaBool b
-       YAML.SFloat d -> return $ return $ MetaString (show d)
-       YAML.SInt i   -> return $ return $ MetaString (show i)
-       _             -> return $ return $ MetaString ""
-yamlToMeta (YAML.Sequence _ xs) = do
-  xs' <- mapM yamlToMeta xs
+       YAML.SStr t       -> toMetaValue t
+       YAML.SBool b      -> return $ return $ MetaBool b
+       YAML.SFloat d     -> return $ return $ MetaString (show d)
+       YAML.SInt i       -> return $ return $ MetaString (show i)
+       YAML.SUnknown _ t ->
+         case checkBoolean t of
+           Just b        -> return $ return $ MetaBool b
+           Nothing       -> toMetaValue t
+       YAML.SNull        -> return $ return $ MetaString ""
+yamlToMetaValue (YAML.Sequence _ xs) = do
+  xs' <- mapM yamlToMetaValue xs
   return $ do
     xs'' <- sequence xs'
     return $ B.toMetaValue xs''
-yamlToMeta (YAML.Mapping _ o) = do
-  let alist = M.toList o
-  foldM (\m (key, v) ->
-     case YAML.parseEither (YAML.parseYAML key) of
-          Left e  -> fail e
-          Right k -> do
-           if ignorable k
-              then return m
-              else do
-                v' <- yamlToMeta v
-                return $ do
-                   MetaMap m' <- m
-                   v'' <- v'
-                   return (MetaMap $ M.insert (T.unpack k) v'' m'))
-        (return $ MetaMap M.empty)
-        alist
-yamlToMeta _ = return $ return $ MetaString ""
+yamlToMetaValue (YAML.Mapping _ o) = fmap B.toMetaValue <$> yamlMap o
+yamlToMetaValue _ = return $ return $ MetaString ""
+
+yamlMap :: PandocMonad m
+        => M.Map YAML.Node YAML.Node
+        -> MarkdownParser m (F (M.Map String MetaValue))
+yamlMap o = do
+    kvs <- forM (M.toList o) $ \(key, v) -> do
+             k <- nodeToKey key
+             return (k, v)
+    let kvs' = filter (not . ignorable . fst) kvs
+    (fmap M.fromList . sequence) <$> mapM toMeta kvs'
+  where
+    ignorable t = (T.pack "_") `T.isSuffixOf` t
+    toMeta (k, v) = do
+      fv <- yamlToMetaValue v
+      return $ do
+        v' <- fv
+        return (T.unpack k, v')
 
 stopLine :: PandocMonad m => MarkdownParser m ()
 stopLine = try $ (string "---" <|> string "...") >> blankline >> return ()
@@ -956,7 +971,9 @@ orderedList = try $ do
                <|> return (style == Example)
   items <- fmap sequence $ many1 $ listItem fourSpaceRule
                  (orderedListStart (Just (style, delim)))
-  start' <- (start <$ guardEnabled Ext_startnum) <|> return 1
+  start' <- if style == Example
+               then return start
+               else (start <$ guardEnabled Ext_startnum) <|> return 1
   return $ B.orderedListWith (start', style, delim) <$> fmap compactify items
 
 bulletList :: PandocMonad m => MarkdownParser m (F Blocks)
@@ -1132,19 +1149,15 @@ rawTeXBlock :: PandocMonad m => MarkdownParser m (F Blocks)
 rawTeXBlock = do
   guardEnabled Ext_raw_tex
   lookAhead $ try $ char '\\' >> letter
-  result <- (B.rawBlock "context" . trim . concat <$>
-                many1 ((++) <$> (rawConTeXtEnvironment <|> conTeXtCommand)
-                            <*> spnl'))
-          <|> (B.rawBlock "latex" . trim . concat <$>
+  result <- (B.rawBlock "tex" . trim . concat <$>
+                many1 ((++) <$> rawConTeXtEnvironment <*> spnl'))
+          <|> (B.rawBlock "tex" . trim . concat <$>
                 many1 ((++) <$> rawLaTeXBlock <*> spnl'))
   return $ case B.toList result of
                 [RawBlock _ cs]
                   | all (`elem` [' ','\t','\n']) cs -> return mempty
                 -- don't create a raw block for suppressed macro defs
                 _ -> return result
-
-conTeXtCommand :: PandocMonad m => MarkdownParser m String
-conTeXtCommand = oneOfStrings ["\\placeformula"]
 
 rawHtmlBlocks :: PandocMonad m => MarkdownParser m (F Blocks)
 rawHtmlBlocks = do
@@ -1708,14 +1721,16 @@ str = do
   (do guardEnabled Ext_smart
       abbrevs <- getOption readerAbbreviations
       if not (null result) && last result == '.' && result `Set.member` abbrevs
-         then try (do ils <- whitespace <|> endline
-                      lookAhead alphaNum
+         then try (do ils <- whitespace
+                      -- ?? lookAhead alphaNum
+                      -- replace space after with nonbreaking space
+                      -- if softbreak, move before abbrev if possible (#4635)
                       return $ do
                         ils' <- ils
-                        if ils' == B.space
-                           then return (B.str result <> B.str "\160")
-                           else -- linebreak or softbreak
-                                return (ils' <> B.str result <> B.str "\160"))
+                        case B.toList ils' of
+                             [Space] ->
+                                 return (B.str result <> B.str "\160")
+                             _ -> return (B.str result <> ils'))
                 <|> return (return (B.str result))
          else return (return (B.str result)))
      <|> return (return (B.str result))
@@ -1867,23 +1882,24 @@ bareURL :: PandocMonad m => MarkdownParser m (F Inlines)
 bareURL = try $ do
   guardEnabled Ext_autolink_bare_uris
   getState >>= guard . stateAllowLinks
-  (orig, src) <- uri <|> emailAddress
+  (cls, (orig, src)) <- (("uri",) <$> uri) <|> (("email",) <$> emailAddress)
   notFollowedBy $ try $ spaces >> htmlTag (~== TagClose "a")
-  return $ return $ B.link src "" (B.str orig)
+  return $ return $ B.linkWith ("",[cls],[]) src "" (B.str orig)
 
 autoLink :: PandocMonad m => MarkdownParser m (F Inlines)
 autoLink = try $ do
   getState >>= guard . stateAllowLinks
   char '<'
-  (orig, src) <- uri <|> emailAddress
+  (cls, (orig, src)) <- (("uri",) <$> uri) <|> (("email",) <$> emailAddress)
   -- in rare cases, something may remain after the uri parser
   -- is finished, because the uri parser tries to avoid parsing
   -- final punctuation.  for example:  in `<http://hi---there>`,
   -- the URI parser will stop before the dashes.
   extra <- fromEntities <$> manyTill nonspaceChar (char '>')
-  attr  <- option nullAttr $ try $
+  attr  <- option ("", [cls], []) $ try $
             guardEnabled Ext_link_attributes >> attributes
-  return $ return $ B.linkWith attr (src ++ escapeURI extra) "" (B.str $ orig ++ extra)
+  return $ return $ B.linkWith attr (src ++ escapeURI extra) ""
+                     (B.str $ orig ++ extra)
 
 image :: PandocMonad m => MarkdownParser m (F Inlines)
 image = try $ do
@@ -2027,9 +2043,9 @@ emoji = try $ do
   char ':'
   emojikey <- many1 (oneOf emojiChars)
   char ':'
-  case M.lookup emojikey emojis of
-       Just s  -> return (return (B.str s))
-       Nothing -> mzero
+  case emojiToInline emojikey of
+    Just i -> return (return $ B.singleton i)
+    Nothing -> mzero
 
 -- Citations
 

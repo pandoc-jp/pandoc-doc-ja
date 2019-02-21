@@ -37,7 +37,7 @@ import Control.Arrow (second)
 import Control.Monad (forM_, guard, liftM, mplus, mzero, when)
 import Control.Monad.Except (throwError)
 import Control.Monad.Identity (Identity (..))
-import Data.Char (isHexDigit, isSpace, toLower, toUpper)
+import Data.Char (isHexDigit, isSpace, toLower, toUpper, isAlphaNum)
 import Data.List (deleteFirstsBy, elemIndex, intercalate, isInfixOf, isSuffixOf,
                   nub, sort, transpose, union)
 import qualified Data.Map as M
@@ -172,6 +172,7 @@ parseRST = do
   docMinusKeys <- concat <$>
                   manyTill (referenceKey <|> anchorDef <|>
                             noteBlock <|> citationBlock <|>
+                            (snd <$> withRaw comment) <|>
                             headerBlock <|> lineClump) eof
   setInput docMinusKeys
   setPosition startPos
@@ -664,11 +665,13 @@ directive' = do
   optional blanklines
   let body' = body ++ "\n\n"
       name = trim $ fromMaybe "" (lookup "name" fields)
-      imgAttr cl = ("", classes, widthAttr ++ heightAttr)
+      classes = words $ maybe "" trim (lookup "class" fields)
+      keyvals = [(k, trim v) | (k, v) <- fields, k /= "name", k /= "class"]
+      imgAttr cl = ("", classes ++ alignClasses, widthAttr ++ heightAttr)
         where
-          classes = words $ maybe "" trim (lookup cl fields) ++
-                      maybe "" (\x -> "align-" ++ trim x)
-                        (lookup "align" fields)
+          alignClasses = words $ maybe "" trim (lookup cl fields) ++
+                          maybe "" (\x -> "align-" ++ trim x)
+                          (lookup "align" fields)
           scale = case trim <$> lookup "scale" fields of
                        Just v  -> case reverse v of
                                        '%':vv ->
@@ -697,8 +700,9 @@ directive' = do
         "line-block" -> lineBlockDirective body'
         "raw" -> return $ B.rawBlock (trim top) (stripTrailingNewlines body)
         "role" -> addNewRole top $ map (second trim) fields
-        "container" -> B.divWith (name, "container" : words top, []) <$>
-                            parseFromString' parseBlocks body'
+        "container" -> B.divWith
+                         (name, "container" : words top ++ classes, []) <$>
+                          parseFromString' parseBlocks body'
         "replace" -> B.para <$>  -- consumed by substKey
                    parseInlineFromString (trim top)
         "unicode" -> B.para <$>  -- consumed by substKey
@@ -716,7 +720,7 @@ directive' = do
                              (l:ls) -> B.divWith ("",["admonition-title"],[])
                                           (B.para (B.str (toUpper l : ls)))
                              [] -> mempty
-              return $ B.divWith ("",[label],[]) (lab <> bod)
+              return $ B.divWith (name,label:classes,keyvals) (lab <> bod)
         "sidebar" ->
            do let subtit = maybe "" trim $ lookup "subtitle" fields
               tit <- B.para . B.strong <$> parseInlineFromString
@@ -724,21 +728,21 @@ directive' = do
                                           then ""
                                           else (":  " ++ subtit))
               bod <- parseFromString' parseBlocks body'
-              return $ B.divWith ("",["sidebar"],[]) $ tit <> bod
+              return $ B.divWith (name,"sidebar":classes,keyvals) $ tit <> bod
         "topic" ->
            do tit <- B.para . B.strong <$> parseInlineFromString top
               bod <- parseFromString' parseBlocks body'
-              return $ B.divWith ("",["topic"],[]) $ tit <> bod
+              return $ B.divWith (name,"topic":classes,keyvals) $ tit <> bod
         "default-role" -> mempty <$ updateState (\s ->
                               s { stateRstDefaultRole =
                                   case trim top of
                                      ""   -> stateRstDefaultRole def
                                      role -> role })
         x | x == "code" || x == "code-block" ->
-          codeblock (words $ fromMaybe [] $ lookup "class" fields)
+          codeblock name classes
                     (lookup "number-lines" fields) (trim top) body
         "aafig" -> do
-          let attribs = ("", ["aafig"], map (second trimr) fields)
+          let attribs = (name, ["aafig"], map (second trimr) fields)
           return $ B.codeBlockWith attribs $ stripTrailingNewlines body
         "math" -> return $ B.para $ mconcat $ map B.displayMath
                          $ toChunks $ top ++ "\n\n" ++ body
@@ -757,8 +761,7 @@ directive' = do
                                      $ B.imageWith attr src "" alt
                           Nothing -> B.imageWith attr src "" alt
         "class" -> do
-            let attrs = ("", splitBy isSpace $ trim top,
-                              map (second trimr) fields)
+            let attrs = (name, words (trim top), map (second trimr) fields)
             --  directive content or the first immediately following element
             children <- case body of
                 "" -> block
@@ -768,7 +771,7 @@ directive' = do
             pos <- getPosition
             logMessage $ SkippedContent (".. " ++ other) pos
             bod <- parseFromString' parseBlocks $ top ++ "\n\n" ++ body'
-            return $ B.divWith ("",[other],[]) bod
+            return $ B.divWith (name, other:classes, keyvals) bod
 
 tableDirective :: PandocMonad m
                => String -> [(String, String)] -> String -> RSTParser m Blocks
@@ -988,10 +991,11 @@ toChunks = dropWhile null
                           then "\\begin{aligned}\n" ++ s ++ "\n\\end{aligned}"
                           else s
 
-codeblock :: [String] -> Maybe String -> String -> String -> RSTParser m Blocks
-codeblock classes numberLines lang body =
+codeblock :: String -> [String] -> Maybe String -> String -> String
+          -> RSTParser m Blocks
+codeblock ident classes numberLines lang body =
   return $ B.codeBlockWith attribs $ stripTrailingNewlines body
-    where attribs = ("", classes', kvs)
+    where attribs = (ident, classes', kvs)
           classes' = "sourceCode" : lang
                     : maybe [] (const ["numberLines"]) numberLines
                     ++ classes
@@ -1089,7 +1093,7 @@ referenceKey = do
 targetURI :: Monad m => ParserT [Char] st m [Char]
 targetURI = do
   skipSpaces
-  optional newline
+  optional $ try $ newline >> notFollowedBy blankline
   contents <- trim <$>
      many1 (satisfy (/='\n')
      <|> try (newline >> many1 spaceChar >> noneOf " \t\n"))
@@ -1265,7 +1269,9 @@ simpleTableHeader headless = try $ do
   rawContent  <- if headless
                     then return ""
                     else simpleTableSep '=' >> anyLine
-  dashes      <- simpleDashedLines '=' <|> simpleDashedLines '-'
+  dashes      <- if headless
+                    then simpleDashedLines '='
+                    else simpleDashedLines '=' <|> simpleDashedLines '-'
   newline
   let lines'   = map snd dashes
   let indices  = scanl (+) 0 lines'
@@ -1313,19 +1319,24 @@ table = gridTable False <|> simpleTable False <|>
 
 inline :: PandocMonad m => RSTParser m Inlines
 inline = choice [ note          -- can start with whitespace, so try before ws
-                , whitespace
                 , link
-                , str
-                , endline
                 , strong
                 , emph
                 , code
                 , subst
                 , interpretedRole
-                , smart
-                , hyphens
-                , escapedChar
-                , symbol ] <?> "inline"
+                , inlineContent ] <?> "inline"
+
+-- strings, spaces and other characters that can appear either by
+-- themselves or within inline markup
+inlineContent :: PandocMonad m => RSTParser m Inlines
+inlineContent = choice [ whitespace
+                       , str
+                       , endline
+                       , smart
+                       , hyphens
+                       , escapedChar
+                       , symbol ] <?> "inline content"
 
 parseInlineFromString :: PandocMonad m => String -> RSTParser m Inlines
 parseInlineFromString = parseFromString' (trimInlines . mconcat <$> many inline)
@@ -1368,11 +1379,11 @@ atStart p = do
 
 emph :: PandocMonad m => RSTParser m Inlines
 emph = B.emph . trimInlines . mconcat <$>
-         enclosed (atStart $ char '*') (char '*') inline
+         enclosed (atStart $ char '*') (char '*') inlineContent
 
 strong :: PandocMonad m => RSTParser m Inlines
 strong = B.strong . trimInlines . mconcat <$>
-          enclosed (atStart $ string "**") (try $ string "**") inline
+          enclosed (atStart $ string "**") (try $ string "**") inlineContent
 
 -- Note, this doesn't precisely implement the complex rule in
 -- http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#inline-markup-recognition-rules
@@ -1380,7 +1391,6 @@ strong = B.strong . trimInlines . mconcat <$>
 --
 -- TODO:
 --  - Classes are silently discarded in addNewRole
---  - Lacks sensible implementation for title-reference (which is the default)
 --  - Allows direct use of the :raw: role, rST only allows inherited use.
 interpretedRole :: PandocMonad m => RSTParser m Inlines
 interpretedRole = try $ do
@@ -1390,12 +1400,12 @@ interpretedRole = try $ do
 renderRole :: PandocMonad m
            => String -> Maybe String -> String -> Attr -> RSTParser m Inlines
 renderRole contents fmt role attr = case role of
-    "sup"  -> return $ B.superscript $ B.str contents
-    "superscript" -> return $ B.superscript $ B.str contents
-    "sub"  -> return $ B.subscript $ B.str contents
-    "subscript"  -> return $ B.subscript $ B.str contents
-    "emphasis" -> return $ B.emph $ B.str contents
-    "strong" -> return $ B.strong $ B.str contents
+    "sup"  -> return $ B.superscript $ treatAsText contents
+    "superscript" -> return $ B.superscript $ treatAsText contents
+    "sub"  -> return $ B.subscript $ treatAsText contents
+    "subscript"  -> return $ B.subscript $ treatAsText contents
+    "emphasis" -> return $ B.emph $ treatAsText contents
+    "strong" -> return $ B.strong $ treatAsText contents
     "rfc-reference" -> return $ rfcLink contents
     "RFC" -> return $ rfcLink contents
     "pep-reference" -> return $ pepLink contents
@@ -1406,7 +1416,7 @@ renderRole contents fmt role attr = case role of
     "title" -> titleRef contents
     "t" -> titleRef contents
     "code" -> return $ B.codeWith (addClass "sourceCode" attr) contents
-    "span" -> return $ B.spanWith attr $ B.str contents
+    "span" -> return $ B.spanWith attr $ treatAsText contents
     "raw" -> return $ B.rawInline (fromMaybe "" fmt) contents
     custom -> do
         customRoles <- stateRstCustomRoles <$> getState
@@ -1414,14 +1424,20 @@ renderRole contents fmt role attr = case role of
             Just (newRole, newFmt, newAttr) ->
                 renderRole contents newFmt newRole newAttr
             Nothing -> -- undefined role
-                return $ B.spanWith ("",[],[("role",role)]) (B.str contents)
+                return $ B.codeWith ("",["interpreted-text"],[("role",role)])
+                          contents
  where
-   titleRef ref = return $ B.str ref -- FIXME: Not a sensible behaviour
+   titleRef ref = return $ B.spanWith ("",["title-ref"],[]) $ treatAsText ref
    rfcLink rfcNo = B.link rfcUrl ("RFC " ++ rfcNo) $ B.str ("RFC " ++ rfcNo)
      where rfcUrl = "http://www.faqs.org/rfcs/rfc" ++ rfcNo ++ ".html"
    pepLink pepNo = B.link pepUrl ("PEP " ++ pepNo) $ B.str ("PEP " ++ pepNo)
      where padNo = replicate (4 - length pepNo) '0' ++ pepNo
            pepUrl = "http://www.python.org/dev/peps/pep-" ++ padNo ++ "/"
+   treatAsText = B.text . handleEscapes
+   handleEscapes [] = []
+   handleEscapes ('\\':' ':cs) = handleEscapes cs
+   handleEscapes ('\\':c:cs) = c : handleEscapes cs
+   handleEscapes (c:cs) = c : handleEscapes cs
 
 addClass :: String -> Attr -> Attr
 addClass c (ident, classes, keyValues) = (ident, classes `union` [c], keyValues)
@@ -1445,7 +1461,18 @@ roleAfter = try $ do
   return (role,contents)
 
 unmarkedInterpretedText :: PandocMonad m => RSTParser m [Char]
-unmarkedInterpretedText = enclosed (atStart $ char '`') (char '`') anyChar
+unmarkedInterpretedText = try $ do
+  atStart (char '`')
+  contents <- mconcat <$> (many1
+       (  many1 (noneOf "`\\\n")
+      <|> (char '\\' >> ((\c -> ['\\',c]) <$> noneOf "\n"))
+      <|> (string "\n" <* notFollowedBy blankline)
+      <|> try (string "`" <*
+                notFollowedBy (() <$ roleMarker) <*
+                lookAhead (satisfy isAlphaNum))
+       ))
+  char '`'
+  return contents
 
 whitespace :: PandocMonad m => RSTParser m Inlines
 whitespace = B.space <$ skipMany1 spaceChar <?> "whitespace"
@@ -1480,7 +1507,7 @@ explicitLink = try $ do
   char '`'
   notFollowedBy (char '`') -- `` marks start of inline code
   label' <- trimInlines . mconcat <$>
-             manyTill (notFollowedBy (char '`') >> inline) (char '<')
+             manyTill (notFollowedBy (char '`') >> inlineContent) (char '<')
   src <- trim <$> manyTill (noneOf ">\n") (char '>')
   skipSpaces
   string "`_"

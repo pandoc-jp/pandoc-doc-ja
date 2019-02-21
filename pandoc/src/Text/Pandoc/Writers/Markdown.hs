@@ -38,7 +38,7 @@ module Text.Pandoc.Writers.Markdown (writeMarkdown, writePlain) where
 import Prelude
 import Control.Monad.Reader
 import Control.Monad.State.Strict
-import Data.Char (chr, isPunctuation, isSpace, ord, isAlphaNum)
+import Data.Char (isPunctuation, isSpace, isAlphaNum)
 import Data.Default
 import qualified Data.HashMap.Strict as H
 import Data.List (find, group, intersperse, sortBy, stripPrefix, transpose)
@@ -65,6 +65,7 @@ import Text.Pandoc.Walk
 import Text.Pandoc.Writers.HTML (writeHtml5String)
 import Text.Pandoc.Writers.Math (texMathToInlines)
 import Text.Pandoc.Writers.Shared
+import Text.Pandoc.XML (toHtml5Entities)
 
 type Notes = [[Block]]
 type Ref   = (Doc, Target, Attr)
@@ -216,8 +217,8 @@ pandocToMarkdown opts (Pandoc meta blocks) = do
   -- Strip off final 'references' header if markdown citations enabled
   let blocks' = if isEnabled Ext_citations opts
                    then case reverse blocks of
-                             (Div (_,["references"],_) _):xs -> reverse xs
-                             _                               -> blocks
+                             (Div ("refs",_,_) _):xs -> reverse xs
+                             _                       -> blocks
                    else blocks
   body <- blockListToMarkdown opts blocks'
   notesAndRefs' <- notesAndRefs opts
@@ -279,38 +280,44 @@ noteToMarkdown opts num blocks = do
 
 -- | Escape special characters for Markdown.
 escapeString :: WriterOptions -> String -> String
-escapeString _  [] = []
-escapeString opts (c:cs) =
-  case c of
+escapeString opts =
+  (if writerPreferAscii opts
+      then T.unpack . toHtml5Entities . T.pack
+      else id) . go
+  where
+  go [] = []
+  go (c:cs) =
+    case c of
        '<' | isEnabled Ext_all_symbols_escapable opts ->
-              '\\' : '<' : escapeString opts cs
-           | otherwise -> "&lt;" ++ escapeString opts cs
+              '\\' : '<' : go cs
+           | otherwise -> "&lt;" ++ go cs
        '>' | isEnabled Ext_all_symbols_escapable opts ->
-              '\\' : '>' : escapeString opts cs
-           | otherwise -> "&gt;" ++ escapeString opts cs
+              '\\' : '>' : go cs
+           | otherwise -> "&gt;" ++ go cs
        '@' | isEnabled Ext_citations opts ->
                case cs of
                     (d:_)
                       | isAlphaNum d || d == '_'
-                         -> '\\':'@':escapeString opts cs
-                    _ -> '@':escapeString opts cs
+                         -> '\\':'@':go cs
+                    _ -> '@':go cs
        _ | c `elem` ['\\','`','*','_','[',']','#'] ->
-              '\\':c:escapeString opts cs
-       '|' | isEnabled Ext_pipe_tables opts -> '\\':'|':escapeString opts cs
-       '^' | isEnabled Ext_superscript opts -> '\\':'^':escapeString opts cs
-       '~' | isEnabled Ext_subscript opts -> '\\':'~':escapeString opts cs
-       '$' | isEnabled Ext_tex_math_dollars opts -> '\\':'$':escapeString opts cs
-       '\'' | isEnabled Ext_smart opts -> '\\':'\'':escapeString opts cs
-       '"' | isEnabled Ext_smart opts -> '\\':'"':escapeString opts cs
+              '\\':c:go cs
+       '|' | isEnabled Ext_pipe_tables opts -> '\\':'|':go cs
+       '^' | isEnabled Ext_superscript opts -> '\\':'^':go cs
+       '~' | isEnabled Ext_subscript opts ||
+             isEnabled Ext_strikeout opts -> '\\':'~':go cs
+       '$' | isEnabled Ext_tex_math_dollars opts -> '\\':'$':go cs
+       '\'' | isEnabled Ext_smart opts -> '\\':'\'':go cs
+       '"' | isEnabled Ext_smart opts -> '\\':'"':go cs
        '-' | isEnabled Ext_smart opts ->
               case cs of
-                   '-':_ -> '\\':'-':escapeString opts cs
-                   _     -> '-':escapeString opts cs
+                   '-':_ -> '\\':'-':go cs
+                   _     -> '-':go cs
        '.' | isEnabled Ext_smart opts ->
               case cs of
-                   '.':'.':rest -> '\\':'.':'.':'.':escapeString opts rest
-                   _            -> '.':escapeString opts cs
-       _ -> c : escapeString opts cs
+                   '.':'.':rest -> '\\':'.':'.':'.':go rest
+                   _            -> '.':go cs
+       _   -> c : go cs
 
 -- | Construct table of contents from list of header blocks.
 tableOfContents :: PandocMonad m => WriterOptions -> [Block] -> MD m Doc
@@ -501,7 +508,7 @@ blockToMarkdown' opts (Header level attr inlines) = do
   -- we calculate the id that would be used by auto_identifiers
   -- so we know whether to print an explicit identifier
   ids <- gets stIds
-  let autoId = uniqueIdent inlines ids
+  let autoId = uniqueIdent (writerExtensions opts) inlines ids
   modify $ \st -> st{ stIds = Set.insert autoId ids }
   let attr' = case attr of
                    ("",[],[]) -> empty
@@ -846,6 +853,13 @@ blockListToMarkdown opts blocks = do
            Plain ils : fixBlocks bs
       fixBlocks (Plain ils : bs) =
            Para ils : fixBlocks bs
+      fixBlocks (r@(RawBlock f raw) : b : bs)
+        | not (null raw)
+        , last raw /= '\n' =
+        case b of
+             Plain{}    -> r : fixBlocks (b:bs)
+             RawBlock{} -> r : fixBlocks (b:bs)
+             _          -> RawBlock f (raw ++ "\n") : fixBlocks (b:bs) -- #4629
       fixBlocks (x : xs)             = x : fixBlocks xs
       fixBlocks []                   = []
       isListBlock (BulletList _)     = True
@@ -982,6 +996,11 @@ isRight (Left  _) = False
 
 -- | Convert Pandoc inline element to markdown.
 inlineToMarkdown :: PandocMonad m => WriterOptions -> Inline -> MD m Doc
+inlineToMarkdown opts (Span ("",["emoji"],kvs) [Str s]) = do
+  case lookup "data-emoji" kvs of
+       Just emojiname | isEnabled Ext_emoji opts ->
+            return $ ":" <> text emojiname <> ":"
+       _ -> inlineToMarkdown opts (Str s)
 inlineToMarkdown opts (Span attrs ils) = do
   plain <- asks envPlain
   contents <- inlineListToMarkdown opts ils
@@ -1056,12 +1075,18 @@ inlineToMarkdown opts (Quoted SingleQuote lst) = do
   contents <- inlineListToMarkdown opts lst
   return $ if isEnabled Ext_smart opts
               then "'" <> contents <> "'"
-              else "‘" <> contents <> "’"
+              else
+                if writerPreferAscii opts
+                   then "&lsquo;" <> contents <> "&rsquo;"
+                   else "‘" <> contents <> "’"
 inlineToMarkdown opts (Quoted DoubleQuote lst) = do
   contents <- inlineListToMarkdown opts lst
   return $ if isEnabled Ext_smart opts
               then "\"" <> contents <> "\""
-              else "“" <> contents <> "”"
+              else
+                if writerPreferAscii opts
+                   then "&ldquo;" <> contents <> "&rdquo;"
+                   else "“" <> contents <> "”"
 inlineToMarkdown opts (Code attr str) = do
   let tickGroups = filter (\s -> '`' `elem` s) $ group str
   let longest    = if null tickGroups
@@ -1242,33 +1267,6 @@ makeMathPlainer = walk go
   where
   go (Emph xs) = Span nullAttr xs
   go x         = x
-
-toSuperscript :: Char -> Maybe Char
-toSuperscript '1' = Just '\x00B9'
-toSuperscript '2' = Just '\x00B2'
-toSuperscript '3' = Just '\x00B3'
-toSuperscript '+' = Just '\x207A'
-toSuperscript '-' = Just '\x207B'
-toSuperscript '=' = Just '\x207C'
-toSuperscript '(' = Just '\x207D'
-toSuperscript ')' = Just '\x207E'
-toSuperscript c
-  | c >= '0' && c <= '9' =
-                 Just $ chr (0x2070 + (ord c - 48))
-  | isSpace c = Just c
-  | otherwise = Nothing
-
-toSubscript :: Char -> Maybe Char
-toSubscript '+' = Just '\x208A'
-toSubscript '-' = Just '\x208B'
-toSubscript '=' = Just '\x208C'
-toSubscript '(' = Just '\x208D'
-toSubscript ')' = Just '\x208E'
-toSubscript c
-  | c >= '0' && c <= '9' =
-                 Just $ chr (0x2080 + (ord c - 48))
-  | isSpace c = Just c
-  | otherwise = Nothing
 
 lineBreakToSpace :: Inline -> Inline
 lineBreakToSpace LineBreak = Space

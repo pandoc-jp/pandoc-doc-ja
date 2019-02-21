@@ -188,7 +188,7 @@ convertImage tmpdir fname =
          then return $ Right pdfOut
          else return $ Left "conversion from SVG failed")
       (\(e :: E.SomeException) -> return $ Left $
-          "check that rsvg2pdf is in path.\n" ++
+          "check that rsvg-convert is in path.\n" ++
           show e)
     _ -> JP.readImage fname >>= \res ->
           case res of
@@ -285,12 +285,7 @@ runTeXProgram verbosity program args runNumber numRuns tmpDir source = do
     let file' = file
 #endif
     let programArgs = ["-halt-on-error", "-interaction", "nonstopmode",
-         "-output-directory", tmpDir'] ++
-         -- see #4484, only compress images on last run:
-         if program == "xelatex" && runNumber < numRuns
-            then ["-output-driver", "xdvipdfmx -z0"]
-            else []
-         ++ args ++ [file']
+         "-output-directory", tmpDir'] ++ args ++ [file']
     env' <- getEnvironment
     let sep = [searchPathSeparator]
     let texinputs = maybe (tmpDir' ++ sep) ((tmpDir' ++ sep) ++)
@@ -314,7 +309,7 @@ runTeXProgram verbosity program args runNumber numRuns tmpDir source = do
       putStrLn $ "[makePDF] Run #" ++ show runNumber
       BL.hPutStr stdout out
       putStr "\n"
-    if runNumber <= numRuns
+    if runNumber < numRuns
        then runTeXProgram verbosity program args (runNumber + 1) numRuns tmpDir source
        else do
          let pdfFile = replaceDirectory (replaceExtension file ".pdf") tmpDir

@@ -1,4 +1,3 @@
-{-# LANGUAGE NoImplicitPrelude #-}
 {-
 Copyright © 2017-2018 Albert Krewinkel <tarleb+pandoc@moltkeplatz.de>
 
@@ -16,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -}
+{-# LANGUAGE NoImplicitPrelude #-}
 {- |
    Module      : Text.Pandoc.Lua
    Copyright   : Copyright © 2017-2018 Albert Krewinkel
@@ -29,23 +29,19 @@ Functions to initialize the Lua interpreter.
 module Text.Pandoc.Lua.Init
   ( LuaException (..)
   , LuaPackageParams (..)
-  , runPandocLua
-  , initLuaState
+  , runLua
   , luaPackageParams
-  , registerScriptPath
   ) where
 
 import Prelude
 import Control.Monad.Trans (MonadIO (..))
 import Data.Data (Data, dataTypeConstrs, dataTypeOf, showConstr)
 import Data.IORef (newIORef, readIORef)
-import Data.Version (Version (versionBranch))
-import Foreign.Lua (Lua, LuaException (..))
+import Foreign.Lua (Lua)
 import GHC.IO.Encoding (getForeignEncoding, setForeignEncoding, utf8)
-import Paths_pandoc (version)
-import Text.Pandoc.Class (PandocIO, getCommonState, getUserDataDir, getMediaBag,
-                          setMediaBag)
-import Text.Pandoc.Definition (pandocTypesVersion)
+import Text.Pandoc.Class (PandocIO, getCommonState, getUserDataDir,
+                          getMediaBag, setMediaBag)
+import Text.Pandoc.Lua.Global (Global (..), setGlobals)
 import Text.Pandoc.Lua.Packages (LuaPackageParams (..),
                                  installPandocPackageSearcher)
 import Text.Pandoc.Lua.Util (loadScriptFromDataDir)
@@ -54,17 +50,36 @@ import qualified Foreign.Lua as Lua
 import qualified Foreign.Lua.Module.Text as Lua
 import qualified Text.Pandoc.Definition as Pandoc
 
+-- | Lua error message
+newtype LuaException = LuaException String deriving (Show)
+
 -- | Run the lua interpreter, using pandoc's default way of environment
 -- initialization.
-runPandocLua :: Lua a -> PandocIO (Either LuaException a)
-runPandocLua luaOp = do
+runLua :: Lua a -> PandocIO (Either LuaException a)
+runLua luaOp = do
   luaPkgParams <- luaPackageParams
+  globals <- defaultGlobals
   enc <- liftIO $ getForeignEncoding <* setForeignEncoding utf8
-  res <- liftIO $ Lua.runLuaEither (initLuaState luaPkgParams *> luaOp)
+  res <- liftIO . Lua.runEither $ do
+    setGlobals globals
+    initLuaState luaPkgParams
+    luaOp
   liftIO $ setForeignEncoding enc
   newMediaBag <- liftIO (readIORef (luaPkgMediaBag luaPkgParams))
   setMediaBag newMediaBag
-  return res
+  return $ case res of
+    Left (Lua.Exception msg) -> Left (LuaException msg)
+    Right x -> Right x
+
+-- | Global variables which should always be set.
+defaultGlobals :: PandocIO [Global]
+defaultGlobals = do
+  commonState <- getCommonState
+  return
+    [ PANDOC_API_VERSION
+    , PANDOC_STATE commonState
+    , PANDOC_VERSION
+    ]
 
 -- | Generate parameters required to setup pandoc's lua environment.
 luaPackageParams :: PandocIO LuaPackageParams
@@ -78,23 +93,14 @@ luaPackageParams = do
     , luaPkgMediaBag = mbRef
     }
 
--- Initialize the lua state with all required values
+-- | Initialize the lua state with all required values
 initLuaState :: LuaPackageParams -> Lua ()
 initLuaState luaPkgParams = do
   Lua.openlibs
   Lua.preloadTextModule "text"
-  Lua.push (versionBranch version)
-  Lua.setglobal "PANDOC_VERSION"
-  Lua.push (versionBranch pandocTypesVersion)
-  Lua.setglobal "PANDOC_API_VERSION"
   installPandocPackageSearcher luaPkgParams
   loadScriptFromDataDir (luaPkgDataDir luaPkgParams) "init.lua"
   putConstructorsInRegistry
-
-registerScriptPath :: FilePath -> Lua ()
-registerScriptPath fp = do
-  Lua.push fp
-  Lua.setglobal "PANDOC_SCRIPT_FILE"
 
 putConstructorsInRegistry :: Lua ()
 putConstructorsInRegistry = do
@@ -106,6 +112,7 @@ putConstructorsInRegistry = do
   constrsToReg $ Pandoc.MetaList mempty
   constrsToReg $ Pandoc.Citation mempty mempty mempty Pandoc.AuthorInText 0 0
   putInReg "Attr"  -- used for Attr type alias
+  putInReg "ListAttributes"  -- used for ListAttributes type alias
   Lua.pop 1
  where
   constrsToReg :: Data a => a -> Lua ()

@@ -38,17 +38,24 @@ module Text.Pandoc.Writers.Shared (
                      , resetField
                      , defField
                      , tagWithAttrs
+                     , isDisplayMath
                      , fixDisplayMath
                      , unsmartify
                      , gridTable
-                     , metaValueToInlines
+                     , lookupMetaBool
+                     , lookupMetaBlocks
+                     , lookupMetaInlines
+                     , lookupMetaString
                      , stripLeadingTrailingSpace
+                     , toSubscript
+                     , toSuperscript
                      )
 where
 import Prelude
 import Control.Monad (zipWithM)
 import Data.Aeson (FromJSON (..), Result (..), ToJSON (..), Value (Object),
                    encode, fromJSON)
+import Data.Char (chr, ord, isSpace)
 import qualified Data.HashMap.Strict as H
 import Data.List (groupBy, intersperse, transpose)
 import qualified Data.Map as M
@@ -59,7 +66,7 @@ import qualified Text.Pandoc.Builder as Builder
 import Text.Pandoc.Definition
 import Text.Pandoc.Options
 import Text.Pandoc.Pretty
-import Text.Pandoc.Walk (query)
+import Text.Pandoc.Shared (stringify)
 import Text.Pandoc.UTF8 (toStringLazy)
 import Text.Pandoc.XML (escapeStringForXML)
 
@@ -187,8 +194,9 @@ tagWithAttrs tag (ident,classes,kvs) = hsep
   ] <> ">"
 
 isDisplayMath :: Inline -> Bool
-isDisplayMath (Math DisplayMath _) = True
-isDisplayMath _                    = False
+isDisplayMath (Math DisplayMath _)          = True
+isDisplayMath (Span _ [Math DisplayMath _]) = True
+isDisplayMath _                             = False
 
 stripLeadingTrailingSpace :: [Inline] -> [Inline]
 stripLeadingTrailingSpace = go . reverse . go . reverse
@@ -332,9 +340,75 @@ gridTable opts blocksToDoc headless aligns widths headers rows = do
            body $$
            border '-' (repeat AlignDefault) widthsInChars
 
-metaValueToInlines :: MetaValue -> [Inline]
-metaValueToInlines (MetaString s)    = [Str s]
-metaValueToInlines (MetaInlines ils) = ils
-metaValueToInlines (MetaBlocks bs)   = query return bs
-metaValueToInlines (MetaBool b)      = [Str $ show b]
-metaValueToInlines _                 = []
+
+
+-- | Retrieve the metadata value for a given @key@
+-- and convert to Bool.
+lookupMetaBool :: String -> Meta -> Bool
+lookupMetaBool key meta =
+  case lookupMeta key meta of
+      Just (MetaBlocks _)     -> True
+      Just (MetaInlines _)    -> True
+      Just (MetaString (_:_)) -> True
+      Just (MetaBool True)    -> True
+      _                       -> False
+
+-- | Retrieve the metadata value for a given @key@
+-- and extract blocks.
+lookupMetaBlocks :: String -> Meta -> [Block]
+lookupMetaBlocks key meta =
+  case lookupMeta key meta of
+         Just (MetaBlocks bs)   -> bs
+         Just (MetaInlines ils) -> [Plain ils]
+         Just (MetaString s)    -> [Plain [Str s]]
+         _                      -> []
+
+-- | Retrieve the metadata value for a given @key@
+-- and extract inlines.
+lookupMetaInlines :: String -> Meta -> [Inline]
+lookupMetaInlines key meta =
+  case lookupMeta key meta of
+         Just (MetaString s)           -> [Str s]
+         Just (MetaInlines ils)        -> ils
+         Just (MetaBlocks [Plain ils]) -> ils
+         Just (MetaBlocks [Para ils])  -> ils
+         _                             -> []
+
+-- | Retrieve the metadata value for a given @key@
+-- and convert to String.
+lookupMetaString :: String -> Meta -> String
+lookupMetaString key meta =
+  case lookupMeta key meta of
+         Just (MetaString s)    -> s
+         Just (MetaInlines ils) -> stringify ils
+         Just (MetaBlocks bs)   -> stringify bs
+         Just (MetaBool b)      -> show b
+         _                      -> ""
+
+
+toSuperscript :: Char -> Maybe Char
+toSuperscript '1' = Just '\x00B9'
+toSuperscript '2' = Just '\x00B2'
+toSuperscript '3' = Just '\x00B3'
+toSuperscript '+' = Just '\x207A'
+toSuperscript '-' = Just '\x207B'
+toSuperscript '=' = Just '\x207C'
+toSuperscript '(' = Just '\x207D'
+toSuperscript ')' = Just '\x207E'
+toSuperscript c
+  | c >= '0' && c <= '9' =
+                 Just $ chr (0x2070 + (ord c - 48))
+  | isSpace c = Just c
+  | otherwise = Nothing
+
+toSubscript :: Char -> Maybe Char
+toSubscript '+' = Just '\x208A'
+toSubscript '-' = Just '\x208B'
+toSubscript '=' = Just '\x208C'
+toSubscript '(' = Just '\x208D'
+toSubscript ')' = Just '\x208E'
+toSubscript c
+  | c >= '0' && c <= '9' =
+                 Just $ chr (0x2080 + (ord c - 48))
+  | isSpace c = Just c
+  | otherwise = Nothing

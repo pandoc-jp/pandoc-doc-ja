@@ -27,59 +27,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 Running pandoc Lua filters.
 -}
 module Text.Pandoc.Lua
-  ( LuaException (..)
-  , runLuaFilter
-  , runPandocLua
+  ( runLua
+  , LuaException (..)
+  -- * Lua globals
+  , Global (..)
+  , setGlobals
+  -- * Filters
+  , runFilterFile
   ) where
 
-import Prelude
-import Control.Monad ((>=>))
-import Foreign.Lua (FromLuaStack (peek), Lua, LuaException (..),
-                    Status (OK), ToLuaStack (push))
-import Text.Pandoc.Class (PandocIO)
-import Text.Pandoc.Definition (Pandoc)
-import Text.Pandoc.Lua.Filter (LuaFilter, walkMWithLuaFilter)
-import Text.Pandoc.Lua.Init (runPandocLua, registerScriptPath)
-import Text.Pandoc.Lua.Util (popValue)
-import Text.Pandoc.Options (ReaderOptions)
-import qualified Foreign.Lua as Lua
+import Text.Pandoc.Lua.Filter (runFilterFile)
+import Text.Pandoc.Lua.Global (Global (..), setGlobals)
+import Text.Pandoc.Lua.Init (LuaException (..), runLua)
+import Text.Pandoc.Lua.StackInstances ()
 
--- | Run the Lua filter in @filterPath@ for a transformation to target
--- format @format@. Pandoc uses Lua init files to setup the Lua
--- interpreter.
-runLuaFilter :: ReaderOptions -> FilePath -> String
-             -> Pandoc -> PandocIO (Either LuaException Pandoc)
-runLuaFilter ropts filterPath format doc =
-  runPandocLua (runLuaFilter' ropts filterPath format doc)
-
-runLuaFilter' :: ReaderOptions -> FilePath -> String
-              -> Pandoc -> Lua Pandoc
-runLuaFilter' ropts filterPath format pd = do
-  registerFormat
-  registerReaderOptions
-  registerScriptPath filterPath
-  top <- Lua.gettop
-  stat <- Lua.dofile filterPath
-  if stat /= OK
-    then do
-      luaErrMsg <- popValue
-      Lua.throwLuaError luaErrMsg
-    else do
-      newtop <- Lua.gettop
-      -- Use the returned filters, or the implicitly defined global filter if
-      -- nothing was returned.
-      luaFilters <- if newtop - top >= 1
-                    then peek (-1)
-                    else Lua.getglobal "_G" *> fmap (:[]) popValue
-      runAll luaFilters pd
- where
-  registerFormat = do
-    push format
-    Lua.setglobal "FORMAT"
-
-  registerReaderOptions = do
-    push ropts
-    Lua.setglobal "PANDOC_READER_OPTIONS"
-
-runAll :: [LuaFilter] -> Pandoc -> Lua Pandoc
-runAll = foldr ((>=>) . walkMWithLuaFilter) return

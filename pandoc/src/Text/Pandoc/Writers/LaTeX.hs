@@ -42,8 +42,9 @@ import Data.Aeson (FromJSON, object, (.=))
 import Data.Char (isAlphaNum, isAscii, isDigit, isLetter, isPunctuation, ord,
                   toLower)
 import Data.List (foldl', intercalate, intersperse, isInfixOf, nubBy,
-                  stripPrefix, (\\))
+                  stripPrefix, (\\), uncons)
 import Data.Maybe (catMaybes, fromMaybe, isJust, mapMaybe, isNothing)
+import qualified Data.Map as M
 import Data.Text (Text)
 import qualified Data.Text as T
 import Network.URI (unEscapeString)
@@ -63,6 +64,7 @@ import Text.Pandoc.Walk
 import Text.Pandoc.Writers.Shared
 import qualified Text.Parsec as P
 import Text.Printf (printf)
+import qualified Data.Text.Normalize as Normalize
 
 data WriterState =
   WriterState { stInNote        :: Bool          -- true if we're in a note
@@ -136,8 +138,8 @@ pandocToLaTeX options (Pandoc meta blocks) = do
   let method = writerCiteMethod options
   let blocks' = if method == Biblatex || method == Natbib
                    then case reverse blocks of
-                             Div (_,["references"],_) _:xs -> reverse xs
-                             _                             -> blocks
+                             Div ("refs",_,_) _:xs -> reverse xs
+                             _                     -> blocks
                    else blocks
   -- see if there are internal links
   let isInternalLink (Link _ _ ('#':xs,_)) = [xs]
@@ -176,9 +178,9 @@ pandocToLaTeX options (Pandoc meta blocks) = do
     modify $ \s -> s{stCsquotes = True}
   let (blocks'', lastHeader) = if writerCiteMethod options == Citeproc then
                                  (blocks', [])
-                               else case last blocks' of
-                                 Header 1 _ il -> (init blocks', il)
-                                 _             -> (blocks', [])
+                               else case reverse blocks' of
+                                 Header 1 _ il : _ -> (init blocks', il)
+                                 _                 -> (blocks', [])
   beamer <- gets stBeamer
   blocks''' <- if beamer
                   then toSlides blocks''
@@ -248,7 +250,8 @@ pandocToLaTeX options (Pandoc meta blocks) = do
                                      defField "biblatex" True
                          _        -> id) $
                   defField "colorlinks" (any hasStringValue
-                           ["citecolor", "urlcolor", "linkcolor", "toccolor"]) $
+                           ["citecolor", "urlcolor", "linkcolor", "toccolor",
+                            "filecolor"]) $
                   (if null dirs
                      then id
                      else defField "dir" ("ltr" :: String)) $
@@ -317,46 +320,110 @@ data StringContext = TextString
 
 -- escape things as needed for LaTeX
 stringToLaTeX :: PandocMonad m => StringContext -> String -> LW m String
-stringToLaTeX  _     []     = return ""
-stringToLaTeX  ctx (x:xs) = do
+stringToLaTeX context zs = do
   opts <- gets stOptions
-  rest <- stringToLaTeX ctx xs
-  let ligatures = isEnabled Ext_smart opts && ctx == TextString
-  let isUrl = ctx == URLString
-  return $
+  go opts context $
+    if writerPreferAscii opts
+       then T.unpack $ Normalize.normalize Normalize.NFD $ T.pack zs
+       else zs
+ where
+  go  _ _     []     = return ""
+  go  opts ctx (x:xs) = do
+    let ligatures = isEnabled Ext_smart opts && ctx == TextString
+    let isUrl = ctx == URLString
+    let mbAccentCmd =
+          if writerPreferAscii opts && ctx == TextString
+             then uncons xs >>= \(c,_) -> M.lookup c accents
+             else Nothing
+    let emits s =
+          case mbAccentCmd of
+               Just cmd -> ((cmd ++ "{" ++ s ++ "}") ++)
+                        <$> go opts ctx (drop 1 xs) -- drop combining accent
+               Nothing  -> (s++) <$> go opts ctx xs
+    let emitc c =
+          case mbAccentCmd of
+               Just cmd -> ((cmd ++ "{" ++ [c] ++ "}") ++)
+                        <$> go opts ctx (drop 1 xs) -- drop combining accent
+               Nothing  -> (c:) <$> go opts ctx xs
     case x of
-       '{' -> "\\{" ++ rest
-       '}' -> "\\}" ++ rest
-       '`' | ctx == CodeString -> "\\textasciigrave{}" ++ rest
-       '$' | not isUrl -> "\\$" ++ rest
-       '%' -> "\\%" ++ rest
-       '&' -> "\\&" ++ rest
-       '_' | not isUrl -> "\\_" ++ rest
-       '#' -> "\\#" ++ rest
-       '-' | not isUrl -> case xs of
-                   -- prevent adjacent hyphens from forming ligatures
-                   ('-':_) -> "-\\/" ++ rest
-                   _       -> '-' : rest
-       '~' | not isUrl -> "\\textasciitilde{}" ++ rest
-       '^' -> "\\^{}" ++ rest
-       '\\'| isUrl     -> '/' : rest  -- NB. / works as path sep even on Windows
-           | otherwise -> "\\textbackslash{}" ++ rest
-       '|' | not isUrl -> "\\textbar{}" ++ rest
-       '<' -> "\\textless{}" ++ rest
-       '>' -> "\\textgreater{}" ++ rest
-       '[' -> "{[}" ++ rest  -- to avoid interpretation as
-       ']' -> "{]}" ++ rest  -- optional arguments
-       '\'' | ctx == CodeString -> "\\textquotesingle{}" ++ rest
-       '\160' -> "~" ++ rest
-       '\x202F' -> "\\," ++ rest
-       '\x2026' -> "\\ldots{}" ++ rest
-       '\x2018' | ligatures -> "`" ++ rest
-       '\x2019' | ligatures -> "'" ++ rest
-       '\x201C' | ligatures -> "``" ++ rest
-       '\x201D' | ligatures -> "''" ++ rest
-       '\x2014' | ligatures -> "---" ++ rest
-       '\x2013' | ligatures -> "--" ++ rest
-       _        -> x : rest
+         '{' -> emits "\\{"
+         '}' -> emits "\\}"
+         '`' | ctx == CodeString -> emits "\\textasciigrave{}"
+         '$' | not isUrl -> emits "\\$"
+         '%' -> emits "\\%"
+         '&' -> emits "\\&"
+         '_' | not isUrl -> emits "\\_"
+         '#' -> emits "\\#"
+         '-' | not isUrl -> case xs of
+                     -- prevent adjacent hyphens from forming ligatures
+                     ('-':_) -> emits "-\\/"
+                     _       -> emitc '-'
+         '~' | not isUrl -> emits "\\textasciitilde{}"
+         '^' -> emits "\\^{}"
+         '\\'| isUrl     -> emitc '/' -- NB. / works as path sep even on Windows
+             | otherwise -> emits "\\textbackslash{}"
+         '|' | not isUrl -> emits "\\textbar{}"
+         '<' -> emits "\\textless{}"
+         '>' -> emits "\\textgreater{}"
+         '[' -> emits "{[}"  -- to avoid interpretation as
+         ']' -> emits "{]}"  -- optional arguments
+         '\'' | ctx == CodeString -> emits "\\textquotesingle{}"
+         '\160' -> emits "~"
+         '\x202F' -> emits "\\,"
+         '\x2026' -> emits "\\ldots{}"
+         '\x2018' | ligatures -> emits "`"
+         '\x2019' | ligatures -> emits "'"
+         '\x201C' | ligatures -> emits "``"
+         '\x201D' | ligatures -> emits "''"
+         '\x2014' | ligatures -> emits "---"
+         '\x2013' | ligatures -> emits "--"
+         _ | writerPreferAscii opts
+             -> case x of
+                  'ı' -> emits "\\i "
+                  'ȷ' -> emits "\\j "
+                  'å' -> emits "\\aa "
+                  'Å' -> emits "\\AA "
+                  'ß' -> emits "\\ss "
+                  'ø' -> emits "\\o "
+                  'Ø' -> emits "\\O "
+                  'Ł' -> emits "\\L "
+                  'ł' -> emits "\\l "
+                  'æ' -> emits "\\ae "
+                  'Æ' -> emits "\\AE "
+                  'œ' -> emits "\\oe "
+                  'Œ' -> emits "\\OE "
+                  '£' -> emits "\\pounds "
+                  '€' -> emits "\\euro "
+                  '©' -> emits "\\copyright "
+                  _   -> emitc x
+           | otherwise -> emitc x
+
+accents :: M.Map Char String
+accents = M.fromList
+  [ ('\779' , "\\H")
+  , ('\768' , "\\`")
+  , ('\769' , "\\'")
+  , ('\770' , "\\^")
+  , ('\771' , "\\~")
+  , ('\776' , "\\\"")
+  , ('\775' , "\\.")
+  , ('\772' , "\\=")
+  , ('\781' , "\\|")
+  , ('\817' , "\\b")
+  , ('\807' , "\\c")
+  , ('\783' , "\\G")
+  , ('\777' , "\\h")
+  , ('\803' , "\\d")
+  , ('\785' , "\\f")
+  , ('\778' , "\\r")
+  , ('\865' , "\\t")
+  , ('\782' , "\\U")
+  , ('\780' , "\\v")
+  , ('\774' , "\\u")
+  , ('\808' , "\\k")
+  , ('\785' , "\\newtie")
+  , ('\8413', "\\textcircled")
+  ]
 
 toLabel :: PandocMonad m => String -> LW m String
 toLabel z = go `fmap` stringToLaTeX URLString z
@@ -588,7 +655,10 @@ blockToLaTeX (CodeBlock (identifier,classes,keyvalAttr) str) = do
                           [ (if key == "startFrom"
                                 then "firstnumber"
                                 else key) ++ "=" ++ mbBraced attr |
-                                (key,attr) <- keyvalAttr ] ++
+                                (key,attr) <- keyvalAttr,
+                                key `notElem` ["exports", "tangle", "results"]
+                                -- see #4889
+                          ] ++
                           (if identifier == ""
                                 then []
                                 else [ "label=" ++ ref ])
@@ -639,7 +709,7 @@ blockToLaTeX (BulletList lst) = do
 blockToLaTeX (OrderedList _ []) = return empty -- otherwise latex error
 blockToLaTeX (OrderedList (start, numstyle, numdelim) lst) = do
   st <- get
-  let inc = if stIncremental st then "[<+->]" else ""
+  let inc = if stBeamer st && stIncremental st then "[<+->]" else ""
   let oldlevel = stOLLevel st
   put $ st {stOLLevel = oldlevel + 1}
   items <- mapM listItemToLaTeX lst
@@ -689,7 +759,8 @@ blockToLaTeX (OrderedList (start, numstyle, numdelim) lst) = do
 blockToLaTeX (DefinitionList []) = return empty
 blockToLaTeX (DefinitionList lst) = do
   incremental <- gets stIncremental
-  let inc = if incremental then "[<+->]" else ""
+  beamer <- gets stBeamer
+  let inc = if beamer && incremental then "[<+->]" else ""
   items <- mapM defListItemToLaTeX lst
   let spacing = if all isTightList (map snd lst)
                    then text "\\tightlist"
@@ -869,9 +940,11 @@ defListItemToLaTeX (term, defs) = do
                     else term'
     def'  <- liftM vsep $ mapM blockListToLaTeX defs
     return $ case defs of
-     ((Header{} : _) : _) ->
+     ((Header{} : _) : _)    ->
        "\\item" <> brackets term'' <> " ~ " $$ def'
-     _                          ->
+     ((CodeBlock{} : _) : _) -> -- see #4662
+       "\\item" <> brackets term'' <> " ~ " $$ def'
+     _                       ->
        "\\item" <> brackets term'' $$ def'
 
 -- | Craft the section header, inserting the secton reference, if supplied.
@@ -1096,10 +1169,10 @@ inlineToLaTeX (Str str) = do
   liftM text $ stringToLaTeX TextString str
 inlineToLaTeX (Math InlineMath str) = do
   setEmptyLine False
-  return $ "\\(" <> text str <> "\\)"
+  return $ "\\(" <> text (handleMathComment str) <> "\\)"
 inlineToLaTeX (Math DisplayMath str) = do
   setEmptyLine False
-  return $ "\\[" <> text str <> "\\]"
+  return $ "\\[" <> text (handleMathComment str) <> "\\]"
 inlineToLaTeX il@(RawInline f str)
   | f == Format "latex" || f == Format "tex"
                         = do
@@ -1200,6 +1273,16 @@ inlineToLaTeX (Note contents) = do
        -- note: a \n before } needed when note ends with a Verbatim environment
        else "\\footnote" <> beamerMark <> braces noteContents
 
+-- A comment at the end of math needs to be followed by a newline,
+-- or the closing delimiter gets swallowed.
+handleMathComment :: String -> String
+handleMathComment s =
+  let (_, ys) = break (\c -> c == '\n' || c == '%') $ reverse s
+  in  case ys of
+         '%':'\\':_ -> s
+         '%':_      -> s ++ "\n"
+         _          -> s
+
 protectCode :: [Inline] -> [Inline]
 protectCode [] = []
 protectCode (x@(Code ("",[],[]) _) : xs) = x : protectCode xs
@@ -1297,19 +1380,27 @@ citationsToBiblatex
                   AuthorInText   -> "textcite"
                   NormalCitation -> "autocite"
 
-citationsToBiblatex (c:cs) = do
-  args <- mapM convertOne (c:cs)
-  return $ text cmd <> foldl' (<>) empty args
-    where
-       cmd = case citationMode c of
-                  SuppressAuthor -> "\\autocites*"
-                  AuthorInText   -> "\\textcites"
-                  NormalCitation -> "\\autocites"
-       convertOne Citation { citationId = k
-                           , citationPrefix = p
-                           , citationSuffix = s
-                           }
-              = citeArguments p s k
+citationsToBiblatex (c:cs)
+  | all (\cit -> null (citationPrefix cit) && null (citationSuffix cit)) (c:cs)
+    = do
+      let cmd = case citationMode c of
+                    SuppressAuthor -> "\\autocite*"
+                    AuthorInText   -> "\\textcite"
+                    NormalCitation -> "\\autocite"
+      return $ text cmd <>
+               braces (text (intercalate "," (map citationId (c:cs))))
+  | otherwise = do
+    let cmd = case citationMode c of
+                    SuppressAuthor -> "\\autocites*"
+                    AuthorInText   -> "\\textcites"
+                    NormalCitation -> "\\autocites"
+    let convertOne Citation { citationId = k
+                            , citationPrefix = p
+                            , citationSuffix = s
+                            }
+                = citeArguments p s k
+    args <- mapM convertOne (c:cs)
+    return $ text cmd <> foldl' (<>) empty args
 
 citationsToBiblatex _ = return empty
 

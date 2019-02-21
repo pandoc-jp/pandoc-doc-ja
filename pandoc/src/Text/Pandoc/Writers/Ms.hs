@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
    Stability   : alpha
    Portability : portable
 
-Conversion of 'Pandoc' documents to groff ms format.
+Conversion of 'Pandoc' documents to roff ms format.
 
 TODO:
 
@@ -60,42 +60,16 @@ import Text.Pandoc.Shared
 import Text.Pandoc.Templates
 import Text.Pandoc.Writers.Math
 import Text.Pandoc.Writers.Shared
+import Text.Pandoc.Writers.Roff
 import Text.Printf (printf)
 import Text.TeXMath (writeEqn)
-
-data WriterState = WriterState { stHasInlineMath :: Bool
-                               , stFirstPara     :: Bool
-                               , stNotes         :: [Note]
-                               , stSmallCaps     :: Bool
-                               , stHighlighting  :: Bool
-                               , stInHeader      :: Bool
-                               , stFontFeatures  :: Map.Map Char Bool
-                               }
-
-defaultWriterState :: WriterState
-defaultWriterState = WriterState{ stHasInlineMath = False
-                                , stFirstPara     = True
-                                , stNotes         = []
-                                , stSmallCaps     = False
-                                , stHighlighting  = False
-                                , stInHeader      = False
-                                , stFontFeatures  = Map.fromList [
-                                                       ('I',False)
-                                                     , ('B',False)
-                                                     , ('C',False)
-                                                     ]
-                                }
-
-type Note = [Block]
-
-type MS = StateT WriterState
 
 -- | Convert Pandoc to Ms.
 writeMs :: PandocMonad m => WriterOptions -> Pandoc -> m Text
 writeMs opts document =
   evalStateT (pandocToMs opts document) defaultWriterState
 
--- | Return groff ms representation of document.
+-- | Return roff ms representation of document.
 pandocToMs :: PandocMonad m => WriterOptions -> Pandoc -> MS m Text
 pandocToMs opts (Pandoc meta blocks) = do
   let colwidth = if writerWrapText opts == WrapAuto
@@ -110,8 +84,8 @@ pandocToMs opts (Pandoc meta blocks) = do
   body <- blockListToMs opts blocks
   let main = render' body
   hasInlineMath <- gets stHasInlineMath
-  let titleMeta = (escapeString . stringify) $ docTitle meta
-  let authorsMeta = map (escapeString . stringify) $ docAuthors meta
+  let titleMeta = (escapeStr opts . stringify) $ docTitle meta
+  let authorsMeta = map (escapeStr opts . stringify) $ docAuthors meta
   hasHighlighting <- gets stHighlighting
   let highlightingMacros = if hasHighlighting
                               then case writerHighlightStyle opts of
@@ -131,88 +105,26 @@ pandocToMs opts (Pandoc meta blocks) = do
        Nothing  -> return main
        Just tpl -> renderTemplate' tpl context
 
--- | Association list of characters to escape.
-msEscapes :: Map.Map Char String
-msEscapes = Map.fromList
-              [ ('\160', "\\~")
-              , ('\'', "\\[aq]")
-              , ('`', "\\`")
-              , ('"', "\\[dq]")
-              , ('\x2014', "\\[em]")
-              , ('\x2013', "\\[en]")
-              , ('\x2026', "\\&...")
-              , ('~', "\\[ti]")
-              , ('^', "\\[ha]")
-              , ('@', "\\@")
-              , ('\\', "\\\\")
-              ]
-
-escapeChar :: Char -> String
-escapeChar c = fromMaybe [c] (Map.lookup c msEscapes)
-
--- | Escape | character, used to mark inline math, inside math.
-escapeBar :: String -> String
-escapeBar = concatMap go
-  where go '|' = "\\[u007C]"
-        go c   = [c]
-
--- | Escape special characters for Ms.
-escapeString :: String -> String
-escapeString = concatMap escapeChar
+escapeStr :: WriterOptions -> String -> String
+escapeStr opts =
+  escapeString (if writerPreferAscii opts then AsciiOnly else AllowUTF8)
 
 escapeUri :: String -> String
 escapeUri = escapeURIString (\c -> c /= '@' && isAllowedInURI c)
 
-toSmallCaps :: String -> String
-toSmallCaps [] = []
-toSmallCaps (c:cs)
+toSmallCaps :: WriterOptions -> String -> String
+toSmallCaps _ [] = []
+toSmallCaps opts (c:cs)
   | isLower c = let (lowers,rest) = span isLower (c:cs)
-                in  "\\s-2" ++ escapeString (map toUpper lowers) ++
-                    "\\s0" ++ toSmallCaps rest
+                in  "\\s-2" ++ escapeStr opts (map toUpper lowers) ++
+                    "\\s0" ++ toSmallCaps opts rest
   | isUpper c = let (uppers,rest) = span isUpper (c:cs)
-                in  escapeString uppers ++ toSmallCaps rest
-  | otherwise = escapeChar c ++ toSmallCaps cs
-
--- | Escape a literal (code) section for Ms.
-escapeCode :: String -> String
-escapeCode = intercalate "\n" . map escapeLine . lines
-  where escapeCodeChar ' '  = "\\ "
-        escapeCodeChar '\t' = "\\\t"
-        escapeCodeChar c    = escapeChar c
-        escapeLine codeline =
-          case concatMap escapeCodeChar codeline of
-            a@('.':_) -> "\\&" ++ a
-            b         -> b
+                in  escapeStr opts uppers ++ toSmallCaps opts rest
+  | otherwise = escapeStr opts [c] ++ toSmallCaps opts cs
 
 -- We split inline lists into sentences, and print one sentence per
--- line.  groff/troff treats the line-ending period differently.
+-- line.  roff treats the line-ending period differently.
 -- See http://code.google.com/p/pandoc/issues/detail?id=148.
-
--- | Returns the first sentence in a list of inlines, and the rest.
-breakSentence :: [Inline] -> ([Inline], [Inline])
-breakSentence [] = ([],[])
-breakSentence xs =
-  let isSentenceEndInline (Str ys@(_:_)) | last ys == '.' = True
-      isSentenceEndInline (Str ys@(_:_)) | last ys == '?' = True
-      isSentenceEndInline LineBreak      = True
-      isSentenceEndInline _              = False
-      (as, bs) = break isSentenceEndInline xs
-  in  case bs of
-           []             -> (as, [])
-           [c]            -> (as ++ [c], [])
-           (c:Space:cs)   -> (as ++ [c], cs)
-           (c:SoftBreak:cs) -> (as ++ [c], cs)
-           (Str ".":Str (')':ys):cs) -> (as ++ [Str ".", Str (')':ys)], cs)
-           (x@(Str ('.':')':_)):cs) -> (as ++ [x], cs)
-           (LineBreak:x@(Str ('.':_)):cs) -> (as ++[LineBreak], x:cs)
-           (c:cs)         -> (as ++ [c] ++ ds, es)
-              where (ds, es) = breakSentence cs
-
--- | Split a list of inlines into sentences.
-splitSentences :: [Inline] -> [[Inline]]
-splitSentences xs =
-  let (sent, rest) = breakSentence xs
-  in  if null rest then [sent] else sent : splitSentences rest
 
 blockToMs :: PandocMonad m
           => WriterOptions -- ^ Options
@@ -245,7 +157,7 @@ blockToMs opts (Para [Image attr alt (src,_tit)])
                        _ -> empty
   capt <- inlineListToMs' opts alt
   return $ nowrap (text ".PSPIC -C " <>
-             doubleQuotes (text (escapeString src)) <>
+             doubleQuotes (text (escapeStr opts src)) <>
              sizeAttrs) $$
            text ".ce 1000" $$
            capt $$
@@ -283,7 +195,7 @@ blockToMs opts (Header level (ident,classes,_) inlines) = do
                                       (if null secnum
                                           then ""
                                           else "  ") ++
-                                      escapeString (stringify inlines))
+                                      escapeStr opts (stringify inlines))
   let backlink = nowrap (text ".pdfhref L -D " <>
        doubleQuotes (text (toAscii ident)) <> space <> text "\\") <> cr <>
        text " -- "
@@ -434,7 +346,7 @@ blockListToMs :: PandocMonad m
               -> [Block]       -- ^ List of block elements
               -> MS m Doc
 blockListToMs opts blocks =
-  mapM (blockToMs opts) blocks >>= (return . vcat)
+  vcat <$> mapM (blockToMs opts) blocks
 
 -- | Convert list of Pandoc inline elements to ms.
 inlineListToMs :: PandocMonad m => WriterOptions -> [Inline] -> MS m Doc
@@ -460,7 +372,7 @@ inlineToMs opts (Strong lst) =
 inlineToMs opts (Strikeout lst) = do
   contents <- inlineListToMs opts lst
   -- we use grey color instead of strikeout, which seems quite
-  -- hard to do in groff for arbitrary bits of text
+  -- hard to do in roff for arbitrary bits of text
   return $ text "\\m[strikecolor]" <> contents <> text "\\m[]"
 inlineToMs opts (Superscript lst) = do
   contents <- inlineListToMs opts lst
@@ -485,20 +397,20 @@ inlineToMs opts (Cite _ lst) =
 inlineToMs opts (Code attr str) = do
   hlCode <- highlightCode opts attr str
   withFontFeature 'C' (return hlCode)
-inlineToMs _ (Str str) = do
+inlineToMs opts (Str str) = do
   let shim = case str of
                   '.':_ -> afterBreak "\\&"
                   _     -> empty
   smallcaps <- gets stSmallCaps
   if smallcaps
-     then return $ shim <> text (toSmallCaps str)
-     else return $ shim <> text (escapeString str)
+     then return $ shim <> text (toSmallCaps opts str)
+     else return $ shim <> text (escapeStr opts str)
 inlineToMs opts (Math InlineMath str) = do
   modify $ \st -> st{ stHasInlineMath = True }
   res <- convertMath writeEqn InlineMath str
   case res of
        Left il -> inlineToMs opts il
-       Right r -> return $ text "@" <> text (escapeBar r) <> text "@"
+       Right r -> return $ text "@" <> text r <> text "@"
 inlineToMs opts (Math DisplayMath str) = do
   res <- convertMath writeEqn InlineMath str
   case res of
@@ -506,7 +418,7 @@ inlineToMs opts (Math DisplayMath str) = do
          contents <- inlineToMs opts il
          return $ cr <> text ".RS" $$ contents $$ text ".RE"
        Right r -> return $
-            cr <> text ".EQ" $$ text (escapeBar r) $$ text ".EN"
+            cr <> text ".EQ" $$ text r $$ text ".EN"
 inlineToMs _ il@(RawInline f str)
   | f == Format "ms" = return $ text str
   | otherwise        = do
@@ -534,9 +446,10 @@ inlineToMs opts (Link _ txt (src, _)) = do
        doubleQuotes (text (escapeUri src)) <> text " -A " <>
        doubleQuotes (text "\\c") <> space <> text "\\") <> cr <>
        text " -- " <> doubleQuotes (nowrap contents) <> cr <> text "\\&"
-inlineToMs _ (Image _ alternate (_, _)) =
+inlineToMs opts (Image _ alternate (_, _)) =
   return $ char '[' <> text "IMAGE: " <>
-           text (escapeString (stringify alternate)) <> char ']'
+           text (escapeStr opts (stringify alternate))
+             <> char ']'
 inlineToMs _ (Note contents) = do
   modify $ \st -> st{ stNotes = contents : stNotes st }
   return $ text "\\**"
@@ -559,28 +472,6 @@ handleNote opts bs = do
                  _                 -> bs
   contents <- blockListToMs opts bs'
   return $ cr <> text ".FS" $$ contents $$ text ".FE" <> cr
-
-fontChange :: PandocMonad m => MS m Doc
-fontChange = do
-  features <- gets stFontFeatures
-  inHeader <- gets stInHeader
-  let filling = ['C' | fromMaybe False $ Map.lookup 'C' features] ++
-                ['B' | inHeader ||
-                       fromMaybe False (Map.lookup 'B' features)] ++
-                ['I' | fromMaybe False $ Map.lookup 'I' features]
-  return $
-    if null filling
-       then text "\\f[R]"
-       else text $ "\\f[" ++ filling ++ "]"
-
-withFontFeature :: PandocMonad m => Char -> MS m Doc -> MS m Doc
-withFontFeature c action = do
-  modify $ \st -> st{ stFontFeatures = Map.adjust not c $ stFontFeatures st }
-  begin <- fontChange
-  d <- action
-  modify $ \st -> st{ stFontFeatures = Map.adjust not c $ stFontFeatures st }
-  end <- fontChange
-  return $ begin <> d <> end
 
 setFirstPara :: PandocMonad m => MS m ()
 setFirstPara = modify $ \st -> st{ stFirstPara = True }
@@ -638,20 +529,20 @@ toMacro sty toktype =
         -- lnColor = lineNumberColor sty
         -- lnBkgColor = lineNumberBackgroundColor sty
 
-msFormatter :: FormatOptions -> [SourceLine] -> Doc
-msFormatter _fmtopts =
+msFormatter :: WriterOptions -> FormatOptions -> [SourceLine] -> Doc
+msFormatter opts _fmtopts =
   vcat . map fmtLine
   where fmtLine = hcat . map fmtToken
         fmtToken (toktype, tok) = text "\\*" <>
            brackets (text (show toktype) <> text " \""
-             <> text (escapeCode (T.unpack tok)) <> text "\"")
+             <> text (escapeStr opts (T.unpack tok)) <> text "\"")
 
 highlightCode :: PandocMonad m => WriterOptions -> Attr -> String -> MS m Doc
 highlightCode opts attr str =
-  case highlight (writerSyntaxMap opts) msFormatter attr str of
+  case highlight (writerSyntaxMap opts) (msFormatter opts) attr str of
          Left msg -> do
            unless (null msg) $ report $ CouldNotHighlight msg
-           return $ text (escapeCode str)
+           return $ text (escapeStr opts str)
          Right h -> do
            modify (\st -> st{ stHighlighting = True })
            return h

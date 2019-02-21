@@ -36,6 +36,7 @@ module Text.Pandoc.Writers.EPUB ( writeEPUB2, writeEPUB3 ) where
 import Prelude
 import Codec.Archive.Zip (Entry, addEntryToArchive, eRelativePath, emptyArchive,
                           fromArchive, fromEntry, toEntry)
+import Control.Applicative ( (<|>) )
 import Control.Monad (mplus, unless, when, zipWithM)
 import Control.Monad.Except (catchError, throwError)
 import Control.Monad.State.Strict (State, StateT, evalState, evalStateT, get,
@@ -109,6 +110,7 @@ data EPUBMetadata = EPUBMetadata{
   , epubStylesheets   :: [FilePath]
   , epubPageDirection :: Maybe ProgressionDirection
   , epubIbooksFields  :: [(String, String)]
+  , epubCalibreFields :: [(String, String)]
   } deriving Show
 
 data Date = Date{
@@ -249,6 +251,18 @@ addMetadataFromXML e@(Element (QName name _ (Just "dc")) attrs _ _) md
   | name == "rights" = md { epubRights = Just $ strContent e }
   | otherwise = md
   where getAttr n = lookupAttr (opfName n) attrs
+addMetadataFromXML e@(Element (QName "meta" _ _) attrs _ _) md =
+  case getAttr "property" of
+       Just s | "ibooks:" `isPrefixOf` s ->
+                md{ epubIbooksFields = (drop 7 s, strContent e) :
+                       epubIbooksFields md }
+       _ -> case getAttr "name" of
+                 Just s | "calibre:" `isPrefixOf` s ->
+                   md{ epubCalibreFields =
+                         (drop 8 s, fromMaybe "" $ getAttr "content") :
+                          epubCalibreFields md }
+                 _ -> md
+  where getAttr n = lookupAttr (unqual n) attrs
 addMetadataFromXML _ md = md
 
 metaValueToString :: MetaValue -> String
@@ -332,6 +346,7 @@ metadataFromMeta opts meta = EPUBMetadata{
     , epubStylesheets        = stylesheets
     , epubPageDirection      = pageDirection
     , epubIbooksFields       = ibooksFields
+    , epubCalibreFields      = calibreFields
     }
   where identifiers = getIdentifier meta
         titles = getTitle meta
@@ -351,15 +366,19 @@ metadataFromMeta opts meta = EPUBMetadata{
         rights = metaValueToString <$> lookupMeta "rights" meta
         coverImage = lookup "epub-cover-image" (writerVariables opts) `mplus`
              (metaValueToString <$> lookupMeta "cover-image" meta)
-        stylesheets = fromMaybe []
-                        (metaValueToPaths <$> lookupMeta "stylesheet" meta) ++
-                      [f | ("css",f) <- writerVariables opts]
+        mCss = lookupMeta "css" meta <|> lookupMeta "stylesheet" meta
+        stylesheets = fromMaybe [] (metaValueToPaths <$> mCss) ++
+                        [f | ("css",f) <- writerVariables opts]
         pageDirection = case map toLower . metaValueToString <$>
                              lookupMeta "page-progression-direction" meta of
                               Just "ltr" -> Just LTR
                               Just "rtl" -> Just RTL
                               _          -> Nothing
         ibooksFields = case lookupMeta "ibooks" meta of
+                            Just (MetaMap mp)
+                               -> M.toList $ M.map metaValueToString mp
+                            _  -> []
+        calibreFields = case lookupMeta "calibre" meta of
                             Just (MetaMap mp)
                                -> M.toList $ M.map metaValueToString mp
                             _  -> []
@@ -461,6 +480,7 @@ pandocToEPUB version opts doc@(Pandoc meta _) = do
   -- title page
   tpContent <- lift $ writeHtml opts'{
                                   writerVariables = ("titlepage","true"):
+                                  ("body-type", "frontmatter"):
                                   ("pagetitle", escapeStringForXML plainTitle):
                                   cssvars True ++ vars }
                                (Pandoc meta [])
@@ -493,7 +513,7 @@ pandocToEPUB version opts doc@(Pandoc meta _) = do
   -- body pages
 
   -- add level 1 header to beginning if none there
-  let blocks' = addIdentifiers
+  let blocks' = addIdentifiers opts
                 $ case blocks of
                       (Header 1 _ _ : _) -> blocks
                       _                  -> Header 1 ("",["unnumbered"],[])
@@ -502,13 +522,13 @@ pandocToEPUB version opts doc@(Pandoc meta _) = do
   let chapterHeaderLevel = writerEpubChapterLevel opts
 
   let isChapterHeader (Header n _ _) = n <= chapterHeaderLevel
-      isChapterHeader (Div ("",["references"],[]) (Header n _ _:_)) =
+      isChapterHeader (Div ("refs",_,_) (Header n _ _:_)) =
         n <= chapterHeaderLevel
       isChapterHeader _ = False
 
   let toChapters :: [Block] -> State [Int] [Chapter]
       toChapters []     = return []
-      toChapters (Div ("",["references"],[]) bs@(Header 1 _ _:_) : rest) =
+      toChapters (Div ("refs",_,_) bs@(Header 1 _ _:_) : rest) =
         toChapters (bs ++ rest)
       toChapters (Header n attr@(_,classes,_) ils : bs) = do
         nums <- get
@@ -565,13 +585,28 @@ pandocToEPUB version opts doc@(Pandoc meta _) = do
   let chapToEntry num (Chapter mbnum bs) =
         mkEntry ("text/" ++ showChapter num) =<<
         writeHtml opts'{ writerNumberOffset = fromMaybe [] mbnum
-                       , writerVariables = cssvars True ++ vars }
-                 (case bs of
-                     (Header _ _ xs : _) ->
+                       , writerVariables = ("body-type", bodyType) :
+                                           cssvars True ++ vars } pdoc
+         where (pdoc, bodyType) =
+                 case bs of
+                     (Header _ (_,_,kvs) xs : _) ->
                        -- remove notes or we get doubled footnotes
-                       Pandoc (setMeta "title" (walk removeNote $ fromList xs)
-                                 nullMeta) bs
-                     _                   -> Pandoc nullMeta bs)
+                       (Pandoc (setMeta "title"
+                           (walk removeNote $ fromList xs) nullMeta) bs,
+                        case lookup "epub:type" kvs of
+                             Nothing -> "bodymatter"
+                             Just x
+                               | x `elem` frontMatterTypes -> "frontmatter"
+                               | x `elem` backMatterTypes  -> "backmatter"
+                               | otherwise                 -> "bodymatter")
+                     _                   -> (Pandoc nullMeta bs, "bodymatter")
+               frontMatterTypes = ["prologue", "abstract", "acknowledgments",
+                                   "copyright-page", "dedication",
+                                   "foreword", "halftitle",
+                                   "introduction", "preface",
+                                   "seriespage", "titlepage"]
+               backMatterTypes = ["afterword", "appendix", "colophon",
+                                  "conclusion", "epigraph"]
 
   chapterEntries <- zipWithM chapToEntry [1..] chapters
 
@@ -785,7 +820,7 @@ pandocToEPUB version opts doc@(Pandoc meta _) = do
                                 [ unode "a" ! [("href", "text/cover.xhtml")
                                               ,("epub:type", "cover")] $
                                   "Cover"] |
-                                  epubCoverImage metadata /= Nothing
+                                  isJust (epubCoverImage metadata)
                               ] ++
                               [ unode "li"
                                 [ unode "a" ! [("href", "#toc")
@@ -839,7 +874,7 @@ metadataElement version md currentTime =
   unode "metadata" ! [("xmlns:dc","http://purl.org/dc/elements/1.1/")
                      ,("xmlns:opf","http://www.idpf.org/2007/opf")] $ mdNodes
   where mdNodes = identifierNodes ++ titleNodes ++ dateNodes
-                  ++ languageNodes ++ ibooksNodes
+                  ++ languageNodes ++ ibooksNodes ++ calibreNodes
                   ++ creatorNodes ++ contributorNodes ++ subjectNodes
                   ++ descriptionNodes ++ typeNodes ++ formatNodes
                   ++ publisherNodes ++ sourceNodes ++ relationNodes
@@ -860,6 +895,9 @@ metadataElement version md currentTime =
                                             $ dateText x]
         ibooksNodes = map ibooksNode (epubIbooksFields md)
         ibooksNode (k, v) = unode "meta" ! [("property", "ibooks:" ++ k)] $ v
+        calibreNodes = map calibreNode (epubCalibreFields md)
+        calibreNode (k, v) = unode "meta" ! [("name", "calibre:" ++ k),
+                                             ("content", v)] $ ()
         languageNodes = [dcTag "language" $ epubLanguage md]
         creatorNodes = withIds "epub-creator" (toCreatorNode "creator") $
                        epubCreator md
@@ -1039,12 +1077,12 @@ showChapter :: Int -> String
 showChapter = printf "ch%03d.xhtml"
 
 -- Add identifiers to any headers without them.
-addIdentifiers :: [Block] -> [Block]
-addIdentifiers bs = evalState (mapM go bs) Set.empty
+addIdentifiers :: WriterOptions -> [Block] -> [Block]
+addIdentifiers opts bs = evalState (mapM go bs) Set.empty
  where go (Header n (ident,classes,kvs) ils) = do
          ids <- get
          let ident' = if null ident
-                         then uniqueIdent ils ids
+                         then uniqueIdent (writerExtensions opts) ils ids
                          else ident
          modify $ Set.insert ident'
          return $ Header n (ident',classes,kvs) ils

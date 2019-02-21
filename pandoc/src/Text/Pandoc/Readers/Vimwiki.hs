@@ -71,7 +71,7 @@ import Control.Monad.Except (throwError)
 import Data.Default
 import Data.List (isInfixOf, isPrefixOf)
 import Data.Maybe
-import Data.Text (Text, unpack)
+import Data.Text (Text)
 import Text.Pandoc.Builder (Blocks, Inlines, fromList, toList, trimInlines)
 import qualified Text.Pandoc.Builder as B (blockQuote, bulletList, code,
                                            codeBlockWith, definitionList,
@@ -85,12 +85,12 @@ import qualified Text.Pandoc.Builder as B (blockQuote, bulletList, code,
 import Text.Pandoc.Class (PandocMonad (..))
 import Text.Pandoc.Definition (Attr, Block (BulletList, OrderedList),
                                Inline (Space), ListNumberDelim (..),
-                               ListNumberStyle (..), Meta, Pandoc (..),
+                               ListNumberStyle (..), Pandoc (..),
                                nullMeta)
 import Text.Pandoc.Options (ReaderOptions)
-import Text.Pandoc.Parsing (F, ParserState, ParserT, blanklines, emailAddress,
+import Text.Pandoc.Parsing (ParserState, ParserT, blanklines, emailAddress,
                             many1Till, orderedListMarker, readWithM,
-                            registerHeader, runF, spaceChar, stateMeta',
+                            registerHeader, spaceChar, stateMeta,
                             stateOptions, uri)
 import Text.Pandoc.Shared (crFilter, splitBy, stringify, stripFirstAndLast)
 import Text.Parsec.Char (alphaNum, anyChar, char, newline, noneOf, oneOf, space,
@@ -101,13 +101,12 @@ import Text.Parsec.Prim (getState, many, try, updateState, (<|>))
 
 readVimwiki :: PandocMonad m => ReaderOptions -> Text -> m Pandoc
 readVimwiki opts s = do
-  res <- readWithM parseVimwiki def{ stateOptions = opts }
-            (unpack (crFilter s))
+  res <- readWithM parseVimwiki def{ stateOptions = opts } $ crFilter s
   case res of
        Left e       -> throwError e
        Right result -> return result
 
-type VwParser = ParserT [Char] ParserState
+type VwParser = ParserT Text ParserState
 
 
 -- constants
@@ -126,7 +125,7 @@ parseVimwiki = do
   spaces
   eof
   st <- getState
-  let meta = runF (stateMeta' st) st
+  let meta = stateMeta st
   return $ Pandoc meta (toList bs)
 
 -- block parser
@@ -429,9 +428,7 @@ tableRow = try $ do
   s <- lookAhead $ manyTill anyChar (try (char '|' >> many spaceChar
     >> newline))
   guard $ not $ "||" `isInfixOf` ("|" ++ s ++ "|")
-  tr <- many tableCell
-  many spaceChar >> char '\n'
-  return tr
+  many tableCell <* many spaceChar <* char '\n'
 
 tableCell :: PandocMonad m => VwParser m Blocks
 tableCell = try $
@@ -446,18 +443,18 @@ ph s = try $ do
   many spaceChar >>string ('%':s) >> spaceChar
   contents <- trimInlines . mconcat <$> manyTill inline (lookAhead newline)
     --use lookAhead because of placeholder in the whitespace parser
-  let meta' = return $ B.setMeta s contents nullMeta :: F Meta
-  updateState $ \st -> st { stateMeta' = stateMeta' st <> meta' }
+  let meta' = B.setMeta s contents nullMeta
+  updateState $ \st -> st { stateMeta = stateMeta st <> meta' }
 
 noHtmlPh :: PandocMonad m => VwParser m ()
 noHtmlPh = try $
-  () <$ (many spaceChar >> string "%nohtml" >> many spaceChar
-    >> lookAhead newline)
+  () <$ many spaceChar <* string "%nohtml" <* many spaceChar
+    <* lookAhead newline
 
 templatePh :: PandocMonad m => VwParser m ()
 templatePh = try $
-  () <$ (many spaceChar >> string "%template" >>many (noneOf "\n")
-    >> lookAhead newline)
+  () <$ many spaceChar <* string "%template" <* many (noneOf "\n")
+    <* lookAhead newline
 
 -- inline parser
 
@@ -617,10 +614,8 @@ procImgurl :: String -> String
 procImgurl s = if take 6 s == "local:" then "file" ++ drop 5 s else s
 
 inlineMath :: PandocMonad m => VwParser m Inlines
-inlineMath = try $ do
-  char '$'
-  contents <- many1Till (noneOf "\n") (char '$')
-  return $ B.math contents
+inlineMath = try $
+  B.math <$ char '$' <*> many1Till (noneOf "\n") (char '$')
 
 tag :: PandocMonad m => VwParser m Inlines
 tag = try $ do

@@ -4,6 +4,7 @@
 $\my+\my$
 ^D
 \newcommand{\my}{\phi}
+
 $\phi+\phi$
 ```
 
@@ -13,6 +14,7 @@ $\phi+\phi$
 $\my+\my$
 ^D
 \newcommand{\my}{\phi}
+
 $\my+\my$
 ```
 
@@ -24,18 +26,18 @@ expanded at point of use:
 % pandoc -f latex -t latex
 \let\a\b
 \newcommand{\b}{\emph{ouk}}
-\a
+\a a
 ^D
-\b
+a̱
 ```
 
 ```
 % pandoc -f latex -t latex
 \newcommand{\a}{\b}
 \newcommand{\b}{\emph{ouk}}
-\a
+\a a
 ^D
-\emph{ouk}
+\emph{ouk}a
 ```
 
 ```
@@ -75,6 +77,7 @@ x &= y\\\end{aligned}\]
 \end{equation}
 ^D
 \newcommand{\my}{\phi}
+
 \begin{equation}
 \phi+\phi
 \end{equation}
@@ -88,6 +91,7 @@ x &= y\\\end{aligned}\]
 \end{equation}
 ^D
 \newcommand{\my}{\phi}
+
 \begin{equation}
 \my+\my
 \end{equation}
@@ -101,3 +105,21 @@ x &= y\\\end{aligned}\]
 \newcommand{\my}{\emph{a}}
 \emph{a}
 ```
+
+<https://tex.stackexchange.com/questions/258/what-is-the-difference-between-let-and-def>
+
+```
+% pandoc -f latex -t plain
+\def\bar{hello}
+\let\fooi\bar
+\def\fooii{\bar}
+\fooi +\fooii
+
+\def\bar{goodbye}
+\fooi +\fooii
+^D
+hello+hello
+
+hello+goodbye
+```
+

@@ -35,14 +35,16 @@ module Text.Pandoc.XML ( escapeCharForXML,
                          inTagsSimple,
                          inTagsIndented,
                          toEntities,
+                         toHtml5Entities,
                          fromEntities ) where
 
 import Prelude
 import Data.Char (isAscii, isSpace, ord)
 import Data.Text (Text)
 import qualified Data.Text as T
-import Text.HTML.TagSoup.Entity (lookupEntity)
+import Text.HTML.TagSoup.Entity (lookupEntity, htmlEntities)
 import Text.Pandoc.Pretty
+import qualified Data.Map as M
 
 -- | Escape one character as needed for XML.
 escapeCharForXML :: Char -> String
@@ -99,6 +101,28 @@ toEntities :: Text -> Text
 toEntities = T.concatMap go
   where go c | isAscii c = T.singleton c
              | otherwise = T.pack ("&#" ++ show (ord c) ++ ";")
+
+-- | Escape all non-ascii characters using HTML5 entities, falling
+-- back to numerical entities.
+toHtml5Entities :: Text -> Text
+toHtml5Entities = T.concatMap go
+  where go c | isAscii c = T.singleton c
+             | otherwise =
+                 case M.lookup c html5EntityMap of
+                   Just t  -> T.singleton '&' <> t <> T.singleton ';'
+                   Nothing -> T.pack ("&#" ++ show (ord c) ++ ";")
+
+html5EntityMap :: M.Map Char Text
+html5EntityMap = foldr go mempty htmlEntities
+  where go (ent, s) entmap =
+         case s of
+           [c] -> M.insertWith
+                   (\new old -> if T.length new > T.length old
+                                   then old
+                                   else new) c ent' entmap
+             where ent' = T.takeWhile (/=';') (T.pack ent)
+           _   -> entmap
+
 
 -- Unescapes XML entities
 fromEntities :: String -> String

@@ -36,8 +36,9 @@ import Control.Monad.Except (catchError)
 import Control.Monad.State.Strict
 import qualified Data.ByteString.Lazy as B
 import Data.Generics (everywhere', mkT)
-import Data.List (isPrefixOf)
+import Data.List (isPrefixOf, intercalate)
 import Data.Maybe (fromMaybe)
+import qualified Data.Map as Map
 import qualified Data.Text.Lazy as TL
 import System.FilePath (takeDirectory, takeExtension, (<.>))
 import Text.Pandoc.BCP47 (Lang (..), getLang, renderLang)
@@ -49,11 +50,11 @@ import Text.Pandoc.Logging
 import Text.Pandoc.MIME (extensionFromMimeType, getMimeType)
 import Text.Pandoc.Options (WrapOption (..), WriterOptions (..))
 import Text.Pandoc.Pretty
-import Text.Pandoc.Shared (stringify)
+import Text.Pandoc.Shared (stringify, normalizeDate)
+import Text.Pandoc.Writers.Shared (lookupMetaString, fixDisplayMath)
 import Text.Pandoc.UTF8 (fromStringLazy, fromTextLazy, toStringLazy)
 import Text.Pandoc.Walk
 import Text.Pandoc.Writers.OpenDocument (writeOpenDocument)
-import Text.Pandoc.Writers.Shared (fixDisplayMath)
 import Text.Pandoc.XML
 import Text.TeXMath
 import Text.XML.Light
@@ -81,6 +82,7 @@ pandocToODT :: PandocMonad m
             -> O m B.ByteString
 pandocToODT opts doc@(Pandoc meta _) = do
   let title = docTitle meta
+  let authors = docAuthors meta
   lang <- toLang (getLang opts meta)
   refArchive <-
        case writerReferenceDoc opts of
@@ -123,6 +125,15 @@ pandocToODT opts doc@(Pandoc meta _) = do
               )
          )
   let archive' = addEntryToArchive manifestEntry archive
+  let userDefinedMetaFields = [k | k <- Map.keys (unMeta meta)
+                              , k `notElem` ["title", "lang", "author", "date"]]
+  let escapedText = text . escapeStringForXML
+  let userDefinedMeta =
+        map (\k -> inTags False "meta:user-defined"
+              [ ("meta_name", escapeStringForXML k)
+              ,("meta-value-type", "string")
+              ] (escapedText $ lookupMetaString k meta)) userDefinedMetaFields
+  let metaTag metafield = inTagsSimple metafield . escapedText
   let metaEntry = toEntry "meta.xml" epochtime
        $ fromStringLazy $ render Nothing
        $ text "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
@@ -134,14 +145,21 @@ pandocToODT opts doc@(Pandoc meta _) = do
            ,("xmlns:meta","urn:oasis:names:tc:opendocument:xmlns:meta:1.0")
            ,("xmlns:ooo","http://openoffice.org/2004/office")
            ,("xmlns:grddl","http://www.w3.org/2003/g/data-view#")
-           ,("office:version","1.2")] ( inTagsSimple "office:meta" $
-                 ( inTagsSimple "dc:title"
-                      (text $ escapeStringForXML (stringify title))
+           ,("office:version","1.2")] ( inTags True "office:meta" [] $
+                 ( metaTag "dc:title" (stringify title)
                    $$
                    case lang of
-                        Just l -> inTagsSimple "dc:language"
-                                    (text (escapeStringForXML (renderLang l)))
+                        Just l  -> metaTag "dc:language" (renderLang l)
                         Nothing -> empty
+                   $$
+                   metaTag "dc:creator"
+                     (intercalate "; " (map stringify authors))
+                   $$
+                   maybe mempty
+                     (metaTag "dc:date")
+                       (normalizeDate (lookupMetaString "date" meta))
+                   $$
+                   vcat userDefinedMeta
                  )
              )
         )
@@ -189,8 +207,8 @@ transformPicMath opts (Image attr@(id', cls, _) lab (src,t)) = catchError
        let dims =
              case (getDim Width, getDim Height) of
                (Just w, Just h)              -> [("width", show w), ("height", show h)]
-               (Just w@(Percent p), Nothing) -> [("width", show w), ("height", show (p / ratio) ++ "%")]
-               (Nothing, Just h@(Percent p)) -> [("width", show (p * ratio) ++ "%"), ("height", show h)]
+               (Just w@(Percent _), Nothing) -> [("rel-width", show w),("rel-height", "scale"),("width", show ptX ++ "pt"),("height", show ptY ++ "pt")]
+               (Nothing, Just h@(Percent _)) -> [("rel-width", "scale"),("rel-height", show h),("width", show ptX ++ "pt"),("height", show ptY ++ "pt")]
                (Just w@(Inch i), Nothing)    -> [("width", show w), ("height", show (i / ratio) ++ "in")]
                (Nothing, Just h@(Inch i))    -> [("width", show (i * ratio) ++ "in"), ("height", show h)]
                _                             -> [("width", show ptX ++ "pt"), ("height", show ptY ++ "pt")]
