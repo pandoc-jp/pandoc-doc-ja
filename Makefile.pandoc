@@ -1,7 +1,24 @@
-.PHONY: pandoc
-pandoc: users-guide.rst
+.PHONY: all tx pandoc html
 
+## すべて実行
+
+all: pandoc html
+
+# Transifex(tx): poファイルをpullする
+
+tx: 
+	tx pull -a
+
+# Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
+
+pandoc: users-guide.rst
 users-guide.rst: ./pandoc/MANUAL.txt
 	pandoc -f markdown -t rst $< -o $@.tmp
 	cat users-guide-header.txt $@.tmp > $@
 	rm $@.tmp
+
+# Sphinx: htmlを生成する
+
+html:
+	make -e SPHINXOPTS="-D language='ja_JP'" html
+
