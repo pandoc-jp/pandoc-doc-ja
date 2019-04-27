@@ -1,32 +1,53 @@
 .PHONY: all intl-update tx pandoc html
 
-## すべて実行
+# 引数
 
-all: pandoc html
+## jgm/pandocのbranch or tag（チェックアウトしたいバージョン番号を指定する）
+PANDOC = 
 
+# make -f Makefile.pandoc checkout PANDOC=バージョン番号
+# jgm/pandocを特定バージョンでチェックアウト
+checkout:
+	cd pandoc && git checkout ${PANDOC}
+	git submodule update
+
+# make -f Makefile.pandoc update
+# アップデート作業をまとめてする (pandoc -> intl-update)
+update: pandoc intl-update
+
+# make -f Makefile.pandoc pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
-
 pandoc: users-guide.rst
 users-guide.rst: ./pandoc/MANUAL.txt
 	pandoc -f markdown -t rst --reference-links $< -o $@.tmp
 	cat users-guide-header.txt $@.tmp > $@
 	rm $@.tmp
 
-## users-guide.rst 原文を更新するときに、翻訳ファイル (pot/po) をupdateする
-intl-update:
+# make -f Makefile.pandoc intl-update
+# users-guide.rst (原文)を更新するときに、翻訳ファイル (pot/po) をupdateする
+intl-update: users-guide.rst
 	make gettext
 	sphinx-intl update -p _build/gettext -l ja
 
-# Transifex(tx): poファイルをpullする
+# make -f Makefile.pandoc tx-push-source
+# Transifex(tx): ソースファイル(pot)をpushする
+
+tx-push-source:
+	tx push -s
+
+# make -f Makefile.pandoc tx-push
+# Transifex(tx): 翻訳ファイル(po)をpushする
 
 tx-push:
-	tx push 
+	tx push -t -l ja
 
+# make -f Makefile.pandoc tx-pull
 # Transifex(tx): poファイルをpullする
 
 tx-pull: 
-	tx pull -a
+	tx pull -l ja
 
+# make -f Makefile.pandoc html
 # Sphinx: htmlを生成する
 
 html:
