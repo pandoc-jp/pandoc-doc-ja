@@ -35,9 +35,9 @@
 <h1>lhs test<a class="headerlink" href="#lhs-test" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">unsplit</span></code> is an arrow that takes a pair of values and combines them to
 return a single value:</p>
-<div class="code haskell highlight-default notranslate"><div class="highlight"><pre><span></span>unsplit :: (Arrow a) =&gt; (b -&gt; c -&gt; d) -&gt; a (b, c) d
-unsplit = arr . uncurry
-          -- arr (\op (x,y) -&gt; x `op` y)
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">unsplit</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Arrow</span> <span class="n">a</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">d</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="n">d</span>
+<span class="nf">unsplit</span> <span class="ow">=</span> <span class="n">arr</span> <span class="o">.</span> <span class="n">uncurry</span>
+          <span class="c1">-- arr (\op (x,y) -&gt; x `op` y)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">(***)</span></code> combines two arrows into a new arrow by running the two arrows on a
@@ -109,7 +109,7 @@ second item of the pair).</p>
       &copy;2019, 日本Pandocユーザ会.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

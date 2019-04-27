@@ -784,33 +784,18 @@ pandoc options are not ignored. Thus, for example,</p>
 </div>
 </div>
 <div class="section" id="templates">
-<h2>Templates<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>When the <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> option is used, pandoc uses a template to
-add header and footer material that is needed for a self-standing
-document. To see the default template that is used, just type</p>
+<h2>テンプレート<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> オプションが使用された場合、独立した文書 (self-standing document) に必要なヘッダとフッタを追加するために、Pandocはテンプレートを用います。既定のテンプレートを参照するには、次を実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">D</span> <span class="o">*</span><span class="n">FORMAT</span><span class="o">*</span>
 </pre></div>
 </div>
-<p>where <em>FORMAT</em> is the name of the output format. A custom template can
-be specified using the <code class="docutils literal notranslate"><span class="pre">--template</span></code> option. You can also override the
-system default templates for a given output format <em>FORMAT</em> by putting a
-file <code class="docutils literal notranslate"><span class="pre">templates/default.*FORMAT*</span></code> in the user data directory (see
-<code class="docutils literal notranslate"><span class="pre">--data-dir</span></code>, above). <em>Exceptions:</em></p>
+<p>ここで <code class="docutils literal notranslate"><span class="pre">*FORMAT*</span></code> は出力形式の名前です (以下同様)。カスタムテンプレートは  <code class="docutils literal notranslate"><span class="pre">--template</span></code> で指定できます。システム上の既定のテンプレートを上書きしたい場合は、ユーザデータディレクトリ (上記の <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照) に、 <code class="docutils literal notranslate"><span class="pre">templates/default.*FORMAT*</span></code> という形のファイル名で保存してください。 <em>ただし以下は例外です:</em></p>
 <ul class="simple">
-<li><p>For <code class="docutils literal notranslate"><span class="pre">odt</span></code> output, customize the <code class="docutils literal notranslate"><span class="pre">default.opendocument</span></code> template.</p></li>
-<li><p>For <code class="docutils literal notranslate"><span class="pre">pdf</span></code> output, customize the <code class="docutils literal notranslate"><span class="pre">default.latex</span></code> template (or the
-<code class="docutils literal notranslate"><span class="pre">default.context</span></code> template, if you use <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">context</span></code>, or the
-<code class="docutils literal notranslate"><span class="pre">default.ms</span></code> template, if you use <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">ms</span></code>, or the
-<code class="docutils literal notranslate"><span class="pre">default.html</span></code> template, if you use <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> はテンプレートを持っていません （しかし、出力をカスタマイズするために <code class="docutils literal notranslate"><span class="pre">--reference-doc</span></code> が使えます）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">odt</span></code> 出力については、 <code class="docutils literal notranslate"><span class="pre">default.opendocument</span></code> テンプレートをカスタマイズします。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pdf</span></code> 出力については、 <code class="docutils literal notranslate"><span class="pre">default.latex</span></code> テンプレートをカスタマイズします。(<code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">context</span></code> を使う場合は <code class="docutils literal notranslate"><span class="pre">default.context</span></code> テンプレート、 <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">ms</span></code> の場合は <code class="docutils literal notranslate"><span class="pre">default.ms</span></code> テンプレート、<code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code> の場合は <code class="docutils literal notranslate"><span class="pre">default.html</span></code> テンプレートをカスタマイズします)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> はテンプレートを持っていません。 (しかし、出力をカスタマイズするために <code class="docutils literal notranslate"><span class="pre">--reference-doc</span></code> が使えます)</p></li>
 </ul>
-<p>Templates contain <em>variables</em>, which allow for the inclusion of
-arbitrary information at any point in the file. They may be set at the
-command line using the <code class="docutils literal notranslate"><span class="pre">-V/--variable</span></code> option. If a variable is not
-set, pandoc will look for the key in the document’s metadata – which can
-be set using either <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata
-blocks</a> or with the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code>
-option.</p>
+<p>テンプレートの中には <em>変数 (variables)</em> があります。これにより、任意の情報をファイル中のどの箇所にも含められます。変数はコマンドライン上で  <code class="docutils literal notranslate"><span class="pre">-V/--variable</span></code> オプションを使うことで指定できます。変数が指定されていない場合、Pandocは文書のメタデータからキーを探します (訳注: Pandocはメタデータとして定義されたキーも、テンプレートの変数として扱います)。メタデータは  <a class="reference external" href="#extension-yaml_metadata_block">YAML メタデータブロック</a> または  <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> オプションによって指定できます。</p>
 <div class="section" id="variables-set-by-pandoc">
 <h3>Variables set by pandoc<a class="headerlink" href="#variables-set-by-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Some variables are set automatically by pandoc. These vary somewhat
@@ -3667,45 +3652,26 @@ work. The extensions can, however, all be individually disabled. Also,
 </div>
 </div>
 <div class="section" id="styling-the-slides">
-<h3>Styling the slides<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>You can change the style of HTML slides by putting customized CSS files
-in <code class="docutils literal notranslate"><span class="pre">$DATADIR/s5/default</span></code> (for S5), <code class="docutils literal notranslate"><span class="pre">$DATADIR/slidy</span></code> (for Slidy), or
-<code class="docutils literal notranslate"><span class="pre">$DATADIR/slideous</span></code> (for Slideous), where <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> is the user
-data directory (see <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code>, above). The originals may be found
-in pandoc’s system data directory (generally
-<code class="docutils literal notranslate"><span class="pre">$CABALDIR/pandoc-VERSION/s5/default</span></code>). Pandoc will look there for any
-files it does not find in the user data directory.</p>
-<p>For dzslides, the CSS is included in the HTML file itself, and may be
-modified there.</p>
-<p>All <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js configuration
-options</a> can be
-set through variables. For example, themes can be used by setting the
-<code class="docutils literal notranslate"><span class="pre">theme</span></code> variable:</p>
+<h3>スライドのスタイルを変える<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>特定の場所にカスタム済のCSSファイルを配置することで、HTMLスライドの変更できます。その場所は <code class="docutils literal notranslate"><span class="pre">$DATADIR/s5/default</span></code> (S5の場合)、 <code class="docutils literal notranslate"><span class="pre">$DATADIR/slidy</span></code> (Slidyの場合)、および <code class="docutils literal notranslate"><span class="pre">$DATADIR/slideous</span></code> (Slideousの場合) です。ただし <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> はユーザデータディレクトリです。 (上記の <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照)。元のCSSファイルはPandocのシステムデータディレクトリ (通常は  <code class="docutils literal notranslate"><span class="pre">$CABALDIR/pandoc-VERSION/s5/default</span></code>) にあります。Pandocはまずユーザデータディレクトリでファイルを検索し、何も見つからない場合にシステムデータディレクトリを検索します。</p>
+<p>dzslidesについては、HTMLファイル自身の中に必要なCSSが含まれます。CSSが変更される場合も同様です。</p>
+<p>すべての <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js 設定オプション</a> は、テンプレート変数を通して設定されます。たとえば、テーマの設定は <code class="docutils literal notranslate"><span class="pre">theme</span></code> 変数を用います:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">V</span> <span class="n">theme</span><span class="o">=</span><span class="n">moon</span>
 </pre></div>
 </div>
-<p>Or you can specify a custom stylesheet using the <code class="docutils literal notranslate"><span class="pre">--css</span></code> option.</p>
-<p>To style beamer slides, you can specify a <code class="docutils literal notranslate"><span class="pre">theme</span></code>, <code class="docutils literal notranslate"><span class="pre">colortheme</span></code>,
-<code class="docutils literal notranslate"><span class="pre">fonttheme</span></code>, <code class="docutils literal notranslate"><span class="pre">innertheme</span></code>, and <code class="docutils literal notranslate"><span class="pre">outertheme</span></code>, using the <code class="docutils literal notranslate"><span class="pre">-V</span></code>
-option:</p>
+<p>あるいは <code class="docutils literal notranslate"><span class="pre">--css</span></code> オプションを用いて、カスタム済のスタイルシートを指定できます。</p>
+<p>Beamerスライドのスタイルを変えるには <code class="docutils literal notranslate"><span class="pre">-V</span></code> オプションを用いて、 <code class="docutils literal notranslate"><span class="pre">theme</span></code> 、 <code class="docutils literal notranslate"><span class="pre">colortheme</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fonttheme</span></code> 、 <code class="docutils literal notranslate"><span class="pre">innertheme</span></code> 、 および <code class="docutils literal notranslate"><span class="pre">outertheme</span></code> を指定します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">t</span> <span class="n">beamer</span> <span class="n">habits</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">V</span> <span class="n">theme</span><span class="p">:</span><span class="n">Warsaw</span> <span class="o">-</span><span class="n">o</span> <span class="n">habits</span><span class="o">.</span><span class="n">pdf</span>
 </pre></div>
 </div>
-<p>Note that header attributes will turn into slide attributes (on a
-<code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;section&gt;</span></code>) in HTML slide formats, allowing you to style
-individual slides. In beamer, the only header attribute that affects
-slides is the <code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code> class, which sets the
-<code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code> option, causing multiple slides to be created if
-the content overfills the frame. This is recommended especially for
-bibliographies:</p>
+<p>補足: ヘッダの属性は、HTMLスライド形式において、(<code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> または <code class="docutils literal notranslate"><span class="pre">&lt;section&gt;</span></code> に対する) スライドの属性  に変更されます。これによりスライドごとのスタイル変更が可能です。Beamerにおいて、スライドに影響を与える唯一のヘッダの属性は <code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code> クラスで、(訳注: Beamerの)  <code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code> オプションを設定します。これにより、コンテンツが1枚のフレームに収まらないときに、複数のスライドへ分割されます。この属性は特に参考文献で推奨されます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># References {.allowframebreaks}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="speaker-notes">
-<h3>Speaker notes<a class="headerlink" href="#speaker-notes" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Speaker notes are supported in reveal.js and PowerPoint (pptx) output.
-You can add notes to your Markdown document thus:</p>
+<h3>発表者ノート<a class="headerlink" href="#speaker-notes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>発表者ノート (speaker notes) は、reveal.jsとPowerPoint (pptx) 出力で利用できます。次のようにMarkdown文書の中でノートを追加できます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:::</span> <span class="n">notes</span>
 
 <span class="n">This</span> <span class="ow">is</span> <span class="n">my</span> <span class="n">note</span><span class="o">.</span>
@@ -3716,17 +3682,12 @@ You can add notes to your Markdown document thus:</p>
 <span class="p">:::</span>
 </pre></div>
 </div>
-<p>To show the notes window in reveal.js, press <code class="docutils literal notranslate"><span class="pre">s</span></code> while viewing the
-presentation. Speaker notes in PowerPoint will be available, as usual,
-in handouts and presenter view.</p>
-<p>Notes are not yet supported for other slide formats, but the notes will
-not appear on the slides themselves.</p>
+<p>reveal.js でノートウィンドウを開くには、プレゼンテーションを閲覧中に  <code class="docutils literal notranslate"><span class="pre">s</span></code> キーを押します。発表者ノートはPowerPointにおいて、いつものように配付資料と発表者ビューで利用できます。</p>
+<p>他のスライド形式において、ノートはまだサポートされていませんが、それでもノートがスライド中に現れることはありません。</p>
 </div>
 <div class="section" id="columns">
-<h3>Columns<a class="headerlink" href="#columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>To put material in side by side columns, you can use a native div
-container with class <code class="docutils literal notranslate"><span class="pre">columns</span></code>, containing two or more div containers
-with class <code class="docutils literal notranslate"><span class="pre">column</span></code> and a <code class="docutils literal notranslate"><span class="pre">width</span></code> attribute:</p>
+<h3>段組み<a class="headerlink" href="#columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>資料を横に並べて段組みとしたい場合に、 ネイティブ Div コンテナ (<code class="docutils literal notranslate"><span class="pre">columns</span></code> クラス付き) を利用できます。その内側には、2つ以上の Div コンテナ (<code class="docutils literal notranslate"><span class="pre">column</span></code> および <code class="docutils literal notranslate"><span class="pre">width</span></code> 属性付き) を入れます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">::::::::::::::</span> <span class="p">{</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span>
 <span class="p">:::</span> <span class="p">{</span><span class="o">.</span><span class="n">column</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">}</span>
 <span class="n">contents</span><span class="o">...</span>
@@ -3739,47 +3700,23 @@ with class <code class="docutils literal notranslate"><span class="pre">column</
 </div>
 </div>
 <div class="section" id="frame-attributes-in-beamer">
-<h3>Frame attributes in beamer<a class="headerlink" href="#frame-attributes-in-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Sometimes it is necessary to add the LaTeX <code class="docutils literal notranslate"><span class="pre">[fragile]</span></code> option to a
-frame in beamer (for example, when using the <code class="docutils literal notranslate"><span class="pre">minted</span></code> environment).
-This can be forced by adding the <code class="docutils literal notranslate"><span class="pre">fragile</span></code> class to the header
-introducing the slide:</p>
+<h3>フレームの属性 (Beamer)<a class="headerlink" href="#frame-attributes-in-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>時々、Beamerではフレームに対するLaTeXオプションとして  <code class="docutils literal notranslate"><span class="pre">[fragile]</span></code> が必要になる場面があります (たとえば <code class="docutils literal notranslate"><span class="pre">minted</span></code> 環境を使う場合)。このオプションをスライド (訳注：Beamerのフレーム) に対して強制するには、スライドを始めるヘッダに対して <code class="docutils literal notranslate"><span class="pre">fragile</span></code> クラスを追加します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fragile slide {.fragile}</span>
 </pre></div>
 </div>
-<p>All of the other frame attributes described in Section 8.1 of the
-<a class="reference external" href="http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/beamer/doc/beameruserguide.pdf">Beamer User’s
-Guide</a>
-may also be used: <code class="docutils literal notranslate"><span class="pre">allowdisplaybreaks</span></code>, <code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>,
-<code class="docutils literal notranslate"><span class="pre">c</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">environment</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">plain</span></code>, <code class="docutils literal notranslate"><span class="pre">shrink</span></code>,
-<code class="docutils literal notranslate"><span class="pre">standout</span></code>, <code class="docutils literal notranslate"><span class="pre">noframenumbering</span></code>.</p>
+<p>他のすべてのフレーム属性 (<a class="reference external" href="http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/beamer/doc/beameruserguide.pdf">Beamer User’s Guide</a> の8.1節に書かれているもの) のうち、使用できるものは次のとおりです:  <code class="docutils literal notranslate"><span class="pre">allowdisplaybreaks</span></code> 、 <code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code> 、 <code class="docutils literal notranslate"><span class="pre">b</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c</span></code> 、 <code class="docutils literal notranslate"><span class="pre">t</span></code> 、 <code class="docutils literal notranslate"><span class="pre">environment</span></code> 、 <code class="docutils literal notranslate"><span class="pre">label</span></code> 、 <code class="docutils literal notranslate"><span class="pre">plain</span></code> 、 <code class="docutils literal notranslate"><span class="pre">shrink</span></code> 、 <code class="docutils literal notranslate"><span class="pre">standout</span></code> 、 <code class="docutils literal notranslate"><span class="pre">noframenumbering</span></code> 。</p>
 </div>
 <div class="section" id="background-in-reveal-js-and-beamer">
-<h3>Background in reveal.js and beamer<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Background images can be added to self-contained reveal.js slideshows
-and to beamer slideshows.</p>
-<p>For the same image on every slide, use the configuration option
-<code class="docutils literal notranslate"><span class="pre">background-image</span></code> either in the YAML metadata block or as a
-command-line variable. (There are no other options in beamer and the
-rest of this section concerns reveal.js slideshows.)</p>
-<p>For reveal.js, you can instead use the reveal.js-native option
-<code class="docutils literal notranslate"><span class="pre">parallaxBackgroundImage</span></code>. You can also set
-<code class="docutils literal notranslate"><span class="pre">parallaxBackgroundHorizontal</span></code> and <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundVertical</span></code> the
-same way and must also set <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundSize</span></code> to have your
-values take effect.</p>
-<p>To set an image for a particular reveal.js slide, add
-<code class="docutils literal notranslate"><span class="pre">{data-background-image=&quot;/path/to/image&quot;}</span></code> to the first slide-level
-header on the slide (which may even be empty).</p>
-<p>In reveal.js’s overview mode, the parallaxBackgroundImage will show up
-only on the first slide.</p>
-<p>Other reveal.js background settings also work on individual slides,
-including <code class="docutils literal notranslate"><span class="pre">data-background-size</span></code>, <code class="docutils literal notranslate"><span class="pre">data-background-repeat</span></code>,
-<code class="docutils literal notranslate"><span class="pre">data-background-color</span></code>, <code class="docutils literal notranslate"><span class="pre">data-transition</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">data-transition-speed</span></code>.</p>
-<p>See the <a class="reference external" href="https://github.com/hakimel/reveal.js#slide-backgrounds">reveal.js
-documentation</a>
-for more details.</p>
-<p>For example in reveal.js:</p>
+<h3>スライドの背景 (reveal.js / Beamer)<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>背景画像は、自己完結したreveal.jsスライドショーと、Beamerスライドショーに追加できます。</p>
+<p>同じ背景画像をすべてのスライドに適用するには、設定オプション <code class="docutils literal notranslate"><span class="pre">background-image</span></code> をYAMLメタデータブロックまたはコマンドラインのテンプレート変数に指定します。(Beamerで利用できるのはこのオプションのみです。この節における残りの説明は、reveal.jsスライドショーに関するものです)</p>
+<p>reveal.jsに関しては、代わりにreveal.js本来のオプションである <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundImage</span></code> を利用できます。同様に <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundHorizontal</span></code> と <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundVertical</span></code> も設定できます。これらを有効にするには、必ず <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundSize</span></code> を設定する必要があります。(訳注: reveal.jsのParallax Background (パララックス背景) という機能。視差効果が生まれるように、スライドが進むごとに少しずつ背景画像が動いていく。詳細:  <a class="reference external" href="https://github.com/hakimel/reveal.js/#parallax-background">GitHub hakimel/reveal.js</a> )</p>
+<p>背景画像を個別のreveal.jsスライドに設定するには、 <code class="docutils literal notranslate"><span class="pre">{data-background-image=&quot;/path/to/image&quot;}</span></code> を、そのスライドにおける最初のスライドレベルのヘッダに追加します。(このヘッダ自体は空スライドを生成するものであってもかまいません)</p>
+<p>reveal.jsのoverviewモード (訳注: 複数スライドを一覧できるモード) においては、parallaxBackgroundImageは最初のスライドのものを表示します。</p>
+<p>その他のreveal.js用背景設定のうち、個別のスライドに対して適用できるものは次のとおりです:  <code class="docutils literal notranslate"><span class="pre">data-background-size</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-background-repeat</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-background-color</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-transition</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-transition-speed</span></code> 。</p>
+<p>詳細は <a class="reference external" href="https://github.com/hakimel/reveal.js#slide-backgrounds">reveal.js のドキュメント</a> をご覧ください。</p>
+<p>reveal.jsスライドショーをつくる例を示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">title</span><span class="p">:</span> <span class="n">My</span> <span class="n">Slideshow</span>
 <span class="n">parallaxBackgroundImage</span><span class="p">:</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">background_image</span><span class="o">.</span><span class="n">png</span>
@@ -4140,7 +4077,7 @@ line between list items.</p>
 <li class="toctree-l2"><a class="reference internal" href="#synopsis">概要</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#description">説明</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#options">オプション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#templates">Templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#templates">テンプレート</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#extensions">Extensions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pandocs-markdown">Pandoc’s Markdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#producing-slide-shows-with-pandoc">スライドショーをPandocで生成する</a></li>
@@ -4190,7 +4127,7 @@ line between list items.</p>
       &copy;2019, 日本Pandocユーザ会.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
