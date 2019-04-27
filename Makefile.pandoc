@@ -1,11 +1,11 @@
-.PHONY: all tx pandoc html
+.PHONY: all intl-update tx pandoc html
 
 ## すべて実行
 
 all: pandoc html
 
 ## MANUAL.txt 原文を更新するときに、翻訳ファイル (pot/po) をupdateする
-update:
+intl-update:
 	make gettext
 	sphinx-intl update -p _build/gettext -l ja
 
