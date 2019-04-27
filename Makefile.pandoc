@@ -4,6 +4,11 @@
 
 all: pandoc html
 
+## MANUAL.txt 原文を更新するときに、翻訳ファイル (pot/po) をupdateする
+update:
+	make gettext
+	sphinx-intl update -p _build/gettext -l ja
+
 # Transifex(tx): poファイルをpullする
 
 tx: 
@@ -13,7 +18,7 @@ tx:
 
 pandoc: users-guide.rst
 users-guide.rst: ./pandoc/MANUAL.txt
-	pandoc -f markdown -t rst $< -o $@.tmp
+	pandoc -f markdown -t rst --reference-links $< -o $@.tmp
 	cat users-guide-header.txt $@.tmp > $@
 	rm $@.tmp
 
