@@ -1,3 +1,0 @@
-[submodule "pandoc"]
-	path = pandoc
-	url = git@github.com:jgm/pandoc.git
