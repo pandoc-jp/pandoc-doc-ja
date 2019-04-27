@@ -4,16 +4,6 @@
 
 all: pandoc html
 
-## MANUAL.txt 原文を更新するときに、翻訳ファイル (pot/po) をupdateする
-intl-update:
-	make gettext
-	sphinx-intl update -p _build/gettext -l ja
-
-# Transifex(tx): poファイルをpullする
-
-tx: 
-	tx pull -a
-
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 
 pandoc: users-guide.rst
@@ -22,8 +12,23 @@ users-guide.rst: ./pandoc/MANUAL.txt
 	cat users-guide-header.txt $@.tmp > $@
 	rm $@.tmp
 
+## users-guide.rst 原文を更新するときに、翻訳ファイル (pot/po) をupdateする
+intl-update:
+	make gettext
+	sphinx-intl update -p _build/gettext -l ja
+
+# Transifex(tx): poファイルをpullする
+
+tx-push:
+	tx push 
+
+# Transifex(tx): poファイルをpullする
+
+tx-pull: 
+	tx pull -a
+
 # Sphinx: htmlを生成する
 
 html:
-	make -e SPHINXOPTS="-D language='ja_JP'" html
+	make -e SPHINXOPTS="-D language='ja'" html
 
