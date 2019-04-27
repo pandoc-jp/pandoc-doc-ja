@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja_JP">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
     <title>Pandoc Test Suite &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
@@ -12,6 +12,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
@@ -49,7 +50,7 @@
 <div class="section" id="level-one-header">
 <h3>Level one header<a class="headerlink" href="#level-one-header" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>This is a set of tests for pandoc.  Most of them are adapted from
-John Gruber’s markdown test suite.</p>
+John Gruber's markdown test suite.</p>
 <div class="section" id="level-two-header">
 <h4>Level two header<a class="headerlink" href="#level-two-header" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <div class="section" id="level-three">
@@ -65,13 +66,13 @@ John Gruber’s markdown test suite.</p>
 </div>
 <div class="section" id="paragraphs">
 <h3>Paragraphs<a class="headerlink" href="#paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Here’s a regular paragraph.</p>
+<p>Here's a regular paragraph.</p>
 <p>In Markdown 1.0.0 and earlier. Version
 8. This line turns into a list item.
 Because a hard-wrapped line in the
 middle of a paragraph looked like a
 list item.</p>
-<p>Here’s one with a bullet.
+<p>Here's one with a bullet.
 * criminey.</p>
 <p>Horizontal rule:</p>
 <hr class="docutils" />
@@ -80,15 +81,15 @@ list item.</p>
 <hr class="docutils" />
 <div class="section" id="block-quotes">
 <h3>Block Quotes<a class="headerlink" href="#block-quotes" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Here’s a block quote:</p>
+<p>Here's a block quote:</p>
 <blockquote>
 <div><p>This is a block quote.
 It is pretty short.</p>
 </div></blockquote>
-<p>Here’s another, differently indented:</p>
+<p>Here's another, differently indented:</p>
 <blockquote>
 <div><p>This is a block quote.
-It’s indented with a tab.</p>
+It's indented with a tab.</p>
 <p>Code in a block quote:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sub</span> <span class="n">status</span> <span class="p">{</span>
     <span class="nb">print</span> <span class="s2">&quot;working&quot;</span><span class="p">;</span>
@@ -204,7 +205,7 @@ These should not be escaped:  \$ \\ \&gt; \[ \{
 <p>Multiple paragraphs:</p>
 <ol class="arabic">
 <li><p>Item 1, graf one.</p>
-<p>Item 1. graf two. The quick brown fox jumped over the lazy dog’s
+<p>Item 1. graf two. The quick brown fox jumped over the lazy dog's
 back.</p>
 </li>
 <li><p>Item 2.</p></li>
@@ -222,7 +223,7 @@ back.</p>
 </ul>
 </li>
 </ul>
-<p>Here’s another:</p>
+<p>Here's another:</p>
 <ol class="arabic">
 <li><p>First</p></li>
 <li><p>Second:</p>
@@ -385,8 +386,8 @@ USA</p>
 <p>Two anonymous links:  <a class="reference external" href="/url1/">the first</a> and <a class="reference external" href="/url2/">the second</a></p>
 <p>Reference links:  <a class="reference external" href="/url1/">link1</a> and <a class="reference external" href="/url2/">link2</a> and <a class="reference external" href="/url1/">link1</a> again.</p>
 <p>Another <a class="reference external" href="/url1/">style of reference link</a>.</p>
-<p>Here’s a <a class="reference external" href="http://example.com/?foo=1&amp;bar=2">link with an ampersand in the URL</a>.</p>
-<p>Here’s a link with an amersand in the link text: <a class="reference external" href="/url/">AT&amp;T</a>.</p>
+<p>Here's a <a class="reference external" href="http://example.com/?foo=1&amp;bar=2">link with an ampersand in the URL</a>.</p>
+<p>Here's a link with an amersand in the link text: <a class="reference external" href="/url/">AT&amp;T</a>.</p>
 <p>Autolinks: <a class="reference external" href="http://example.com/?foo=1&amp;bar=2">http://example.com/?foo=1&amp;bar=2</a> and <a class="reference external" href="mailto:nobody&#37;&#52;&#48;nowhere&#46;net">nobody<span>&#64;</span>nowhere<span>&#46;</span>net</a>.</p>
 <p>But not here:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
@@ -395,7 +396,7 @@ USA</p>
 </div>
 <div class="section" id="images">
 <h3>Images<a class="headerlink" href="#images" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>From 「Voyage dans la Lune」 by Georges Melies (1902):</p>
+<p>From &quot;Voyage dans la Lune&quot; by Georges Melies (1902):</p>
 <img alt="../../_images/lalune.jpg" src="../../_images/lalune.jpg" />
 <a class="reference internal image-reference" href="../../_images/lalune.jpg"><img alt="Voyage dans la Lune" src="../../_images/lalune.jpg" style="height: 2343px;" /></a>
 <p>Here is a movie <img alt="movie" src="../../_images/movie.jpg" /> icon.</p>
@@ -613,7 +614,7 @@ F &amp;= \gamma \alpha^2</div><p>All done.</p>
 <h3>Default-Role<a class="headerlink" href="#default-role" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Try changing the default role to a few different things.</p>
 <div class="section" id="doesn-t-break-title-parsing">
-<h4>Doesn’t Break Title Parsing<a class="headerlink" href="#doesn-t-break-title-parsing" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>Doesn't Break Title Parsing<a class="headerlink" href="#doesn-t-break-title-parsing" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Inline math: <span class="math notranslate nohighlight">\(E=mc^2\)</span> or <span class="math notranslate nohighlight">\(E=mc^2\)</span> or <span class="math notranslate nohighlight">\(E=mc^2\)</span>.
 Other roles: <sup>super</sup>, <sub>sub</sub>.</p>
 <div class="math notranslate nohighlight">

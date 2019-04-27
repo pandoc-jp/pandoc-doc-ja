@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja_JP">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
     <title>（新・工事中）Pandocユーザーズガイド 日本語版 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
@@ -12,6 +12,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
@@ -41,10 +42,22 @@
 </div>
 <div class="section" id="description">
 <h2>説明<a class="headerlink" href="#description" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Pandocは、あるマークアップ形式から他の形式へ変換する <a class="reference external" href="https://www.haskell.org">Haskell</a> ライブラリと、そのライブラリを用いたコマンドラインツールです。</p>
-<p>Pandoc は、 <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> 、 <a class="reference external" href="http://www.w3.org/html/">HTML</a> 、 <a class="reference external" href="http://latex-project.org">LaTeX</a> 、 <a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word docx</a> など、これに限定されない多数のマークアップとワープロ形式の間で変換することができます。入力および出力形式の完全なリストについては、下記の <a href="#id17"><span class="problematic" id="id18">`--fromおよび--toオプション&lt;#general-options&gt;`__</span></a> を参照してください。 Pandoc は <a href="#id17"><span class="problematic" id="id19">`PDF&lt;https://www.adobe.com/pdf/&gt;`__</span></a> 出力を生成することもできます。下記の <a href="#id17"><span class="problematic" id="id20">`PDFの作成&lt;#creating-a-pdf&gt;`__</span></a> を参照してください。</p>
-<p>Markdown の Pandoc 拡張バージョンには、 <a href="#id17"><span class="problematic" id="id21">`テーブル&lt;#tables&gt;`__</span></a> 、 <a href="#id17"><span class="problematic" id="id22">`定義リスト&lt;＃definition-lists&gt;`__</span></a> 、 <a href="#id17"><span class="problematic" id="id23">`メタデータブロック&lt;＃metadata-blocks&gt;`__</span></a> 、 <a href="#id17"><span class="problematic" id="id24">`脚注&lt;#footnotes&gt;`__</span></a> 、 <a href="#id17"><span class="problematic" id="id25">`引用&lt;#citations&gt;`__</span></a> 、 <a href="#id17"><span class="problematic" id="id26">`数式&lt;#math&gt;`__</span></a> をはじめ多数の構文を含みます。下記の <a href="#id17"><span class="problematic" id="id27">`Pandoc 拡張 Markdown&lt;＃pandocs-markdown&gt;`__</span></a> を参照してください。</p>
-<p>Pandoc はモジュール設計されています。 Pandoc は、与えられた形式のテキストをパースして文書のネイティブ表現（<a href="#id1"><span class="problematic" id="id2">*</span></a>抽象構文木*またはAST）に変換する Reader 群、およびネイティブ表現をターゲットの出力形式に変換する Writer 群で構成されています。つまり、入力または出力形式を追加するには、 Reader または Writer を追加するだけで済みます。ユーザは、カスタムの <a href="#id17"><span class="problematic" id="id28">`pandocフィルタ&lt;http://pandoc.org/filters.html&gt;`__</span></a> を実行することで、中間の AST を書き換えることもできます。</p>
+<p>Pandoc is a <a class="reference external" href="https://www.haskell.org">Haskell</a> library for converting from one markup format to
+another, and a command-line tool that uses this library.</p>
+<p>Pandoc can convert between numerous markup and word processing formats,
+including, but not limited to, various flavors of <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>, <a class="reference external" href="http://www.w3.org/html/">HTML</a>,
+<a class="reference external" href="http://latex-project.org">LaTeX</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word docx</a>. For the full lists of input and output
+formats, see the <code class="docutils literal notranslate"><span class="pre">--from</span></code> and <code class="docutils literal notranslate"><span class="pre">--to</span></code> <a class="reference external" href="#general-options">options below</a>. Pandoc can
+also produce <a class="reference external" href="https://www.adobe.com/pdf/">PDF</a> output: see <a class="reference external" href="#creating-a-pdf">creating a PDF</a>, below.</p>
+<p>Pandoc’s enhanced version of Markdown includes syntax for <a class="reference external" href="#tables">tables</a>,
+<a class="reference external" href="#definition-lists">definition lists</a>, <a class="reference external" href="#metadata-blocks">metadata blocks</a>, <a class="reference external" href="#footnotes">footnotes</a>, <a class="reference external" href="#citations">citations</a>,
+<a class="reference external" href="#math">math</a>, and much more. See below under <a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a>.</p>
+<p>Pandoc has a modular design: it consists of a set of readers, which
+parse text in a given format and produce a native representation of the
+document (an <em>abstract syntax tree</em> or AST), and a set of writers, which
+convert this native representation into a target format. Thus, adding an
+input or output format requires only adding a reader or writer. Users
+can also run custom <a class="reference external" href="http://pandoc.org/filters.html">pandoc filters</a> to modify the intermediate AST.</p>
 <p>Pandoc での文書の中間表現は、変換するほとんどの形式より表現力が劣ることから、すべての形式と他の形式との間で、完全に変換できるわけではありません。 Pandoc は、文書の構造要素を保とうとしますが、マージンサイズのような緻密なフォーマッティングは行いません。また、複雑なテーブルなどの一部の文書要素は、 Pandoc の単純な文書モデルにフィットしない場合があります。 Pandoc 拡張 Markdown からは、他のすべての形式へ完全に変換されることを目指していますが、 Pandoc 拡張 Markdown よりも表現力が豊富な形式から変換する場合は、表現が劣化することは否めません。</p>
 <div class="section" id="using-pandoc">
 <h3><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> の使い方<a class="headerlink" href="#using-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -56,7 +69,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">html</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
-<p>スタンドアロン文書がどのように生成されるかについての詳細は、下記の <a href="#id17"><span class="problematic" id="id29">`テンプレート&lt;#templates&gt;`__</span></a> を参照してください。</p>
+<p>For more information on how standalone documents are produced, see
+<a class="reference external" href="#templates">Templates</a> below.</p>
 <p>複数のファイルが入力された場合、 Pandoc はそれらを解析する前に（それらの間に空白行を入れて）連結します。（ファイルを個別に解析するには <code class="docutils literal notranslate"><span class="pre">--file-scope</span></code> を使います。）</p>
 </div>
 <div class="section" id="specifying-formats">
@@ -69,7 +83,10 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">html</span> <span class="o">-</span><span class="n">t</span> <span class="n">markdown</span> <span class="n">hello</span><span class="o">.</span><span class="n">html</span>
 </pre></div>
 </div>
-<p>サポートされている入出力の形式は、下記の <a class="reference external" href="#options">Options</a> に掲載されています。（入力形式の <code class="docutils literal notranslate"><span class="pre">-f</span></code> と 出力形式の <code class="docutils literal notranslate"><span class="pre">-t</span></code> を見てください）または、 <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-input-formats</span></code> や <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-output-formats</span></code> でサポートされている形式の一覧が表示されます。</p>
+<p>Supported input and output formats are listed below under <a class="reference external" href="#options">Options</a>
+(see <code class="docutils literal notranslate"><span class="pre">-f</span></code> for input formats and <code class="docutils literal notranslate"><span class="pre">-t</span></code> for output formats). You can
+also use <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-input-formats</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-output-formats</span></code> to print lists of supported formats.</p>
 <p>もし、入力または出力形式が指定されていない場合は、 <code class="docutils literal notranslate"><span class="pre">pandoc</span></code> はファイル名の拡張子から推測します。例として、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hello</span><span class="o">.</span><span class="n">tex</span> <span class="n">hello</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -78,7 +95,9 @@
 </div>
 <div class="section" id="character-encoding">
 <h3>文字コード<a class="headerlink" href="#character-encoding" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Pandoc は入力と出力の両方に UTF-8 文字コードを使用します。あなたのローカルの文字コードが UTF-8 ではない場合、 <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id17"><span class="problematic" id="id30">`iconv``&lt;http://www.gnu.org/software/libiconv/&gt;`__</span></a> を通して入力と出力をパイプすべきです:</p>
+<p>Pandoc uses the UTF-8 character encoding for both input and output. If
+your local character encoding is not UTF-8, you should pipe input and
+output through <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id108"><span class="problematic" id="id109">`iconv```_</span></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iconv</span> <span class="o">-</span><span class="n">t</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">pandoc</span> <span class="o">|</span> <span class="n">iconv</span> <span class="o">-</span><span class="n">f</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
 </pre></div>
 </div>
@@ -91,10 +110,38 @@
 </pre></div>
 </div>
 <p>既定では、Pandoc は PDF を生成するために LaTeX を利用しようとします。その際、 LaTeX エンジンがインストールされている必要があります (下記の <code class="docutils literal notranslate"><span class="pre">--pdf-engine</span></code> を参照してください)</p>
-<p>あるいは、 Pandoc は <a class="reference external" href="http://www.contextgarden.net/">ConTeXt</a> 、 `` pdfroff`` 、または次の HTML / CSS からの PDF 変換エンジンのいずれかを使用して PDF を作成することができます。 <code class="docutils literal notranslate"><span class="pre">`wkhtmltopdf</span></code> &lt;<a class="reference external" href="https://wkhtmltopdf.org">https://wkhtmltopdf.org</a>&gt;`__ 、 <code class="docutils literal notranslate"><span class="pre">`weasyprint</span></code> &lt;<a class="reference external" href="http://weasyprint.org">http://weasyprint.org</a>&gt;`__ または <code class="docutils literal notranslate"><span class="pre">`prince</span></code> &lt;<a class="reference external" href="https://www.princexml.com/">https://www.princexml.com/</a>&gt;`__ 。これを行うには、同じように拡張子 <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> を付けて出力ファイルを指定しますが、 `` –pdf-engine``オプションまたは `` -t context`` 、 <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code> を追加、もしくは、コマンドラインに <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">ms</span></code> を付けます（ `` -t html`` のデフォルトは `` –pdf-engine = wkhtmltopdf`` です）。</p>
-<p>PDF 出力は、 <a href="#id17"><span class="problematic" id="id31">`LaTeX 変数&lt;#variables-for-latex&gt;`__</span></a> (LaTeX が使用されている場合)と <a href="#id17"><span class="problematic" id="id32">`ConTeXt 変数&lt;#variables-for-context&gt;`__</span></a> (ConTeXt が使用されている場合)を使うことで制御できます。HTML / CSS からの PDF 変換エンジンを使うとき、 <code class="docutils literal notranslate"><span class="pre">--css</span></code> で出力を調整することができます。 <code class="docutils literal notranslate"><span class="pre">wkhtmltopdf</span></code> を使う場合、変数 <code class="docutils literal notranslate"><span class="pre">margin-left</span></code> 、 <code class="docutils literal notranslate"><span class="pre">margin-right</span></code> 、 <code class="docutils literal notranslate"><span class="pre">margin-top</span></code> 、 <code class="docutils literal notranslate"><span class="pre">margin-bottom</span></code> 、 <code class="docutils literal notranslate"><span class="pre">footer-html</span></code> 、 <code class="docutils literal notranslate"><span class="pre">header-html</span></code> および <code class="docutils literal notranslate"><span class="pre">papersize</span></code> は出力に対して有効です。</p>
+<p>Alternatively, pandoc can use <a class="reference external" href="http://www.contextgarden.net/">ConTeXt</a>, <code class="docutils literal notranslate"><span class="pre">pdfroff</span></code>, or any of the
+following HTML/CSS-to-PDF-engines, to create a PDF: <code class="docutils literal notranslate"><span class="pre">`wkhtmltopdf```_,</span>
+<span class="pre">```weasyprint```_</span> <span class="pre">or</span> <span class="pre">```prince```_.</span> <span class="pre">To</span> <span class="pre">do</span> <span class="pre">this,</span> <span class="pre">specify</span> <span class="pre">an</span> <span class="pre">output</span> <span class="pre">file</span>
+<span class="pre">with</span> <span class="pre">a</span> <span class="pre">``.pdf</span></code> extension, as before, but add the <code class="docutils literal notranslate"><span class="pre">--pdf-engine</span></code>
+option or <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">context</span></code>, <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code>, or <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">ms</span></code> to the command line
+(<code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">--pdf-engine=wkhtmltopdf</span></code>).</p>
+<p>PDF output can be controlled using <a class="reference external" href="#variables-for-latex">variables for LaTeX</a> (if LaTeX is
+used) and <a class="reference external" href="#variables-for-context">variables for ConTeXt</a> (if ConTeXt is used). When using an
+HTML/CSS-to-PDF-engine, <code class="docutils literal notranslate"><span class="pre">--css</span></code> affects the output. If <code class="docutils literal notranslate"><span class="pre">wkhtmltopdf</span></code>
+is used, then the variables <code class="docutils literal notranslate"><span class="pre">margin-left</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-right</span></code>,
+<code class="docutils literal notranslate"><span class="pre">margin-top</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-bottom</span></code>, <code class="docutils literal notranslate"><span class="pre">footer-html</span></code>, <code class="docutils literal notranslate"><span class="pre">header-html</span></code> and
+<code class="docutils literal notranslate"><span class="pre">papersize</span></code> will affect the output.</p>
 <p>PDF 作成におけるデバッグを行うには、中間生成物を確認することが有効です。 例えば <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">test.pdf``の代わりに、</span></code> -s -o test.tex``を使って生成された LaTeX 出力で確認することができます。その後、 <a href="#id1"><span class="problematic" id="id2">``</span></a>pdflatex test.tex``でテストすることができます。</p>
-<p>LaTeX を使用する場合、以下のパッケージが利用可能であるひつようがあります（それらは`TeX Live &lt;<a class="reference external" href="http://www.tug.org/texlive/">http://www.tug.org/texlive/</a>&gt;`__の最近のすべてのバージョンに含まれています）。<code class="docutils literal notranslate"><span class="pre">`amsfonts</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/amsfonts">https://ctan.org/pkg/amsfonts</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`amsmath</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/amsmath">https://ctan.org/pkg/amsmath</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`lm</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/lm">https://ctan.org/pkg/lm</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`unicode-math</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/unicode-math">https://ctan.org/pkg/unicode-math</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`ifxetex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/ifxetex">https://ctan.org/pkg/ifxetex</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`ifluatex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/ifluatex">https://ctan.org/pkg/ifluatex</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`listings</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/listings">https://ctan.org/pkg/listings</a>&gt;`__ ( <code class="docutils literal notranslate"><span class="pre">--listings</span></code> オプションが使われている場合), <code class="docutils literal notranslate"><span class="pre">`fancyvrb</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/fancyvrb">https://ctan.org/pkg/fancyvrb</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`longtable</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/longtable">https://ctan.org/pkg/longtable</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`booktabs</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/booktabs">https://ctan.org/pkg/booktabs</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`graphicx</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/graphicx">https://ctan.org/pkg/graphicx</a>&gt;`__ そして <code class="docutils literal notranslate"><span class="pre">`grffile</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/grffile">https://ctan.org/pkg/grffile</a>&gt;`__ (ドキュメントに画像が含まれている場合), <code class="docutils literal notranslate"><span class="pre">`hyperref</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/hyperref">https://ctan.org/pkg/hyperref</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`xcolor</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/xcolor">https://ctan.org/pkg/xcolor</a>&gt;`__ (with <code class="docutils literal notranslate"><span class="pre">colorlinks</span></code>), <code class="docutils literal notranslate"><span class="pre">`ulem</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/ulem">https://ctan.org/pkg/ulem</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`geometry</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/geometry">https://ctan.org/pkg/geometry</a>&gt;`__ (<code class="docutils literal notranslate"><span class="pre">geometry</span></code> 変数を使用), <code class="docutils literal notranslate"><span class="pre">`setspace</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/setspace">https://ctan.org/pkg/setspace</a>&gt;`__ (<code class="docutils literal notranslate"><span class="pre">linestretch</span></code> を使用), and <code class="docutils literal notranslate"><span class="pre">`babel</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/babel">https://ctan.org/pkg/babel</a>&gt;`__ (<code class="docutils literal notranslate"><span class="pre">lang</span></code> を使用)。 LaTeX エンジンとしての <code class="docutils literal notranslate"><span class="pre">xelatex</span></code> または <code class="docutils literal notranslate"><span class="pre">lualatex</span></code> の使用は <code class="docutils literal notranslate"><span class="pre">`fontspec</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/fontspec">https://ctan.org/pkg/fontspec</a>&gt;`__が必須です。 <code class="docutils literal notranslate"><span class="pre">xelatex</span></code> は <code class="docutils literal notranslate"><span class="pre">`polyglossia</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/polyglossia">https://ctan.org/pkg/polyglossia</a>&gt;`__ (<code class="docutils literal notranslate"><span class="pre">lang</span></code> を使用), <code class="docutils literal notranslate"><span class="pre">`xecjk</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/xecjk">https://ctan.org/pkg/xecjk</a>&gt;`__, そして <code class="docutils literal notranslate"><span class="pre">`bidi</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/bidi">https://ctan.org/pkg/bidi</a>&gt;`__ (<code class="docutils literal notranslate"><span class="pre">dir</span></code> 変数を使用)を使います。もし <code class="docutils literal notranslate"><span class="pre">mathspec</span></code> 変数がある場合、<code class="docutils literal notranslate"><span class="pre">xelatex</span></code> は <code class="docutils literal notranslate"><span class="pre">`unicode-math</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/unicode-math">https://ctan.org/pkg/unicode-math</a>&gt;`__の代わりに <code class="docutils literal notranslate"><span class="pre">`mathspec</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/mathspec">https://ctan.org/pkg/mathspec</a>&gt;`__ を使います。利用可能であれば <code class="docutils literal notranslate"><span class="pre">`upquote</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/upquote">https://ctan.org/pkg/upquote</a>&gt;`__ と <code class="docutils literal notranslate"><span class="pre">`microtype</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/microtype">https://ctan.org/pkg/microtype</a>&gt;`__ パッケージが使われ、 <code class="docutils literal notranslate"><span class="pre">\usepackage{csquotes}</span></code> がテンプレートに存在するか <code class="docutils literal notranslate"><span class="pre">/H/--include-in-header</span></code> を介してインクルードされている場合、<code class="docutils literal notranslate"><span class="pre">`csquotes</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/csquotes">https://ctan.org/pkg/csquotes</a>&gt;`__ は <a class="reference external" href="#typography">タイポグラフィ</a> が使われます。<code class="docutils literal notranslate"><span class="pre">`natbib</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/natbib">https://ctan.org/pkg/natbib</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`biblatex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/biblatex">https://ctan.org/pkg/biblatex</a>&gt;`__, <code class="docutils literal notranslate"><span class="pre">`bibtex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/bibtex">https://ctan.org/pkg/bibtex</a>&gt;`__, そして <code class="docutils literal notranslate"><span class="pre">`biber</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/biber">https://ctan.org/pkg/biber</a>&gt;`__ パッケージは <a class="reference external" href="#citation-rendering">引用のレンダリング</a> に任意で使うことができます。</p>
+<p>When using LaTeX, the following packages need to be available (they are
+included with all recent versions of <a class="reference external" href="http://www.tug.org/texlive/">TeX Live</a>): <code class="docutils literal notranslate"><span class="pre">`amsfonts```_,</span>
+<span class="pre">```amsmath```_,</span> <span class="pre">```lm```_,</span> <span class="pre">```unicode-math```_,</span> <span class="pre">```ifxetex```_,</span>
+<span class="pre">```ifluatex```_,</span> <span class="pre">```listings```_</span> <span class="pre">(if</span> <span class="pre">the</span> <span class="pre">``--listings</span></code> option is used),
+<code class="docutils literal notranslate"><span class="pre">`fancyvrb```_,</span> <span class="pre">```longtable```_,</span> <span class="pre">```booktabs```_,</span> <span class="pre">```graphicx```_</span> <span class="pre">and</span>
+<span class="pre">```grffile```_</span> <span class="pre">(if</span> <span class="pre">the</span> <span class="pre">document</span> <span class="pre">contains</span> <span class="pre">images),</span> <span class="pre">```hyperref```_,</span>
+<span class="pre">```xcolor```_</span> <span class="pre">(with</span> <span class="pre">``colorlinks</span></code>), <code class="docutils literal notranslate"><span class="pre">`ulem```_,</span> <span class="pre">```geometry```_</span> <span class="pre">(with</span>
+<span class="pre">the</span> <span class="pre">``geometry</span></code> variable set), <code class="docutils literal notranslate"><span class="pre">`setspace```_</span> <span class="pre">(with</span> <span class="pre">``linestretch</span></code>),
+and <code class="docutils literal notranslate"><span class="pre">`babel```_</span> <span class="pre">(with</span> <span class="pre">``lang</span></code>). The use of <code class="docutils literal notranslate"><span class="pre">xelatex</span></code> or <code class="docutils literal notranslate"><span class="pre">lualatex</span></code>
+as the LaTeX engine requires <code class="docutils literal notranslate"><span class="pre">`fontspec```_.</span> <span class="pre">``xelatex</span></code> uses
+<code class="docutils literal notranslate"><span class="pre">`polyglossia```_</span> <span class="pre">(with</span> <span class="pre">``lang</span></code>), <code class="docutils literal notranslate"><span class="pre">`xecjk```_,</span> <span class="pre">and</span> <span class="pre">```bidi```_</span> <span class="pre">(with</span>
+<span class="pre">the</span> <span class="pre">``dir</span></code> variable set). If the <code class="docutils literal notranslate"><span class="pre">mathspec</span></code> variable is set,
+<code class="docutils literal notranslate"><span class="pre">xelatex</span></code> will use <code class="docutils literal notranslate"><span class="pre">`mathspec```_</span> <span class="pre">instead</span> <span class="pre">of</span> <span class="pre">```unicode-math```_.</span> <span class="pre">The</span>
+<span class="pre">```upquote```_</span> <span class="pre">and</span> <span class="pre">```microtype```_</span> <span class="pre">packages</span> <span class="pre">are</span> <span class="pre">used</span> <span class="pre">if</span> <span class="pre">available,</span> <span class="pre">and</span>
+<span class="pre">```csquotes```_</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">`typography`_</span> <span class="pre">if</span>
+<span class="pre">``\usepackage{csquotes}</span></code> is present in the template or included via
+<code class="docutils literal notranslate"><span class="pre">/H/--include-in-header</span></code>. The <a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id110"><span class="problematic" id="id111">`natbib```_</span></a>, <a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id112"><span class="problematic" id="id113">`biblatex```_</span></a>,
+<a href="#id7"><span class="problematic" id="id8">``</span></a><a href="#id114"><span class="problematic" id="id115">`bibtex```_</span></a>, and <a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id116"><span class="problematic" id="id117">`biber```_</span></a> packages can optionally be used for
+<a class="reference external" href="#citation-rendering">citation rendering</a>.</p>
 </div>
 <div class="section" id="reading-from-the-web">
 <h3>Webからの読み込み<a class="headerlink" href="#reading-from-the-web" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -117,115 +164,103 @@
 <dt><code class="docutils literal notranslate"><span class="pre">-f</span></code> <em>FORMAT</em>、 <code class="docutils literal notranslate"><span class="pre">-r</span></code> <em>FORMAT</em>、 <code class="docutils literal notranslate"><span class="pre">--from=</span></code><em>FORMAT</em>、 <code class="docutils literal notranslate"><span class="pre">--read=</span></code><em>FORMAT</em></dt><dd><p>入力形式を指定します。<em>FORMAT</em> は次のいずれかになります：</p>
 <div class="docutils container" id="input-formats">
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">commonmark</span></code> (<a class="reference external" href="http://commonmark.org">CommonMark</a>
-Markdown)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">creole</span></code> (<a class="reference external" href="http://www.wikicreole.org/wiki/Creole1.0">Creole
-1.0</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commonmark</span></code> (<a class="reference external" href="http://commonmark.org">CommonMark</a> Markdown)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">creole</span></code> (<a class="reference external" href="http://www.wikicreole.org/wiki/Creole1.0">Creole 1.0</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docbook</span></code> (<a class="reference external" href="http://docbook.org">DocBook</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word
-docx</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word docx</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">epub</span></code> (<a class="reference external" href="http://idpf.org/epub">EPUB</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fb2</span></code>
-(<a class="reference external" href="http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1">FictionBook2</a>
-e-book)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gfm</span></code> (<a class="reference external" href="https://help.github.com/articles/github-flavored-markdown/">GitHub-Flavored Markdown</a>)、あるいは非推奨で正確性に欠ける <code class="docutils literal notranslate"><span class="pre">markdown_github</span></code> 。<code class="docutils literal notranslate"><span class="pre">`gfm</span></code> &lt;#markdown-variants&gt;`__でサポートされていない拡張記法を利用したい場合に限り、<code class="docutils literal notranslate"><span class="pre">`markdown_github</span></code> &lt;#markdown-variants&gt;`__ を使ってください。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">haddock</span></code> (<a class="reference external" href="https://www.haskell.org/haddock/doc/html/ch03s08.html">Haddockマークアップ</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fb2</span></code> (<a class="reference external" href="http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1">FictionBook2</a> e-book)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gfm</span></code> (<a class="reference external" href="https://help.github.com/articles/github-flavored-markdown/">GitHub-Flavored Markdown</a>), or the deprecated and
+less accurate <code class="docutils literal notranslate"><span class="pre">markdown_github</span></code>; use <a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id118"><span class="problematic" id="id119">`markdown_github```_</span></a>
+only if you need extensions not supported in <a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id120"><span class="problematic" id="id121">`gfm```_</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">haddock</span></code> (<a class="reference external" href="https://www.haskell.org/haddock/doc/html/ch03s08.html">Haddock markup</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jats</span></code> (<a class="reference external" href="https://jats.nlm.nih.gov">JATS</a> XML)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">json</span></code> (Pandoc ASTのJSON形式)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">latex</span></code> (<a class="reference external" href="http://latex-project.org">LaTeX</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">markdown</span></code> (<a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">markdown_mmd</span></code>
-(<a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">markdown_phpextra</span></code> (<a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown
-Extra</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> (オリジナルの拡張されていない <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mediawiki</span></code> (<a class="reference external" href="https://www.mediawiki.org/wiki/Help:Formatting">MediaWiki マークアップ</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">man</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man7/groff_man.7.html">roff
-man</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_mmd</span></code> (<a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_phpextra</span></code> (<a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> (original unextended <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mediawiki</span></code> (<a class="reference external" href="https://www.mediawiki.org/wiki/Help:Formatting">MediaWiki markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">man</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man7/groff_man.7.html">roff man</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">muse</span></code> (<a class="reference external" href="https://amusewiki.org/library/manual">Muse</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">native</span></code> (Pandoc ASTのHaskellネイティブ形式)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">odt</span></code> (<a class="reference external" href="http://en.wikipedia.org/wiki/OpenDocument">ODT</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">opml</span></code> (<a class="reference external" href="http://dev.opml.org/spec2.html">OPML</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">org</span></code> (<a class="reference external" href="http://orgmode.org">Emacs Org mode</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code>
-(<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code> (<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">t2t</span></code> (<a class="reference external" href="http://txt2tags.org">txt2tags</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">textile</span></code> (<a class="reference external" href="http://redcloth.org/textile">Textile</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tikiwiki</span></code> (<a class="reference external" href="https://doc.tiki.org/Wiki-Syntax-Text#The_Markup_Language_Wiki-Syntax">TikiWiki マークアップ</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">twiki</span></code> (<a class="reference external" href="http://twiki.org/cgi-bin/view/TWiki/TextFormattingRules">TWiki マークアップ</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tikiwiki</span></code> (<a class="reference external" href="https://doc.tiki.org/Wiki-Syntax-Text#The_Markup_Language_Wiki-Syntax">TikiWiki markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">twiki</span></code> (<a class="reference external" href="http://twiki.org/cgi-bin/view/TWiki/TextFormattingRules">TWiki markup</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vimwiki</span></code> (<a class="reference external" href="https://vimwiki.github.io">Vimwiki</a>)</p></li>
 </ul>
 </div>
-<p>Markdown拡張は``+EXTENSION`` か <code class="docutils literal notranslate"><span class="pre">-EXTENSION</span></code> をフォーマット名に追加することで個別に有効または無効化することができます。拡張とその名前のリストは下記の <a class="reference external" href="#extensions">Extensions</a> を参照してください。下記の <code class="docutils literal notranslate"><span class="pre">--list-input-formats</span></code> と <code class="docutils literal notranslate"><span class="pre">--list-extensions</span></code> を参照してください。</p>
+<p>Extensions can be individually enabled or disabled by appending
+<code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> or <code class="docutils literal notranslate"><span class="pre">-EXTENSION</span></code> to the format name. See
+<a class="reference external" href="#extensions">Extensions</a> below, for a list of extensions and their names. See
+<code class="docutils literal notranslate"><span class="pre">--list-input-formats</span></code> and <code class="docutils literal notranslate"><span class="pre">--list-extensions</span></code>, below.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-t</span></code> <em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">-w</span></code> <em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">--to=</span></code><em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">--write=</span></code><em>FORMAT</em></dt><dd><p>出力形式を指定してください。 <em>FORMAT</em> は以下の形式が選択できます。</p>
 <div class="docutils container" id="output-formats">
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">asciidoc</span></code>
-(<a class="reference external" href="http://www.methods.co.nz/asciidoc/">AsciiDoc</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">beamer</span></code> (<a class="reference external" href="https://ctan.org/pkg/beamer">LaTeX beamer</a> スライドショー)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">commonmark</span></code> (<a class="reference external" href="http://commonmark.org">CommonMark</a>
-Markdown)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">asciidoc</span></code> (<a class="reference external" href="http://www.methods.co.nz/asciidoc/">AsciiDoc</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">beamer</span></code> (<a class="reference external" href="https://ctan.org/pkg/beamer">LaTeX beamer</a> slide show)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commonmark</span></code> (<a class="reference external" href="http://commonmark.org">CommonMark</a> Markdown)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">context</span></code> (<a class="reference external" href="http://www.contextgarden.net/">ConTeXt</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">docbook</span></code> or <code class="docutils literal notranslate"><span class="pre">docbook4</span></code> (<a class="reference external" href="http://docbook.org">DocBook</a>
-4)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docbook</span></code> or <code class="docutils literal notranslate"><span class="pre">docbook4</span></code> (<a class="reference external" href="http://docbook.org">DocBook</a> 4)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docbook5</span></code> (DocBook 5)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word
-docx</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dokuwiki</span></code> (<a class="reference external" href="https://www.dokuwiki.org/dokuwiki">DokuWiki マークアップ</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">epub</span></code> or <code class="docutils literal notranslate"><span class="pre">epub3</span></code> (<a class="reference external" href="http://idpf.org/epub">EPUB3</a> 電子書籍)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word docx</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dokuwiki</span></code> (<a class="reference external" href="https://www.dokuwiki.org/dokuwiki">DokuWiki markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epub</span></code> or <code class="docutils literal notranslate"><span class="pre">epub3</span></code> (<a class="reference external" href="http://idpf.org/epub">EPUB</a> v3 book)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">epub2</span></code> (EPUB2 電子書籍)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fb2</span></code>
-(<a class="reference external" href="http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1">FictionBook2</a>
-e-book)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gfm</span></code> (<a class="reference external" href="https://help.github.com/articles/github-flavored-markdown/">GitHub-Flavored Markdown</a>)、あるいは非推奨で正確性に欠ける <code class="docutils literal notranslate"><span class="pre">markdown_github</span></code> 。<code class="docutils literal notranslate"><span class="pre">`gfm</span></code> &lt;#markdown-variants&gt;`__でサポートされていない拡張記法を利用したい場合に限り、<code class="docutils literal notranslate"><span class="pre">`markdown_github</span></code> &lt;#markdown-variants&gt;`__ を使ってください。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">haddock</span></code> (<a class="reference external" href="https://www.haskell.org/haddock/doc/html/ch03s08.html">Haddockマークアップ</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">html5</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a>, すなわち <a class="reference external" href="http://www.w3.org/TR/html5/">HTML5</a>/XHTML <a class="reference external" href="https://www.w3.org/TR/html-polyglot/">Polyglot マークアップ</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">html4</span></code> (<a class="reference external" href="http://www.w3.org/TR/xhtml1/">XHTML</a> 1.0
-Transitional)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">icml</span></code> (<a class="reference external" href="http://wwwimages.adobe.com/www.adobe.com/content/dam/acom/en/devnet/indesign/sdk/cs6/idml/idml-cookbook.pdf">InDesign
-ICML</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fb2</span></code> (<a class="reference external" href="http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1">FictionBook2</a> e-book)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gfm</span></code> (<a class="reference external" href="https://help.github.com/articles/github-flavored-markdown/">GitHub-Flavored Markdown</a>), or the deprecated and
+less accurate <code class="docutils literal notranslate"><span class="pre">markdown_github</span></code>; use <a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id122"><span class="problematic" id="id123">`markdown_github```_</span></a>
+only if you need extensions not supported in <a href="#id17"><span class="problematic" id="id18">``</span></a><a href="#id124"><span class="problematic" id="id125">`gfm```_</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">haddock</span></code> (<a class="reference external" href="https://www.haskell.org/haddock/doc/html/ch03s08.html">Haddock markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">html5</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a>, i.e. <a class="reference external" href="http://www.w3.org/TR/html5/">HTML5</a>/XHTML <a class="reference external" href="https://www.w3.org/TR/html-polyglot/">polyglot
+markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">html4</span></code> (<a class="reference external" href="http://www.w3.org/TR/xhtml1/">XHTML</a> 1.0 Transitional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">icml</span></code> (<a class="reference external" href="http://wwwimages.adobe.com/www.adobe.com/content/dam/acom/en/devnet/indesign/sdk/cs6/idml/idml-cookbook.pdf">InDesign ICML</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jats</span></code> (<a class="reference external" href="https://jats.nlm.nih.gov">JATS</a> XML)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">json</span></code> (Pandoc ASTのJSON形式)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">latex</span></code> (<a class="reference external" href="http://latex-project.org">LaTeX</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">man</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man7/groff_man.7.html">roff
-man</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">man</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man7/groff_man.7.html">roff man</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">markdown</span></code> (<a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">markdown_mmd</span></code>
-(<a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">markdown_phpextra</span></code> (<a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown
-Extra</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> (オリジナルの拡張されていない <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mediawiki</span></code> (<a class="reference external" href="https://www.mediawiki.org/wiki/Help:Formatting">MediaWiki マークアップ</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ms</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man7/groff_ms.7.html">roff
-ms</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_mmd</span></code> (<a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_phpextra</span></code> (<a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> (original unextended <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mediawiki</span></code> (<a class="reference external" href="https://www.mediawiki.org/wiki/Help:Formatting">MediaWiki markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man7/groff_ms.7.html">roff ms</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">muse</span></code> (<a class="reference external" href="https://amusewiki.org/library/manual">Muse</a>),</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">native</span></code> (Haskellネイティブ形式),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">odt</span></code> (<a class="reference external" href="http://en.wikipedia.org/wiki/OpenDocument">LibreOffice/Apache OpenOffice ワープロ文書</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">odt</span></code> (<a class="reference external" href="http://en.wikipedia.org/wiki/OpenDocument">OpenOffice text document</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">opml</span></code> (<a class="reference external" href="http://dev.opml.org/spec2.html">OPML</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">opendocument</span></code> (<a class="reference external" href="http://opendocument.xml.org">OpenDocument XML</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opendocument</span></code> (<a class="reference external" href="http://opendocument.xml.org">OpenDocument</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">org</span></code> (<a class="reference external" href="http://orgmode.org">Emacs Org mode</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">plain</span></code> (プレーンテキスト),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pptx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> スライドショー)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code>
-(<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rtf</span></code> (<a class="reference external" href="http://en.wikipedia.org/wiki/Rich_Text_Format">リッチテキスト形式</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">texinfo</span></code> (<a class="reference external" href="http://www.gnu.org/software/texinfo/">GNU
-Texinfo</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pptx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> slide show)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rst</span></code> (<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rtf</span></code> (<a class="reference external" href="http://en.wikipedia.org/wiki/Rich_Text_Format">Rich Text Format</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">texinfo</span></code> (<a class="reference external" href="http://www.gnu.org/software/texinfo/">GNU Texinfo</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">textile</span></code> (<a class="reference external" href="http://redcloth.org/textile">Textile</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">slideous</span></code> (<a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a> HTML / JavaScript スライドショー)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">slidy</span></code> (<a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a> HTML / JavaScript スライドショー)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dzslides</span></code> (<a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a> HTML5 / JavaScript スライドショー),</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">revealjs</span></code> (<a class="reference external" href="http://lab.hakim.se/reveal-js/">reveal.js</a> HTML5 + JavaScript スライドショー)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">s5</span></code> (<a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a> HTML and JavaScript スライドショー)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slideous</span></code> (<a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a> HTML and JavaScript slide show)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slidy</span></code> (<a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a> HTML and JavaScript slide show)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dzslides</span></code> (<a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a> HTML5 + JavaScript slide show),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">revealjs</span></code> (<a class="reference external" href="http://lab.hakim.se/reveal-js/">reveal.js</a> HTML5 + JavaScript slide show)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s5</span></code> (<a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a> HTML and JavaScript slide show)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tei</span></code> (<a class="reference external" href="https://github.com/TEIC/TEI-Simple">TEI Simple</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">zimwiki</span></code> (<a class="reference external" href="http://zim-wiki.org/manual/Help/Wiki_Syntax.html">ZimWiki マークアップ</a>)</p></li>
-<li><p>カスタム Lua Writerのパス。下記の <a class="reference external" href="#custom-writers">Custom writers</a> を参照してください。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zimwiki</span></code> (<a class="reference external" href="http://zim-wiki.org/manual/Help/Wiki_Syntax.html">ZimWiki markup</a>)</p></li>
+<li><p>the path of a custom lua writer, see <a class="reference external" href="#custom-writers">Custom writers</a> below</p></li>
 </ul>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">odt</span></code>、 <code class="docutils literal notranslate"><span class="pre">docx</span></code>、 <code class="docutils literal notranslate"><span class="pre">epub</span></code> の出力は <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">-</span></code> で強制しない限り標準出力 <em>stdout</em> に出力されない点に注意してください。</p>
-<p>Markdown拡張は <code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> か <code class="docutils literal notranslate"><span class="pre">-EXTENSION</span></code> をフォーマット名に加えることで個別に有効または無効にすることができます。拡張のリストとその名前については下記の <a class="reference external" href="#extensions">Extensions</a> を参照してください。下記の <code class="docutils literal notranslate"><span class="pre">--list-output-formats</span></code> と <code class="docutils literal notranslate"><span class="pre">--list-extensions</span></code> を参照してください。</p>
+<p>Extensions can be individually enabled or disabled by appending
+<code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> or <code class="docutils literal notranslate"><span class="pre">-EXTENSION</span></code> to the format name. See
+<a class="reference external" href="#extensions">Extensions</a> below, for a list of extensions and their names. See
+<code class="docutils literal notranslate"><span class="pre">--list-output-formats</span></code> and <code class="docutils literal notranslate"><span class="pre">--list-extensions</span></code>, below.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-o</span></code> <em>FILE</em>, <code class="docutils literal notranslate"><span class="pre">--output=</span></code><em>FILE</em></dt><dd><p>出力を標準出力 <em>stdout</em> の代わりに <em>FILE</em> に書き出します。<em>FILE</em> が <code class="docutils literal notranslate"><span class="pre">-</span></code> の場合は、テキスト的でない形式 (<code class="docutils literal notranslate"><span class="pre">docx</span></code>, <code class="docutils literal notranslate"><span class="pre">odt</span></code>, <code class="docutils literal notranslate"><span class="pre">epub2</span></code>, <code class="docutils literal notranslate"><span class="pre">epub3</span></code>) が指定されていても、出力は標準出力 <em>stdout</em> になります。</p>
 </dd>
@@ -294,7 +329,11 @@ Texinfo</a>)</p></li>
 </pre></div>
 </div>
 <p>後者の形式はフィルターのデバッグに便利です。</p>
-<p>JSONフィルタは任意のプログラミング言語で書けます。HaskellでJSONフィルタを書く場合は、その手助けとして <code class="docutils literal notranslate"><span class="pre">Text.Pandoc.JSON</span></code> モジュールの <code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> 関数を利用できます。PythonでJSONフィルタを書きたい場合は、PyPIからインストールできる <code class="docutils literal notranslate"><span class="pre">`pandocfilters</span></code> &lt;<a class="reference external" href="https://github.com/jgm/pandocfilters">https://github.com/jgm/pandocfilters</a>&gt;`__ モジュールが利用可能です。他にもJSONフィルタ用のライブラリはいくつか存在し、 <a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a> 、 <a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a> 、 <a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">JavaScript/node.js</a> で利用できます。</p>
+<p>Filters may be written in any language. <code class="docutils literal notranslate"><span class="pre">Text.Pandoc.JSON</span></code> exports
+<code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> to facilitate writing filters in Haskell. Those who
+would prefer to write filters in python can use the module
+<a href="#id19"><span class="problematic" id="id20">``</span></a><a href="#id126"><span class="problematic" id="id127">`pandocfilters```_</span></a>, installable from PyPI. There are also pandoc
+filter libraries in <a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a>, <a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a>, and <a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">JavaScript/node.js</a>.</p>
 <p>Pandocはフィルターを以下の優先順で探します。</p>
 <ol class="arabic simple">
 <li><p>指定された絶対パスか相対パス（実行可能または実行不能）</p></li>
@@ -323,9 +362,22 @@ Texinfo</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$DATADIR/filters</span></code> (実行可能または実行不能) ここで <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> はユーザデータディレクトリです。 (前記の <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照してください)。</p></li>
 </ol>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">-M</span></code> <em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>VAL</em>], <code class="docutils literal notranslate"><span class="pre">--metadata=</span></code><em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">:</span></code><em>VAL</em>]</dt><dd><p>メタデータフィールド <em>KEY</em> を値 <em>VAL</em> に設定します。コマンドラインで指定された値は <a href="#id17"><span class="problematic" id="id33">`YAMLメタデータブロック&lt;＃extension-yaml_metadata_block&gt;`__</span></a> を使用して文書で指定された値を上書きしてしまいます。値は YAML 論理値または文字列値としてパースされます。値が指定されていない場合は、値は論理値 true として扱われます。<code class="docutils literal notranslate"><span class="pre">--variable</span></code> のように、 <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> はテンプレート変数を設定します。しかし、 <code class="docutils literal notranslate"><span class="pre">--variable</span></code> とは異なり、 <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> は基になる文書中のメタデータ（フィルタからアクセス可能で、一部の出力書式で印刷されるかもしれません）に影響し、メタデータの値はテンプレートに挿入されるとエスケープされます。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">-M</span></code> <em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>VAL</em>], <code class="docutils literal notranslate"><span class="pre">--metadata=</span></code><em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">:</span></code><em>VAL</em>]</dt><dd><p>Set the metadata field <em>KEY</em> to the value <em>VAL</em>. A value specified on
+the command line overrides a value specified in the document using
+<a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a>. Values will be parsed as YAML boolean or
+string values. If no value is specified, the value will be treated as
+Boolean true. Like <code class="docutils literal notranslate"><span class="pre">--variable</span></code>, <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> causes template
+variables to be set. But unlike <code class="docutils literal notranslate"><span class="pre">--variable</span></code>, <code class="docutils literal notranslate"><span class="pre">--metadata</span></code>
+affects the metadata of the underlying document (which is accessible
+from filters and may be printed in some output formats) and metadata
+values will be escaped when inserted into the template.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--metadata-file=</span></code><em>FILE</em></dt><dd><p>与えられたYAML（またはJSON）ファイルからメタデータを読みます。このオプションはすべての入力形式で使うことが出来ますが、YAMLファイル中の string scalar は常にMarkdownとして解釈されます。一般的に、入力は <a class="reference external" href="#extension-yaml_metadata_block">YAML メタデータブロック</a> と同様に扱われます。メタデータの値はドキュメント中で指定、または <code class="docutils literal notranslate"><span class="pre">-M</span></code> オプションを使用することで、オプションで指定された値で上書きできます。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--metadata-file=</span></code><em>FILE</em></dt><dd><p>Read metadata from the supplied YAML (or JSON) file. This option can
+be used with every input format, but string scalars in the YAML file
+will always be parsed as Markdown. Generally, the input will be
+handled the same as in <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a>. Metadata values
+specified inside the document, or by using <code class="docutils literal notranslate"><span class="pre">-M</span></code>, overwrite values
+specified with this option.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-p</span></code>, <code class="docutils literal notranslate"><span class="pre">--preserve-tabs</span></code></dt><dd><p>タブをスペースに変換する（デフォルトの挙動）せずにそのまま残します。リテラルコードSPANとコードブロック中のタブにのみ影響を与えることに注意が必要です。通常のテキスト中のタブはスペースとして扱われます。</p>
 </dd>
@@ -344,7 +396,16 @@ Texinfo</a>)</p></li>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">--standalone</span></code></dt><dd><p>適切なヘッダーとフッター (例えば、フラグメントではなく、スタンドアロンの HTML 、 LaTeX 、 TEI 、または RTF ファイル) を使用して出力を生成します。このオプションは <code class="docutils literal notranslate"><span class="pre">pdf</span></code> 、 <code class="docutils literal notranslate"><span class="pre">epub</span></code> 、 <code class="docutils literal notranslate"><span class="pre">epub3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fb2</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docx</span></code> 、および <code class="docutils literal notranslate"><span class="pre">odt</span></code> 出力に対して自動的に設定されます。<code class="docutils literal notranslate"><span class="pre">native</span></code> 出力の場合、このオプションはメタデータを含めます。それ以外の場合、メタデータは抑制されます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--template=</span></code><em>FILE</em>|<em>URL</em></dt><dd><p>指定したファイルを生成文書のためのカスタムテンプレートとして使用します。<code class="docutils literal notranslate"><span class="pre">--standalone</span></code> を意味します。テンプレートの文法については、以下の <a class="reference external" href="#templates">Templates</a> を参照してください。拡張子が指定されていない場合は、 Writer に対応する拡張子が追加されるので、 <code class="docutils literal notranslate"><span class="pre">--template=special</span></code> は HTML出力用に <code class="docutils literal notranslate"><span class="pre">special.html</span></code> を検索します。テンプレートが見つからない場合、 pandoc はユーザーデータディレクトリの <code class="docutils literal notranslate"><span class="pre">templates</span></code> サブディレクトリで検索します (<code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照してください)。このオプションが使われていない場合は、出力フォーマットに適した既定のテンプレートが使用されます (<code class="docutils literal notranslate"><span class="pre">-D/--print-default-template</span></code> を参照してください)。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--template=</span></code><em>FILE</em>|<em>URL</em></dt><dd><p>Use the specified file as a custom template for the generated
+document. Implies <code class="docutils literal notranslate"><span class="pre">--standalone</span></code>. See <a class="reference external" href="#templates">Templates</a>, below, for a
+description of template syntax. If no extension is specified, an
+extension corresponding to the writer will be added, so that
+<code class="docutils literal notranslate"><span class="pre">--template=special</span></code> looks for <code class="docutils literal notranslate"><span class="pre">special.html</span></code> for HTML output. If
+the template is not found, pandoc will search for it in the
+<code class="docutils literal notranslate"><span class="pre">templates</span></code> subdirectory of the user data directory (see
+<code class="docutils literal notranslate"><span class="pre">--data-dir</span></code>). If this option is not used, a default template
+appropriate for the output format will be used (see
+<code class="docutils literal notranslate"><span class="pre">-D/--print-default-template</span></code>).</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-V</span></code> <em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>VAL</em>], <code class="docutils literal notranslate"><span class="pre">--variable=</span></code><em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">:</span></code><em>VAL</em>]</dt><dd><p>文書をスタンドアロンモードでレンダリングするときは、テンプレート変数 <em>KEY</em> を値 <em>VAL</em> に設定します。 pandoc は既定のテンプレートで使用される変数を自動的に設定するので、これは一般的に <code class="docutils literal notranslate"><span class="pre">--template</span></code> オプションでカスタムテンプレートを指定するために使われる場合にのみ役に立ちます。 <em>VAL</em> が指定されていない場合、キーには値 <code class="docutils literal notranslate"><span class="pre">true</span></code> が設定されます。</p>
 </dd>
@@ -358,7 +419,10 @@ Texinfo</a>)</p></li>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--wrap=auto</span></code>|<code class="docutils literal notranslate"><span class="pre">none</span></code>|<code class="docutils literal notranslate"><span class="pre">preserve</span></code></dt><dd><p>テキストが出力でどのように折り返されるかを決定します(レンダリングされたバージョンではなくソースコード)。 <code class="docutils literal notranslate"><span class="pre">auto</span></code> (既定)の場合、 pandoc は <code class="docutils literal notranslate"><span class="pre">--columns</span></code> （既定では72)で指定された列幅に行を折り返そうとします。 <code class="docutils literal notranslate"><span class="pre">none</span></code> を指定すると、 pandocはいっさい折り返しません。 <code class="docutils literal notranslate"><span class="pre">preserve</span></code> を指定すると、 pandoc は元の文書からの折り返しを保護しようとします (つまり、ソースに意味のない改行がある場合、出力にも意味のない改行が含まれます)。現在、自動折り返しは HTML 出力には機能しません。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--columns=</span></code><em>NUMBER</em></dt><dd><p>行の長さは文字数で指定してください。これは生成されたソースコードでのテキストの折り返しに反映されます (<code class="docutils literal notranslate"><span class="pre">--wrap</span></code> を参照)。これはプレーンテキストでの表の列幅計算にも反映されます (下記の <a href="#id17"><span class="problematic" id="id34">`Tables&lt;#tables&gt;`__</span></a> を参照してください)。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--columns=</span></code><em>NUMBER</em></dt><dd><p>Specify length of lines in characters. This affects text wrapping in
+the generated source code (see <code class="docutils literal notranslate"><span class="pre">--wrap</span></code>). It also affects
+calculation of column widths for plain text tables (see <a class="reference external" href="#tables">Tables</a>
+below).</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--toc</span></code>, <code class="docutils literal notranslate"><span class="pre">--table-of-contents</span></code></dt><dd><p>出力文書に自動生成された目次を含めます（あるいは、 <code class="docutils literal notranslate"><span class="pre">latex</span></code> 、 <code class="docutils literal notranslate"><span class="pre">context</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docx</span></code> 、 <code class="docutils literal notranslate"><span class="pre">odt</span></code> 、 <code class="docutils literal notranslate"><span class="pre">opendocument</span></code> 、 <code class="docutils literal notranslate"><span class="pre">rst</span></code> 、または <code class="docutils literal notranslate"><span class="pre">ms</span></code> の場合) 。このオプションは <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> を使わない限り影響がなく、 <code class="docutils literal notranslate"><span class="pre">man</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docbook4</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docbook5</span></code> 、 <code class="docutils literal notranslate"><span class="pre">jats</span></code> の出力にも影響がありません。</p>
 </dd>
@@ -368,7 +432,11 @@ Texinfo</a>)</p></li>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--no-highlight</span></code></dt><dd><p>言語属性が指定されている場合でも、コードブロックとインラインのシンタックスハイライトを無効にします。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--highlight-style=</span></code><em>STYLE</em>|<em>FILE</em></dt><dd><p>ソースコードのシンタックスハイライトに用いる色のスタイルを指定します。オプションは <code class="docutils literal notranslate"><span class="pre">pygments</span></code> (既定)、 <code class="docutils literal notranslate"><span class="pre">kate</span></code> 、 <code class="docutils literal notranslate"><span class="pre">monochrome</span></code> 、 <code class="docutils literal notranslate"><span class="pre">breezeDark</span></code> 、 <code class="docutils literal notranslate"><span class="pre">espresso</span></code> 、 <code class="docutils literal notranslate"><span class="pre">zenburn</span></code> 、 <code class="docutils literal notranslate"><span class="pre">haddock</span></code> 、そして <code class="docutils literal notranslate"><span class="pre">tango</span></code> です。 pandocでのシンタックスハイライトの詳細については、下記の <a class="reference external" href="#syntax-highlighting">Syntax highlighting</a> を参照してください。<code class="docutils literal notranslate"><span class="pre">--list-highlight-styles</span></code> も参照してください。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--highlight-style=</span></code><em>STYLE</em>|<em>FILE</em></dt><dd><p>Specifies the coloring style to be used in highlighted source code.
+Options are <code class="docutils literal notranslate"><span class="pre">pygments</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">kate</span></code>, <code class="docutils literal notranslate"><span class="pre">monochrome</span></code>,
+<code class="docutils literal notranslate"><span class="pre">breezeDark</span></code>, <code class="docutils literal notranslate"><span class="pre">espresso</span></code>, <code class="docutils literal notranslate"><span class="pre">zenburn</span></code>, <code class="docutils literal notranslate"><span class="pre">haddock</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">tango</span></code>. For more information on syntax highlighting in pandoc, see
+<a class="reference external" href="#syntax-highlighting">Syntax highlighting</a>, below. See also <code class="docutils literal notranslate"><span class="pre">--list-highlight-styles</span></code>.</p>
 <p>Instead of a <em>STYLE</em> name, a JSON file with extension <code class="docutils literal notranslate"><span class="pre">.theme</span></code> may
 be supplied. This will be parsed as a KDE syntax highlighting theme
 and (if valid) used as the highlighting style.</p>
@@ -494,12 +562,10 @@ document starts with a level-2 header which you want to be numbered
 “1.5”, specify <code class="docutils literal notranslate"><span class="pre">--number-offset=1,4</span></code>. Offsets are 0 by default.
 Implies <code class="docutils literal notranslate"><span class="pre">--number-sections</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--listings</span></code></dt><dd><p>Use the <code class="docutils literal notranslate"><span class="pre">`listings</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/listings">https://ctan.org/pkg/listings</a>&gt;`__ package for
-LaTeX code blocks. The package does not support multi-byte encoding
-for source code. To handle UTF-8 you would need to use a custom
-template. This issue is fully documented here: <a class="reference external" href="https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings#Encoding_issue">Encoding issue with
-the listings
-package</a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--listings</span></code></dt><dd><p>Use the <a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id128"><span class="problematic" id="id129">`listings```_</span></a> package for LaTeX code blocks. The package
+does not support multi-byte encoding for source code. To handle UTF-8
+you would need to use a custom template. This issue is fully
+documented here: <a class="reference external" href="https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings#Encoding_issue">Encoding issue with the listings package</a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-i</span></code>, <code class="docutils literal notranslate"><span class="pre">--incremental</span></code></dt><dd><p>Make list items in slide shows display incrementally (one by one).
 The default is for lists to be displayed all at once.</p>
@@ -515,8 +581,8 @@ the slide show</a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--section-divs</span></code></dt><dd><p>Wrap sections in <code class="docutils literal notranslate"><span class="pre">&lt;section&gt;</span></code> tags (or <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> tags for
 <code class="docutils literal notranslate"><span class="pre">html4</span></code>), and attach identifiers to the enclosing <code class="docutils literal notranslate"><span class="pre">&lt;section&gt;</span></code> (or
-<code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code>) rather than the header itself. See <a class="reference external" href="#header-identifiers">Header
-identifiers</a>, below.</p>
+<code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code>) rather than the header itself. See <a class="reference external" href="#header-identifiers">Header identifiers</a>,
+below.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--email-obfuscation=none</span></code>|<code class="docutils literal notranslate"><span class="pre">javascript</span></code>|<code class="docutils literal notranslate"><span class="pre">references</span></code></dt><dd><p>Specify a method for obfuscating <code class="docutils literal notranslate"><span class="pre">mailto:</span></code> links in HTML documents.
 <code class="docutils literal notranslate"><span class="pre">none</span></code> leaves <code class="docutils literal notranslate"><span class="pre">mailto:</span></code> links as they are. <code class="docutils literal notranslate"><span class="pre">javascript</span></code>
@@ -592,8 +658,7 @@ Markdown source document you can also specify <code class="docutils literal notr
 YAML metadata block (see <a class="reference external" href="#epub-metadata">EPUB Metadata</a>, below).</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--epub-metadata=</span></code><em>FILE</em></dt><dd><p>Look in the specified XML file for metadata for the EPUB. The file
-should contain a series of <a class="reference external" href="http://dublincore.org/documents/dces/">Dublin Core
-elements</a>. For example:</p>
+should contain a series of <a class="reference external" href="http://dublincore.org/documents/dces/">Dublin Core elements</a>. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">rights</span><span class="o">&gt;</span><span class="n">Creative</span> <span class="n">Commons</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">rights</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="n">dc</span><span class="p">:</span><span class="n">language</span><span class="o">&gt;</span><span class="n">es</span><span class="o">-</span><span class="n">AR</span><span class="o">&lt;/</span><span class="n">dc</span><span class="p">:</span><span class="n">language</span><span class="o">&gt;</span>
 </pre></div>
@@ -601,14 +666,12 @@ elements</a>. For example:</p>
 <p>By default, pandoc will include the following metadata elements:
 <code class="docutils literal notranslate"><span class="pre">&lt;dc:title&gt;</span></code> (from the document title), <code class="docutils literal notranslate"><span class="pre">&lt;dc:creator&gt;</span></code> (from the
 document authors), <code class="docutils literal notranslate"><span class="pre">&lt;dc:date&gt;</span></code> (from the document date, which
-should be in <a class="reference external" href="http://www.w3.org/TR/NOTE-datetime">ISO 8601
-format</a>), <code class="docutils literal notranslate"><span class="pre">&lt;dc:language&gt;</span></code>
-(from the <code class="docutils literal notranslate"><span class="pre">lang</span></code> variable, or, if is not set, the locale), and
+should be in <a class="reference external" href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 format</a>), <code class="docutils literal notranslate"><span class="pre">&lt;dc:language&gt;</span></code> (from the
+<code class="docutils literal notranslate"><span class="pre">lang</span></code> variable, or, if is not set, the locale), and
 <code class="docutils literal notranslate"><span class="pre">&lt;dc:identifier</span> <span class="pre">id=&quot;BookId&quot;&gt;</span></code> (a randomly generated UUID). Any of
 these may be overridden by elements in the metadata file.</p>
 <p>Note: if the source document is Markdown, a YAML metadata block in
-the document can be used instead. See below under <a class="reference external" href="#epub-metadata">EPUB
-Metadata</a>.</p>
+the document can be used instead. See below under <a class="reference external" href="#epub-metadata">EPUB Metadata</a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--epub-embed-font=</span></code><em>FILE</em></dt><dd><p>Embed the specified font in the EPUB. This option can be repeated to
 embed multiple fonts. Wildcards can also be used: for example,
@@ -690,18 +753,15 @@ to <em>FILE</em>, overriding any value set in the metadata. (This is
 equivalent to <code class="docutils literal notranslate"><span class="pre">--metadata</span> <span class="pre">citation-abbreviations=FILE</span></code>.) This
 option is only relevant with <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--natbib</span></code></dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">`natbib</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/natbib">https://ctan.org/pkg/natbib</a>&gt;`__ for citations in
-LaTeX output. This option is not for use with the <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code>
-filter or with PDF output. It is intended for use in producing a
-LaTeX file that can be processed with
-<code class="docutils literal notranslate"><span class="pre">`bibtex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/bibtex">https://ctan.org/pkg/bibtex</a>&gt;`__.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--natbib</span></code></dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">`natbib```_</span> <span class="pre">for</span> <span class="pre">citations</span> <span class="pre">in</span> <span class="pre">LaTeX</span> <span class="pre">output.</span> <span class="pre">This</span> <span class="pre">option</span> <span class="pre">is</span> <span class="pre">not</span>
+<span class="pre">for</span> <span class="pre">use</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">``pandoc-citeproc</span></code> filter or with PDF output. It is
+intended for use in producing a LaTeX file that can be processed with
+<a href="#id23"><span class="problematic" id="id24">``</span></a><a href="#id130"><span class="problematic" id="id131">`bibtex```_</span></a>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--biblatex</span></code></dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">`biblatex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/biblatex">https://ctan.org/pkg/biblatex</a>&gt;`__ for citations in
-LaTeX output. This option is not for use with the <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code>
-filter or with PDF output. It is intended for use in producing a
-LaTeX file that can be processed with
-<code class="docutils literal notranslate"><span class="pre">`bibtex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/bibtex">https://ctan.org/pkg/bibtex</a>&gt;`__ or
-<code class="docutils literal notranslate"><span class="pre">`biber</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/biber">https://ctan.org/pkg/biber</a>&gt;`__.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--biblatex</span></code></dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">`biblatex```_</span> <span class="pre">for</span> <span class="pre">citations</span> <span class="pre">in</span> <span class="pre">LaTeX</span> <span class="pre">output.</span> <span class="pre">This</span> <span class="pre">option</span> <span class="pre">is</span> <span class="pre">not</span>
+<span class="pre">for</span> <span class="pre">use</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">``pandoc-citeproc</span></code> filter or with PDF output. It is
+intended for use in producing a LaTeX file that can be processed with
+<a href="#id25"><span class="problematic" id="id26">``</span></a><a href="#id132"><span class="problematic" id="id133">`bibtex```_</span></a> or <a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id134"><span class="problematic" id="id135">`biber```_</span></a>.</p>
 </dd>
 </dl>
 </div>
@@ -713,19 +773,17 @@ that they may be styled differently from the surrounding text if needed.
 However, this gives acceptable results only for basic math, usually you
 will want to use <code class="docutils literal notranslate"><span class="pre">--mathjax</span></code> or another of the following options.</p>
 <dl>
-<dt><code class="docutils literal notranslate"><span class="pre">--mathjax</span></code>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>URL</em>]</dt><dd><p>Use <a class="reference external" href="https://www.mathjax.org">MathJax</a> to display embedded TeX
-math in HTML output. TeX math will be put between <code class="docutils literal notranslate"><span class="pre">\(...\)</span></code> (for
-inline math) or <code class="docutils literal notranslate"><span class="pre">\[...\]</span></code> (for display math) and wrapped in
-<code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> tags with class <code class="docutils literal notranslate"><span class="pre">math</span></code>. Then the MathJax JavaScript will
-render it. The <em>URL</em> should point to the <code class="docutils literal notranslate"><span class="pre">MathJax.js</span></code> load script.
-If a <em>URL</em> is not provided, a link to the Cloudflare CDN will be
-inserted.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--mathjax</span></code>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>URL</em>]</dt><dd><p>Use <a class="reference external" href="https://www.mathjax.org">MathJax</a> to display embedded TeX math in HTML output. TeX math
+will be put between <code class="docutils literal notranslate"><span class="pre">\(...\)</span></code> (for inline math) or <code class="docutils literal notranslate"><span class="pre">\[...\]</span></code> (for
+display math) and wrapped in <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> tags with class <code class="docutils literal notranslate"><span class="pre">math</span></code>.
+Then the MathJax JavaScript will render it. The <em>URL</em> should point to
+the <code class="docutils literal notranslate"><span class="pre">MathJax.js</span></code> load script. If a <em>URL</em> is not provided, a link to
+the Cloudflare CDN will be inserted.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--mathml</span></code></dt><dd><p>Convert TeX math to <a class="reference external" href="http://www.w3.org/Math/">MathML</a> (in
-<code class="docutils literal notranslate"><span class="pre">epub3</span></code>, <code class="docutils literal notranslate"><span class="pre">docbook4</span></code>, <code class="docutils literal notranslate"><span class="pre">docbook5</span></code>, <code class="docutils literal notranslate"><span class="pre">jats</span></code>, <code class="docutils literal notranslate"><span class="pre">html4</span></code> and
-<code class="docutils literal notranslate"><span class="pre">html5</span></code>). This is the default in <code class="docutils literal notranslate"><span class="pre">odt</span></code> output. Note that
-currently only Firefox and Safari (and select e-book readers)
-natively support MathML.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--mathml</span></code></dt><dd><p>Convert TeX math to <a class="reference external" href="http://www.w3.org/Math/">MathML</a> (in <code class="docutils literal notranslate"><span class="pre">epub3</span></code>, <code class="docutils literal notranslate"><span class="pre">docbook4</span></code>,
+<code class="docutils literal notranslate"><span class="pre">docbook5</span></code>, <code class="docutils literal notranslate"><span class="pre">jats</span></code>, <code class="docutils literal notranslate"><span class="pre">html4</span></code> and <code class="docutils literal notranslate"><span class="pre">html5</span></code>). This is the default
+in <code class="docutils literal notranslate"><span class="pre">odt</span></code> output. Note that currently only Firefox and Safari (and
+select e-book readers) natively support MathML.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--webtex</span></code>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>URL</em>]</dt><dd><p>Convert TeX formulas to <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code> tags that link to an external
 script that converts formulas to images. The formula will be
@@ -738,17 +796,15 @@ option will affect Markdown output as well as HTML, which is useful
 if you’re targeting a version of Markdown without native math
 support.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--katex</span></code>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>URL</em>]</dt><dd><p>Use <a class="reference external" href="https://github.com/Khan/KaTeX">KaTeX</a> to display embedded TeX
-math in HTML output. The <em>URL</em> is the base URL for the KaTeX library.
-That directory should contain a <code class="docutils literal notranslate"><span class="pre">katex.min.js</span></code> and a
-<code class="docutils literal notranslate"><span class="pre">katex.min.css</span></code> file. If a <em>URL</em> is not provided, a link to the
-KaTeX CDN will be inserted.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--katex</span></code>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>URL</em>]</dt><dd><p>Use <a class="reference external" href="https://github.com/Khan/KaTeX">KaTeX</a> to display embedded TeX math in HTML output. The <em>URL</em>
+is the base URL for the KaTeX library. That directory should contain
+a <code class="docutils literal notranslate"><span class="pre">katex.min.js</span></code> and a <code class="docutils literal notranslate"><span class="pre">katex.min.css</span></code> file. If a <em>URL</em> is not
+provided, a link to the KaTeX CDN will be inserted.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--gladtex</span></code></dt><dd><p>Enclose TeX math in <code class="docutils literal notranslate"><span class="pre">&lt;eq&gt;</span></code> tags in HTML output. The resulting HTML
-can then be processed by
-<a class="reference external" href="http://humenda.github.io/GladTeX/">GladTeX</a> to produce images of
-the typeset formulas and an HTML file with links to these images. So,
-the procedure is:</p>
+can then be processed by <a class="reference external" href="http://humenda.github.io/GladTeX/">GladTeX</a> to produce images of the typeset
+formulas and an HTML file with links to these images. So, the
+procedure is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="o">--</span><span class="n">gladtex</span> <span class="nb">input</span><span class="o">.</span><span class="n">md</span> <span class="o">-</span><span class="n">o</span> <span class="n">myfile</span><span class="o">.</span><span class="n">htex</span>
 <span class="n">gladtex</span> <span class="o">-</span><span class="n">d</span> <span class="n">myfile</span><span class="o">-</span><span class="n">images</span> <span class="n">myfile</span><span class="o">.</span><span class="n">htex</span>
 <span class="c1"># produces myfile.html and images in myfile-images</span>
@@ -795,7 +851,12 @@ pandoc options are not ignored. Thus, for example,</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">pdf</span></code> 出力については、 <code class="docutils literal notranslate"><span class="pre">default.latex</span></code> テンプレートをカスタマイズします。(<code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">context</span></code> を使う場合は <code class="docutils literal notranslate"><span class="pre">default.context</span></code> テンプレート、 <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">ms</span></code> の場合は <code class="docutils literal notranslate"><span class="pre">default.ms</span></code> テンプレート、<code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code> の場合は <code class="docutils literal notranslate"><span class="pre">default.html</span></code> テンプレートをカスタマイズします)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> はテンプレートを持っていません。 (しかし、出力をカスタマイズするために <code class="docutils literal notranslate"><span class="pre">--reference-doc</span></code> が使えます)</p></li>
 </ul>
-<p>テンプレートの中には <em>変数 (variables)</em> があります。これにより、任意の情報をファイル中のどの箇所にも含められます。変数はコマンドライン上で  <code class="docutils literal notranslate"><span class="pre">-V/--variable</span></code> オプションを使うことで指定できます。変数が指定されていない場合、Pandocは文書のメタデータからキーを探します (訳注: Pandocはメタデータとして定義されたキーも、テンプレートの変数として扱います)。メタデータは  <a class="reference external" href="#extension-yaml_metadata_block">YAML メタデータブロック</a> または  <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> オプションによって指定できます。</p>
+<p>Templates contain <em>variables</em>, which allow for the inclusion of
+arbitrary information at any point in the file. They may be set at the
+command line using the <code class="docutils literal notranslate"><span class="pre">-V/--variable</span></code> option. If a variable is not
+set, pandoc will look for the key in the document’s metadata – which can
+be set using either <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a> or with the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code>
+option.</p>
 <div class="section" id="variables-set-by-pandoc">
 <h3>Variables set by pandoc<a class="headerlink" href="#variables-set-by-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Some variables are set automatically by pandoc. These vary somewhat
@@ -819,8 +880,8 @@ terminal.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">author</span></code>, <code class="docutils literal notranslate"><span class="pre">date</span></code></dt><dd><p>allow identification of basic aspects of the document. Included in
 PDF metadata through LaTeX and ConTeXt. These can be set through a
-<a class="reference external" href="#extension-pandoc_title_block">pandoc title block</a>, which allows
-for multiple authors, or through a YAML metadata block:</p>
+<a class="reference external" href="#extension-pandoc_title_block">pandoc title block</a>, which allows for multiple authors, or through
+a YAML metadata block:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">author</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">Aristotle</span>
@@ -831,9 +892,8 @@ for multiple authors, or through a YAML metadata block:</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">subtitle</span></code></dt><dd><p>document subtitle, included in HTML, EPUB, LaTeX, ConTeXt, and Word
 docx; renders in LaTeX only when using a document class that supports
-<code class="docutils literal notranslate"><span class="pre">\subtitle</span></code>, such as <code class="docutils literal notranslate"><span class="pre">beamer</span></code> or the
-<a class="reference external" href="https://ctan.org/pkg/koma-script">KOMA-Script</a> series
-(<code class="docutils literal notranslate"><span class="pre">scrartcl</span></code>, <code class="docutils literal notranslate"><span class="pre">scrreprt</span></code>, <code class="docutils literal notranslate"><span class="pre">scrbook</span></code>). <a class="footnote-reference brackets" href="#id12" id="id1">1</a></p>
+<code class="docutils literal notranslate"><span class="pre">\subtitle</span></code>, such as <code class="docutils literal notranslate"><span class="pre">beamer</span></code> or the <a class="reference external" href="https://ctan.org/pkg/koma-script">KOMA-Script</a> series
+(<code class="docutils literal notranslate"><span class="pre">scrartcl</span></code>, <code class="docutils literal notranslate"><span class="pre">scrreprt</span></code>, <code class="docutils literal notranslate"><span class="pre">scrbook</span></code>). <a class="footnote-reference brackets" href="#id74" id="id29">1</a></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">institute</span></code></dt><dd><p>author affiliations (in LaTeX and Beamer only). Can be a list, when
 there are multiple authors.</p>
@@ -867,10 +927,10 @@ are transformed to the selected output format.</p>
 <h3>Language variables<a class="headerlink" href="#language-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">lang</span></code></dt><dd><p>identifies the main language of the document, using a code according
-to <a class="reference external" href="https://tools.ietf.org/html/bcp47">BCP 47</a> (e.g. <code class="docutils literal notranslate"><span class="pre">en</span></code> or
-<code class="docutils literal notranslate"><span class="pre">en-GB</span></code>). For some output formats, pandoc will convert it to an
-appropriate format stored in the additional variables <code class="docutils literal notranslate"><span class="pre">babel-lang</span></code>,
-<code class="docutils literal notranslate"><span class="pre">polyglossia-lang</span></code> (LaTeX) and <code class="docutils literal notranslate"><span class="pre">context-lang</span></code> (ConTeXt).</p>
+to <a class="reference external" href="https://tools.ietf.org/html/bcp47">BCP 47</a> (e.g. <code class="docutils literal notranslate"><span class="pre">en</span></code> or <code class="docutils literal notranslate"><span class="pre">en-GB</span></code>). For some output formats,
+pandoc will convert it to an appropriate format stored in the
+additional variables <code class="docutils literal notranslate"><span class="pre">babel-lang</span></code>, <code class="docutils literal notranslate"><span class="pre">polyglossia-lang</span></code> (LaTeX) and
+<code class="docutils literal notranslate"><span class="pre">context-lang</span></code> (ConTeXt).</p>
 <p>Native pandoc Spans and Divs with the lang attribute (value in BCP
 47) can be used to switch the language in that range. In LaTeX
 output, <code class="docutils literal notranslate"><span class="pre">babel-otherlangs</span></code> and <code class="docutils literal notranslate"><span class="pre">polyglossia-otherlangs</span></code> variables
@@ -883,8 +943,7 @@ Spans and Divs in the document.</p>
 with the <code class="docutils literal notranslate"><span class="pre">dir</span></code> attribute (value <code class="docutils literal notranslate"><span class="pre">rtl</span></code> or <code class="docutils literal notranslate"><span class="pre">ltr</span></code>) can be used to
 override the base direction in some output formats. This may not
 always be necessary if the final renderer (e.g. the browser, when
-generating HTML) supports the <a class="reference external" href="http://www.w3.org/International/articles/inline-bidi-markup/uba-basics">Unicode Bidirectional
-Algorithm</a>.</p>
+generating HTML) supports the <a class="reference external" href="http://www.w3.org/International/articles/inline-bidi-markup/uba-basics">Unicode Bidirectional Algorithm</a>.</p>
 <p>When using LaTeX for bidirectional documents, only the <code class="docutils literal notranslate"><span class="pre">xelatex</span></code>
 engine is fully supported (use <code class="docutils literal notranslate"><span class="pre">--pdf-engine=xelatex</span></code>).</p>
 </dd>
@@ -892,10 +951,8 @@ engine is fully supported (use <code class="docutils literal notranslate"><span 
 </div>
 <div class="section" id="variables-for-slides">
 <h3>Variables for slides<a class="headerlink" href="#variables-for-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Variables are available for <a class="reference external" href="#producing-slide-shows-with-pandoc">producing slide shows with
-pandoc</a>, including all <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js
-configuration
-options</a>.</p>
+<p>Variables are available for <a class="reference external" href="#producing-slide-shows-with-pandoc">producing slide shows with pandoc</a>,
+including all <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js configuration options</a>.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">titlegraphic</span></code></dt><dd><p>title graphic for Beamer documents</p>
 </dd>
@@ -910,8 +967,7 @@ options</a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">revealjs-url</span></code></dt><dd><p>base URL for reveal.js documents (defaults to <code class="docutils literal notranslate"><span class="pre">reveal.js</span></code>)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">theme</span></code>, <code class="docutils literal notranslate"><span class="pre">colortheme</span></code>, <code class="docutils literal notranslate"><span class="pre">fonttheme</span></code>, <code class="docutils literal notranslate"><span class="pre">innertheme</span></code>, <code class="docutils literal notranslate"><span class="pre">outertheme</span></code></dt><dd><p>themes for LaTeX <code class="docutils literal notranslate"><span class="pre">`beamer</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/beamer">https://ctan.org/pkg/beamer</a>&gt;`__
-documents</p>
+<dt><code class="docutils literal notranslate"><span class="pre">theme</span></code>, <code class="docutils literal notranslate"><span class="pre">colortheme</span></code>, <code class="docutils literal notranslate"><span class="pre">fonttheme</span></code>, <code class="docutils literal notranslate"><span class="pre">innertheme</span></code>, <code class="docutils literal notranslate"><span class="pre">outertheme</span></code></dt><dd><p>themes for LaTeX <a href="#id30"><span class="problematic" id="id31">``</span></a><a href="#id136"><span class="problematic" id="id137">`beamer```_</span></a> documents</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">themeoptions</span></code></dt><dd><p>options for LaTeX beamer themes (a list).</p>
 </dd>
@@ -939,50 +995,40 @@ for 16:9, <code class="docutils literal notranslate"><span class="pre">149</span
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">fontsize</span></code></dt><dd><p>font size for body text (e.g. <code class="docutils literal notranslate"><span class="pre">10pt</span></code>, <code class="docutils literal notranslate"><span class="pre">12pt</span></code>)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">documentclass</span></code></dt><dd><p>document class,
-e.g. <code class="docutils literal notranslate"><span class="pre">`article</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/article">https://ctan.org/pkg/article</a>&gt;`__,
-<code class="docutils literal notranslate"><span class="pre">`report</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/report">https://ctan.org/pkg/report</a>&gt;`__,
-<code class="docutils literal notranslate"><span class="pre">`book</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/book">https://ctan.org/pkg/book</a>&gt;`__,
-<code class="docutils literal notranslate"><span class="pre">`memoir</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/memoir">https://ctan.org/pkg/memoir</a>&gt;`__</p>
+<dt><code class="docutils literal notranslate"><span class="pre">documentclass</span></code></dt><dd><p>document class, e.g. <a href="#id32"><span class="problematic" id="id33">``</span></a><a href="#id138"><span class="problematic" id="id139">`article```_</span></a>, <a href="#id34"><span class="problematic" id="id35">``</span></a><a href="#id140"><span class="problematic" id="id141">`report```_</span></a>, <a href="#id36"><span class="problematic" id="id37">``</span></a><a href="#id142"><span class="problematic" id="id143">`book```_</span></a>,
+<a href="#id38"><span class="problematic" id="id39">``</span></a><a href="#id144"><span class="problematic" id="id145">`memoir```_</span></a></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">classoption</span></code></dt><dd><p>option for document class, e.g. <code class="docutils literal notranslate"><span class="pre">oneside</span></code>; may be repeated for
 multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">beameroption</span></code></dt><dd><p>In beamer, add extra beamer option with <code class="docutils literal notranslate"><span class="pre">\setbeameroption{}</span></code></p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">geometry</span></code></dt><dd><p>option for <code class="docutils literal notranslate"><span class="pre">`geometry</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/geometry">https://ctan.org/pkg/geometry</a>&gt;`__ package,
-e.g. <code class="docutils literal notranslate"><span class="pre">margin=1in</span></code>; may be repeated for multiple options</p>
+<dt><code class="docutils literal notranslate"><span class="pre">geometry</span></code></dt><dd><p>option for <code class="docutils literal notranslate"><span class="pre">`geometry```_</span> <span class="pre">package,</span> <span class="pre">e.g.</span><span class="pre">\</span> <span class="pre">``margin=1in</span></code>; may be
+repeated for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">margin-left</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-right</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-top</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-bottom</span></code></dt><dd><p>sets margins, if <code class="docutils literal notranslate"><span class="pre">geometry</span></code> is not used (otherwise <code class="docutils literal notranslate"><span class="pre">geometry</span></code>
 overrides these)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p>adjusts line spacing using the
-<code class="docutils literal notranslate"><span class="pre">`setspace</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/setspace">https://ctan.org/pkg/setspace</a>&gt;`__ package,
-e.g. <code class="docutils literal notranslate"><span class="pre">1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p>adjusts line spacing using the <code class="docutils literal notranslate"><span class="pre">`setspace```_</span> <span class="pre">package,</span>
+<span class="pre">e.g.</span><span class="pre">\</span> <span class="pre">``1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">fontfamily</span></code></dt><dd><p>font package for use with <code class="docutils literal notranslate"><span class="pre">pdflatex</span></code>: <a class="reference external" href="http://www.tug.org/texlive/">TeX
-Live</a> includes many options,
-documented in the <a class="reference external" href="http://www.tug.dk/FontCatalogue/">LaTeX Font
-Catalogue</a>. The default is
+<dt><code class="docutils literal notranslate"><span class="pre">fontfamily</span></code></dt><dd><p>font package for use with <code class="docutils literal notranslate"><span class="pre">pdflatex</span></code>: <a class="reference external" href="http://www.tug.org/texlive/">TeX Live</a> includes many
+options, documented in the <a class="reference external" href="http://www.tug.dk/FontCatalogue/">LaTeX Font Catalogue</a>. The default is
 <a class="reference external" href="https://ctan.org/pkg/lm">Latin Modern</a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">fontfamilyoptions</span></code></dt><dd><p>options for package used as <code class="docutils literal notranslate"><span class="pre">fontfamily</span></code>: e.g. <code class="docutils literal notranslate"><span class="pre">osf,sc</span></code> with
-<code class="docutils literal notranslate"><span class="pre">fontfamily</span></code> set to
-<code class="docutils literal notranslate"><span class="pre">`mathpazo</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/mathpazo">https://ctan.org/pkg/mathpazo</a>&gt;`__ provides Palatino
-with old-style figures and true small caps; may be repeated for
-multiple options</p>
+<code class="docutils literal notranslate"><span class="pre">fontfamily</span></code> set to <a href="#id40"><span class="problematic" id="id41">``</span></a><a href="#id146"><span class="problematic" id="id147">`mathpazo```_</span></a> provides Palatino with
+old-style figures and true small caps; may be repeated for multiple
+options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">mainfont</span></code>, <code class="docutils literal notranslate"><span class="pre">romanfont</span></code>, <code class="docutils literal notranslate"><span class="pre">sansfont</span></code>, <code class="docutils literal notranslate"><span class="pre">monofont</span></code>, <code class="docutils literal notranslate"><span class="pre">mathfont</span></code>, <code class="docutils literal notranslate"><span class="pre">CJKmainfont</span></code></dt><dd><p>font families for use with <code class="docutils literal notranslate"><span class="pre">xelatex</span></code> or <code class="docutils literal notranslate"><span class="pre">lualatex</span></code>: take the name
-of any system font, using the
-<code class="docutils literal notranslate"><span class="pre">`fontspec</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/fontspec">https://ctan.org/pkg/fontspec</a>&gt;`__ package. Note that
-if <code class="docutils literal notranslate"><span class="pre">CJKmainfont</span></code> is used, the
-<code class="docutils literal notranslate"><span class="pre">`xecjk</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/xecjk">https://ctan.org/pkg/xecjk</a>&gt;`__ package must be available.</p>
+of any system font, using the <code class="docutils literal notranslate"><span class="pre">`fontspec```_</span> <span class="pre">package.</span> <span class="pre">Note</span> <span class="pre">that</span> <span class="pre">if</span>
+<span class="pre">``CJKmainfont</span></code> is used, the <a href="#id42"><span class="problematic" id="id43">``</span></a><a href="#id148"><span class="problematic" id="id149">`xecjk```_</span></a> package must be available.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">mainfontoptions</span></code>, <code class="docutils literal notranslate"><span class="pre">romanfontoptions</span></code>, <code class="docutils literal notranslate"><span class="pre">sansfontoptions</span></code>, <code class="docutils literal notranslate"><span class="pre">monofontoptions</span></code>, <code class="docutils literal notranslate"><span class="pre">mathfontoptions</span></code>, <code class="docutils literal notranslate"><span class="pre">CJKoptions</span></code></dt><dd><p>options to use with <code class="docutils literal notranslate"><span class="pre">mainfont</span></code>, <code class="docutils literal notranslate"><span class="pre">sansfont</span></code>, <code class="docutils literal notranslate"><span class="pre">monofont</span></code>,
 <code class="docutils literal notranslate"><span class="pre">mathfont</span></code>, <code class="docutils literal notranslate"><span class="pre">CJKmainfont</span></code> in <code class="docutils literal notranslate"><span class="pre">xelatex</span></code> and <code class="docutils literal notranslate"><span class="pre">lualatex</span></code>. Allow
-for any choices available through
-<code class="docutils literal notranslate"><span class="pre">`fontspec</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/fontspec">https://ctan.org/pkg/fontspec</a>&gt;`__, such as the
-OpenType features <code class="docutils literal notranslate"><span class="pre">Numbers=OldStyle,Numbers=Proportional</span></code>. May be
+for any choices available through <code class="docutils literal notranslate"><span class="pre">`fontspec```_,</span> <span class="pre">such</span> <span class="pre">as</span> <span class="pre">the</span>
+<span class="pre">OpenType</span> <span class="pre">features</span> <span class="pre">``Numbers=OldStyle,Numbers=Proportional</span></code>. May be
 repeated for multiple options.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">fontenc</span></code></dt><dd><p>allows font encoding to be specified through <code class="docutils literal notranslate"><span class="pre">fontenc</span></code> package
@@ -997,8 +1043,8 @@ encodings</a>)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">linkcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">filecolor</span></code>, <code class="docutils literal notranslate"><span class="pre">citecolor</span></code>, <code class="docutils literal notranslate"><span class="pre">urlcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">toccolor</span></code></dt><dd><p>color for internal links, external links, citation links, linked
 URLs, and links in table of contents, respectively: uses options
-allowed by <code class="docutils literal notranslate"><span class="pre">`xcolor</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/xcolor">https://ctan.org/pkg/xcolor</a>&gt;`__, including
-the <code class="docutils literal notranslate"><span class="pre">dvipsnames</span></code>, <code class="docutils literal notranslate"><span class="pre">svgnames</span></code>, and <code class="docutils literal notranslate"><span class="pre">x11names</span></code> lists</p>
+allowed by <code class="docutils literal notranslate"><span class="pre">`xcolor```_,</span> <span class="pre">including</span> <span class="pre">the</span> <span class="pre">``dvipsnames</span></code>, <code class="docutils literal notranslate"><span class="pre">svgnames</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">x11names</span></code> lists</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">links-as-notes</span></code></dt><dd><p>causes links to be printed as footnotes</p>
 </dd>
@@ -1041,12 +1087,10 @@ section titles in the header.</p>
 <h3>Variables for ConTeXt<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>paper size, e.g. <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">A4</span></code>, <code class="docutils literal notranslate"><span class="pre">landscape</span></code> (see <a class="reference external" href="https://wiki.contextgarden.net/PaperSetup">ConTeXt
-Paper Setup</a>); may be
-repeated for multiple options</p>
+Paper Setup</a>); may be repeated for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">layout</span></code></dt><dd><p>options for page margins and text arrangement (see <a class="reference external" href="https://wiki.contextgarden.net/Layout">ConTeXt
-Layout</a>); may be repeated
-for multiple options</p>
+Layout</a>); may be repeated for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">margin-left</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-right</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-top</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-bottom</span></code></dt><dd><p>sets margins, if <code class="docutils literal notranslate"><span class="pre">layout</span></code> is not used (otherwise <code class="docutils literal notranslate"><span class="pre">layout</span></code>
 overrides these)</p>
@@ -1063,24 +1107,20 @@ Switching</a>)</p>
 <code class="docutils literal notranslate"><span class="pre">boldslanted</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">cap</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">indenting</span></code></dt><dd><p>controls indentation of paragraphs, e.g. <code class="docutils literal notranslate"><span class="pre">yes,small,next</span></code> (see
-<a class="reference external" href="https://wiki.contextgarden.net/Indentation">ConTeXt
-Indentation</a>); may be
-repeated for multiple options</p>
+<a class="reference external" href="https://wiki.contextgarden.net/Indentation">ConTeXt Indentation</a>); may be repeated for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">whitespace</span></code></dt><dd><p>spacing between paragraphs, e.g. <code class="docutils literal notranslate"><span class="pre">none</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code> (using
-<code class="docutils literal notranslate"><span class="pre">`setupwhitespace</span></code> &lt;<a class="reference external" href="https://wiki.contextgarden.net/Command/setupwhitespace">https://wiki.contextgarden.net/Command/setupwhitespace</a>&gt;`__)</p>
+<a href="#id44"><span class="problematic" id="id45">``</span></a><a href="#id150"><span class="problematic" id="id151">`setupwhitespace```_</span></a>)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">interlinespace</span></code></dt><dd><p>adjusts line spacing, e.g. <code class="docutils literal notranslate"><span class="pre">4ex</span></code> (using
-<code class="docutils literal notranslate"><span class="pre">`setupinterlinespace</span></code> &lt;<a class="reference external" href="https://wiki.contextgarden.net/Command/setupinterlinespace">https://wiki.contextgarden.net/Command/setupinterlinespace</a>&gt;`__);
-may be repeated for multiple options</p>
+<a href="#id46"><span class="problematic" id="id47">``</span></a><a href="#id152"><span class="problematic" id="id153">`setupinterlinespace```_</span></a>); may be repeated for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">headertext</span></code>, <code class="docutils literal notranslate"><span class="pre">footertext</span></code></dt><dd><p>text to be placed in running header or footer (see <a class="reference external" href="https://wiki.contextgarden.net/Headers_and_Footers">ConTeXt Headers
-and Footers</a>);
-may be repeated up to four times for different placement</p>
+and Footers</a>); may be repeated up to four times for different
+placement</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">pagenumbering</span></code></dt><dd><p>page number style and location (using
-<code class="docutils literal notranslate"><span class="pre">`setuppagenumbering</span></code> &lt;<a class="reference external" href="https://wiki.contextgarden.net/Command/setuppagenumbering">https://wiki.contextgarden.net/Command/setuppagenumbering</a>&gt;`__);
-may be repeated for multiple options</p>
+<dt><code class="docutils literal notranslate"><span class="pre">pagenumbering</span></code></dt><dd><p>page number style and location (using <a href="#id48"><span class="problematic" id="id49">``</span></a><a href="#id154"><span class="problematic" id="id155">`setuppagenumbering```_</span></a>); may
+be repeated for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">toc</span></code></dt><dd><p>include table of contents (can also be set using
 <code class="docutils literal notranslate"><span class="pre">--toc/--table-of-contents</span></code>)</p>
@@ -1091,10 +1131,8 @@ may be repeated for multiple options</p>
 To successfully generate PDF/A the required ICC color profiles have
 to be available and the content and all included files (such as
 images) have to be standard conforming. The ICC profiles can be
-obtained from <a class="reference external" href="https://wiki.contextgarden.net/PDFX#ICC_profiles">ConTeXt ICC
-Profiles</a>. See
-also <a class="reference external" href="https://wiki.contextgarden.net/PDF/A">ConTeXt PDFA</a> for more
-details.</p>
+obtained from <a class="reference external" href="https://wiki.contextgarden.net/PDFX#ICC_profiles">ConTeXt ICC Profiles</a>. See also <a class="reference external" href="https://wiki.contextgarden.net/PDF/A">ConTeXt PDFA</a> for
+more details.</p>
 </dd>
 </dl>
 </div>
@@ -1181,9 +1219,8 @@ as its value. So, for example:</p>
 <p>If you use custom templates, you may need to revise them as pandoc
 changes. We recommend tracking the changes in the default templates, and
 modifying your custom templates accordingly. An easy way to do this is
-to fork the
-<a class="reference external" href="https://github.com/jgm/pandoc-templates">pandoc-templates</a>
-repository and merge in changes after each pandoc release.</p>
+to fork the <a class="reference external" href="https://github.com/jgm/pandoc-templates">pandoc-templates</a> repository and merge in changes after
+each pandoc release.</p>
 <p>Templates may contain comments: anything on a line after <code class="docutils literal notranslate"><span class="pre">$--</span></code> will be
 treated as a comment and ignored.</p>
 </div>
@@ -1199,9 +1236,9 @@ enabled, while <code class="docutils literal notranslate"><span class="pre">--fr
 Markdown without footnotes or pipe tables.</p>
 <p>The markdown reader and writer make by far the most use of extensions.
 Extensions only used by them are therefore covered in the section
-<a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a> below (See <a class="reference external" href="#markdown-variants">Markdown
-variants</a> for <code class="docutils literal notranslate"><span class="pre">commonmark</span></code> and <code class="docutils literal notranslate"><span class="pre">gfm</span></code>.) In the
-following, extensions that also work for other formats are covered.</p>
+<a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a> below (See <a class="reference external" href="#markdown-variants">Markdown variants</a> for <code class="docutils literal notranslate"><span class="pre">commonmark</span></code>
+and <code class="docutils literal notranslate"><span class="pre">gfm</span></code>.) In the following, extensions that also work for other
+formats are covered.</p>
 <div class="section" id="typography">
 <h3>Typography<a class="headerlink" href="#typography" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-smart">
@@ -1328,10 +1365,8 @@ than <code class="docutils literal notranslate"><span class="pre">-</span></code
 </div>
 <div class="section" id="math-input">
 <h3>Math Input<a class="headerlink" href="#math-input" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>The extensions <code class="docutils literal notranslate"><span class="pre">`tex_math_dollars</span></code> &lt;#extension-tex_math_dollars&gt;`__,
-<code class="docutils literal notranslate"><span class="pre">`tex_math_single_backslash</span></code> &lt;#extension-tex_math_single_backslash&gt;`__,
-and
-<code class="docutils literal notranslate"><span class="pre">`tex_math_double_backslash</span></code> &lt;#extension-tex_math_double_backslash&gt;`__
+<p>The extensions <a href="#id50"><span class="problematic" id="id51">``</span></a><a href="#id156"><span class="problematic" id="id157">`tex_math_dollars```_</span></a>,
+<a href="#id52"><span class="problematic" id="id53">``</span></a><a href="#id158"><span class="problematic" id="id159">`tex_math_single_backslash```_</span></a>, and <a href="#id54"><span class="problematic" id="id55">``</span></a><a href="#id160"><span class="problematic" id="id161">`tex_math_double_backslash```_</span></a>
 are described in the section about Pandoc’s Markdown.</p>
 <p>However, they can also be used with HTML input. This is handy for
 reading web pages formatted using MathJax, for example.</p>
@@ -1447,8 +1482,8 @@ picked up by the Haskell compiler.</p>
 <span id="ext-styles"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">styles</span></code><a class="headerlink" href="#extension-styles" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Read all docx styles as divs (for paragraph styles) and spans (for
 character styles) regardless of whether pandoc understands the meaning
-of these styles. This can be used with <a class="reference external" href="#custom-styles-in-docx">docx custom
-styles</a>. Disabled by default.</p>
+of these styles. This can be used with <a class="reference external" href="#custom-styles-in-docx">docx custom styles</a>. Disabled
+by default.</p>
 <dl class="simple">
 <dt>input formats</dt><dd><p><code class="docutils literal notranslate"><span class="pre">docx</span></code></p>
 </dd>
@@ -1461,30 +1496,28 @@ Emacs Muse markup.</p>
 </div>
 <div class="section" id="extension-citations">
 <span id="org-citations"></span><h4>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#extension-citations" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>Some aspects of <a class="reference external" href="#citations">Pandoc’s Markdown citation syntax</a> are
-also accepted in <code class="docutils literal notranslate"><span class="pre">org</span></code> input.</p>
+<p>Some aspects of <a class="reference external" href="#citations">Pandoc’s Markdown citation syntax</a> are also accepted
+in <code class="docutils literal notranslate"><span class="pre">org</span></code> input.</p>
 </div>
 <div class="section" id="extension-ntb">
 <h4>Extension: <code class="docutils literal notranslate"><span class="pre">ntb</span></code><a class="headerlink" href="#extension-ntb" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In the <code class="docutils literal notranslate"><span class="pre">context</span></code> output format this enables the use of <a class="reference external" href="http://wiki.contextgarden.net/TABLE">Natural Tables
-(TABLE)</a> instead of the default
-<a class="reference external" href="http://wiki.contextgarden.net/xtables">Extreme Tables (xtables)</a>.
-Natural tables allow more fine-grained global customization but come at
-a performance penalty compared to extreme tables.</p>
+(TABLE)</a> instead of the default <a class="reference external" href="http://wiki.contextgarden.net/xtables">Extreme Tables (xtables)</a>. Natural
+tables allow more fine-grained global customization but come at a
+performance penalty compared to extreme tables.</p>
 </div>
 </div>
 </div>
 <div class="section" id="pandocs-markdown">
 <h2>Pandoc’s Markdown<a class="headerlink" href="#pandocs-markdown" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc understands an extended and slightly revised version of John
-Gruber’s <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a>
-syntax. This document explains the syntax, noting differences from
-standard Markdown. Except where noted, these differences can be
-suppressed by using the <code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> format instead of
-<code class="docutils literal notranslate"><span class="pre">markdown</span></code>. Extensions can be enabled or disabled to specify the
-behavior more granularly. They are described in the following. See also
-<a class="reference external" href="#extensions">Extensions</a> above, for extensions that work also on
-other formats.</p>
+Gruber’s <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> syntax. This document explains the syntax, noting
+differences from standard Markdown. Except where noted, these
+differences can be suppressed by using the <code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> format
+instead of <code class="docutils literal notranslate"><span class="pre">markdown</span></code>. Extensions can be enabled or disabled to
+specify the behavior more granularly. They are described in the
+following. See also <a class="reference external" href="#extensions">Extensions</a> above, for extensions that work also
+on other formats.</p>
 <div class="section" id="philosophy">
 <h3>Philosophy<a class="headerlink" href="#philosophy" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Markdown is designed to be easy to write, and, even more importantly,
@@ -1492,8 +1525,7 @@ easy to read:</p>
 <blockquote>
 <div><p>A Markdown-formatted document should be publishable as-is, as plain
 text, without looking like it’s been marked up with tags or
-formatting instructions. – <a class="reference external" href="http://daringfireball.net/projects/markdown/syntax#philosophy">John
-Gruber</a></p>
+formatting instructions. – <a class="reference external" href="http://daringfireball.net/projects/markdown/syntax#philosophy">John Gruber</a></p>
 </div></blockquote>
 <p>This principle has guided pandoc’s decisions in finding syntax for
 tables, footnotes, and other extensions.</p>
@@ -1564,8 +1596,7 @@ through line wrapping). Consider, for example:</p>
 the space.</p>
 <div class="section" id="header-identifiers">
 <h5>Header identifiers<a class="headerlink" href="#header-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h5>
-<p>See also the <code class="docutils literal notranslate"><span class="pre">`auto_identifiers</span></code>
-extension &lt;#extension-auto_identifiers&gt;`__ above.</p>
+<p>See also the <code class="docutils literal notranslate"><span class="pre">`auto_identifiers</span></code> extension`_ above.</p>
 </div>
 </div>
 <div class="section" id="extension-header-attributes">
@@ -1585,8 +1616,7 @@ identifier <code class="docutils literal notranslate"><span class="pre">foo</spa
 <span class="o">---------------</span>
 </pre></div>
 </div>
-<p>(This syntax is compatible with <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown
-Extra</a>.)</p>
+<p>(This syntax is compatible with <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a>.)</p>
 <p>Note that although this syntax allows assignment of classes and
 key/value attributes, writers generally don’t use all of this
 information. Identifiers, classes, and key/value attributes are used in
@@ -1813,8 +1843,7 @@ begin with a space.</p>
 <span class="o">|</span> <span class="n">Berkeley</span><span class="p">,</span> <span class="n">CA</span> <span class="mi">94718</span>
 </pre></div>
 </div>
-<p>This syntax is borrowed from
-<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>.</p>
+<p>This syntax is borrowed from <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>.</p>
 </div>
 </div>
 <div class="section" id="lists">
@@ -1925,7 +1954,7 @@ with uppercase and lowercase letters and roman numerals, in addition to
 Arabic numerals. List markers may be enclosed in parentheses or followed
 by a single right-parentheses or period. They must be separated from the
 text that follows by at least one space, and, if the list marker is a
-capital letter with a period, by at least two spaces. <a class="footnote-reference brackets" href="#id13" id="id2">2</a></p>
+capital letter with a period, by at least two spaces. <a class="footnote-reference brackets" href="#id75" id="id56">2</a></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">fancy_lists</span></code> extension also allows ‘<code class="docutils literal notranslate"><span class="pre">#</span></code>’ to be used as an
 ordered list marker in place of a numeral:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#. one</span>
@@ -1969,8 +1998,7 @@ is used. So, the following will create three lists:</p>
 <div class="section" id="extension-definition-lists">
 <h4>Extension: <code class="docutils literal notranslate"><span class="pre">definition_lists</span></code><a class="headerlink" href="#extension-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandoc supports definition lists, using the syntax of <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown
-Extra</a> with some
-extensions. <a class="footnote-reference brackets" href="#id14" id="id3">3</a></p>
+Extra</a> with some extensions. <a class="footnote-reference brackets" href="#id76" id="id57">3</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Term</span> <span class="mi">1</span>
 
 <span class="p">:</span>   <span class="n">Definition</span> <span class="mi">1</span>
@@ -2155,7 +2183,7 @@ It may appear either before or after the table.</p>
 </div>
 <p>The headers and table rows must each fit on one line. Column alignments
 are determined by the position of the header text relative to the dashed
-line below it: <a class="footnote-reference brackets" href="#id15" id="id4">4</a></p>
+line below it: <a class="footnote-reference brackets" href="#id77" id="id58">4</a></p>
 <ul class="simple">
 <li><p>If the dashed line is flush with the header text on the right side
 but extends beyond it on the left, the column is right-aligned.</p></li>
@@ -2249,8 +2277,7 @@ the table), or the table may be interpreted as a simple table.</p>
 omitted for a headerless table. The cells of grid tables may contain
 arbitrary block elements (multiple paragraphs, code blocks, lists,
 etc.). Cells that span multiple columns or rows are not supported. Grid
-tables can be created easily using <a class="reference external" href="http://table.sourceforge.net/">Emacs table
-mode</a>.</p>
+tables can be created easily using <a class="reference external" href="http://table.sourceforge.net/">Emacs table mode</a>.</p>
 <p>Alignments can be specified as with pipe tables, by putting colons at
 the boundaries of the separator line after the header:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>+---------------+---------------+--------------------+
@@ -2270,8 +2297,7 @@ the boundaries of the separator line after the header:</p>
 means that neither variable numbers of columns across rows nor variable
 numbers of rows across columns are supported by Pandoc. All grid tables
 must have the same number of columns in each row, and the same number of
-rows in each column. For example, the Docutils <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#grid-tables">sample grid
-tables</a>
+rows in each column. For example, the Docutils <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#grid-tables">sample grid tables</a>
 will not render as expected with Pandoc.</p>
 </div>
 <div class="section" id="extension-pipe-tables">
@@ -2286,12 +2312,11 @@ will not render as expected with Pandoc.</p>
   <span class="p">:</span> <span class="n">Demonstration</span> <span class="n">of</span> <span class="n">pipe</span> <span class="n">table</span> <span class="n">syntax</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>The syntax is identical to <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/#table">PHP Markdown Extra
-tables</a>. The
-beginning and ending pipe characters are optional, but pipes are
-required between all columns. The colons indicate column alignment as
-shown. The header cannot be omitted. To simulate a headerless table,
-include a header with blank cells.</p>
+<p>The syntax is identical to <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/#table">PHP Markdown Extra tables</a>. The beginning
+and ending pipe characters are optional, but pipes are required between
+all columns. The colons indicate column alignment as shown. The header
+cannot be omitted. To simulate a headerless table, include a header with
+blank cells.</p>
 <p>Since the pipes indicate column boundaries, columns need not be
 vertically aligned, as they are in the above example. So, this is a
 perfectly legal (though ugly) pipe table:</p>
@@ -2485,8 +2510,7 @@ $endfor$
 <p>Raw content to include in the document’s header may be specified using
 <code class="docutils literal notranslate"><span class="pre">header-includes</span></code>; however, it is important to mark up this content as
 raw code for a particular output format, using the <code class="docutils literal notranslate"><span class="pre">`raw_attribute</span></code>
-extension &lt;#extension-raw_attribute&gt;`__), or it will be interpreted as
-markdown. For example:</p>
+extension`_), or it will be interpreted as markdown. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>header-includes:
 - |
   ```{=latex}
@@ -2653,8 +2677,7 @@ or <code class="docutils literal notranslate"><span class="pre">\[...\]</span></
 <dt>Markdown, Emacs Org mode, ConTeXt, ZimWiki</dt><dd><p>It will appear verbatim surrounded by <code class="docutils literal notranslate"><span class="pre">$...$</span></code> (for inline math) or
 <code class="docutils literal notranslate"><span class="pre">$$...$$</span></code> (for display math).</p>
 </dd>
-<dt>reStructuredText</dt><dd><p>It will be rendered using an <cite>interpreted text role
-`</cite>:math:`` &lt;<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/roles.html#math">http://docutils.sourceforge.net/docs/ref/rst/roles.html#math</a>&gt;`__.</p>
+<dt>reStructuredText</dt><dd><p>It will be rendered using an <cite>interpreted text role `</cite>:math:<a href="#id59"><span class="problematic" id="id60">``</span></a><a href="#id61"><span class="problematic" id="id62">`</span></a>_.</p>
 </dd>
 <dt>AsciiDoc</dt><dd><p>It will be rendered as <code class="docutils literal notranslate"><span class="pre">latexmath:[...]</span></code>.</p>
 </dd>
@@ -2682,16 +2705,15 @@ using CodeCogs or other compatible web service, downloaded and
 embedded in the e-book. Otherwise, they will appear verbatim.</p>
 </dd>
 <dt>HTML, Slidy, DZSlides, S5, EPUB</dt><dd><p>The way math is rendered in HTML will depend on the command-line
-options selected. Therefore see <a class="reference external" href="#math-rendering-in-html">Math rendering in
-HTML</a> above.</p>
+options selected. Therefore see <a class="reference external" href="#math-rendering-in-html">Math rendering in HTML</a> above.</p>
 </dd>
 </dl>
 </div>
 </div>
-<div class="section" id="id5">
-<h3>Raw HTML<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="section" id="id6">
-<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_html</span></code><a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id63">
+<h3>Raw HTML<a class="headerlink" href="#id63" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id64">
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_html</span></code><a class="headerlink" href="#id64" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Markdown allows you to insert raw HTML (or DocBook) anywhere in a
 document (except verbatim contexts, where <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> are
 interpreted literally). (Technically this is not an extension, since
@@ -2741,22 +2763,22 @@ Markdown with HTML block elements. For example, one can surround a block
 of Markdown text with <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> tags without preventing it from being
 interpreted as Markdown.</p>
 </div>
-<div class="section" id="id7">
-<h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_divs</span></code><a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id65">
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_divs</span></code><a class="headerlink" href="#id65" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Use native pandoc <code class="docutils literal notranslate"><span class="pre">Div</span></code> blocks for content inside <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> tags. For
 the most part this should give the same output as
 <code class="docutils literal notranslate"><span class="pre">markdown_in_html_blocks</span></code>, but it makes it easier to write pandoc
 filters to manipulate groups of blocks.</p>
 </div>
-<div class="section" id="id8">
-<h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_spans</span></code><a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id66">
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">native_spans</span></code><a class="headerlink" href="#id66" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Use native pandoc <code class="docutils literal notranslate"><span class="pre">Span</span></code> blocks for content inside <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> tags.
 For the most part this should give the same output as <code class="docutils literal notranslate"><span class="pre">raw_html</span></code>, but
 it makes it easier to write pandoc filters to manipulate groups of
 inlines.</p>
 </div>
-<div class="section" id="id9">
-<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_tex</span></code><a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id67">
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">raw_tex</span></code><a class="headerlink" href="#id67" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>In addition to raw HTML, pandoc allows raw LaTeX, TeX, and ConTeXt to be
 included in a document. Inline TeX commands will be preserved and passed
 unchanged to the LaTeX and ConTeXt writers. Thus, for example, you can
@@ -2832,8 +2854,7 @@ $\tuple{a, b, c}$
 </pre></div>
 </div>
 <p>Note that LaTeX macros will not be applied if they occur inside inside a
-raw span or block marked with the <code class="docutils literal notranslate"><span class="pre">`raw_attribute</span></code>
-extension &lt;#extension-raw_attribute&gt;`__.</p>
+raw span or block marked with the <code class="docutils literal notranslate"><span class="pre">`raw_attribute</span></code> extension`_.</p>
 <p>When <code class="docutils literal notranslate"><span class="pre">latex_macros</span></code> is disabled, the raw LaTeX and math will not have
 macros applied. This is usually a better approach when you are targeting
 LaTeX or PDF.</p>
@@ -2926,8 +2947,7 @@ omitted entirely:</p>
 <div class="section" id="internal-links">
 <h5>Internal links<a class="headerlink" href="#internal-links" title="このヘッドラインへのパーマリンク">¶</a></h5>
 <p>To link to another section of the same document, use the automatically
-generated identifier (see <a class="reference external" href="#header-identifiers">Header identifiers</a>).
-For example:</p>
+generated identifier (see <a class="reference external" href="#header-identifiers">Header identifiers</a>). For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">See</span> <span class="n">the</span> <span class="p">[</span><span class="n">Introduction</span><span class="p">](</span><span class="c1">#introduction).</span>
 </pre></div>
 </div>
@@ -2981,9 +3001,8 @@ and a reference ![image][ref] with attributes.
 [ref]: foo.jpg &quot;optional title&quot; {#id .class key=val key2=&quot;val 2&quot;}
 </pre></div>
 </div>
-<p>(This syntax is compatible with <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown
-Extra</a> when only
-<code class="docutils literal notranslate"><span class="pre">#id</span></code> and <code class="docutils literal notranslate"><span class="pre">.class</span></code> are used.)</p>
+<p>(This syntax is compatible with <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a> when only <code class="docutils literal notranslate"><span class="pre">#id</span></code>
+and <code class="docutils literal notranslate"><span class="pre">.class</span></code> are used.)</p>
 <p>For HTML and EPUB, all attributes except <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> (but
 including <code class="docutils literal notranslate"><span class="pre">srcset</span></code> and <code class="docutils literal notranslate"><span class="pre">sizes</span></code>) are passed through as is. The other
 writers ignore attributes that are not supported by their output format.</p>
@@ -3023,23 +3042,21 @@ embedded in the image file.</p></li>
 <div class="section" id="divs-and-spans">
 <h3>Divs and Spans<a class="headerlink" href="#divs-and-spans" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">native_divs</span></code> and <code class="docutils literal notranslate"><span class="pre">native_spans</span></code> extensions (see
-<a class="reference external" href="#extension-native_divs">above</a>), HTML syntax can be used as part of
-markdown to create native <code class="docutils literal notranslate"><span class="pre">Div</span></code> and <code class="docutils literal notranslate"><span class="pre">Span</span></code> elements in the pandoc
-AST (as opposed to raw HTML). However, there is also nicer syntax
-available:</p>
+<a class="reference external" href="#extension-native_divs">above</a>), HTML syntax can be used as part of markdown to create native
+<code class="docutils literal notranslate"><span class="pre">Div</span></code> and <code class="docutils literal notranslate"><span class="pre">Span</span></code> elements in the pandoc AST (as opposed to raw
+HTML). However, there is also nicer syntax available:</p>
 <div class="section" id="extension-fenced-divs">
 <h4>Extension: <code class="docutils literal notranslate"><span class="pre">fenced_divs</span></code><a class="headerlink" href="#extension-fenced-divs" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Allow special fenced syntax for native <code class="docutils literal notranslate"><span class="pre">Div</span></code> blocks. A Div starts with
 a fence containing at least three consecutive colons plus some
 attributes. The attributes may optionally be followed by another string
 of consecutive colons. The attribute syntax is exactly as in fenced code
-blocks (see <cite>Extension:
-``fenced_code_attributes`</cite> &lt;#extension-fenced_code_attributes&gt;`__). As
-with fenced code blocks, one can use either attributes in curly braces
-or a single unbraced word, which will be treated as a class name. The
-Div ends with another line containing a string of at least three
-consecutive colons. The fenced Div should be separated by blank lines
-from preceding and following blocks.</p>
+blocks (see <a class="reference external" href="#extension-fenced_code_attributes">Extension: ``fenced_code_attributes``</a>). As with fenced
+code blocks, one can use either attributes in curly braces or a single
+unbraced word, which will be treated as a class name. The Div ends with
+another line containing a string of at least three consecutive colons.
+The fenced Div should be separated by blank lines from preceding and
+following blocks.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:::::</span> <span class="p">{</span><span class="c1">#special .sidebar}</span>
 <span class="n">Here</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">paragraph</span><span class="o">.</span>
@@ -3122,8 +3139,8 @@ cannot contain multiple paragraphs). The syntax is as follows:</p>
 </div>
 <div class="section" id="citations">
 <h3>Citations<a class="headerlink" href="#citations" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="section" id="id10">
-<h4>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id68">
+<h4>Extension: <code class="docutils literal notranslate"><span class="pre">citations</span></code><a class="headerlink" href="#id68" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Using an external filter, <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code>, pandoc can automatically
 generate citations and a bibliography in a number of styles. Basic usage
 is</p>
@@ -3189,8 +3206,7 @@ bibliography may have any of these formats:</p>
 from any of the supported formats.</p>
 <p>In-field markup: In BibTeX and BibLaTeX databases, pandoc-citeproc
 parses a subset of LaTeX markup; in CSL YAML databases, pandoc Markdown;
-and in CSL JSON databases, an <a class="reference external" href="http://docs.citationstyles.org/en/1.0/release-notes.html#rich-text-markup-within-fields">HTML-like
-markup</a>:</p>
+and in CSL JSON databases, an <a class="reference external" href="http://docs.citationstyles.org/en/1.0/release-notes.html#rich-text-markup-within-fields">HTML-like markup</a>:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">&lt;i&gt;...&lt;/i&gt;</span></code></dt><dd><p>italics</p>
 </dd>
@@ -3242,13 +3258,11 @@ YAML-encoded references, for example:</p>
 <p>(<code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span> <span class="pre">--bib2yaml</span></code> can produce these from a bibliography
 file in one of the supported formats.)</p>
 <p>Citations and references can be formatted using any style supported by
-the <a class="reference external" href="http://citationstyles.org">Citation Style Language</a>, listed in
-the <a class="reference external" href="https://www.zotero.org/styles">Zotero Style Repository</a>. These
-files are specified using the <code class="docutils literal notranslate"><span class="pre">--csl</span></code> option or the <code class="docutils literal notranslate"><span class="pre">csl</span></code> metadata
-field. By default, <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> will use the <a class="reference external" href="http://chicagomanualofstyle.org">Chicago Manual of
-Style</a> author-date format. The CSL
-project provides further information on <a class="reference external" href="https://citationstyles.org/authors/">finding and editing
-styles</a>.</p>
+the <a class="reference external" href="http://citationstyles.org">Citation Style Language</a>, listed in the <a class="reference external" href="https://www.zotero.org/styles">Zotero Style
+Repository</a>. These files are specified using the <code class="docutils literal notranslate"><span class="pre">--csl</span></code> option or
+the <code class="docutils literal notranslate"><span class="pre">csl</span></code> metadata field. By default, <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> will use the
+<a class="reference external" href="http://chicagomanualofstyle.org">Chicago Manual of Style</a> author-date format. The CSL project provides
+further information on <a class="reference external" href="https://citationstyles.org/authors/">finding and editing styles</a>.</p>
 <p>To make your citations hyperlinks to the corresponding bibliography
 entries, add <code class="docutils literal notranslate"><span class="pre">link-citations:</span> <span class="pre">true</span></code> to your YAML metadata.</p>
 <p>Citations go inside square brackets and are separated by semicolons.
@@ -3264,9 +3278,8 @@ may contain alphanumerics, <code class="docutils literal notranslate"><span clas
 <span class="n">Blah</span> <span class="n">blah</span> <span class="p">[</span><span class="nd">@smith04</span><span class="p">;</span> <span class="nd">@doe99</span><span class="p">]</span><span class="o">.</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> detects locator terms in the <a class="reference external" href="https://github.com/citation-style-language/locales">CSL locale
-files</a>. Either
-abbreviated or unabbreviated forms are accepted. In the <code class="docutils literal notranslate"><span class="pre">en-US</span></code>
+<p><code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> detects locator terms in the <a class="reference external" href="https://github.com/citation-style-language/locales">CSL locale files</a>.
+Either abbreviated or unabbreviated forms are accepted. In the <code class="docutils literal notranslate"><span class="pre">en-US</span></code>
 locale, locator terms can be written in either singular or plural forms,
 as <code class="docutils literal notranslate"><span class="pre">book</span></code>, <code class="docutils literal notranslate"><span class="pre">bk.</span></code>/<code class="docutils literal notranslate"><span class="pre">bks.</span></code>; <code class="docutils literal notranslate"><span class="pre">chapter</span></code>, <code class="docutils literal notranslate"><span class="pre">chap.</span></code>/<code class="docutils literal notranslate"><span class="pre">chaps.</span></code>;
 <code class="docutils literal notranslate"><span class="pre">column</span></code>, <code class="docutils literal notranslate"><span class="pre">col.</span></code>/<code class="docutils literal notranslate"><span class="pre">cols.</span></code>; <code class="docutils literal notranslate"><span class="pre">figure</span></code>, <code class="docutils literal notranslate"><span class="pre">fig.</span></code>/<code class="docutils literal notranslate"><span class="pre">figs.</span></code>;
@@ -3339,15 +3352,12 @@ or not they appear in the document, by using a wildcard:</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>For LaTeX output, you can also use
-<code class="docutils literal notranslate"><span class="pre">`natbib</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/natbib">https://ctan.org/pkg/natbib</a>&gt;`__ or
-<code class="docutils literal notranslate"><span class="pre">`biblatex</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/biblatex">https://ctan.org/pkg/biblatex</a>&gt;`__ to render the
-bibliography. In order to do so, specify bibliography files as outlined
-above, and add <code class="docutils literal notranslate"><span class="pre">--natbib</span></code> or <code class="docutils literal notranslate"><span class="pre">--biblatex</span></code> argument to <code class="docutils literal notranslate"><span class="pre">pandoc</span></code>
-invocation. Bear in mind that bibliography files have to be in
-respective format (either BibTeX or BibLaTeX).</p>
-<p>For more information, see the <a class="reference external" href="https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md">pandoc-citeproc man
-page</a>.</p>
+<p>For LaTeX output, you can also use <code class="docutils literal notranslate"><span class="pre">`natbib```_</span> <span class="pre">or</span> <span class="pre">```biblatex```_</span> <span class="pre">to</span>
+<span class="pre">render</span> <span class="pre">the</span> <span class="pre">bibliography.</span> <span class="pre">In</span> <span class="pre">order</span> <span class="pre">to</span> <span class="pre">do</span> <span class="pre">so,</span> <span class="pre">specify</span> <span class="pre">bibliography</span> <span class="pre">files</span>
+<span class="pre">as</span> <span class="pre">outlined</span> <span class="pre">above,</span> <span class="pre">and</span> <span class="pre">add</span> <span class="pre">``--natbib</span></code> or <code class="docutils literal notranslate"><span class="pre">--biblatex</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">pandoc</span></code> invocation. Bear in mind that bibliography files have to be
+in respective format (either BibTeX or BibLaTeX).</p>
+<p>For more information, see the <a class="reference external" href="https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md">pandoc-citeproc man page</a>.</p>
 </div>
 </div>
 <div class="section" id="non-pandoc-extensions">
@@ -3433,8 +3443,8 @@ parsed inside block-level tags if the tags have the attribute
 </div>
 <div class="section" id="extension-mmd-title-block">
 <h4>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_title_block</span></code><a class="headerlink" href="#extension-mmd-title-block" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>Enables a <a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>
-style title block at the top of the document, for example:</p>
+<p>Enables a <a class="reference external" href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a> style title block at the top of the document,
+for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Title</span><span class="p">:</span>   <span class="n">My</span> <span class="n">title</span>
 <span class="n">Author</span><span class="p">:</span>  <span class="n">John</span> <span class="n">Doe</span>
 <span class="n">Date</span><span class="p">:</span>    <span class="n">September</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2008</span>
@@ -3465,7 +3475,7 @@ braces <code class="docutils literal notranslate"><span class="pre">&lt;...&gt;<
 <h4>Extension: <code class="docutils literal notranslate"><span class="pre">mmd_link_attributes</span></code><a class="headerlink" href="#extension-mmd-link-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Parses multimarkdown style key-value attributes on link and image
 references. This extension should not be confused with the
-<code class="docutils literal notranslate"><span class="pre">`link_attributes</span></code> &lt;#extension-link_attributes&gt;`__ extension.</p>
+<a href="#id69"><span class="problematic" id="id70">``</span></a><a href="#id162"><span class="problematic" id="id163">`link_attributes```_</span></a> extension.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>This is a reference ![image][ref] with multimarkdown attributes.
 
 [ref]: http://path.to/image &quot;Image title&quot; width=20px height=30px
@@ -3481,8 +3491,8 @@ the header but before any trailing <code class="docutils literal notranslate"><s
 <div class="section" id="extension-compact-definition-lists">
 <h4>Extension: <code class="docutils literal notranslate"><span class="pre">compact_definition_lists</span></code><a class="headerlink" href="#extension-compact-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Activates the definition list syntax of pandoc 1.12.x and earlier. This
-syntax differs from the one described above under <a class="reference external" href="#definition-lists">Definition
-lists</a> in several respects:</p>
+syntax differs from the one described above under <a class="reference external" href="#definition-lists">Definition lists</a> in
+several respects:</p>
 <ul class="simple">
 <li><p>No blank line is required between consecutive items of the definition
 list.</p></li>
@@ -3490,7 +3500,7 @@ list.</p></li>
 items; the space between a term and its definition does not affect
 anything.</p></li>
 <li><p>Lazy wrapping of paragraphs is not allowed: the entire definition
-must be indented four spaces. <a class="footnote-reference brackets" href="#id16" id="id11">5</a></p></li>
+must be indented four spaces. <a class="footnote-reference brackets" href="#id78" id="id71">5</a></p></li>
 </ul>
 </div>
 </div>
@@ -3545,7 +3555,11 @@ work. The extensions can, however, all be individually disabled. Also,
 </div>
 <div class="section" id="producing-slide-shows-with-pandoc">
 <h2>スライドショーをPandocで生成する<a class="headerlink" href="#producing-slide-shows-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Pandocを使うと、HTML + JavaScript のスライドプレゼンテーション (Webブラウザで閲覧可能) を生成できます。5つの形式があります:  <a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a> 、 <a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a> 、 <a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a> 、 <a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a> 、 <a class="reference external" href="http://lab.hakim.se/reveal-js/">reveal.js</a> 。あるいは、LaTeX  <code class="docutils literal notranslate"><span class="pre">`beamer</span></code> &lt;<a class="reference external" href="https://ctan.org/pkg/beamer">https://ctan.org/pkg/beamer</a>&gt;`__ や Microsoft  <a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> 形式によって、 PDFスライドショーを生成することもできます。</p>
+<p>You can use pandoc to produce an HTML + JavaScript slide presentation
+that can be viewed via a web browser. There are five ways to do this,
+using <a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a>, <a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a>, <a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a>, <a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a>, or <a class="reference external" href="http://lab.hakim.se/reveal-js/">reveal.js</a>. You
+can also produce a PDF slide show using LaTeX <a href="#id72"><span class="problematic" id="id73">``</span></a><a href="#id164"><span class="problematic" id="id165">`beamer```_</span></a>, or slides
+shows in Microsoft <a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> format.</p>
 <p>シンプルなスライドショーを作成するMarkdownソース  <code class="docutils literal notranslate"><span class="pre">habits.txt</span></code> の例を示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% Habits
 % John Doe
@@ -3585,7 +3599,15 @@ work. The extensions can, however, all be individually disabled. Also,
 </pre></div>
 </div>
 <p>ここで <code class="docutils literal notranslate"><span class="pre">FORMAT</span></code> は <code class="docutils literal notranslate"><span class="pre">s5</span></code> 、 <code class="docutils literal notranslate"><span class="pre">slidy</span></code> 、 <code class="docutils literal notranslate"><span class="pre">slideous</span></code> 、 <code class="docutils literal notranslate"><span class="pre">dzslides</span></code> または <code class="docutils literal notranslate"><span class="pre">revealjs</span></code> のいずれかです。</p>
-<p>Slidy、Slideous、reveal.js、またはS5の場合、 <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> オプション付きで出力されたファイルには、JavaScriptおよびCSSファイルへのリンクが埋め込まれます。既定では、それらのファイルはそれぞれ次の相対パスにおいて有効とみなされます: <code class="docutils literal notranslate"><span class="pre">s5/default</span></code> (S5の場合) 、 <code class="docutils literal notranslate"><span class="pre">slideous</span></code> (Slideousの場合) 、 <code class="docutils literal notranslate"><span class="pre">reveal.js</span></code> (reveal.jsの場合) 、 <code class="docutils literal notranslate"><span class="pre">w3.org</span></code> 上のSlidyのWebサイト (for Slidy) (これらのパスは、それぞれ変数 <code class="docutils literal notranslate"><span class="pre">s5-url</span></code> 、 <code class="docutils literal notranslate"><span class="pre">slideous-url</span></code> 、  <code class="docutils literal notranslate"><span class="pre">revealjs-url</span></code> 、 <code class="docutils literal notranslate"><span class="pre">slidy-url</span></code> にて変更できます)。DZSlidesについては、既定では（比較的短い）JavaScriptとCSSが出力ファイルに含まれます。</p>
+<p>For Slidy, Slideous, reveal.js, and S5, the file produced by pandoc with
+the <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> option embeds a link to JavaScript and CSS
+files, which are assumed to be available at the relative path
+<code class="docutils literal notranslate"><span class="pre">s5/default</span></code> (for S5), <code class="docutils literal notranslate"><span class="pre">slideous</span></code> (for Slideous), <code class="docutils literal notranslate"><span class="pre">reveal.js</span></code> (for
+reveal.js), or at the Slidy website at <code class="docutils literal notranslate"><span class="pre">w3.org</span></code> (for Slidy). (These
+paths can be changed by setting the <code class="docutils literal notranslate"><span class="pre">slidy-url</span></code>, <code class="docutils literal notranslate"><span class="pre">slideous-url</span></code>,
+<code class="docutils literal notranslate"><span class="pre">revealjs-url</span></code>, or <code class="docutils literal notranslate"><span class="pre">s5-url</span></code> variables; see <a class="reference external" href="#variables-for-slides">Variables for slides</a>,
+above.) For DZSlides, the (relatively short) JavaScript and CSS are
+included in the file by default.</p>
 <p>すべてのHTMLスライド形式において、 <code class="docutils literal notranslate"><span class="pre">--self-contained</span></code> オプションを用いることで、画面にスライドショーを表示するためのすべてのデータ (スクリプト、スタイルシート、画像および動画) を含めて、単一ファイルとして出力できます。</p>
 <p>beamerでPDFスライドショーを出力するには、次のように実行します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">t</span> <span class="n">beamer</span> <span class="n">habits</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">o</span> <span class="n">habits</span><span class="o">.</span><span class="n">pdf</span>
@@ -3598,7 +3620,7 @@ work. The extensions can, however, all be individually disabled. Also,
 </div>
 <div class="section" id="structuring-the-slide-show">
 <h3>スライドショーの構造をつくる<a class="headerlink" href="#structuring-the-slide-show" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>既定では、 <em>スライドレベル (slide level)</em> は、文書中のどこかの位置において、(他のヘッダではなく) コンテンツが直ちに次に現れるような、ヘッダ階層の中で最も高いレベルのヘッダです。上記の例では (訳注: <code class="docutils literal notranslate"><span class="pre">habits.txt</span></code> )、常にレベル 1 ヘッダ (訳注: <cite># ` で始まる) に続いて、レベル 2 ヘッダ (訳注: `## ` で始まる) が置かれます。そのレベル 2 ヘッダに続いて、コンテンツが置かれます。つまり、いまは 2 がスライドレベルです。この既定動作は `</cite>–slide-level``  オプションで変更できます。</p>
+<p>既定では、 <em>スライドレベル (slide level)</em> は、文書中のどこかの位置において、(他のヘッダではなく) コンテンツが直ちに次に現れるような、ヘッダ階層の中で最も高いレベルのヘッダです。上記の例では (訳注: <code class="docutils literal notranslate"><span class="pre">habits.txt</span></code> )、常にレベル 1 ヘッダ (訳注: <cite># ` で始まる) に続いて、レベル 2 ヘッダ (訳注: `## ` で始まる) が置かれます。そのレベル 2 ヘッダに続いて、コンテンツが置かれます。つまり、いまは 2 がスライドレベルです。この既定動作は `</cite>--slide-level``  オプションで変更できます。</p>
 <p>1つの文書は、次のルールによっていくつかのスライドに分割されます:</p>
 <ul class="simple">
 <li><p>水平線は、常に新しいスライドを開始する。</p></li>
@@ -3655,7 +3677,8 @@ work. The extensions can, however, all be individually disabled. Also,
 <h3>スライドのスタイルを変える<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>特定の場所にカスタム済のCSSファイルを配置することで、HTMLスライドの変更できます。その場所は <code class="docutils literal notranslate"><span class="pre">$DATADIR/s5/default</span></code> (S5の場合)、 <code class="docutils literal notranslate"><span class="pre">$DATADIR/slidy</span></code> (Slidyの場合)、および <code class="docutils literal notranslate"><span class="pre">$DATADIR/slideous</span></code> (Slideousの場合) です。ただし <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> はユーザデータディレクトリです。 (上記の <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照)。元のCSSファイルはPandocのシステムデータディレクトリ (通常は  <code class="docutils literal notranslate"><span class="pre">$CABALDIR/pandoc-VERSION/s5/default</span></code>) にあります。Pandocはまずユーザデータディレクトリでファイルを検索し、何も見つからない場合にシステムデータディレクトリを検索します。</p>
 <p>dzslidesについては、HTMLファイル自身の中に必要なCSSが含まれます。CSSが変更される場合も同様です。</p>
-<p>すべての <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js 設定オプション</a> は、テンプレート変数を通して設定されます。たとえば、テーマの設定は <code class="docutils literal notranslate"><span class="pre">theme</span></code> 変数を用います:</p>
+<p>All <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js configuration options</a> can be set through variables. For
+example, themes can be used by setting the <code class="docutils literal notranslate"><span class="pre">theme</span></code> variable:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">V</span> <span class="n">theme</span><span class="o">=</span><span class="n">moon</span>
 </pre></div>
 </div>
@@ -3705,7 +3728,10 @@ work. The extensions can, however, all be individually disabled. Also,
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fragile slide {.fragile}</span>
 </pre></div>
 </div>
-<p>他のすべてのフレーム属性 (<a class="reference external" href="http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/beamer/doc/beameruserguide.pdf">Beamer User’s Guide</a> の8.1節に書かれているもの) のうち、使用できるものは次のとおりです:  <code class="docutils literal notranslate"><span class="pre">allowdisplaybreaks</span></code> 、 <code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code> 、 <code class="docutils literal notranslate"><span class="pre">b</span></code> 、 <code class="docutils literal notranslate"><span class="pre">c</span></code> 、 <code class="docutils literal notranslate"><span class="pre">t</span></code> 、 <code class="docutils literal notranslate"><span class="pre">environment</span></code> 、 <code class="docutils literal notranslate"><span class="pre">label</span></code> 、 <code class="docutils literal notranslate"><span class="pre">plain</span></code> 、 <code class="docutils literal notranslate"><span class="pre">shrink</span></code> 、 <code class="docutils literal notranslate"><span class="pre">standout</span></code> 、 <code class="docutils literal notranslate"><span class="pre">noframenumbering</span></code> 。</p>
+<p>All of the other frame attributes described in Section 8.1 of the
+<a class="reference external" href="http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/beamer/doc/beameruserguide.pdf">Beamer User’s Guide</a> may also be used: <code class="docutils literal notranslate"><span class="pre">allowdisplaybreaks</span></code>,
+<code class="docutils literal notranslate"><span class="pre">allowframebreaks</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">c</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">environment</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>,
+<code class="docutils literal notranslate"><span class="pre">plain</span></code>, <code class="docutils literal notranslate"><span class="pre">shrink</span></code>, <code class="docutils literal notranslate"><span class="pre">standout</span></code>, <code class="docutils literal notranslate"><span class="pre">noframenumbering</span></code>.</p>
 </div>
 <div class="section" id="background-in-reveal-js-and-beamer">
 <h3>スライドの背景 (reveal.js / Beamer)<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -3715,7 +3741,7 @@ work. The extensions can, however, all be individually disabled. Also,
 <p>背景画像を個別のreveal.jsスライドに設定するには、 <code class="docutils literal notranslate"><span class="pre">{data-background-image=&quot;/path/to/image&quot;}</span></code> を、そのスライドにおける最初のスライドレベルのヘッダに追加します。(このヘッダ自体は空スライドを生成するものであってもかまいません)</p>
 <p>reveal.jsのoverviewモード (訳注: 複数スライドを一覧できるモード) においては、parallaxBackgroundImageは最初のスライドのものを表示します。</p>
 <p>その他のreveal.js用背景設定のうち、個別のスライドに対して適用できるものは次のとおりです:  <code class="docutils literal notranslate"><span class="pre">data-background-size</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-background-repeat</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-background-color</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-transition</span></code> 、 <code class="docutils literal notranslate"><span class="pre">data-transition-speed</span></code> 。</p>
-<p>詳細は <a class="reference external" href="https://github.com/hakimel/reveal.js#slide-backgrounds">reveal.js のドキュメント</a> をご覧ください。</p>
+<p>See the <a class="reference external" href="https://github.com/hakimel/reveal.js#slide-backgrounds">reveal.js documentation</a> for more details.</p>
 <p>reveal.jsスライドショーをつくる例を示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">title</span><span class="p">:</span> <span class="n">My</span> <span class="n">Slideshow</span>
@@ -3737,7 +3763,9 @@ work. The extensions can, however, all be individually disabled. Also,
 <h2>EPUB を Pandoc でつくる<a class="headerlink" href="#creating-epubs-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="epub-metadata">
 <h3>EPUB メタデータ<a class="headerlink" href="#epub-metadata" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>EPUB メタデータは <code class="docutils literal notranslate"><span class="pre">--epub-metadata</span></code> オプションを使うことで指定できます。しかし、ソース文書が  Markdown の場合は、 <a class="reference external" href="#extension-yaml_metadata_block">YAML メタデータブロック</a> を使うとよいでしょう。例を示します：</p>
+<p>EPUB metadata may be specified using the <code class="docutils literal notranslate"><span class="pre">--epub-metadata</span></code> option, but
+if the source document is Markdown, it is better to use a <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata
+block</a>. Here is an example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>---
 title:
 - type: main
@@ -3766,13 +3794,18 @@ ibooks:
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">title</span></code></dt><dd><p>文字列値、またはフィールド  <code class="docutils literal notranslate"><span class="pre">file-as</span></code> および <code class="docutils literal notranslate"><span class="pre">type</span></code> のオブジェクト、またはこのようなオブジェクトのリスト。<code class="docutils literal notranslate"><span class="pre">type</span></code> の有効な値は <code class="docutils literal notranslate"><span class="pre">main</span></code> 、 <code class="docutils literal notranslate"><span class="pre">subtitle</span></code> 、 <code class="docutils literal notranslate"><span class="pre">short</span></code> 、 <code class="docutils literal notranslate"><span class="pre">collection</span></code> 、 <code class="docutils literal notranslate"><span class="pre">edition</span></code> 、 <code class="docutils literal notranslate"><span class="pre">extended</span></code> 。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">creator</span></code></dt><dd><p>文字列値、または フィールド <code class="docutils literal notranslate"><span class="pre">role</span></code> 、 <code class="docutils literal notranslate"><span class="pre">file-as</span></code> および <code class="docutils literal notranslate"><span class="pre">text</span></code> のオブジェクト、またはこのようなオブジェクトのリスト。 <code class="docutils literal notranslate"><span class="pre">role</span></code> として有効な値は <a class="reference external" href="http://loc.gov/marc/relators/relaterm.html">MARC relators</a> を参照。しかし Pandoc は human-readable なバージョン ( “author” や “editor” など) を、適切な MARC relatorsに変換しようとします。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">creator</span></code></dt><dd><p>Either a string value, or an object with fields <code class="docutils literal notranslate"><span class="pre">role</span></code>,
+<code class="docutils literal notranslate"><span class="pre">file-as</span></code>, and <code class="docutils literal notranslate"><span class="pre">text</span></code>, or a list of such objects. Valid values
+for <code class="docutils literal notranslate"><span class="pre">role</span></code> are <a class="reference external" href="http://loc.gov/marc/relators/relaterm.html">MARC relators</a>, but pandoc will attempt to
+translate the human-readable versions (like “author” and “editor”) to
+the appropriate marc relators.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">contributor</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">creator</span></code> と同じ形式。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">date</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code> 形式の文字列 (年 <code class="docutils literal notranslate"><span class="pre">YYYY</span></code> は必要な場合のみ)。 Pandoc は他の一般的な日時フォーマットを変換しようとします。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">lang</span></code> (古い形式: <code class="docutils literal notranslate"><span class="pre">language</span></code>)</dt><dd><p><a class="reference external" href="https://tools.ietf.org/html/bcp47">BCP 47</a> 形式の文字列. これが指定されていない場合、Pandocはローカルの言語を既定とします。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">lang</span></code> (古い形式: <code class="docutils literal notranslate"><span class="pre">language</span></code>)</dt><dd><p>A string value in <a class="reference external" href="https://tools.ietf.org/html/bcp47">BCP 47</a> format. Pandoc will default to the local
+language if nothing is specified.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">subject</span></code></dt><dd><p>文字列値、またはその値のリスト。</p>
 </dd>
@@ -3792,7 +3825,9 @@ ibooks:
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">css</span></code> (古い形式: <code class="docutils literal notranslate"><span class="pre">stylesheet</span></code>)</dt><dd><p>文字列値（CSSスタイルシートへのパス）</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">page-progression-direction</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">ltr</span></code> (left-to-right) もしくは <code class="docutils literal notranslate"><span class="pre">rtl</span></code> (right-to-left) 。<code class="docutils literal notranslate"><span class="pre">`spine</span></code> 要素 &lt;<a class="reference external" href="http://idpf.org/epub/301/spec/epub-publications.html#sec-spine-elem">http://idpf.org/epub/301/spec/epub-publications.html#sec-spine-elem</a>&gt;`__ に対する <code class="docutils literal notranslate"><span class="pre">page-progression-direction</span></code> 属性を指定。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">page-progression-direction</span></code></dt><dd><p>Either <code class="docutils literal notranslate"><span class="pre">ltr</span></code> or <code class="docutils literal notranslate"><span class="pre">rtl</span></code>. Specifies the
+<code class="docutils literal notranslate"><span class="pre">page-progression-direction</span></code> attribute for the <code class="docutils literal notranslate"><span class="pre">`spine</span></code>
+element`_.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">ibooks</span></code></dt><dd><p>iBooks 特有のメタデータ。下記のフィールドが有効：</p>
 <ul class="simple">
@@ -3810,7 +3845,9 @@ ibooks:
 </div>
 <div class="section" id="the-epub-type-attribute">
 <h3><code class="docutils literal notranslate"><span class="pre">epub:type</span></code> 属性<a class="headerlink" href="#the-epub-type-attribute" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">epub3</span></code> 出力向けに、ユーザは <code class="docutils literal notranslate"><span class="pre">`epub:type</span></code> 属性 &lt;<a class="reference external" href="http://www.idpf.org/epub/31/spec/epub-contentdocs.html#sec-epub-type-attribute">http://www.idpf.org/epub/31/spec/epub-contentdocs.html#sec-epub-type-attribute</a>&gt;`__ を使って、EPUB チャプターに対応するヘッダをマークアップできます (訳注: <a class="reference external" href="https://www.slideshare.net/lost_and_found/epub-16332538">EPUBのナビゲーションを理解しよう</a> も参照)。たとえば、この属性に値 <code class="docutils literal notranslate"><span class="pre">prologue</span></code> をセットするには、下記のようなMarkdownを記述します：</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">epub3</span></code> output, you can mark up the header that corresponds to an
+EPUB chapter using the <code class="docutils literal notranslate"><span class="pre">`epub:type</span></code> attribute`_. For example, to set
+the attribute to the value <code class="docutils literal notranslate"><span class="pre">prologue</span></code>, use this markdown:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># My chapter {epub:type=prologue}</span>
 </pre></div>
 </div>
@@ -3897,7 +3934,12 @@ ibooks:
 </div>
 <div class="section" id="syntax-highlighting">
 <h2>シンタックスハイライト<a class="headerlink" href="#syntax-highlighting" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Pandocは <a class="reference external" href="#fenced-code-blocks">囲いコードブロック</a> に対して、指定された言語名に応じたシンタックスハイライトを自動的に適用します。シンタックスハイライトには、Haskell ライブラリ <a class="reference external" href="https://github.com/jgm/skylighting">skylighting</a> が使用されます。現在、シンタックスハイライトは HTML 、 EPUB 、 docx 、 ms 、および LaTeX/PDF 出力に適用されます。Pandocが認識する言語名の一覧を見るには、 <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-highlight-languages</span></code> を実行します。</p>
+<p>Pandoc will automatically highlight syntax in <a class="reference external" href="#fenced-code-blocks">fenced code blocks</a> that
+are marked with a language name. The Haskell library <a class="reference external" href="https://github.com/jgm/skylighting">skylighting</a> is
+used for highlighting. Currently highlighting is supported only for
+HTML, EPUB, Docx, Ms, and LaTeX/PDF output. To see a list of language
+names that pandoc will recognize, type
+<code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-highlight-languages</span></code>.</p>
 <p>カラースキームは <code class="docutils literal notranslate"><span class="pre">--highlight-style</span></code> オプションによって選択できます。既定のカラースキームは <code class="docutils literal notranslate"><span class="pre">pygments</span></code> で、これはPythonライブラリの pygments を真似たものです (ただしPandocの中では、実際の pygments はシンタックスハイライトに利用されません)。ハイライトスタイルの一覧を見るには、 <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-highlight-styles</span></code> を実行してください。</p>
 <p>既定のハイライトスタイルに満足できない場合には、 <code class="docutils literal notranslate"><span class="pre">--print-highlight-style</span></code> によってJSON形式の <code class="docutils literal notranslate"><span class="pre">.theme</span></code> ファイルを出力することで、ハイライトスタイルを変更して <code class="docutils literal notranslate"><span class="pre">--highlight-style</span></code> の引数として与えることで、カスタマイズが可能です。たとえば、 <code class="docutils literal notranslate"><span class="pre">pygments</span></code> スタイルのJSONファイルを得るには、次を実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="nb">print</span><span class="o">-</span><span class="n">highlight</span><span class="o">-</span><span class="n">style</span> <span class="n">pygments</span> <span class="o">&gt;</span> <span class="n">my</span><span class="o">.</span><span class="n">theme</span>
@@ -3907,7 +3949,11 @@ ibooks:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="n">highlight</span><span class="o">-</span><span class="n">style</span> <span class="n">my</span><span class="o">.</span><span class="n">theme</span>
 </pre></div>
 </div>
-<p>それでも内蔵のハイライトに満足できない場合や、サポートされていない言語に対するハイライトが必要な場合には、 <code class="docutils literal notranslate"><span class="pre">--syntax-definition</span></code> オプションを使って <a class="reference external" href="https://docs.kde.org/stable5/en/applications/katepart/highlight.html">KDE-style XML syntax definition file</a> を読み込むことも可能です。自分でファイルを書く前に、KDEの <a class="reference external" href="https://github.com/KDE/syntax-highlighting/tree/master/data/syntax">repository of syntax definitions</a> もご覧ください。</p>
+<p>If you are not satisfied with the built-in highlighting, or you want
+highlight a language that isn’t supported, you can use the
+<code class="docutils literal notranslate"><span class="pre">--syntax-definition</span></code> option to load a <a class="reference external" href="https://docs.kde.org/stable5/en/applications/katepart/highlight.html">KDE-style XML syntax
+definition file</a>. Before writing your own, have a look at KDE’s
+<a class="reference external" href="https://github.com/KDE/syntax-highlighting/tree/master/data/syntax">repository of syntax definitions</a>.</p>
 <p>シンタックスハイライトを無効にするには、 <code class="docutils literal notranslate"><span class="pre">--no-highlight</span></code> オプションを使います。</p>
 </div>
 <div class="section" id="custom-styles-in-docx">
@@ -3915,7 +3961,11 @@ ibooks:
 <div class="section" id="input">
 <h3>入力<a class="headerlink" href="#input" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>通常、docx Readerはスタイルの読み込みにおいて、Pandocの要素に直接変換できるもの、または入力文書のスタイルの派生として解釈できるもののみを読み込みます。</p>
-<p>docx Reader  (<code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">docx+styles</span></code>) において <code class="docutils literal notranslate"><span class="pre">`styles</span></code> 拡張 &lt;#ext-styles&gt;`__ を有効にすることで、入力文書のスタイルを <code class="docutils literal notranslate"><span class="pre">custom-style</span></code> class として保持した出力を得られます。段落スタイルは div として解釈され、文字スタイルは span として解釈されます。</p>
+<p>By enabling the <code class="docutils literal notranslate"><span class="pre">`styles</span></code> extension`_ in the docx reader
+(<code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">docx+styles</span></code>), you can produce output that maintains the styles
+of the input document, using the <code class="docutils literal notranslate"><span class="pre">custom-style</span></code> class. Paragraph
+styles are interpreted as divs, while character styles are interpreted
+as spans.</p>
 <p>例えば、テストディレクトリ中の <code class="docutils literal notranslate"><span class="pre">custom-style-reference.docx</span></code> を使うことで、次のような異なる出力を得ることが出来ます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">+styles</span></code> 拡張がない場合:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pandoc test/docx/custom-style-reference.docx -f docx -t markdown
@@ -3965,12 +4015,19 @@ text style.
 </div>
 <p>は、段落スタイル <code class="docutils literal notranslate"><span class="pre">Poetry</span></code> をその中の2行に適用します。</p>
 <p>あるスタイルが reference.docx の中で見つからない場合は、そのスタイルは出力ファイルの中で、通常のテキストから継承された形で定義されます。すでにスタイルが定義されている場合は、Pandocはその定義を変更しません。</p>
-<p>この機能と <a class="reference external" href="http://pandoc.org/filters.html">Pandoc フィルタ</a> を併用することで、すばらしいカスタマイズを実現できます。たとえば、引用の後に続くすべての段落をインデントしたい場合には、必要なスタイルを適用するフィルタを書けばよいのです。また、すべての斜体を <code class="docutils literal notranslate"><span class="pre">Emphasis</span></code> 文字スタイルに変換したい場合には (もしかしたら文字色が変わるかもしれません)、斜体となっているすべてのインラインを custom-style <code class="docutils literal notranslate"><span class="pre">Emphasis</span></code> が適用された <code class="docutils literal notranslate"><span class="pre">span</span></code> に変換するフィルタを書けばよいでしょう。</p>
+<p>This feature allows for greatest customization in conjunction with
+<a class="reference external" href="http://pandoc.org/filters.html">pandoc filters</a>. If you want all paragraphs after block quotes to be
+indented, you can write a filter to apply the styles necessary. If you
+want all italics to be transformed to the <code class="docutils literal notranslate"><span class="pre">Emphasis</span></code> character style
+(perhaps to change their color), you can write a filter which will
+transform all italicized inlines to inlines within an <code class="docutils literal notranslate"><span class="pre">Emphasis</span></code>
+custom-style <code class="docutils literal notranslate"><span class="pre">span</span></code>.</p>
 </div>
 </div>
 <div class="section" id="custom-writers">
 <h2>カスタム Writer<a class="headerlink" href="#custom-writers" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Pandoc は <a class="reference external" href="http://www.lua.org">lua</a> で書かれたカスタム Writer によって拡張することができます。 (Pandoc には Lua インタプリタが内蔵されているため、個別に Lua をインストールする必要はありません。)</p>
+<p>Pandoc can be extended with custom writers written in <a class="reference external" href="http://www.lua.org">lua</a>. (Pandoc
+includes a lua interpreter, so lua need not be installed separately.)</p>
 <p>カスタム Writer を使用するには、単に Lua スクリプトへのパスを出力形式として指定するだけです。例えば:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">t</span> <span class="n">data</span><span class="o">/</span><span class="n">sample</span><span class="o">.</span><span class="n">lua</span>
 </pre></div>
@@ -3985,7 +4042,11 @@ text style.
 <p>Pandoc を使用して Web アプリケーションのユーザー提供コンテンツを変換する場合には、次の点に注意してください:</p>
 <ol class="arabic simple">
 <li><p>明示的に作成することを要求するもの以外に、Pandoc 自体はファイルを作成または改変することはありませんが(PDF の作成に使用される一時ファイルを除きます)、フィルタまたはカスタムWriterは、原則としてファイルシステム上でファイルの作成や改変などを行うことができます。フィルタとカスタム Writer を使用する前に、それらを十分注意深く検証してください。</p></li>
-<li><p>自身のアプリケーションにおいてPandocを（実行ファイルとしてではなく）Haskellライブラリとしてを利用する場合は、 <code class="docutils literal notranslate"><span class="pre">PandocPure</span></code>  モナドの中でPandocの操作を行うことで、ファイルシステムから完全に隔離された環境でPandocを実行できます。詳しくは <a class="reference external" href="http://pandoc.org/using-the-pandoc-api.html">Using the pandoc API</a> をご覧ください。</p></li>
+<li><p>If your application uses pandoc as a Haskell library (rather than
+shelling out to the executable), it is possible to use it in a mode
+that fully isolates pandoc from your file system, by running the
+pandoc operations in the <code class="docutils literal notranslate"><span class="pre">PandocPure</span></code> monad. See the document
+<a class="reference external" href="http://pandoc.org/using-the-pandoc-api.html">Using the pandoc API</a> for more details.</p></li>
 <li><p>Pandocのパーサは、めったに起こらないいくつかの厄介なケースにおいて、病的な振る舞いをすることがあります。セキュリティ上の穴を悪用するDOS攻撃を防ぐために、Pandocにおけるあらゆる操作は一定時間内に終わらせる方がよいでしょう。実行ファイルのPandocを利用する場合は、コマンドラインオプションとしてたとえば <code class="docutils literal notranslate"><span class="pre">+RTS</span> <span class="pre">-M512M</span> <span class="pre">-RTS</span></code> （ヒープサイズを512MBに制限する）といったものを指定できます。</p></li>
 <li><p>Pandocが出力するHTMLは、安全であることを保証しません。Markdown入力時において <code class="docutils literal notranslate"><span class="pre">raw_html</span></code> が有効になっている場合、ユーザは任意のHTMLを挿入できます。 <code class="docutils literal notranslate"><span class="pre">raw_html</span></code> が無効の場合でさえ、ユーザはヘッダ、span、およびコードブロックの属性に、危険なコンテンツを含めることが可能です。安全のために、出力されるすべてのHTMLはHTMLサニタイザを通してください。</p></li>
 </ol>
@@ -3993,12 +4054,12 @@ text style.
 <div class="section" id="authors">
 <h2>原文の著者について<a class="headerlink" href="#authors" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Copyright 2006-2017 John MacFarlane (<a class="reference external" href="mailto:jgm&#37;&#52;&#48;berkeley&#46;edu">jgm<span>&#64;</span>berkeley<span>&#46;</span>edu</a>). Released under
-the <a class="reference external" href="http://www.gnu.org/copyleft/gpl.html">GPL</a>, version 2 or
-greater. This software carries no warranty of any kind. (See COPYRIGHT
-for full copyright and warranty notices.) For a full list of
-contributors, see the file AUTHORS.md in the pandoc source code.</p>
+the <a class="reference external" href="http://www.gnu.org/copyleft/gpl.html">GPL</a>, version 2 or greater. This software carries no warranty of
+any kind. (See COPYRIGHT for full copyright and warranty notices.) For a
+full list of contributors, see the file AUTHORS.md in the pandoc source
+code.</p>
 <dl class="footnote brackets">
-<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dt class="label" id="id74"><span class="brackets"><a class="fn-backref" href="#id29">1</a></span></dt>
 <dd><p>To make <code class="docutils literal notranslate"><span class="pre">subtitle</span></code> work with other LaTeX document classes, you can
 add the following to <code class="docutils literal notranslate"><span class="pre">header-includes</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">providecommand</span><span class="p">{</span>\<span class="n">subtitle</span><span class="p">}[</span><span class="mi">1</span><span class="p">]{</span><span class="o">%</span>
@@ -4009,7 +4070,7 @@ add the following to <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 </dd>
-<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dt class="label" id="id75"><span class="brackets"><a class="fn-backref" href="#id56">2</a></span></dt>
 <dd><p>The point of this rule is to ensure that normal paragraphs starting
 with people’s initials, like</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">B</span><span class="o">.</span> <span class="n">Russell</span> <span class="n">was</span> <span class="n">an</span> <span class="n">English</span> <span class="n">philosopher</span><span class="o">.</span>
@@ -4026,16 +4087,14 @@ escape can be used:</p>
 </pre></div>
 </div>
 </dd>
-<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p>I have been influenced by the suggestions of <a class="reference external" href="http://www.justatheory.com/computers/markup/modest-markdown-proposal.html">David
-Wheeler</a>.</p>
+<dt class="label" id="id76"><span class="brackets"><a class="fn-backref" href="#id57">3</a></span></dt>
+<dd><p>I have been influenced by the suggestions of <a class="reference external" href="http://www.justatheory.com/computers/markup/modest-markdown-proposal.html">David Wheeler</a>.</p>
 </dd>
-<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dt class="label" id="id77"><span class="brackets"><a class="fn-backref" href="#id58">4</a></span></dt>
 <dd><p>This scheme is due to Michel Fortin, who proposed it on the <a class="reference external" href="http://six.pairlist.net/pipermail/markdown-discuss/2005-March/001097.html">Markdown
-discussion
-list</a>.</p>
+discussion list</a>.</p>
 </dd>
-<dt class="label" id="id16"><span class="brackets"><a class="fn-backref" href="#id11">5</a></span></dt>
+<dt class="label" id="id78"><span class="brackets"><a class="fn-backref" href="#id71">5</a></span></dt>
 <dd><p>To see why laziness is incompatible with relaxing the requirement of
 a blank line between items, consider the following example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bar</span>
