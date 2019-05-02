@@ -126,7 +126,7 @@ msgstr ""
 msgid ""
 "For more information on how standalone documents are produced, see "
 "`Templates`_ below."
-msgstr ""
+msgstr "スタンドアロン文書がどのように生成されるかについての詳細は、下記の `Templates`_ を参照してください。"
 
 #: ../../users-guide.rst:65
 msgid ""
@@ -533,7 +533,9 @@ msgstr "``beamer`` (`LaTeX beamer`_ スライドショー)"
 
 #: ../../users-guide.rst:255
 msgid "``context`` (`ConTeXt`_)"
-msgstr "``context`` (`ConTeXt`_)"
+msgstr ""
+"``context`` (`ConTeXt`_) (訳注: "
+"TeXのマクロパッケージの1つ。LaTeXとはまったく異なるマクロ体系を持ち、LuaTeXと一体的に開発が進められている)"
 
 #: ../../users-guide.rst:256
 msgid "``docbook`` or ``docbook4`` (`DocBook`_ 4)"
@@ -824,7 +826,7 @@ msgstr "``--base-header-level=``\\ *NUMBER*"
 
 #: ../../users-guide.rst:384
 msgid "Specify the base level for headings (defaults to 1)."
-msgstr ""
+msgstr "ヘッダのベースレベルを指定します（デフォルトは1）。"
 
 #: ../../users-guide.rst:390
 msgid "``--strip-empty-paragraphs``"
@@ -913,6 +915,11 @@ msgid ""
 "installable from PyPI. There are also pandoc filter libraries in `PHP`_, "
 "`perl`_, and `JavaScript/node.js`_."
 msgstr ""
+"JSONフィルタは任意のプログラミング言語で書けます。HaskellでJSONフィルタを書く場合は、その手助けとして "
+"``Text.Pandoc.JSON`` モジュールの ``toJSONFilter`` "
+"関数を利用できます。PythonでJSONフィルタを書きたい場合は、PyPIからインストールできる  ```pandocfilters```_ "
+"モジュールが利用可能です。他にもJSONフィルタ用のライブラリはいくつか存在し、 `PHP`_, `perl`_, "
+"`JavaScript/node.js`_ で利用できます。"
 
 #: ../../users-guide.rst:436
 msgid "In order of preference, pandoc will look for filters in"
@@ -989,6 +996,11 @@ msgid ""
 "output formats) and metadata values will be escaped when inserted into the "
 "template."
 msgstr ""
+"メタデータフィールド *KEY* を値 *VAL* に設定します。コマンドラインで指定された値は `YAML metadata blocks`_ "
+"を使用して文書で指定された値を上書きしてしまいます。値は YAMLの真偽値または文字列値としてパースされます。値が指定されていない場合、値は真偽値 "
+"true として扱われます。 ``--variable`` と同様に、 ``--metadata`` はテンプレート変数を設定します。しかし、 "
+"``--variable`` とは異なり、 ``--metadata`` "
+"は基になる文書中のメタデータ（フィルタからアクセス可能で、一部の出力書式で印刷されるかもしれません）に影響し、メタデータの値はテンプレートに挿入されるとエスケープされます。"
 
 #: ../../users-guide.rst:499
 msgid "``--metadata-file=``\\ *FILE*"
@@ -1002,6 +1014,9 @@ msgid ""
 "`YAML metadata blocks`_. Metadata values specified inside the document, or "
 "by using ``-M``, overwrite values specified with this option."
 msgstr ""
+"与えられたYAML（またはJSON）ファイルからメタデータを読みます。このオプションはすべての入力形式で使うことが出来ますが、YAMLファイル中の文字列値"
+" (スカラー) は常にMarkdownとして解釈されます。一般的に、入力は  `YAML metadata blocks`_ "
+"と同様に扱われます。メタデータの値はドキュメント中で指定、または ``-M`` オプションを使用することで、オプションで指定された値で上書きできます。"
 
 #: ../../users-guide.rst:504
 msgid "``-p``, ``--preserve-tabs``"
@@ -1131,6 +1146,12 @@ msgid ""
 "appropriate for the output format will be used (see ``-D/--print-default-"
 "template``)."
 msgstr ""
+"指定されたファイルを出力文書のためのカスタムテンプレートとして使用します。暗黙に ``--standalone`` "
+"も設定します。テンプレートの文法については、下記の `Templates`_ を参照してください。拡張子が指定されていない場合は、 Writer "
+"に対応する拡張子が追加されるます。つまり ``--template=special`` は HTML出力用に ``special.html`` "
+"を検索します。テンプレートが見つからない場合、Pandoc はユーザーデータディレクトリの ``templates`` サブディレクトリを検索します "
+"(``--data-dir`` を参照)。このオプションが使われていない場合は、出力形式に応じて既定のテンプレートが使用されます (``-D"
+"/--print-default-template`` を参照)。"
 
 #: ../../users-guide.rst:574
 msgid "``-V`` *KEY*\\ [``=``\\ *VAL*], ``--variable=``\\ *KEY*\\ [``:``\\ *VAL*]"
@@ -1161,6 +1182,10 @@ msgid ""
 " to a file, but ``-o``/``--output`` must come before ``--print-default-"
 "template`` on the command line."
 msgstr ""
+"出力形式 *FORMAT* のために、システム既定のテンプレートを出力します。(利用可能な *FORMAT* の一覧については ``-t`` を参照) "
+"ユーザデータディレクトリ内のテンプレートは無視されます。このオプションの出力は ``-o`` / ``--output`` "
+"によってファイルにリダイレクト出力できます。しかしコマンドラインでは ``-o`` / ``--output`` は ``--print-"
+"default-template`` の前に置く必要があります。"
 
 #: ../../users-guide.rst:588
 msgid "``--print-default-data-file=``\\ *FILE*"
@@ -1173,6 +1198,9 @@ msgid ""
 " to a file, but ``-o``/``--output`` must come before ``--print-default-data-"
 "file`` on the command line."
 msgstr ""
+"システム既定のデータファイルを出力します。ユーザデータディレクトリの中のファイルは無視されます。このオプションの出力は ``-o`` / "
+"``--output``によってファイルにリダイレクト出力できます。しかしコマンドラインでは ``-o`` / ``--output`` は "
+"``--print-default-data-file`` の前に置く必要があります。"
 
 #: ../../users-guide.rst:593
 msgid "``--eol=crlf``\\ \\|\\ ``lf``\\ \\|\\ ``native``"
@@ -1216,6 +1244,11 @@ msgid ""
 "in HTML output. In ``ipynb`` output, this option affects wrapping of the "
 "contents of markdown cells."
 msgstr ""
+"テキストが出力でどのように折り返されるかを決定します(レンダリングされたバージョンではなくソースコード)。 ``auto`` (既定)の場合、 "
+"pandoc は ``--columns`` （既定では72)で指定された列幅に行を折り返そうとします。 ``none`` を指定すると、 "
+"pandocはいっさい折り返しません。 ``preserve`` を指定すると、 pandoc は元の文書からの折り返しを保護しようとします "
+"(つまり、ソースに意味のない改行がある場合、出力にも意味のない改行が含まれます)。現在、自動折り返しは HTML 出力には機能しません。 "
+"``ipynb`` 出力では、このオプションはMarkdownセル内のコンテンツの折り返しに対して影響します。"
 
 #: ../../users-guide.rst:616
 msgid "``--columns=``\\ *NUMBER*"
@@ -1227,6 +1260,8 @@ msgid ""
 "generated source code (see ``--wrap``). It also affects calculation of "
 "column widths for plain text tables (see `Tables`_ below)."
 msgstr ""
+"行の長さは文字数で指定してください。これは生成されたソースコードでのテキストの折り返しに反映されます (``--wrap`` "
+"を参照)。これはプレーンテキストでの表の列幅計算にも反映されます (下記の `Tables`_ を参照)。"
 
 #: ../../users-guide.rst:624
 msgid "``--toc``, ``--table-of-contents``"
@@ -1254,7 +1289,7 @@ msgid ""
 "Specify the number of section levels to include in the table of contents. "
 "The default is 3 (which means that level-1, 2, and 3 headings will be listed"
 " in the contents)."
-msgstr ""
+msgstr "目次に含めるセクションレベルを指定します。既定は3です(つまりレベル 1, 2, 3 の見出しが目次に表示されます) 。"
 
 #: ../../users-guide.rst:635
 msgid "``--strip-comments``"
@@ -1293,6 +1328,10 @@ msgid ""
 "on syntax highlighting in pandoc, see `Syntax highlighting`_, below. See "
 "also ``--list-highlight-styles``."
 msgstr ""
+"ソースコードのシンタックスハイライトに用いる色のスタイルを指定します。オプションは ``pygments`` (既定)、 ``kate`` , "
+"``monochrome``, ``breezeDark``, ``espresso``, ``zenburn``, ``haddock``, "
+"``tango`` です。 pandocでのシンタックスハイライトの詳細については、下記の `Syntax highlighting`_ "
+"を参照してください。 (``--list-highlight-styles`` も参照)"
 
 #: ../../users-guide.rst:648
 msgid ""
@@ -1321,6 +1360,9 @@ msgid ""
 "but ``-o``/``--output`` must come before ``--print-highlight-style`` on the "
 "command line."
 msgstr ""
+"ハイライトスタイルのJSON表記を出力します。これを編集して ``.theme`` 拡張子を付けて保存し、 ``--highlight-style`` オプションに指定できます。このオプションの出力は ``-o`` / ``--output``によってファイルにリダイレクト出力できます。しかしコマンドラインでは ``-o`` / ``--output`` は ``--print-highlight-style`` の前に置く必要があります。\n"
+"\n"
+"Prints a JSON version of a highlighting style, which can be modified, saved with a ``.theme`` extension, and used with ``--highlight-style``. This option may be used with ``-o``/``--output`` to redirect output to a file, but ``-o``/``--output`` must come before ``--print-highlight-style`` on the command line."
 
 #: ../../users-guide.rst:667
 msgid "``--syntax-definition=``\\ *FILE*"
@@ -1333,6 +1375,9 @@ msgid ""
 "be used to add support for new languages or to use altered syntax "
 "definitions for existing languages."
 msgstr ""
+"KDE XML syntax definitionファイルを指定し、マークされたコードブロックに対して適切にシンタックスハイライトを適用します。新しい言語をサポートしたり、既存の言語に対して別のシンタックス定義を与えたりできます。\n"
+"\n"
+"Instructs pandoc to load a KDE XML syntax definition file, which will be used for syntax highlighting of appropriately marked code blocks. This can be used to add support for new languages or to use altered syntax definitions for existing languages."
 
 #: ../../users-guide.rst:674
 msgid "``-H`` *FILE*, ``--include-in-header=``\\ *FILE*\\ \\|\\ *URL*"
@@ -2919,11 +2964,11 @@ msgstr "natbib向けのオプションリスト"
 
 #: ../../users-guide.rst:1521
 msgid "Variables for ConTeXt"
-msgstr ""
+msgstr "ConTeXt用の変数"
 
 #: ../../users-guide.rst:1523
 msgid "Pandoc uses these variables when `creating a PDF`_ with ConTeXt."
-msgstr ""
+msgstr "Pandocでは `creating a PDF`_ でConTeXtを使う際に、下記の変数を利用します。"
 
 #: ../../users-guide.rst:1526
 msgid "font size for body text (e.g. ``10pt``, ``12pt``)"

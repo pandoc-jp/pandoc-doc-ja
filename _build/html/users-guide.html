@@ -57,8 +57,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">html</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
-<p>For more information on how standalone documents are produced, see
-<a class="reference external" href="#templates">Templates</a> below.</p>
+<p>スタンドアロン文書がどのように生成されるかについての詳細は、下記の <a class="reference external" href="#templates">Templates</a> を参照してください。</p>
 <p>複数のファイルが入力された場合、 Pandoc はそれらを解析する前に（それらの間に空白行を入れて）連結します。（ファイルを個別に解析するには <code class="docutils literal notranslate"><span class="pre">--file-scope</span></code> を使います。）</p>
 </div>
 <div class="section" id="specifying-formats">
@@ -160,7 +159,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">asciidoc</span></code> (<a class="reference external" href="http://www.methods.co.nz/asciidoc/">AsciiDoc</a>) または <code class="docutils literal notranslate"><span class="pre">asciidoctor</span></code> (<a class="reference external" href="https://asciidoctor.org/">AsciiDoctor</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">beamer</span></code> (<a class="reference external" href="https://ctan.org/pkg/beamer">LaTeX beamer</a> スライドショー)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">commonmark</span></code> (<a class="reference external" href="http://commonmark.org">CommonMark</a>) (訳注: Markdownの事実上の標準仕様)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">context</span></code> (<a class="reference external" href="http://www.contextgarden.net/">ConTeXt</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">context</span></code> (<a class="reference external" href="http://www.contextgarden.net/">ConTeXt</a>) (訳注: TeXのマクロパッケージの1つ。LaTeXとはまったく異なるマクロ体系を持ち、LuaTeXと一体的に開発が進められている)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docbook</span></code> or <code class="docutils literal notranslate"><span class="pre">docbook4</span></code> (<a class="reference external" href="http://docbook.org">DocBook</a> 4)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docbook5</span></code> (DocBook 5)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docx</span></code> (<a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word docx</a>)</p></li>
@@ -246,7 +245,7 @@
 <div class="section" id="reader-options">
 <h3>Readerのオプション<a class="headerlink" href="#reader-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl>
-<dt><code class="docutils literal notranslate"><span class="pre">--base-header-level=</span></code><em>NUMBER</em></dt><dd><p>Specify the base level for headings (defaults to 1).</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--base-header-level=</span></code><em>NUMBER</em></dt><dd><p>ヘッダのベースレベルを指定します（デフォルトは1）。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--strip-empty-paragraphs</span></code></dt><dd><p><em>非推奨です。代わりに ``+empty_paragraphs`` 拡張を使用してください。</em>  中身のない段落を無視します。このオプションは段落間の空白を作るために空白の段落を使用したワードプロセッシング文書を変換するのに便利です。</p>
 </dd>
@@ -265,11 +264,7 @@
 </pre></div>
 </div>
 <p>後者の形式はフィルターのデバッグに便利です。</p>
-<p>Filters may be written in any language. <code class="docutils literal notranslate"><span class="pre">Text.Pandoc.JSON</span></code> exports
-<code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> to facilitate writing filters in Haskell. Those who
-would prefer to write filters in python can use the module
-<a href="#id33"><span class="problematic" id="id34">``</span></a><a href="#id131"><span class="problematic" id="id132">`pandocfilters```_</span></a>, installable from PyPI. There are also pandoc
-filter libraries in <a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a>, <a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a>, and <a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">JavaScript/node.js</a>.</p>
+<p>JSONフィルタは任意のプログラミング言語で書けます。HaskellでJSONフィルタを書く場合は、その手助けとして <code class="docutils literal notranslate"><span class="pre">Text.Pandoc.JSON</span></code> モジュールの <code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> 関数を利用できます。PythonでJSONフィルタを書きたい場合は、PyPIからインストールできる  <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id131"><span class="problematic" id="id132">`pandocfilters```_</span></a> モジュールが利用可能です。他にもJSONフィルタ用のライブラリはいくつか存在し、 <a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a>, <a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a>, <a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">JavaScript/node.js</a> で利用できます。</p>
 <p>Pandocはフィルターを以下の優先順で探します。</p>
 <ol class="arabic simple">
 <li><p>指定された絶対パスか相対パス（実行可能または実行不能）</p></li>
@@ -298,22 +293,9 @@ filter libraries in <a class="reference external" href="https://github.com/vinai
 <li><p><code class="docutils literal notranslate"><span class="pre">$DATADIR/filters</span></code> (実行可能または実行不能) ここで <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> はユーザデータディレクトリです。 (前記の <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照してください)。</p></li>
 </ol>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">-M</span></code> <em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>VAL</em>], <code class="docutils literal notranslate"><span class="pre">--metadata=</span></code><em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">:</span></code><em>VAL</em>]</dt><dd><p>Set the metadata field <em>KEY</em> to the value <em>VAL</em>. A value specified on
-the command line overrides a value specified in the document using
-<a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a>. Values will be parsed as YAML boolean or
-string values. If no value is specified, the value will be treated as
-Boolean true. Like <code class="docutils literal notranslate"><span class="pre">--variable</span></code>, <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> causes template
-variables to be set. But unlike <code class="docutils literal notranslate"><span class="pre">--variable</span></code>, <code class="docutils literal notranslate"><span class="pre">--metadata</span></code>
-affects the metadata of the underlying document (which is accessible
-from filters and may be printed in some output formats) and metadata
-values will be escaped when inserted into the template.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">-M</span></code> <em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>VAL</em>], <code class="docutils literal notranslate"><span class="pre">--metadata=</span></code><em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">:</span></code><em>VAL</em>]</dt><dd><p>メタデータフィールド <em>KEY</em> を値 <em>VAL</em> に設定します。コマンドラインで指定された値は <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a> を使用して文書で指定された値を上書きしてしまいます。値は YAMLの真偽値または文字列値としてパースされます。値が指定されていない場合、値は真偽値 true として扱われます。 <code class="docutils literal notranslate"><span class="pre">--variable</span></code> と同様に、 <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> はテンプレート変数を設定します。しかし、 <code class="docutils literal notranslate"><span class="pre">--variable</span></code> とは異なり、 <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> は基になる文書中のメタデータ（フィルタからアクセス可能で、一部の出力書式で印刷されるかもしれません）に影響し、メタデータの値はテンプレートに挿入されるとエスケープされます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--metadata-file=</span></code><em>FILE</em></dt><dd><p>Read metadata from the supplied YAML (or JSON) file. This option can
-be used with every input format, but string scalars in the YAML file
-will always be parsed as Markdown. Generally, the input will be
-handled the same as in <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a>. Metadata values
-specified inside the document, or by using <code class="docutils literal notranslate"><span class="pre">-M</span></code>, overwrite values
-specified with this option.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--metadata-file=</span></code><em>FILE</em></dt><dd><p>与えられたYAML（またはJSON）ファイルからメタデータを読みます。このオプションはすべての入力形式で使うことが出来ますが、YAMLファイル中の文字列値 (スカラー) は常にMarkdownとして解釈されます。一般的に、入力は  <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a> と同様に扱われます。メタデータの値はドキュメント中で指定、または <code class="docutils literal notranslate"><span class="pre">-M</span></code> オプションを使用することで、オプションで指定された値で上書きできます。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-p</span></code>, <code class="docutils literal notranslate"><span class="pre">--preserve-tabs</span></code></dt><dd><p>タブをスペースに変換する（デフォルトの挙動）せずにそのまま残します。リテラルコードSPANとコードブロック中のタブにのみ影響を与えることに注意が必要です。通常のテキスト中のタブはスペースとして扱われます。</p>
 </dd>
@@ -332,82 +314,39 @@ specified with this option.</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">--standalone</span></code></dt><dd><p>適切なヘッダーとフッター (例えば、フラグメントではなく、スタンドアロンの HTML 、 LaTeX 、 TEI 、または RTF ファイル) を使用して出力を生成します。このオプションは <code class="docutils literal notranslate"><span class="pre">pdf</span></code> 、 <code class="docutils literal notranslate"><span class="pre">epub</span></code> 、 <code class="docutils literal notranslate"><span class="pre">epub3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fb2</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docx</span></code> 、および <code class="docutils literal notranslate"><span class="pre">odt</span></code> 出力に対して自動的に設定されます。<code class="docutils literal notranslate"><span class="pre">native</span></code> 出力の場合、このオプションはメタデータを含めます。それ以外の場合、メタデータは抑制されます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--template=</span></code><em>FILE</em>|<em>URL</em></dt><dd><p>Use the specified file as a custom template for the generated
-document. Implies <code class="docutils literal notranslate"><span class="pre">--standalone</span></code>. See <a class="reference external" href="#templates">Templates</a>, below, for a
-description of template syntax. If no extension is specified, an
-extension corresponding to the writer will be added, so that
-<code class="docutils literal notranslate"><span class="pre">--template=special</span></code> looks for <code class="docutils literal notranslate"><span class="pre">special.html</span></code> for HTML output. If
-the template is not found, pandoc will search for it in the
-<code class="docutils literal notranslate"><span class="pre">templates</span></code> subdirectory of the user data directory (see
-<code class="docutils literal notranslate"><span class="pre">--data-dir</span></code>). If this option is not used, a default template
-appropriate for the output format will be used (see
-<code class="docutils literal notranslate"><span class="pre">-D/--print-default-template</span></code>).</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--template=</span></code><em>FILE</em>|<em>URL</em></dt><dd><p>指定されたファイルを出力文書のためのカスタムテンプレートとして使用します。暗黙に <code class="docutils literal notranslate"><span class="pre">--standalone</span></code> も設定します。テンプレートの文法については、下記の <a class="reference external" href="#templates">Templates</a> を参照してください。拡張子が指定されていない場合は、 Writer に対応する拡張子が追加されるます。つまり <code class="docutils literal notranslate"><span class="pre">--template=special</span></code> は HTML出力用に <code class="docutils literal notranslate"><span class="pre">special.html</span></code> を検索します。テンプレートが見つからない場合、Pandoc はユーザーデータディレクトリの <code class="docutils literal notranslate"><span class="pre">templates</span></code> サブディレクトリを検索します (<code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照)。このオプションが使われていない場合は、出力形式に応じて既定のテンプレートが使用されます (<code class="docutils literal notranslate"><span class="pre">-D/--print-default-template</span></code> を参照)。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-V</span></code> <em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>VAL</em>], <code class="docutils literal notranslate"><span class="pre">--variable=</span></code><em>KEY</em>[<code class="docutils literal notranslate"><span class="pre">:</span></code><em>VAL</em>]</dt><dd><p>文書をスタンドアロンモードでレンダリングするときは、テンプレート変数 <em>KEY</em> を値 <em>VAL</em> に設定します。 pandoc は既定のテンプレートで使用される変数を自動的に設定するので、これは一般的に <code class="docutils literal notranslate"><span class="pre">--template</span></code> オプションでカスタムテンプレートを指定するために使われる場合にのみ役に立ちます。 <em>VAL</em> が指定されていない場合、キーには値 <code class="docutils literal notranslate"><span class="pre">true</span></code> が設定されます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">-D</span></code> <em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">--print-default-template=</span></code><em>FORMAT</em></dt><dd><p>Print the system default template for an output <em>FORMAT</em>. (See <code class="docutils literal notranslate"><span class="pre">-t</span></code>
-for a list of possible <em>FORMAT</em>s.) Templates in the user data
-directory are ignored. This option may be used with
-<code class="docutils literal notranslate"><span class="pre">-o</span></code>/<code class="docutils literal notranslate"><span class="pre">--output</span></code> to redirect output to a file, but
-<code class="docutils literal notranslate"><span class="pre">-o</span></code>/<code class="docutils literal notranslate"><span class="pre">--output</span></code> must come before <code class="docutils literal notranslate"><span class="pre">--print-default-template</span></code> on
-the command line.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">-D</span></code> <em>FORMAT</em>, <code class="docutils literal notranslate"><span class="pre">--print-default-template=</span></code><em>FORMAT</em></dt><dd><p>出力形式 <em>FORMAT</em> のために、システム既定のテンプレートを出力します。(利用可能な <em>FORMAT</em> の一覧については <code class="docutils literal notranslate"><span class="pre">-t</span></code> を参照) ユーザデータディレクトリ内のテンプレートは無視されます。このオプションの出力は <code class="docutils literal notranslate"><span class="pre">-o</span></code> / <code class="docutils literal notranslate"><span class="pre">--output</span></code> によってファイルにリダイレクト出力できます。しかしコマンドラインでは <code class="docutils literal notranslate"><span class="pre">-o</span></code> / <code class="docutils literal notranslate"><span class="pre">--output</span></code> は <code class="docutils literal notranslate"><span class="pre">--print-default-template</span></code> の前に置く必要があります。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--print-default-data-file=</span></code><em>FILE</em></dt><dd><p>Print a system default data file. Files in the user data directory
-are ignored. This option may be used with <code class="docutils literal notranslate"><span class="pre">-o</span></code>/<code class="docutils literal notranslate"><span class="pre">--output</span></code> to
-redirect output to a file, but <code class="docutils literal notranslate"><span class="pre">-o</span></code>/<code class="docutils literal notranslate"><span class="pre">--output</span></code> must come before
-<code class="docutils literal notranslate"><span class="pre">--print-default-data-file</span></code> on the command line.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--print-default-data-file=</span></code><em>FILE</em></dt><dd><p>システム既定のデータファイルを出力します。ユーザデータディレクトリの中のファイルは無視されます。このオプションの出力は <code class="docutils literal notranslate"><span class="pre">-o</span></code> / <code class="docutils literal notranslate"><span class="pre">--output``によってファイルにリダイレクト出力できます。しかしコマンドラインでは</span> <span class="pre">``-o</span></code> / <code class="docutils literal notranslate"><span class="pre">--output</span></code> は <code class="docutils literal notranslate"><span class="pre">--print-default-data-file</span></code> の前に置く必要があります。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--eol=crlf</span></code>|<code class="docutils literal notranslate"><span class="pre">lf</span></code>|<code class="docutils literal notranslate"><span class="pre">native</span></code></dt><dd><p>手動で改行コードを指定してください: <code class="docutils literal notranslate"><span class="pre">crlf</span></code> (Windows) 、 <code class="docutils literal notranslate"><span class="pre">lf</span></code> (macOS/Linux/UNIX) 、または <code class="docutils literal notranslate"><span class="pre">native</span></code> (pandoc が実行されているOSに適した改行コード)。既定は <code class="docutils literal notranslate"><span class="pre">native</span></code> です。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--dpi</span></code>=<em>NUMBER</em></dt><dd><p>ピクセルからインチ/センチメートルへの変換、および逆変換のためにdpi 値(ドット/インチ)を指定します。既定は 96 dpi です。技術的には、正しい用語はppi (ピクセル数/インチ)です。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--wrap=auto</span></code>|<code class="docutils literal notranslate"><span class="pre">none</span></code>|<code class="docutils literal notranslate"><span class="pre">preserve</span></code></dt><dd><p>Determine how text is wrapped in the output (the source code, not the
-rendered version). With <code class="docutils literal notranslate"><span class="pre">auto</span></code> (the default), pandoc will attempt
-to wrap lines to the column width specified by <code class="docutils literal notranslate"><span class="pre">--columns</span></code> (default
-72). With <code class="docutils literal notranslate"><span class="pre">none</span></code>, pandoc will not wrap lines at all. With
-<code class="docutils literal notranslate"><span class="pre">preserve</span></code>, pandoc will attempt to preserve the wrapping from the
-source document (that is, where there are nonsemantic newlines in the
-source, there will be nonsemantic newlines in the output as well).
-Automatic wrapping does not currently work in HTML output. In
-<code class="docutils literal notranslate"><span class="pre">ipynb</span></code> output, this option affects wrapping of the contents of
-markdown cells.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--wrap=auto</span></code>|<code class="docutils literal notranslate"><span class="pre">none</span></code>|<code class="docutils literal notranslate"><span class="pre">preserve</span></code></dt><dd><p>テキストが出力でどのように折り返されるかを決定します(レンダリングされたバージョンではなくソースコード)。 <code class="docutils literal notranslate"><span class="pre">auto</span></code> (既定)の場合、 pandoc は <code class="docutils literal notranslate"><span class="pre">--columns</span></code> （既定では72)で指定された列幅に行を折り返そうとします。 <code class="docutils literal notranslate"><span class="pre">none</span></code> を指定すると、 pandocはいっさい折り返しません。 <code class="docutils literal notranslate"><span class="pre">preserve</span></code> を指定すると、 pandoc は元の文書からの折り返しを保護しようとします (つまり、ソースに意味のない改行がある場合、出力にも意味のない改行が含まれます)。現在、自動折り返しは HTML 出力には機能しません。 <code class="docutils literal notranslate"><span class="pre">ipynb</span></code> 出力では、このオプションはMarkdownセル内のコンテンツの折り返しに対して影響します。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--columns=</span></code><em>NUMBER</em></dt><dd><p>Specify length of lines in characters. This affects text wrapping in
-the generated source code (see <code class="docutils literal notranslate"><span class="pre">--wrap</span></code>). It also affects
-calculation of column widths for plain text tables (see <a class="reference external" href="#tables">Tables</a>
-below).</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--columns=</span></code><em>NUMBER</em></dt><dd><p>行の長さは文字数で指定してください。これは生成されたソースコードでのテキストの折り返しに反映されます (<code class="docutils literal notranslate"><span class="pre">--wrap</span></code> を参照)。これはプレーンテキストでの表の列幅計算にも反映されます (下記の <a class="reference external" href="#tables">Tables</a> を参照)。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--toc</span></code>, <code class="docutils literal notranslate"><span class="pre">--table-of-contents</span></code></dt><dd><p>出力文書に自動生成された目次を含めます（あるいは、 <code class="docutils literal notranslate"><span class="pre">latex</span></code> 、 <code class="docutils literal notranslate"><span class="pre">context</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docx</span></code> 、 <code class="docutils literal notranslate"><span class="pre">odt</span></code> 、 <code class="docutils literal notranslate"><span class="pre">opendocument</span></code> 、 <code class="docutils literal notranslate"><span class="pre">rst</span></code> 、または <code class="docutils literal notranslate"><span class="pre">ms</span></code> の場合) 。このオプションは <code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> を使わない限り影響がなく、 <code class="docutils literal notranslate"><span class="pre">man</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docbook4</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docbook5</span></code> 、 <code class="docutils literal notranslate"><span class="pre">jats</span></code> の出力にも影響がありません。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--toc-depth=</span></code><em>NUMBER</em></dt><dd><p>Specify the number of section levels to include in the table of
-contents. The default is 3 (which means that level-1, 2, and 3
-headings will be listed in the contents).</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--toc-depth=</span></code><em>NUMBER</em></dt><dd><p>目次に含めるセクションレベルを指定します。既定は3です(つまりレベル 1, 2, 3 の見出しが目次に表示されます) 。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--strip-comments</span></code></dt><dd><p>Markdown または Textile ソース内の HTML コメントは、生 (raw) の HTML として Markdown 、 Textile 、または HTML 出力に渡さずに取り除きます。 <code class="docutils literal notranslate"><span class="pre">markdown_in_html_blocks</span></code> 拡張が設定されていない場合、これは生 (raw) の HTML ブロック内の HTML コメントには適用されません。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--no-highlight</span></code></dt><dd><p>言語属性が指定されている場合でも、コードブロックとインラインのシンタックスハイライトを無効にします。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--highlight-style=</span></code><em>STYLE</em>|<em>FILE</em></dt><dd><p>Specifies the coloring style to be used in highlighted source code.
-Options are <code class="docutils literal notranslate"><span class="pre">pygments</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">kate</span></code>, <code class="docutils literal notranslate"><span class="pre">monochrome</span></code>,
-<code class="docutils literal notranslate"><span class="pre">breezeDark</span></code>, <code class="docutils literal notranslate"><span class="pre">espresso</span></code>, <code class="docutils literal notranslate"><span class="pre">zenburn</span></code>, <code class="docutils literal notranslate"><span class="pre">haddock</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">tango</span></code>. For more information on syntax highlighting in pandoc, see
-<a class="reference external" href="#syntax-highlighting">Syntax highlighting</a>, below. See also <code class="docutils literal notranslate"><span class="pre">--list-highlight-styles</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--highlight-style=</span></code><em>STYLE</em>|<em>FILE</em></dt><dd><p>ソースコードのシンタックスハイライトに用いる色のスタイルを指定します。オプションは <code class="docutils literal notranslate"><span class="pre">pygments</span></code> (既定)、 <code class="docutils literal notranslate"><span class="pre">kate</span></code> , <code class="docutils literal notranslate"><span class="pre">monochrome</span></code>, <code class="docutils literal notranslate"><span class="pre">breezeDark</span></code>, <code class="docutils literal notranslate"><span class="pre">espresso</span></code>, <code class="docutils literal notranslate"><span class="pre">zenburn</span></code>, <code class="docutils literal notranslate"><span class="pre">haddock</span></code>, <code class="docutils literal notranslate"><span class="pre">tango</span></code> です。 pandocでのシンタックスハイライトの詳細については、下記の <a class="reference external" href="#syntax-highlighting">Syntax highlighting</a> を参照してください。 (<code class="docutils literal notranslate"><span class="pre">--list-highlight-styles</span></code> も参照)</p>
 <p>Instead of a <em>STYLE</em> name, a JSON file with extension <code class="docutils literal notranslate"><span class="pre">.theme</span></code> may
 be supplied. This will be parsed as a KDE syntax highlighting theme
 and (if valid) used as the highlighting style.</p>
 <p>既存スタイルの JSON バージョンを生成するには、 <code class="docutils literal notranslate"><span class="pre">--print-highlight-style</span></code> を使用します。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--print-highlight-style=</span></code><em>STYLE</em>|<em>FILE</em></dt><dd><p>Prints a JSON version of a highlighting style, which can be modified,
-saved with a <code class="docutils literal notranslate"><span class="pre">.theme</span></code> extension, and used with
-<code class="docutils literal notranslate"><span class="pre">--highlight-style</span></code>. This option may be used with
-<code class="docutils literal notranslate"><span class="pre">-o</span></code>/<code class="docutils literal notranslate"><span class="pre">--output</span></code> to redirect output to a file, but
-<code class="docutils literal notranslate"><span class="pre">-o</span></code>/<code class="docutils literal notranslate"><span class="pre">--output</span></code> must come before <code class="docutils literal notranslate"><span class="pre">--print-highlight-style</span></code> on
-the command line.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--print-highlight-style=</span></code><em>STYLE</em>|<em>FILE</em></dt><dd><p>ハイライトスタイルのJSON表記を出力します。これを編集して <code class="docutils literal notranslate"><span class="pre">.theme</span></code> 拡張子を付けて保存し、 <code class="docutils literal notranslate"><span class="pre">--highlight-style</span></code> オプションに指定できます。このオプションの出力は <code class="docutils literal notranslate"><span class="pre">-o</span></code> / <code class="docutils literal notranslate"><span class="pre">--output``によってファイルにリダイレクト出力できます。しかしコマンドラインでは</span> <span class="pre">``-o</span></code> / <code class="docutils literal notranslate"><span class="pre">--output</span></code> は <code class="docutils literal notranslate"><span class="pre">--print-highlight-style</span></code> の前に置く必要があります。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--syntax-definition=</span></code><em>FILE</em></dt><dd><p>Instructs pandoc to load a KDE XML syntax definition file, which will
-be used for syntax highlighting of appropriately marked code blocks.
-This can be used to add support for new languages or to use altered
-syntax definitions for existing languages.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--syntax-definition=</span></code><em>FILE</em></dt><dd><p>KDE XML syntax definitionファイルを指定し、マークされたコードブロックに対して適切にシンタックスハイライトを適用します。新しい言語をサポートしたり、既存の言語に対して別のシンタックス定義を与えたりできます。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">-H</span></code> <em>FILE</em>, <code class="docutils literal notranslate"><span class="pre">--include-in-header=</span></code><em>FILE</em>|<em>URL</em></dt><dd><p>Include contents of <em>FILE</em>, verbatim, at the end of the header. This
 can be used, for example, to include special CSS or JavaScript in
@@ -1105,8 +1044,8 @@ pandoc options are not ignored. Thus, for example,</p>
 </div>
 </div>
 <div class="section" id="variables-for-context">
-<h3>Variables for ConTeXt<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Pandoc uses these variables when <a class="reference external" href="#creating-a-pdf">creating a PDF</a> with ConTeXt.</p>
+<h3>ConTeXt用の変数<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Pandocでは <a class="reference external" href="#creating-a-pdf">creating a PDF</a> でConTeXtを使う際に、下記の変数を利用します。</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">fontsize</span></code></dt><dd><p>font size for body text (e.g. <code class="docutils literal notranslate"><span class="pre">10pt</span></code>, <code class="docutils literal notranslate"><span class="pre">12pt</span></code>)</p>
 </dd>
