@@ -39,7 +39,45 @@
 <p>※ 順次書いていきます。</p>
 <p>Pandocユーザーズガイドの翻訳作業に参加される方向けに説明します。</p>
 <div class="section" id="id1">
-<h2>前提<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>サイトまとめ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul>
+<li><p>Slack</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Pandocユーザ会のSlackで、連絡などを行っています</p></li>
+<li><p>招待リンク: <a class="reference external" href="https://join.slack.com/t/jpang/shared_invite/enQtNjE1MTgzOTkxMjgyLWEzNGVhMmZhODE4ZTVjNDhiYmU1OGNkYzJlZjMwM2NlNmNlNzJmOGY4YzFmYjQ1MTVlNjJiNzk1MzI3ODdmNmY">https://join.slack.com/t/jpang/shared_invite/enQtNjE1MTgzOTkxMjgyLWEzNGVhMmZhODE4ZTVjNDhiYmU1OGNkYzJlZjMwM2NlNmNlNzJmOGY4YzFmYjQ1MTVlNjJiNzk1MzI3ODdmNmY</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>GitHub</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jgm/pandoc/blob/master/MANUAL.txt">jgm/pandocのMANUAL.txt</a></p></li>
+<li><p><a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja">pandoc-jp/pandoc-doc-ja: 日本語訳のSphinxサイト</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Transifex（クラウド上で共同翻訳するためのWebアプリ）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.transifex.com/jpang/pandoc-users-guide/dashboard/">Transifex: Pandoc User’s Guide プロジェクト</a></p></li>
+<li><p>参加希望者は招待します。「参加方法」を参照。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Read the Docs（翻訳後のドキュメントをデプロイする先）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://pandoc-doc-ja.readthedocs.io/ja/latest/index.html">（新装工事中）日本Pandocユーザ会 — 日本Pandocユーザ会 2019.02.21 ドキュメント</a></p></li>
+<li><p>いまお読みのドキュメントが、Read the Docsにデプロイされています</p></li>
+<li><p>デプロイは藤原が行います</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>前提<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul>
 <li><p><strong>reStructuredText (reST)</strong> という、Markdownよりも高機能な記法を使います</p>
 <blockquote>
@@ -52,8 +90,8 @@
 <li><p>実際には <strong>Transifex</strong> というWebアプリを使って、翻訳作業を進めていただきます</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>参加方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id3">
+<h2>参加方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a class="reference external" href="https://docs.google.com/forms/d/e/1FAIpQLScOdbrRWXKWAOHop7yyxrmq-D8DcwHo6u8aNAywRgfd3pX6dQ/viewform">Pandocユーザーズガイド日本語版 翻訳ボランティア 登録フォーム</a> よりご参加ください。</p>
 <p>管理者（藤原）が下記に登録します。</p>
 <ul>
@@ -67,19 +105,24 @@
 <li><p>Pandocユーザ会 Slack</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>作業手順<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id4">
+<h2>作業手順<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="transifex">
 <h3>Transifexのトップ（「翻訳」を選ぶ）<a class="headerlink" href="#transifex" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<img alt="img/transifex-top.jpg" src="img/transifex-top.jpg" />
-</div>
-<div class="section" id="id4">
-<h3>Transifexの開始時（言語を選ぶ）<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<img alt="img/transifex-begin.jpg" src="img/transifex-begin.jpg" />
+<img alt="_images/transifex-top.jpg" src="_images/transifex-top.jpg" />
+<ul>
+<li><p>Transifexの開始時に言語を選ぶ画面が出てきた場合は <code class="docutils literal notranslate"><span class="pre">Japanese</span> <span class="pre">(ja)</span></code> を選択してください。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Japanese</span> <span class="pre">(Japan)</span> <span class="pre">(ja_JP)</span></code> は使用せず、 <code class="docutils literal notranslate"><span class="pre">Japanese</span> <span class="pre">(ja)</span></code> に統一しました。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
 </div>
 <div class="section" id="id5">
 <h3>ケース1: 普通に翻訳する場合<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<img alt="img/transifex-main1.jpg" src="img/transifex-main1.jpg" />
+<img alt="_images/transifex-main1.jpg" src="_images/transifex-main1.jpg" />
 <ol class="arabic simple">
 <li><p>左側：訳したい文字列を選択（自分が訳せそうなもののみでOKです）</p></li>
 <li><p>右上：原文（英語）の文字列が出ているのを確認</p></li>
@@ -102,36 +145,162 @@
 </div>
 <div class="section" id="rest">
 <h3>ケース2: reST記法を含む場合<a class="headerlink" href="#rest" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<img alt="img/transifex-main2.jpg" src="img/transifex-main2.jpg" />
+<img alt="_images/transifex-main2.jpg" src="_images/transifex-main2.jpg" />
 <ul>
 <li><p>reST記法を含む場合は、 <strong>元のreST記法（特にリンク）を崩さないようにしてください</strong></p>
 <blockquote>
 <div><ul class="simple">
 <li><p>リンク（`リンク文字列 &lt;URL&gt;`_ など、いくつか種類がある）</p></li>
 <li><p>コード（バッククォート2つで囲む）</p></li>
-<li><p>見出し（見出しの次の行に <code class="docutils literal notranslate"><span class="pre">=</span></code> または <code class="docutils literal notranslate"><span class="pre">-</span></code> をたくさん並べる。Transifexの文字列には現れないので注意）</p></li>
 <li><p>太字、リストは大体同じ（ただしリストの入れ子は空行必須）</p></li>
 <li><p>詳しくは: <a class="reference external" href="https://quick-restructuredtext.readthedocs.io/en/latest/">早わかり reStructuredText</a></p></li>
 <li><p>その他、よくわからない記号は基本的にいじらないようにしてください（レビューで修正します）</p></li>
 </ul>
 </div></blockquote>
 </li>
+<li><p><strong>reST記法の前後には、半角スペースを入れてください。</strong></p></li>
+</ul>
+<p>悪い例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`Word docx`_など、
+</pre></div>
+</div>
+<p>よい例 (「など」の手前に半角スペース):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`Word docx`_ など、
+</pre></div>
+</div>
+<p>また、reSTの見出し（見出しの次の行に <code class="docutils literal notranslate"><span class="pre">=</span></code> または <code class="docutils literal notranslate"><span class="pre">-</span></code> をたくさん並べる）は <strong>Transifexの文字列には現れない</strong> ので注意してください。</p>
+<p>(原文のreST版 <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/blob/master/users-guide.rst">users-guide.rst</a> を見ると、見出しの様子がわかります)</p>
+</div>
+<div class="section" id="id7">
+<h3>ケース3: (reST記法) 内部ハイパーリンクターゲット<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>PandocでMarkdown → reSTに変換する際、現在は <code class="docutils literal notranslate"><span class="pre">--reference-links</span></code> というオプションを付けています。
+これにより、リンクは原則として `foo`_ という形式（参照リンク・内部リンク）として現れます。</p>
+<p>この場合、テキスト (<code class="docutils literal notranslate"><span class="pre">foo</span></code>) もそのままにしてください！</p>
+<p>例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`Templates`_  → `Templates`_
+(`テンプレート`_ に翻訳しない)
+</pre></div>
+</div>
+<p>ただし、リンクの参照元がTransifexに表示されないので（原因調査中）、翻訳の際は下記の原文も参照してください。
+(レビュー時にまとめて修正します)</p>
+<ul class="simple">
+<li><p>原文 Markdown版: <a class="reference external" href="https://github.com/jgm/pandoc/blob/master/MANUAL.txt">jgm/pandoc: MANUAL.txt</a></p></li>
+<li><p>原文 reST版: <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/blob/master/users-guide.rst">pandoc-jp/pandoc-doc-ja: users-guide.rst</a></p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="q-a">
-<h2>Q&amp;A<a class="headerlink" href="#q-a" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Q: Issueを見つけた。どうしたらいい？</p>
-<blockquote>
-<div><p><a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/issues">Issues · pandoc-jp/pandoc-doc-ja</a> にまとめています。
-必要であれば、Issueを追加してください。また、過去のIssueも少しあるので参考にしてください。</p>
-</div></blockquote>
-</div>
-<div class="section" id="id7">
-<h2>お礼について<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id8">
+<h2>お礼について<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><strong>金銭的なお礼はありません。</strong> あらかじめご了承ください。</p>
 <p>翻訳・レビューにおいて貢献実績が確認された方には、お名前・Twitter ID・リンクなど（あれば）をサイトに掲載するようにします。
 （掲載時にお伺いします。「掲載しない」でも可能です）</p>
+<p>補足: 2019-04-27時点で、藤原のミスでTransifex上の翻訳者名が消失してしまっています。申し訳ありません。
+以下の方々に関しては、翻訳による貢献を確認しているので、成果物にはお名前を含める予定です。</p>
+<ul class="simple">
+<li><p>makotosanさん</p></li>
+<li><p>niszetさん</p></li>
+<li><p>べこさん (becolomochi)</p></li>
+</ul>
+</div>
+<div class="section" id="q-a">
+<h2>Q&amp;A<a class="headerlink" href="#q-a" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul>
+<li><p>Q: Issueを見つけた。どうしたらいい？</p>
+<blockquote>
+<div><ul>
+<li><p><a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/issues">Issues · pandoc-jp/pandoc-doc-ja</a> にまとめています。
+必要であれば、Issueを追加してください。また、過去のIssueも少しあるので参考にしてください。</p>
+<p>もしくは、Slack <code class="docutils literal notranslate"><span class="pre">#users-guide-trans</span></code> に直接質問ください。</p>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2>参考<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id10">
+<h3>ビルド・デプロイに使用しているツールまとめ<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul>
+<li><p>Pandoc</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>変換: MANUAL.txt(markdown) -&gt; users-guide.rst(reStructuredText)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Sphinx</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>rstからHTML（サイト）を構築</p></li>
+<li><p>国際化(sphinx-intl)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Transifex</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>実際にテキストを翻訳（共同）</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Read the Docs</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>GitHub上のSphinxサイトをビルドして公開</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>機械翻訳について<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>機械翻訳は <strong>各自の責任において、参考・補助のために</strong> 利用可能とします。ただし、各自で最終的には <strong>Transifex上に訳文を反映させてください</strong> 。
+(訳文のマスターデータ[.poファイル]は、Transifexにあるものとします)</p>
+<ul>
+<li><p>Ubuntuコミュニティでこういう事件もあったために、「レビューは人力でやる ＆ 藤原が最終責任を持つ」という体制は崩さないようにしようと思います。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a href="#id12"><span class="problematic" id="id13">`</span></a>Ubuntu英日翻訳にGoogle翻訳の成果物を突っ込む人物が現れライセンスがなんじゃもんじゃでつらい - Togetter</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>&lt;<a class="reference external" href="https://togetter.com/li/1084225">https://togetter.com/li/1084225</a>&gt;`_</p>
+<ul>
+<li><p>目安（グレーゾーン判定は藤原がやります）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>OK「翻訳者の責任で、翻訳テキストを書く」</p></li>
+<li><p>グレーゾーン「Google翻訳を「参考」として利用する」（程度問題）</p></li>
+<li><p>グレーゾーン「Google翻訳が出したテキストを、一部利用する」（程度問題）</p></li>
+<li><p>NG「Google翻訳の「結果」を、100%そのまま利用する」</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>ツールの参考: <a class="reference external" href="https://translate.google.com/toolkit/">Google翻訳者ツールキット</a> (by makotosan さん)</p>
+<p>&gt; Transifexは原文のエレメント単位で翻訳する仕様なので、長文のブロックが非常に翻訳しづらくなります。
+&gt; 翻訳者ツールキットは、原文を分割することができるので、
+&gt;
+&gt; 1. TransifexからPOをダウンロードして翻訳者ツールキットで読み込み
+&gt; 2. 翻訳者ツールキット上で原文を分割=&gt;機械翻訳もしくは&#64;sky_y さんの旧バージョンのユーザーガイドからテキスト拝借
+&gt; 3. 訳文をリライト
+&gt; 4. エレメント単位の翻訳完了後、翻訳者ツールキットからTransifexにコピペ
+&gt;
+&gt; で長文を乗り切ることができました。
+&gt; 良ければ試してみてください。</p>
+</div>
+<div class="section" id="textlint">
+<h3>textlintについて<a class="headerlink" href="#textlint" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>日本語を自動的に校正してくれるツール <a class="reference external" href="https://textlint.github.io/">textlint</a> については、
+現状のプロジェクトとしては導入していませんが、現状各自で利用してかまいません。</p>
+<ul class="simple">
+<li><p>Transifexやpoファイルとの兼ね合いがうまくいかないので……。</p></li>
+<li><p>レビュー時に一度適用してみようと思います。</p></li>
+</ul>
+<p>ルールを利用する際は <a class="reference external" href="https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing">textlint-rule-preset-ja-technical-writing</a> というプリセットを利用してください。</p>
+</div>
 </div>
 </div>
 
@@ -155,11 +324,13 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">翻訳の手引 for Pandocユーザーズガイド</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">前提</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">参加方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">作業手順</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">サイトまとめ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">前提</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">参加方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">作業手順</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">お礼について</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#q-a">Q&amp;A</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">お礼について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="users-guide.html">（新・工事中）Pandocユーザーズガイド 日本語版</a></li>
