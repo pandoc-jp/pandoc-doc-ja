@@ -4,6 +4,9 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
+# makotosan <makotokanamoto@yahoo.co.jp>, 2019
+# Takada Atsushi <takada-at@klab.com>, 2019
+# niszet <niszet0016@gmail.com>, 2019
 # Yuki Fujiwara <sky.y.0079@gmail.com>, 2019
 # 
 #, fuzzy
@@ -23,7 +26,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3
 msgid "（新・工事中）Pandocユーザーズガイド 日本語版"
-msgstr ""
+msgstr "（新・工事中）Pandocユーザーズガイド 日本語版"
 
 #: ../../users-guide.rst:6
 msgid "Synopsis"
@@ -1381,7 +1384,7 @@ msgstr ""
 
 #: ../../users-guide.rst:674
 msgid "``-H`` *FILE*, ``--include-in-header=``\\ *FILE*\\ \\|\\ *URL*"
-msgstr ""
+msgstr "``-H`` *FILE*, ``--include-in-header=`` *FILE* | *URL*"
 
 #: ../../users-guide.rst:670
 msgid ""
@@ -1390,10 +1393,13 @@ msgid ""
 "This option can be used repeatedly to include multiple files in the header. "
 "They will be included in the order specified. Implies ``--standalone``."
 msgstr ""
+"*FILE* "
+"のコンテンツを、そのままヘッダの末尾に挿入します。たとえば、HTML文書に独自のCSSやJavaScriptを埋め込むことに利用できます。このオプションは複数のファイルを1つのヘッダに埋め込むために繰り返し使用できます。その順番はオプションで指定した通りになります。"
+" ``--standalone`` を暗黙に指定します。"
 
 #: ../../users-guide.rst:682
 msgid "``-B`` *FILE*, ``--include-before-body=``\\ *FILE*\\ \\|\\ *URL*"
-msgstr ""
+msgstr "``-B`` *FILE*, ``--include-before-body=`` *FILE* | *URL*"
 
 #: ../../users-guide.rst:677
 msgid ""
@@ -1403,10 +1409,14 @@ msgid ""
 "documents. This option can be used repeatedly to include multiple files. "
 "They will be included in the order specified. Implies ``--standalone``."
 msgstr ""
+"*FILE* のコンテンツを、そのまま本文 (body) の先頭 (すなわちHTMLでは ``<body>`` タグの後ろ、あるいはLaTeXでは "
+"``\\begin{document}`` コマンドの後ろ) "
+"に挿入します。HTML文書にナビゲーションバーやバナーを挿入するために使用できます。このオプションは複数のファイルを1つのヘッダに埋め込むために繰り返し使用できます。その順番はオプションで指定した通りになります。"
+" ``--standalone`` を暗黙に指定します。"
 
 #: ../../users-guide.rst:689
 msgid "``-A`` *FILE*, ``--include-after-body=``\\ *FILE*\\ \\|\\ *URL*"
-msgstr ""
+msgstr "``-A`` *FILE*, ``--include-after-body=`` *FILE* | *URL*"
 
 #: ../../users-guide.rst:685
 msgid ""
@@ -1415,10 +1425,14 @@ msgid ""
 "LaTeX). This option can be used repeatedly to include multiple files. They "
 "will be included in the order specified. Implies ``--standalone``."
 msgstr ""
+"*FILE* のコンテンツを、そのまま本文 (body) の末尾 (すなわちHTMLでは ``</body>`` タグの前、あるいはLaTeXでは "
+"``\\end{document}`` コマンドの後ろ) "
+"に挿入します。このオプションは複数のファイルを1つのヘッダに埋め込むために繰り返し使用できます。その順番はオプションで指定した通りになります。 "
+"``--standalone`` を暗黙に指定します。"
 
 #: ../../users-guide.rst:704
 msgid "``--resource-path=``\\ *SEARCHPATH*"
-msgstr "``--resource-path=``\\ *SEARCHPATH*"
+msgstr "``--resource-path=`` *SEARCHPATH*"
 
 #: ../../users-guide.rst:692
 msgid ""
@@ -1430,6 +1444,11 @@ msgid ""
 "For example: ``--resource-path=.:test`` will search the working directory "
 "and the ``test`` subdirectory, in that order."
 msgstr ""
+"画像やその他のリソースを検索するためのパス (訳注: 以下、リソースパス) のリスト。パスの区切りは  ``:`` (Linux, UNIX, "
+"macOSの場合) もしくは ``;`` (Windowsの場合) で区切ります。 ``--resource-path`` "
+"が指定されていない場合、既定のリソースパスはカレントディレクトリです。注意: ``--resource-path`` "
+"を使う場合、カレントディレクトリは他のパスとともに明示的に指定される必要があります。さもなければ検索されません。たとえば ``--resource-"
+"path=.:test`` はカレントディレクトリと ``test`` サブディレクトリを、この順番で検索します。"
 
 #: ../../users-guide.rst:701
 msgid ""
@@ -1437,6 +1456,9 @@ msgid ""
 "images (for example, ``docx``, ``pdf``, or ``html`` with ``--self-"
 "contained``) or (b) it is used together with ``--extract-media``."
 msgstr ""
+"``--resource-path`` は (a) 画像を埋め込む出力形式 (たとえば  ``docx``, ``pdf`` もしくは "
+"``--self-contained`` 付きの ``html`` ) 、もしくは (b) ``--extract-media`` "
+"を同時に使う場合のみに有効です。"
 
 #: ../../users-guide.rst:711
 msgid "``--request-header=``\\ *NAME*\\ ``:``\\ *VAL*"
@@ -1449,10 +1471,13 @@ msgid ""
 "used in a document must be downloaded). If you’re behind a proxy, you also "
 "need to set the environment variable ``http_proxy`` to ``http://...``."
 msgstr ""
+"HTTPリクエストを発行する際に、リクエストヘッダ *NAME* に値 *VAL* "
+"を設定します。たとえばコマンドラインでURLが指定されている場合や、文書中のあるリソースがダウンロードされる必要がある場合に利用できます。もしユーザがプロキシの後ろにいる場合には、環境変数"
+" ``http_proxy``  を  ``http://...`` に設定する必要もあります。"
 
 #: ../../users-guide.rst:714
 msgid "Options affecting specific writers"
-msgstr ""
+msgstr "特定のWriterに関するオプション"
 
 #: ../../users-guide.rst:734
 msgid "``--self-contained``"
@@ -1478,6 +1503,13 @@ msgid ""
 "features (e.g. zoom or speaker notes) may not work in an offline “self-"
 "contained” ``reveal.js`` slide show."
 msgstr ""
+"外部ファイルに依存しないようなスタンドアロンのHTMLファイルを出力します。 リンクされたスクリプト、スタイルシート、画像、動画といったコンテンツを結合するために ``data:`` URIを利用します。暗黙に ``--standalone`` を指定します。ブラウザに正しく表示するために、他に外部のファイルやネットへのアクセスを必要としないという意味で、最終的なファイルは「自己完結している」(self-contained)というべきでしょう。\n"
+"\n"
+"このオプションはHTML出力を伴う形式で有効です。すなわち ``html4``, ``html5``, ``html+lhs``, ``html5+lhs``, ``s5``, ``slidy``, ``slideous``, ``dzslides``, および ``revealjs`` です。絶対URLで指定されたスクリプト、画像、スタイルシートはダウンロードされます。相対URLで指定された場合は、カレントディレクトリからの相対パス (最初のソースファイルがローカルの場合)、もしくはベースURLからの相対パス (最初のソースファイルがリモートの場合) を検索します。\n"
+"\n"
+"``data-external=\"1\"`` 属性をもつ要素はそのまま残ります。すなわちこの要素がリンク参照している文書は、元の文書に結合されません。\n"
+"\n"
+"制約: JavaScriptを通じて動的にロードされるリソースは結合されません。結果として ``--self-contained`` は ``--mathjax`` では動作しません。オフラインの「自己完結している」 ``reveal.js`` スライドショーでは、いくつかの先進的な機能 (ズームや発表者ノートなど) が動作しません。"
 
 #: ../../users-guide.rst:737
 msgid "``--html-q-tags``"
@@ -1485,7 +1517,7 @@ msgstr "``--html-q-tags``"
 
 #: ../../users-guide.rst:737
 msgid "Use ``<q>`` tags for quotes in HTML."
-msgstr ""
+msgstr "HTMLで ``<q>`` タグを引用に利用します。"
 
 #: ../../users-guide.rst:745
 msgid "``--ascii``"
@@ -1500,6 +1532,10 @@ msgid ""
 "commands for accented characters when possible). roff man output uses ASCII "
 "by default."
 msgstr ""
+"出力にASCII文字のみを使用します。現在はXMLおよびHTMLフォーマット(このオプションを選択するとUTF-"
+"8のかわりに実体参照を使用します)、CommonMark、gfm、およびマークダウン(実体参照を使用)、roff "
+"ms(16進数エスケープを使用)でサポートされており、LaTeX(可能であればアクセント付き文字のための標準コマンドを使用します)では一部サポートされています。roff"
+" manの出力はデフォルトでASCIIを使用します。"
 
 #: ../../users-guide.rst:751
 msgid "``--reference-links``"
@@ -1511,6 +1547,9 @@ msgid ""
 "reStructuredText. By default inline links are used. The placement of link "
 "references is affected by the ``--reference-location`` option."
 msgstr ""
+"マークダウンまたは "
+"reStructuredTextを書き出す際にインラインリンクのかわりに参考文献スタイルのリンクを使用します。デフォルトでは、インラインリンクが使用されます。リンク先の位置は"
+"``--reference-location`` オプションに影響を受けます。"
 
 #: ../../users-guide.rst:757
 msgid "``--reference-location = block``\\ \\|\\ ``section``\\ \\|\\ ``document``"
@@ -1523,6 +1562,8 @@ msgid ""
 " or the document. The default is ``document``. Currently only affects the "
 "markdown writer."
 msgstr ""
+"脚注(``reference-"
+"links``オプションが設定されている場合は参考文献も)が、現在の(トップレベル)ブロックの最後、現在のセクションの最後、文書の最後のいずれに配置されるのかを指定します。デフォルトは``document``です。現在は、このオプションの影響を受けるのは、マークダウンwriterのみとなっています。"
 
 #: ../../users-guide.rst:763
 msgid "``--atx-headers``"
@@ -1535,6 +1576,8 @@ msgid ""
 "output, ATX headings are always used.) This option also affects markdown "
 "cells in ``ipynb`` output."
 msgstr ""
+"マークダウン出力の際、ATXスタイルの見出しを使用します。既定では、レベル1とレベル2の見出しにはsetextスタイルを使用し、それ以外にはATXの見出しを使用します。(注意:"
+" ``gfm``出力の場合ATXの見出しが常に使用されます)。このオプションは、``ipynb``出力のマークダウンセルでも適用されます。"
 
 #: ../../users-guide.rst:777
 msgid "``--top-level-division=[default|section|chapter|part]``"
@@ -1553,6 +1596,8 @@ msgid ""
 "either ``chapter`` or ``part`` will cause top-level headings to become "
 "``\\part{..}``, while second-level headings remain as their default type."
 msgstr ""
+"LaTex、ConTeXt、DocBook、TEI出力において、トップレベルの見出しを指定した単位として扱います。順序は、部(part)、章(chapter)、節(section)の順となります。すべての見出しは、トップレベルの見出しが指定したレベルとなるように遷移します。既定の挙動では、経験則によって次のように単位が決定されます。他の条件が適用されない場合、``section``が選択されます。LaTeXの文書クラスが``report``、``book``、``memoir`` に設定された場合は (``article`` オプションが設定されない場合)、暗黙に``chapter``が設定されます。出力形式が``beamer`` の場合、``chapter``、``part``を設定すると、トップレベルの見出しは``\\part{..}``となり、レベル2の見出しは既定のままになります。 \n"
+" "
 
 #: ../../users-guide.rst:783
 msgid "``-N``, ``--number-sections``"
@@ -1564,6 +1609,8 @@ msgid ""
 " sections are not numbered. Sections with class ``unnumbered`` will never be"
 " numbered, even if ``--number-sections`` is specified."
 msgstr ""
+"LaTeX、ConTeXt、HTML、EPUB出力の節見出しに数字をつけます。既定では、節は数字なしとなります。``unnumbered``クラスを設定した節は"
+"、``--number-sections``  が指定されていても数字なしとなります。"
 
 #: ../../users-guide.rst:793
 msgid "``--number-offset=``\\ *NUMBER*\\ [``,``\\ *NUMBER*\\ ``,``\\ *…*]"
@@ -1579,6 +1626,12 @@ msgid ""
 "heading which you want to be numbered “1.5”, specify ``--number-"
 "offset=1,4``. Offsets are 0 by default. Implies ``--number-sections``."
 msgstr ""
+"セクションヘッダのオフセット値。HTML出力に対してのみ適用されます (他の出力形式では無視されます)。1番目の値はトップレベル (レベル1) "
+"ヘッダのセクション番号に対して適用されます。2番目はレベル2ヘッダに対して、以下同様に適用されます。たとえば、文書のトップレベルヘッダに対して「6」というセクション番号を指定したい場合は、"
+" ``--number-offset=5`` "
+"を指定してください。一方で、文書をレベル2ヘッダから始める際に「1.5」というセクション番号を指定したい場合は、 ``--number-"
+"offset=1,4`` を指定してください。オフセット値の既定は「0」です。このオプションは ``--number-sections`` "
+"を暗黙に指定します。"
 
 #: ../../users-guide.rst:799
 msgid "``--listings``"
@@ -1591,6 +1644,10 @@ msgid ""
 "to use a custom template. This issue is fully documented here: `Encoding "
 "issue with the listings package`_."
 msgstr ""
+"LaTeXのコードブロックに対して ```listings```_ "
+"パッケージを適用します。このパッケージは、ソースコードのマルチバイトエンコーディングをサポートしていません。UTF-"
+"8を扱うには、カスタムテンプレートを使う必要があります。この問題はここで完全に文書化されています: `Encoding issue with the "
+"listings package`_"
 
 #: ../../users-guide.rst:803
 msgid "``-i``, ``--incremental``"
@@ -1600,7 +1657,7 @@ msgstr "``-i``, ``--incremental``"
 msgid ""
 "Make list items in slide shows display incrementally (one by one). The "
 "default is for lists to be displayed all at once."
-msgstr ""
+msgstr "スライドショー中でリストアイテムをインクリメンタルに (1度に1つずつ) 表示するように変更します。既定ではリストは一気に表示されます。"
 
 #: ../../users-guide.rst:813
 msgid "``--slide-level=``\\ *NUMBER*"
@@ -1616,6 +1673,8 @@ msgid ""
 "slide show. The default is to set the slide level based on the contents of "
 "the document; see `Structuring the slide show`_."
 msgstr ""
+"スライドの見出しレベルを指定します(``beamer``、``s5``、``slidy``、``slideous``、``dzslides``が対象)。このレベルより上の見出しは、スライドショーを節に分割するために使用されます。このレベルより下の見出しは、スライド内の小見出しとなります。スライドレベルの見出しの下に含まれない内容は、スライドショーにも含まれないことに注意してください。既定では、文書の内容に基づいてスライドのレベルを設定します。`Structuring"
+" the slide show`_ を参照してください。"
 
 #: ../../users-guide.rst:819
 msgid "``--section-divs``"
@@ -1627,6 +1686,9 @@ msgid ""
 "attach identifiers to the enclosing ``<section>`` (or ``<div>``) rather than"
 " the heading itself. See `Heading identifiers`_, below."
 msgstr ""
+"セクションを ``<section>`` タグ (``html4`` 向けには ``<div>`` タグ) "
+"で囲みます。そのセクションの識別子は見出しそのものではなく ``<section>`` (もしくは ``<div>``) に含まれます。下記の "
+"`Heading identifiers`_ も参照。"
 
 #: ../../users-guide.rst:826
 msgid "``--email-obfuscation=none``\\ \\|\\ ``javascript``\\ \\|\\ ``references``"
@@ -1640,6 +1702,9 @@ msgid ""
 "letters as decimal or hexadecimal character references. The default is "
 "``none``."
 msgstr ""
+"HTML文書において ``mailto:`` リンクを難読化 (obfuscating) する方法を指定します。 ``none`` は "
+"``mailto:`` リンクをそのままにします。 ``javascript`` はJavaScriptを用いて難読化します。 "
+"``references`` は文字列を十進数または十六進数の数値文字参照として出力することで難読化します。既定は ``none`` です。"
 
 #: ../../users-guide.rst:832
 msgid "``--id-prefix=``\\ *STRING*"
@@ -1652,6 +1717,8 @@ msgid ""
 "This is useful for preventing duplicate identifiers when generating "
 "fragments to be included in other pages."
 msgstr ""
+"指定された接頭辞 (prefix) "
+"をすべての識別子、HTMLとDocBook出力の内部リンク、およびMarkdownとHaddock出力の脚注番号に付加します。たとえば文書の断片を他のページからインクルードして生成する際に、このオプションを使うと識別子の重複を防げて便利です。"
 
 #: ../../users-guide.rst:837
 msgid "``-T`` *STRING*, ``--title-prefix=``\\ *STRING*"
@@ -1663,6 +1730,9 @@ msgid ""
 "the HTML header (but not in the title as it appears at the beginning of the "
 "HTML body). Implies ``--standalone``."
 msgstr ""
+"接頭辞 *STRING* を、HTMLヘッダにおけるtitle文字列の最初に挿入します (このtitleはHTML本文の最初に現れるものとは異なります)。暗黙に ``--standalone`` を指定します。\n"
+"\n"
+"(訳注: たとえば ``-T FOO -V pagetitle=タイトル`` を指定すれば、HTML出力の ``<head>`` 要素の中で ``<title>FOO – タイトル</title>`` と出力されます。タイトルの形式はHTML出力用のテンプレートに依存し、詳細は ``pandoc -D html`` で確認できます)"
 
 #: ../../users-guide.rst:847
 msgid "``-c`` *URL*, ``--css=``\\ *URL*"
@@ -1673,6 +1743,7 @@ msgid ""
 "Link to a CSS style sheet. This option can be used repeatedly to include "
 "multiple files. They will be included in the order specified."
 msgstr ""
+"CSSスタイルシートをリンクします。このオプションは複数のファイルをインクルードするために繰り返し指定できます。オプションを指定した通りの順番でインクルードされます。"
 
 #: ../../users-guide.rst:843
 msgid ""
@@ -1681,6 +1752,10 @@ msgid ""
 " for a file ``epub.css`` in the user data directory (see ``--data-dir``). If"
 " it is not found there, sensible defaults will be used."
 msgstr ""
+"EPUBを生成する場合、スタイルシートが必須です。もしこのオプション (もしくはメタデータのフィールドにおける ``css`` や "
+"``stylesheet``) が引数なしで指定された場合、Pandocは ``epub.css`` というファイルをユーザデータディレクトリ "
+"(``--data-dir`` を参照) から探します。それでも見つからなければ、Pandocは自動で認識できる既定ファイル (sensible "
+"defaults) を利用しようとします。"
 
 #: ../../users-guide.rst:949
 msgid "``--reference-doc=``\\ *FILE*"
@@ -1690,6 +1765,9 @@ msgstr "``--reference-doc=``\\ *FILE*"
 msgid ""
 "Use the specified file as a style reference in producing a docx or ODT file."
 msgstr ""
+"docxまたはodt出力のためのスタイル参照 (style reference) ファイルを指定します。\n"
+"\n"
+"(訳注: 多くの出力形式ではスタンドアロン文書の書式を指定するためにテンプレートを利用できますが、docxとODTではテンプレートが利用できません。その代わりにこのオプションでは、実際のdocx/ODTファイル (スタイル参照ファイル) をテンプレートと見なして書式を指定できます)"
 
 #: ../../users-guide.rst:912 ../../users-guide.rst:3568
 msgid "Docx"
@@ -1705,10 +1783,11 @@ msgid ""
 "``reference.docx`` in the user data directory (see ``--data-dir``). If this "
 "is not found either, sensible defaults will be used."
 msgstr ""
-"最良の結果を得るためには、参照する docx は、 Pandoc を使用して作成された docx ファイルを修正したものを使うべきです。参照する "
-"docx の中身は無視されますが、そのスタイルシートと文書プロパティ（余白、ページサイズ、ヘッダー、フッターなど）は新しい docx "
-"で使用されます。コマンドラインで参照する docx が指定されていない場合、 Pandoc はユーザーデータディレクトリでファイル "
-"``reference.docx`` を探します (``--data-dir`` を参照)。それでも見つからない場合は、気の利いた既定が使用されます。"
+"最良の出力を得るために、あらかじめスタイル参照用の docx ファイルを Pandoc で出力し、それを修正して用いるようにしてください。参照する "
+"docx の本文は無視されますが、そのスタイルシートと文書プロパティ（余白、ページサイズ、ヘッダー、フッターなど）は新しい docx "
+"で使用されます。コマンドラインでスタイル参照用 docx が指定されていない場合、Pandoc はユーザーデータディレクトリから "
+"``reference.docx`` を探します (``--data-dir`` "
+"を参照)。それでも見つからない場合は、Pandocは自動で認識できる既定ファイルを探します。"
 
 #: ../../users-guide.rst:863
 msgid ""
@@ -1718,162 +1797,166 @@ msgid ""
 "the styles as you wish, and save the file. For best results, do not make "
 "changes to this file other than modifying the styles used by pandoc:"
 msgstr ""
+"ユーザ用のカスタム ``reference.docx`` をつくるには、まずは既定の ``reference.docx`` のコピーを取得します: ``pandoc -o custom-reference.docx --print-default-data-file reference.docx`` を実行してください。次にWordで ``custom-reference.docx`` を開き、ユーザが望むようにスタイルを変更し保存します。最良の出力を得るためには、Pandocが利用する下記のスタイルを変更するようにし、それ以外は変更しないようにしてください:\n"
+"\n"
+"(訳注: 以下、下記記事にある日本語スタイル名を括弧内に補足する。ただし不明なものは省略する。\n"
+"`(1/15 追記) Markdown Preview Enhanced+pandocでdocxを出力する際のあれこれ（あるいはスタイル対応表） - niszetの日記 <https://niszet.hatenablog.com/entry/2018/01/14/214800>`__)"
 
 #: ../../users-guide.rst:870
 msgid "Paragraph styles:"
-msgstr ""
+msgstr "段落スタイル:"
 
 #: ../../users-guide.rst:872
 msgid "Normal"
-msgstr ""
+msgstr "Normal (標準)"
 
 #: ../../users-guide.rst:873
 msgid "Body Text"
-msgstr ""
+msgstr "Body Text (本文)"
 
 #: ../../users-guide.rst:874
 msgid "First Paragraph"
-msgstr ""
+msgstr "First Paragraph"
 
 #: ../../users-guide.rst:875
 msgid "Compact"
-msgstr ""
+msgstr "Compact"
 
 #: ../../users-guide.rst:876
 msgid "Title"
-msgstr ""
+msgstr "Title (表題)"
 
 #: ../../users-guide.rst:877
 msgid "Subtitle"
-msgstr ""
+msgstr "Subtitle (副題)"
 
 #: ../../users-guide.rst:878
 msgid "Author"
-msgstr ""
+msgstr "Author"
 
 #: ../../users-guide.rst:879
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: ../../users-guide.rst:880
 msgid "Abstract"
-msgstr ""
+msgstr "Abstract"
 
 #: ../../users-guide.rst:881
 msgid "Bibliography"
-msgstr ""
+msgstr "Bibliography"
 
 #: ../../users-guide.rst:882
 msgid "Heading 1"
-msgstr ""
+msgstr "Heading 1 (見出し1)"
 
 #: ../../users-guide.rst:883
 msgid "Heading 2"
-msgstr ""
+msgstr "Heading 2 (見出し2)"
 
 #: ../../users-guide.rst:884
 msgid "Heading 3"
-msgstr ""
+msgstr "Heading 3 (見出し3)"
 
 #: ../../users-guide.rst:885
 msgid "Heading 4"
-msgstr ""
+msgstr "Heading 4 (見出し4)"
 
 #: ../../users-guide.rst:886
 msgid "Heading 5"
-msgstr ""
+msgstr "Heading 5 (見出し5)"
 
 #: ../../users-guide.rst:887
 msgid "Heading 6"
-msgstr ""
+msgstr "Heading 6 (見出し6)"
 
 #: ../../users-guide.rst:888
 msgid "Heading 7"
-msgstr ""
+msgstr "Heading 7 (見出し7)"
 
 #: ../../users-guide.rst:889
 msgid "Heading 8"
-msgstr ""
+msgstr "Heading 8 (見出し8)"
 
 #: ../../users-guide.rst:890
 msgid "Heading 9"
-msgstr ""
+msgstr "Heading 9 (見出し9)"
 
 #: ../../users-guide.rst:891
 msgid "Block Text"
-msgstr ""
+msgstr "Block Text (ブロック)"
 
 #: ../../users-guide.rst:892
 msgid "Footnote Text"
-msgstr ""
+msgstr "Footnote Text"
 
 #: ../../users-guide.rst:893
 msgid "Definition Term"
-msgstr ""
+msgstr "Definition Term"
 
 #: ../../users-guide.rst:894
 msgid "Definition"
-msgstr ""
+msgstr "Definition"
 
 #: ../../users-guide.rst:895
 msgid "Caption"
-msgstr ""
+msgstr "Caption"
 
 #: ../../users-guide.rst:896
 msgid "Table Caption"
-msgstr ""
+msgstr "Table Caption"
 
 #: ../../users-guide.rst:897
 msgid "Image Caption"
-msgstr ""
+msgstr "Image Caption"
 
 #: ../../users-guide.rst:898
 msgid "Figure"
-msgstr ""
+msgstr "Figure"
 
 #: ../../users-guide.rst:899
 msgid "Captioned Figure"
-msgstr ""
+msgstr "Captioned Figure"
 
 #: ../../users-guide.rst:900
 msgid "TOC Heading"
-msgstr ""
+msgstr "TOC Heading"
 
 #: ../../users-guide.rst:902
 msgid "Character styles:"
-msgstr ""
+msgstr "文字スタイル:"
 
 #: ../../users-guide.rst:904
 msgid "Default Paragraph Font"
-msgstr ""
+msgstr "Default Paragraph Font"
 
 #: ../../users-guide.rst:905
 msgid "Body Text Char"
-msgstr ""
+msgstr "Body Text Char"
 
 #: ../../users-guide.rst:906
 msgid "Verbatim Char"
-msgstr ""
+msgstr "Verbatim Char"
 
 #: ../../users-guide.rst:907
 msgid "Footnote Reference"
-msgstr ""
+msgstr "Footnote Reference"
 
 #: ../../users-guide.rst:908
 msgid "Hyperlink"
-msgstr ""
+msgstr "Hyperlink (ハイパーリンク)"
 
 #: ../../users-guide.rst:910
 msgid "Table style:"
-msgstr ""
+msgstr "表スタイル:"
 
 #: ../../users-guide.rst:912
 msgid "Table"
-msgstr ""
+msgstr "Table"
 
 #: ../../users-guide.rst:927 ../../users-guide.rst:3562
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../../users-guide.rst:915
 msgid ""
@@ -1884,6 +1967,10 @@ msgid ""
 " data directory (see ``--data-dir``). If this is not found either, sensible "
 "defaults will be used."
 msgstr ""
+"最良の出力を得るために、あらかじめスタイル参照用の ODT ファイルを Pandoc で出力し、それを修正して用いるようにしてください。参照する ODT"
+" の本文は無視されますが、そのスタイルシートは新しい ODT で使用されます。コマンドラインでスタイル参照用 ODT "
+"が指定されていない場合、Pandoc はユーザーデータディレクトリから ``reference.odt`` を探します (``--data-dir`` "
+"を参照)。それでも見つからない場合は、Pandocは自動で認識できる既定ファイルを探します。"
 
 #: ../../users-guide.rst:923
 msgid ""
@@ -1892,6 +1979,10 @@ msgid ""
 "file reference.odt``. Then open ``custom-reference.odt`` in LibreOffice, "
 "modify the styles as you wish, and save the file."
 msgstr ""
+"ユーザ用のカスタム ``reference.odt`` をつくるには、まずは既定の ``reference.odt`` のコピーを取得します: "
+"``pandoc -o custom-reference.odt --print-default-data-file reference.odt`` "
+"を実行してください。次にLibreOfficeで ``custom-reference.odt`` "
+"を開き、ユーザが望むようにスタイルを変更し保存します。"
 
 #: ../../users-guide.rst:949
 msgid "PowerPoint"
@@ -2972,103 +3063,110 @@ msgstr "Pandocでは `creating a PDF`_ でConTeXtを使う際に、下記の変�
 
 #: ../../users-guide.rst:1526
 msgid "font size for body text (e.g. ``10pt``, ``12pt``)"
-msgstr ""
+msgstr "本文テキストのフォントサイズ (例: ``10pt``, ``12pt``)"
 
 #: ../../users-guide.rst:1528
 msgid "``headertext``, ``footertext``"
-msgstr ""
+msgstr "``headertext``, ``footertext``"
 
 #: ../../users-guide.rst:1528
 msgid ""
 "text to be placed in running header or footer (see `ConTeXt Headers and "
 "Footers`_); repeat up to four times for different placement"
 msgstr ""
+"(それぞれページの天と地の) 柱に配置されるテキスト (`ConTeXt Headers and Footers`_ を参照)。異なる場所に対して4つまで繰り返し指定可能\n"
+"text to be placed in running header or footer (see `ConTeXt Headers and Footers`_); repeat up to four times for different placement"
 
 #: ../../users-guide.rst:1531
 msgid "``indenting``"
-msgstr ""
+msgstr "``indenting``"
 
 #: ../../users-guide.rst:1531
 msgid ""
 "controls indentation of paragraphs, e.g. \\ ``yes,small,next`` (see `ConTeXt"
 " Indentation`_); repeat for multiple options"
 msgstr ""
+"パラグラフのインデントを制御します。例: ``yes,small,next`` (`ConTeXt Indentation`_ を参照) 複数回指定可能"
 
 #: ../../users-guide.rst:1534
 msgid "``interlinespace``"
-msgstr ""
+msgstr "``interlinespace``"
 
 #: ../../users-guide.rst:1534
 msgid ""
 "adjusts line spacing, e.g. \\ ``4ex`` (using ```setupinterlinespace```_); "
 "repeat for multiple options"
-msgstr ""
+msgstr "行間を制御します。例: ``4ex`` (```setupinterlinespace```_ を利用) 複数回指定可能"
 
 #: ../../users-guide.rst:1537
 msgid "``layout``"
-msgstr ""
+msgstr "``layout``"
 
 #: ../../users-guide.rst:1537
 msgid ""
 "options for page margins and text arrangement (see `ConTeXt Layout`_); "
 "repeat for multiple options"
-msgstr ""
+msgstr "ページのマージンとテキスト配置のためのオプション (`ConTeXt Layout`_ を参照) 複数回指定可能"
 
 #: ../../users-guide.rst:1540
 msgid "``linkcolor``, ``contrastcolor``"
-msgstr ""
+msgstr "``linkcolor``, ``contrastcolor``"
 
 #: ../../users-guide.rst:1540
 msgid ""
 "color for links outside and inside a page, e.g. \\ ``red``, ``blue`` (see "
 "`ConTeXt Color`_)"
-msgstr ""
+msgstr "ページの外部および内部に向けたリンクの色。例: ``red``, ``blue`` (`ConTeXt Color`_ を参照)"
 
 #: ../../users-guide.rst:1543
 msgid "``linkstyle``"
-msgstr ""
+msgstr "``linkstyle``"
 
 #: ../../users-guide.rst:1543
 msgid ""
 "typeface style for links, e.g. \\ ``normal``, ``bold``, ``slanted``, "
 "``boldslanted``, ``type``, ``cap``, ``small``"
 msgstr ""
+"リンクの書体。例: ``normal``, ``bold``, ``slanted``, ``boldslanted``, ``type``, "
+"``cap``, ``small``"
 
 #: ../../users-guide.rst:1548
 msgid "``mainfont``, ``sansfont``, ``monofont``, ``mathfont``"
-msgstr ""
+msgstr "``mainfont``, ``sansfont``, ``monofont``, ``mathfont``"
 
 #: ../../users-guide.rst:1548
 msgid ""
 "font families: take the name of any system font (see `ConTeXt Font "
 "Switching`_)"
-msgstr ""
+msgstr "フォントファミリー: 任意のシステムフォントのフォント名 (`ConTeXt Font Switching`_ を参照)"
 
 #: ../../users-guide.rst:1551
 msgid ""
 "sets margins, if ``layout`` is not used (otherwise ``layout`` overrides "
 "these)"
-msgstr ""
+msgstr "``layout``  が設定されていない場合にマージンを設定 (``layout`` はこれらを上書きします)"
 
 #: ../../users-guide.rst:1554
 msgid "``pagenumbering``"
-msgstr ""
+msgstr "``pagenumbering``"
 
 #: ../../users-guide.rst:1554
 msgid ""
 "page number style and location (using ```setuppagenumbering```_); repeat for"
 " multiple options"
-msgstr ""
+msgstr "ページ番号のスタイルと場所 (```setuppagenumbering```_ を利用) 複数回指定可能"
 
 #: ../../users-guide.rst:1557
 msgid ""
 "paper size, e.g. \\ ``letter``, ``A4``, ``landscape`` (see `ConTeXt Paper "
 "Setup`_); repeat for multiple options"
 msgstr ""
+"ページサイズ。例: ``letter``, ``A4``, ``landscape`` (`ConTeXt Paper Setup`_ を参照) "
+"複数回指定可能"
 
 #: ../../users-guide.rst:1564
 msgid "``pdfa``"
-msgstr ""
+msgstr "``pdfa``"
 
 #: ../../users-guide.rst:1560
 msgid ""
@@ -3078,26 +3176,32 @@ msgid ""
 " standard conforming. The ICC profiles can be obtained from `ConTeXt ICC "
 "Profiles`_. See also `ConTeXt PDFA`_ for more details."
 msgstr ""
+"プリアンブルに対して、PDF/A-1b:2005 "
+"の生成に必要なセットアップを追加。PDF/Aを正しく生成するためには、ICCカラープロファイルが必須であり、コンテンツおよびすべての付属ファイル "
+"(画像など) も規格に準拠する必要があります。ICCプロファイルは  `ConTeXt ICC Profiles`_ から得られます。詳細は  "
+"`ConTeXt PDFA`_ を参照。"
 
 #: ../../users-guide.rst:1571
 msgid "``whitespace``"
-msgstr ""
+msgstr "``whitespace``"
 
 #: ../../users-guide.rst:1570
 msgid ""
 "spacing between paragraphs, e.g. \\ ``none``, ``small`` (using "
 "```setupwhitespace```_)"
-msgstr ""
+msgstr "パラグラフ間の空白。例: ``none``, ``small`` (```setupwhitespace```_ を利用)"
 
 #: ../../users-guide.rst:1574
 msgid "Variables for ``wkhtmltopdf``"
-msgstr ""
+msgstr "``wkhtmltopdf`` 用の変数"
 
 #: ../../users-guide.rst:1576
 msgid ""
 "Pandoc uses these variables when `creating a PDF`_ with ```wkhtmltopdf```_. "
 "The ``--css`` option also affects the output."
 msgstr ""
+"Pandocは ```wkhtmltopdf```_ を用いた `creating a PDF`_ の際に、下記の変数を利用します。 ``--css``"
+" オプションも同様に出力へ影響します。"
 
 #: ../../users-guide.rst:1579
 msgid "``footer-html``, ``header-html``"
@@ -3301,7 +3405,7 @@ msgstr "目次のタイトル (EPUB, opendocument, odt, docx, pptx, beamer, LaTe
 
 #: ../../users-guide.rst:1671
 msgid "Using variables in templates"
-msgstr ""
+msgstr "テンプレートで変数を使う"
 
 #: ../../users-guide.rst:1673
 msgid ""
@@ -3625,7 +3729,7 @@ msgstr ""
 msgid ""
 "(However, a different algorithm is used if ``gfm_auto_identifiers`` is "
 "enabled; see below.)"
-msgstr ""
+msgstr "（しかし、 ``gfm_auto_identifiers`` を有効にした場合、異なるアルゴリズムが使われます。下記を参照してください）"
 
 #: ../../users-guide.rst:1858
 msgid ""
@@ -3675,16 +3779,18 @@ msgid ""
 "and ```tex_math_double_backslash```_ are described in the section about "
 "Pandoc’s Markdown."
 msgstr ""
+"```tex_math_dollars```_ 、 ```tex_math_single_backslash```_ 、 そして "
+"```tex_math_double_backslash```_ 拡張はPandoc’s Markdownのセクションに書かれています。"
 
 #: ../../users-guide.rst:1900
 msgid ""
 "However, they can also be used with HTML input. This is handy for reading "
 "web pages formatted using MathJax, for example."
-msgstr ""
+msgstr "しかし、これらはHTML入力とともに使用することができます。これは例えばMathJaxを使って整えられたウェブページを読むのに便利です。"
 
 #: ../../users-guide.rst:1904
 msgid "Raw HTML/TeX"
-msgstr ""
+msgstr "生の HTML/TeX"
 
 #: ../../users-guide.rst:1906
 msgid ""
@@ -3701,13 +3807,13 @@ msgstr ""
 
 #: ../../users-guide.rst:1924
 msgid "Allows raw LaTeX, TeX, and ConTeXt to be included in a document."
-msgstr ""
+msgstr "生の LaTeX、 TeX、ConTeXt を文書に含めることを許します。"
 
 #: ../../users-guide.rst:1926
 msgid ""
 "This extension can be enabled/disabled for the following formats (in "
 "addition to ``markdown``):"
-msgstr ""
+msgstr "この拡張は下記の形式で有効/無効に出来ます（ ``markdown``形式に加えて ）"
 
 #: ../../users-guide.rst:1930
 msgid ""
@@ -3717,7 +3823,7 @@ msgstr ""
 
 #: ../../users-guide.rst:1933
 msgid "``textile``, ``commonmark``"
-msgstr ""
+msgstr "``textile``, ``commonmark``"
 
 #: ../../users-guide.rst:1935
 msgid ""
@@ -4159,7 +4265,7 @@ msgstr "文字通りのブロック (コードブロック)"
 
 #: ../../users-guide.rst:2363
 msgid "Indented code blocks"
-msgstr ""
+msgstr "インデントされたコードブロック"
 
 #: ../../users-guide.rst:2365
 msgid ""
@@ -5130,7 +5236,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3519
 msgid "Math"
-msgstr ""
+msgstr "数式"
 
 #: ../../users-guide.rst:3524
 msgid ""
@@ -5147,7 +5253,7 @@ msgstr ""
 msgid ""
 "TeX math will be printed in all output formats. How it is rendered depends "
 "on the output format:"
-msgstr ""
+msgstr "TeX 数式はすべての出力形式で出力されます。どのようにレンダリングされるかは出力形式に依存します："
 
 #: ../../users-guide.rst:3536
 msgid "LaTeX"
@@ -5171,7 +5277,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3541
 msgid "XWiki"
-msgstr ""
+msgstr "XWiki"
 
 #: ../../users-guide.rst:3542
 msgid "It will appear verbatim surrounded by ``{{formula}}..{{/formula}}``."
@@ -5179,7 +5285,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3543
 msgid "reStructuredText"
-msgstr ""
+msgstr "reStructuredText"
 
 #: ../../users-guide.rst:3544
 msgid "It will be rendered using an `interpreted text role ``:math:```_."
@@ -5575,29 +5681,31 @@ msgstr ""
 
 #: ../../users-guide.rst:3890
 msgid "Internal links"
-msgstr ""
+msgstr "内部リンク"
 
 #: ../../users-guide.rst:3892
 msgid ""
 "To link to another section of the same document, use the automatically "
 "generated identifier (see `Heading identifiers`_). For example:"
 msgstr ""
+"同じ文書の異なるセクションへリンクするために、\n"
+"自動生成された識別子を使用してください（ `Heading identifiers`_ を参照）。例えば："
 
 #: ../../users-guide.rst:3907
 msgid ""
 "Internal links are currently supported for HTML formats (including HTML "
 "slide shows and EPUB), LaTeX, and ConTeXt."
-msgstr ""
+msgstr "内部リンクは現在HTML（HTMLスライドとEPUBを含みます）、LaTex、ConTeXt形式でサポートされています。"
 
 #: ../../users-guide.rst:3911
 msgid "Images"
-msgstr ""
+msgstr "画像"
 
 #: ../../users-guide.rst:3913
 msgid ""
 "A link immediately preceded by a ``!`` will be treated as an image. The link"
 " text will be used as the image’s alt text:"
-msgstr ""
+msgstr "``!`` が直前についたリンクは画像として扱われます。リンクテキストは画像の代替テキストとして使われます。"
 
 #: ../../users-guide.rst:3927
 msgid ""
@@ -5605,6 +5713,7 @@ msgid ""
 " rendered as a figure with a caption. The image’s alt text will be used as "
 "the caption."
 msgstr ""
+"空白でない代替テキストのある画像は、パラグラフ内でそれ自身で発生した、キャプションのついた画像として処理されます。画像の代替テキストはキャプションとして使用されます。"
 
 #: ../../users-guide.rst:3935
 msgid ""
@@ -5612,6 +5721,8 @@ msgid ""
 " RTF) do not yet support figures. In those formats, you’ll just get an image"
 " in a paragraph by itself, with no caption."
 msgstr ""
+"これがどのようにレンダリングされるかは出力形式に依存します。いくつかの出力形式（例えば "
+"RTF）は図をサポートしていません。これらの形式ではユーザはパラグラフ内にキャプションのない画像が得られます。"
 
 #: ../../users-guide.rst:3939
 msgid ""
@@ -5630,13 +5741,15 @@ msgstr ""
 
 #: ../../users-guide.rst:3954
 msgid "Attributes can be set on links and images:"
-msgstr ""
+msgstr "属性はリンクと画像に設定できます"
 
 #: ../../users-guide.rst:3963
 msgid ""
 "(This syntax is compatible with `PHP Markdown Extra`_ when only ``#id`` and "
 "``.class`` are used.)"
 msgstr ""
+"（このシンタックスは ``#id`` と ``.class``  のみが使われるとき\n"
+" `PHP Markdown Extra`_ と互換です。）"
 
 #: ../../users-guide.rst:3966
 msgid ""
@@ -5700,7 +5813,7 @@ msgstr ""
 
 #: ../../users-guide.rst:4002
 msgid "Divs and Spans"
-msgstr ""
+msgstr "Div と Span"
 
 #: ../../users-guide.rst:4004
 msgid ""
@@ -5725,7 +5838,7 @@ msgstr ""
 
 #: ../../users-guide.rst:4023
 msgid "Example:"
-msgstr ""
+msgstr "例："
 
 #: ../../users-guide.rst:4033
 msgid ""
@@ -5750,11 +5863,11 @@ msgstr ""
 
 #: ../../users-guide.rst:4064
 msgid "Footnotes"
-msgstr ""
+msgstr "脚注"
 
 #: ../../users-guide.rst:4069
 msgid "Pandoc’s Markdown allows footnotes, using the following syntax:"
-msgstr ""
+msgstr "Pandoc’s Markdown では次の構文を使って脚注を使えます"
 
 #: ../../users-guide.rst:4091
 msgid ""
