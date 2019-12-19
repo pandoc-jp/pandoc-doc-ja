@@ -1,0 +1,1999 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, 日本Pandocユーザ会
+# This file is distributed under the same license as the 日本Pandocユーザ会 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 日本Pandocユーザ会 \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-27 17:43+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../pandoc/data/templates/default.rst:1
+msgid "$if(titleblock)$ $titleblock$"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:4
+msgid "$endif$ $for(author)$ :Author: $author$ $endfor$ $if(date)$ :Date:   $date$ $endif$ $if(author)$"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:13
+msgid "$else$ $if(date)$"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:16
+msgid "$endif$ $endif$ $if(rawtex)$ .. role:: raw-latex(raw)"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:0
+msgid "format"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:20
+msgid "latex"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:23
+msgid "$endif$ $for(include-before)$ $include-before$"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:27
+msgid "$endfor$ $if(toc)$ .. contents::"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:33
+msgid "$endif$ $if(number-sections)$ .. section-numbering::"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:41
+msgid "$endfor$ $body$ $for(include-after)$"
+msgstr ""
+
+#: ../../pandoc/data/templates/default.rst:45
+msgid "$include-after$ $endfor$"
+msgstr ""
+
+#: ../../pandoc/test/lhs-test.rst:2
+msgid "lhs test"
+msgstr ""
+
+#: ../../pandoc/test/lhs-test.rst:4
+msgid "``unsplit`` is an arrow that takes a pair of values and combines them to return a single value:"
+msgstr ""
+
+#: ../../pandoc/test/lhs-test.rst:13
+msgid "``(***)`` combines two arrows into a new arrow by running the two arrows on a pair of values (one arrow on the first item of the pair and one arrow on the second item of the pair)."
+msgstr ""
+
+#: ../../pandoc/test/lhs-test.rst:21
+msgid "Block quote:"
+msgstr ""
+
+#: ../../pandoc/test/lhs-test.rst:23
+msgid "foo bar"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:2
+#: ../../pandoc/test/writer.rst:3
+msgid "Pandoc Test Suite"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:4
+msgid "Subtitle"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:0
+msgid "Authors"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:6
+msgid "John MacFarlane; Anonymous"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:0
+#: ../../pandoc/test/writer.rst:0
+msgid "Date"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:7
+#: ../../pandoc/test/writer.rst:7
+msgid "July 17, 2006"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:0
+msgid "Revision"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:8
+msgid "3"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:11
+msgid "Level one header"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:13
+msgid "This is a set of tests for pandoc.  Most of them are adapted from John Gruber's markdown test suite."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:17
+msgid "Level two header"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:20
+msgid "Level three"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:23
+msgid "Level four with *emphasis*"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:26
+msgid "Level five"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:29
+#: ../../pandoc/test/writer.rst:52
+msgid "Paragraphs"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:31
+msgid "Here's a regular paragraph."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:33
+#: ../../pandoc/test/writer.rst:56
+msgid "In Markdown 1.0.0 and earlier. Version 8. This line turns into a list item. Because a hard-wrapped line in the middle of a paragraph looked like a list item."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:39
+msgid "Here's one with a bullet. * criminey."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:42
+msgid "Horizontal rule:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:46
+msgid "Another:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:51
+#: ../../pandoc/test/writer.rst:68
+msgid "Block Quotes"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:53
+msgid "Here's a block quote:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:55
+#: ../../pandoc/test/writer.rst:72
+msgid "This is a block quote. It is pretty short."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:58
+msgid "Here's another, differently indented:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:60
+msgid "This is a block quote. It's indented with a tab."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:63
+msgid "Code in a block quote::"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:69
+msgid "List in a block quote:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:71
+#: ../../pandoc/test/writer.rst:86
+msgid "item one"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:72
+#: ../../pandoc/test/writer.rst:87
+msgid "item two"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:74
+#: ../../pandoc/test/writer.rst:89
+msgid "Nested block quotes:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:76
+#: ../../pandoc/test/rst-reader.rst:78
+#: ../../pandoc/test/writer.rst:91
+#: ../../pandoc/test/writer.rst:95
+msgid "nested"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:81
+#: ../../pandoc/test/writer.rst:104
+msgid "Code Blocks"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:83
+#: ../../pandoc/test/writer.rst:106
+#: ../../pandoc/test/writer.rst:512
+msgid "Code:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:97
+msgid "And::"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:103
+#: ../../pandoc/test/writer.rst:118
+msgid "And:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:111
+#: ../../pandoc/test/writer.rst:129
+msgid "Lists"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:114
+#: ../../pandoc/test/writer.rst:132
+msgid "Unordered"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:116
+#: ../../pandoc/test/writer.rst:134
+msgid "Asterisks tight:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:118
+#: ../../pandoc/test/rst-reader.rst:124
+#: ../../pandoc/test/writer.rst:136
+#: ../../pandoc/test/writer.rst:142
+msgid "asterisk 1"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:119
+#: ../../pandoc/test/rst-reader.rst:126
+#: ../../pandoc/test/writer.rst:137
+#: ../../pandoc/test/writer.rst:144
+msgid "asterisk 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:120
+#: ../../pandoc/test/rst-reader.rst:128
+#: ../../pandoc/test/writer.rst:138
+#: ../../pandoc/test/writer.rst:146
+msgid "asterisk 3"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:122
+#: ../../pandoc/test/writer.rst:140
+msgid "Asterisks loose:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:130
+#: ../../pandoc/test/writer.rst:148
+msgid "Pluses tight:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:132
+#: ../../pandoc/test/rst-reader.rst:138
+#: ../../pandoc/test/writer.rst:150
+#: ../../pandoc/test/writer.rst:156
+msgid "Plus 1"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:133
+#: ../../pandoc/test/rst-reader.rst:140
+#: ../../pandoc/test/writer.rst:151
+#: ../../pandoc/test/writer.rst:158
+msgid "Plus 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:134
+#: ../../pandoc/test/rst-reader.rst:142
+#: ../../pandoc/test/writer.rst:152
+#: ../../pandoc/test/writer.rst:160
+msgid "Plus 3"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:136
+#: ../../pandoc/test/writer.rst:154
+msgid "Pluses loose:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:144
+#: ../../pandoc/test/writer.rst:162
+msgid "Minuses tight:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:146
+#: ../../pandoc/test/rst-reader.rst:152
+#: ../../pandoc/test/writer.rst:164
+#: ../../pandoc/test/writer.rst:170
+msgid "Minus 1"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:147
+#: ../../pandoc/test/rst-reader.rst:154
+#: ../../pandoc/test/writer.rst:165
+#: ../../pandoc/test/writer.rst:172
+msgid "Minus 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:148
+#: ../../pandoc/test/rst-reader.rst:156
+#: ../../pandoc/test/writer.rst:166
+#: ../../pandoc/test/writer.rst:174
+msgid "Minus 3"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:150
+#: ../../pandoc/test/writer.rst:168
+msgid "Minuses loose:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:159
+#: ../../pandoc/test/writer.rst:177
+msgid "Ordered"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:161
+#: ../../pandoc/test/writer.rst:179
+msgid "Tight:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:163
+#: ../../pandoc/test/rst-reader.rst:175
+#: ../../pandoc/test/rst-reader.rst:210
+#: ../../pandoc/test/tables.rst:43
+#: ../../pandoc/test/tables.rst:57
+#: ../../pandoc/test/tables.rst:76
+#: ../../pandoc/test/writer.rst:181
+#: ../../pandoc/test/writer.rst:193
+#: ../../pandoc/test/writer.rst:228
+#: ../../pandoc/test/writer.rst:239
+msgid "First"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:164
+#: ../../pandoc/test/rst-reader.rst:177
+#: ../../pandoc/test/tables.rst:46
+#: ../../pandoc/test/tables.rst:60
+#: ../../pandoc/test/tables.rst:79
+#: ../../pandoc/test/writer.rst:182
+#: ../../pandoc/test/writer.rst:195
+msgid "Second"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:165
+#: ../../pandoc/test/rst-reader.rst:179
+#: ../../pandoc/test/rst-reader.rst:218
+#: ../../pandoc/test/writer.rst:183
+#: ../../pandoc/test/writer.rst:197
+#: ../../pandoc/test/writer.rst:235
+#: ../../pandoc/test/writer.rst:247
+msgid "Third"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:167
+#: ../../pandoc/test/writer.rst:185
+msgid "and:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:169
+#: ../../pandoc/test/rst-reader.rst:183
+#: ../../pandoc/test/writer.rst:187
+#: ../../pandoc/test/writer.rst:201
+msgid "One"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:170
+#: ../../pandoc/test/rst-reader.rst:185
+#: ../../pandoc/test/writer.rst:188
+#: ../../pandoc/test/writer.rst:203
+msgid "Two"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:171
+#: ../../pandoc/test/rst-reader.rst:187
+#: ../../pandoc/test/writer.rst:189
+#: ../../pandoc/test/writer.rst:205
+msgid "Three"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:173
+#: ../../pandoc/test/writer.rst:191
+msgid "Loose using tabs:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:181
+#: ../../pandoc/test/writer.rst:199
+msgid "and using spaces:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:189
+#: ../../pandoc/test/writer.rst:207
+msgid "Multiple paragraphs:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:191
+#: ../../pandoc/test/writer.rst:209
+msgid "Item 1, graf one."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:193
+msgid "Item 1. graf two. The quick brown fox jumped over the lazy dog's back."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:196
+#: ../../pandoc/test/writer.rst:213
+msgid "Item 2."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:198
+#: ../../pandoc/test/writer.rst:215
+msgid "Item 3."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:200
+msgid "Nested:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:202
+#: ../../pandoc/test/rst-reader.rst:204
+#: ../../pandoc/test/rst-reader.rst:206
+#: ../../pandoc/test/writer.rst:220
+#: ../../pandoc/test/writer.rst:222
+#: ../../pandoc/test/writer.rst:224
+msgid "Tab"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:208
+msgid "Here's another:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:212
+#: ../../pandoc/test/writer.rst:229
+#: ../../pandoc/test/writer.rst:241
+msgid "Second:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:214
+#: ../../pandoc/test/writer.rst:231
+#: ../../pandoc/test/writer.rst:243
+msgid "Fee"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:215
+#: ../../pandoc/test/writer.rst:232
+#: ../../pandoc/test/writer.rst:244
+msgid "Fie"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:216
+#: ../../pandoc/test/writer.rst:233
+#: ../../pandoc/test/writer.rst:245
+msgid "Foe"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:221
+#: ../../pandoc/test/writer.rst:261
+msgid "Fancy list markers"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:223
+#: ../../pandoc/test/writer.rst:263
+msgid "begins with 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:224
+#: ../../pandoc/test/writer.rst:265
+msgid "and now 3"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:226
+#: ../../pandoc/test/writer.rst:267
+msgid "with a continuation"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:228
+#: ../../pandoc/test/writer.rst:269
+msgid "sublist with roman numerals, starting with 4"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:229
+#: ../../pandoc/test/writer.rst:270
+msgid "more items"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:231
+#: ../../pandoc/test/rst-reader.rst:232
+#: ../../pandoc/test/writer.rst:272
+#: ../../pandoc/test/writer.rst:273
+msgid "a subsublist"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:234
+#: ../../pandoc/test/writer.rst:275
+msgid "Nesting:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:236
+#: ../../pandoc/test/writer.rst:277
+msgid "Upper Alpha"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:238
+#: ../../pandoc/test/writer.rst:279
+msgid "Upper Roman."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:240
+#: ../../pandoc/test/writer.rst:281
+msgid "Decimal start with 6"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:242
+#: ../../pandoc/test/writer.rst:283
+msgid "Lower alpha with paren"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:244
+#: ../../pandoc/test/writer.rst:285
+msgid "Autonumbering:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:246
+#: ../../pandoc/test/writer.rst:287
+msgid "Autonumber."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:247
+#: ../../pandoc/test/writer.rst:288
+msgid "More."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:249
+#: ../../pandoc/test/writer.rst:290
+msgid "Nested."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:251
+msgid "Autonumbering with explicit start:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:253
+msgid "item 1"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:254
+msgid "item 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:257
+msgid "Definition"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:260
+msgid "term 1"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:260
+msgid "Definition 1."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:265
+msgid "term 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:263
+msgid "Definition 2, paragraph 1."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:265
+msgid "Definition 2, paragraph 2."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:268
+msgid "term with *emphasis*"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:268
+msgid "Definition 3."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:271
+msgid "Field Lists"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:0
+#: ../../pandoc/test/rst-reader.rst:0
+msgid "address"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:273
+#: ../../pandoc/test/rst-reader.rst:278
+msgid "61 Main St."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:0
+#: ../../pandoc/test/rst-reader.rst:0
+msgid "city"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:274
+#: ../../pandoc/test/rst-reader.rst:279
+msgid "*Nowhere*, MA, USA"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:0
+#: ../../pandoc/test/rst-reader.rst:0
+msgid "phone"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:276
+#: ../../pandoc/test/rst-reader.rst:282
+msgid "123-4567"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:285
+#: ../../pandoc/test/writer.rst:385
+msgid "HTML Blocks"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:287
+#: ../../pandoc/test/writer.rst:387
+msgid "Simple block on one line:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:293
+#: ../../pandoc/test/writer.rst:469
+msgid "Now, nested:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:306
+msgid "LaTeX Block"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:317
+#: ../../pandoc/test/writer.rst:559
+msgid "Inline Markup"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:319
+msgid "This is *emphasized*. This is **strong**."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:321
+#: ../../pandoc/test/writer.rst:575
+msgid "This is code: ``>``, ``$``, ``\\``, ``\\$``, ``<html>``."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:323
+msgid "This is\\ :sub:`subscripted` and this is :sup:`superscripted`\\ ."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:326
+#: ../../pandoc/test/writer.rst:646
+msgid "Special Characters"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:328
+#: ../../pandoc/test/writer.rst:648
+msgid "Here is some unicode:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:330
+#: ../../pandoc/test/writer.rst:650
+msgid "I hat: Î"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:331
+#: ../../pandoc/test/writer.rst:651
+msgid "o umlaut: ö"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:332
+#: ../../pandoc/test/writer.rst:652
+msgid "section: §"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:333
+#: ../../pandoc/test/writer.rst:653
+msgid "set membership: ∈"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:334
+#: ../../pandoc/test/writer.rst:654
+msgid "copyright: ©"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:336
+#: ../../pandoc/test/writer.rst:656
+msgid "AT&T has an ampersand in their name."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:338
+#: ../../pandoc/test/writer.rst:660
+msgid "This & that."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:340
+#: ../../pandoc/test/writer.rst:662
+msgid "4 < 5."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:342
+#: ../../pandoc/test/writer.rst:664
+msgid "6 > 5."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:344
+#: ../../pandoc/test/writer.rst:666
+msgid "Backslash: \\\\"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:346
+#: ../../pandoc/test/writer.rst:668
+msgid "Backtick: \\`"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:348
+#: ../../pandoc/test/writer.rst:670
+msgid "Asterisk: \\*"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:350
+#: ../../pandoc/test/writer.rst:672
+msgid "Underscore: \\_"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:352
+msgid "Left brace: \\{"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:354
+msgid "Right brace: \\}"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:356
+msgid "Left bracket: \\["
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:358
+msgid "Right bracket: \\]"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:360
+msgid "Left paren: \\("
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:362
+msgid "Right paren: \\)"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:364
+msgid "Greater-than: \\>"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:366
+msgid "Hash: \\#"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:368
+msgid "Period: \\."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:370
+msgid "Bang: \\!"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:372
+msgid "Plus: \\+"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:374
+msgid "Minus: \\-"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:377
+#: ../../pandoc/test/writer.rst:701
+msgid "Links"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:379
+msgid "Explicit:  a `URL </url/>`_."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:381
+msgid "Explicit with no label:  `<foo>`_."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:383
+msgid "Two anonymous links:  `the first`__ and `the second`__"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:388
+msgid "Reference links:  `link1`_ and `link2`_ and link1_ again."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:393
+msgid "Another `style of reference link <link1_>`_."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:395
+msgid "Here's a `link with an ampersand in the URL`_."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:397
+msgid "Here's a link with an amersand in the link text: `AT&T </url/>`_."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:401
+msgid "Autolinks: http://example.com/?foo=1&bar=2 and nobody@nowhere.net."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:403
+msgid "But not here::"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:408
+#: ../../pandoc/test/writer.rst:783
+msgid "Images"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:410
+msgid "From \"Voyage dans la Lune\" by Georges Melies (1902):"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:418
+#: ../../pandoc/test/writer.rst:792
+msgid "Here is a movie |movie| icon."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:422
+msgid "And an |image with a link|."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:429
+msgid "Comments"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:431
+msgid "First paragraph"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:439
+msgid "Another paragraph"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:451
+msgid "A third paragraph"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:454
+msgid "Line blocks"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:456
+msgid "But can a bee be said to be"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:457
+msgid "or not to be an entire bee,"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:458
+msgid "when half the bee is not a bee,"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:459
+msgid "due to some ancient injury?"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:462
+msgid "Continuation line"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:464
+msgid "and another"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:467
+msgid "Simple Tables"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:470
+#: ../../pandoc/test/rst-reader.rst:488
+msgid "col 1"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:470
+#: ../../pandoc/test/rst-reader.rst:488
+msgid "col 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:470
+#: ../../pandoc/test/rst-reader.rst:488
+msgid "col 3"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:472
+#: ../../pandoc/test/rst-reader.rst:479
+#: ../../pandoc/test/rst-reader.rst:517
+msgid "r1 a"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:472
+#: ../../pandoc/test/rst-reader.rst:479
+#: ../../pandoc/test/rst-reader.rst:517
+msgid "b"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:472
+#: ../../pandoc/test/rst-reader.rst:479
+msgid "c"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:473
+#: ../../pandoc/test/rst-reader.rst:480
+#: ../../pandoc/test/rst-reader.rst:493
+#: ../../pandoc/test/rst-reader.rst:502
+#: ../../pandoc/test/rst-reader.rst:511
+msgid "r2 d"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:473
+#: ../../pandoc/test/rst-reader.rst:480
+#: ../../pandoc/test/rst-reader.rst:493
+#: ../../pandoc/test/rst-reader.rst:502
+#: ../../pandoc/test/rst-reader.rst:511
+msgid "e"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:473
+#: ../../pandoc/test/rst-reader.rst:480
+#: ../../pandoc/test/rst-reader.rst:493
+#: ../../pandoc/test/rst-reader.rst:502
+#: ../../pandoc/test/rst-reader.rst:511
+msgid "f"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:476
+#: ../../pandoc/test/rst-reader.rst:496
+msgid "Headless"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:485
+msgid "Grid Tables"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:490
+#: ../../pandoc/test/rst-reader.rst:499
+#: ../../pandoc/test/rst-reader.rst:508
+msgid "r1 a r1 bis"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:490
+#: ../../pandoc/test/rst-reader.rst:499
+#: ../../pandoc/test/rst-reader.rst:508
+msgid "b b 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:490
+#: ../../pandoc/test/rst-reader.rst:499
+#: ../../pandoc/test/rst-reader.rst:508
+msgid "c c 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:505
+msgid "Spaces at ends of lines"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:514
+msgid "Multiple blocks in a cell"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:519
+msgid "r1 bis"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:518
+#: ../../pandoc/test/rst-reader.rst:519
+msgid "b 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:517
+msgid "c c 2 c 2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:523
+#: ../../pandoc/test/writer.rst:797
+msgid "Footnotes"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:525
+msgid "[1]_"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:527
+#: ../../pandoc/test/rst-reader.rst:529
+msgid "[#]_"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:531
+msgid "[*]_"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:533
+msgid "Note with one line."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:535
+msgid "Note with continuation line."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:538
+msgid "Note with"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:540
+msgid "continuation block."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:542
+msgid "Note with continuation line"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:545
+msgid "and a second para."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:547
+msgid "Not in note."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:550
+msgid "Math"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:552
+msgid "Some inline math :math:`E=mc^2`\\ .  Now some display math:"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:555
+msgid "E=mc^2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:557
+msgid "E = mc^2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:561
+msgid "E = mc^2  \\alpha = \\beta"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:567
+msgid "E &= mc^2\\\\ F &= \\pi E  F &= \\gamma \\alpha^2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:576
+msgid "All done."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:579
+msgid "Default-Role"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:581
+msgid "Try changing the default role to a few different things."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:586
+msgid "Doesn't Break Title Parsing"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:588
+msgid "Inline math: `E=mc^2` or :math:`E=mc^2` or `E=mc^2`:math:. Other roles: :sup:`super`, `sub`:sub:."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:591
+msgid "\\alpha = beta  E = mc^2"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:598
+msgid "Some `of` these :sup:`words` are in `superscript`:sup:."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:600
+msgid "Reset default-role to the default default."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:604
+msgid "And now `some-invalid-string-3231231` is nonsense."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:609
+msgid "And now with :html:`<b>inline</b> <span id=\"test\">HTML</span>`."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:614
+msgid "And some inline haskell :haskell:`fmap id [1,2..10]`."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:621
+msgid "Indirect python role :py:`[x*x for x in [1,2,3,4,5]]`."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:628
+msgid "Different indirect C :c:`int x = 15;`."
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:631
+msgid "Literal symbols"
+msgstr ""
+
+#: ../../pandoc/test/rst-reader.rst:633
+msgid "2*2 = 4*1"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:1
+msgid "Simple table with caption:"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:3
+#: ../../pandoc/test/tables.rst:25
+msgid "Demonstration of simple table syntax."
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:6
+#: ../../pandoc/test/tables.rst:16
+#: ../../pandoc/test/tables.rst:28
+msgid "Right"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:6
+#: ../../pandoc/test/tables.rst:16
+#: ../../pandoc/test/tables.rst:28
+msgid "Left"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:6
+#: ../../pandoc/test/tables.rst:16
+#: ../../pandoc/test/tables.rst:28
+msgid "Center"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:6
+#: ../../pandoc/test/tables.rst:16
+#: ../../pandoc/test/tables.rst:28
+msgid "Default"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:8
+#: ../../pandoc/test/tables.rst:8
+#: ../../pandoc/test/tables.rst:8
+#: ../../pandoc/test/tables.rst:8
+#: ../../pandoc/test/tables.rst:18
+#: ../../pandoc/test/tables.rst:18
+#: ../../pandoc/test/tables.rst:18
+#: ../../pandoc/test/tables.rst:18
+#: ../../pandoc/test/tables.rst:30
+#: ../../pandoc/test/tables.rst:30
+#: ../../pandoc/test/tables.rst:30
+#: ../../pandoc/test/tables.rst:30
+#: ../../pandoc/test/tables.rst:68
+#: ../../pandoc/test/tables.rst:68
+#: ../../pandoc/test/tables.rst:68
+#: ../../pandoc/test/tables.rst:68
+msgid "12"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:9
+#: ../../pandoc/test/tables.rst:9
+#: ../../pandoc/test/tables.rst:9
+#: ../../pandoc/test/tables.rst:9
+#: ../../pandoc/test/tables.rst:19
+#: ../../pandoc/test/tables.rst:19
+#: ../../pandoc/test/tables.rst:19
+#: ../../pandoc/test/tables.rst:19
+#: ../../pandoc/test/tables.rst:31
+#: ../../pandoc/test/tables.rst:31
+#: ../../pandoc/test/tables.rst:31
+#: ../../pandoc/test/tables.rst:31
+#: ../../pandoc/test/tables.rst:69
+#: ../../pandoc/test/tables.rst:69
+#: ../../pandoc/test/tables.rst:69
+#: ../../pandoc/test/tables.rst:69
+msgid "123"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:10
+#: ../../pandoc/test/tables.rst:10
+#: ../../pandoc/test/tables.rst:10
+#: ../../pandoc/test/tables.rst:10
+#: ../../pandoc/test/tables.rst:20
+#: ../../pandoc/test/tables.rst:20
+#: ../../pandoc/test/tables.rst:20
+#: ../../pandoc/test/tables.rst:20
+#: ../../pandoc/test/tables.rst:32
+#: ../../pandoc/test/tables.rst:32
+#: ../../pandoc/test/tables.rst:32
+#: ../../pandoc/test/tables.rst:32
+#: ../../pandoc/test/tables.rst:70
+#: ../../pandoc/test/tables.rst:70
+#: ../../pandoc/test/tables.rst:70
+#: ../../pandoc/test/tables.rst:70
+msgid "1"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:13
+msgid "Simple table without caption:"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:23
+msgid "Simple table indented two spaces:"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:35
+msgid "Multiline table with caption:"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:37
+msgid "Here’s the caption. It may span multiple lines."
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:40
+#: ../../pandoc/test/tables.rst:54
+msgid "Centered Header"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:40
+#: ../../pandoc/test/tables.rst:54
+msgid "Left Aligned"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:40
+#: ../../pandoc/test/tables.rst:54
+msgid "Right Aligned"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:40
+#: ../../pandoc/test/tables.rst:54
+msgid "Default aligned"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:43
+#: ../../pandoc/test/tables.rst:46
+#: ../../pandoc/test/tables.rst:57
+#: ../../pandoc/test/tables.rst:60
+#: ../../pandoc/test/tables.rst:76
+#: ../../pandoc/test/tables.rst:79
+msgid "row"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:43
+#: ../../pandoc/test/tables.rst:57
+#: ../../pandoc/test/tables.rst:76
+msgid "12.0"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:43
+#: ../../pandoc/test/tables.rst:57
+#: ../../pandoc/test/tables.rst:76
+msgid "Example of a row that spans multiple lines."
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:46
+#: ../../pandoc/test/tables.rst:60
+#: ../../pandoc/test/tables.rst:79
+msgid "5.0"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:46
+#: ../../pandoc/test/tables.rst:60
+#: ../../pandoc/test/tables.rst:79
+msgid "Here’s another one. Note the blank line between rows."
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:51
+msgid "Multiline table without caption:"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:65
+msgid "Table without column headers:"
+msgstr ""
+
+#: ../../pandoc/test/tables.rst:73
+msgid "Multiline table without column headers:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:0
+#: ../../pandoc/test/writer.rst:0
+msgid "Author"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:5
+msgid "John MacFarlane"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:6
+msgid "Anonymous"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:13
+msgid "This is a set of tests for pandoc. Most of them are adapted from John Gruber’s markdown test suite."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:19
+msgid "Headers"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:22
+msgid "Level 2 with an `embedded link </url>`__"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:25
+msgid "Level 3 with *emphasis*"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:28
+msgid "Level 4"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:31
+msgid "Level 5"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:34
+msgid "Level 1"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:37
+msgid "Level 2 with *emphasis*"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:40
+msgid "Level 3"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:42
+#: ../../pandoc/test/writer.rst:47
+msgid "with no blank line"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:45
+msgid "Level 2"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:54
+msgid "Here’s a regular paragraph."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:60
+msgid "Here’s one with a bullet. \\* criminey."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:62
+msgid "There should be a hard line break"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:63
+msgid "here."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:70
+msgid "E-mail style:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:76
+msgid "Code in a block quote:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:84
+msgid "A list:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:97
+msgid "This should not be a block quote: 2 > 1."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:99
+msgid "And a following paragraph."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:211
+msgid "Item 1. graf two. The quick brown fox jumped over the lazy dog’s back."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:218
+msgid "Nested"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:226
+msgid "Here’s another:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:237
+msgid "Same thing but with paragraphs:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:250
+msgid "Tabs and spaces"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:252
+msgid "this is a list item indented with tabs"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:254
+msgid "this is a list item indented with spaces"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:256
+msgid "this is an example list item indented with tabs"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:258
+msgid "this is an example list item indented with spaces"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:292
+msgid "Should not be a list item:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:294
+msgid "M.A. 2007"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:296
+msgid "Williams"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:301
+msgid "Definition Lists"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:303
+msgid "Tight using spaces:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:305
+#: ../../pandoc/test/writer.rst:314
+#: ../../pandoc/test/writer.rst:324
+#: ../../pandoc/test/writer.rst:353
+#: ../../pandoc/test/writer.rst:364
+#: ../../pandoc/test/writer.rst:376
+msgid "apple"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:306
+#: ../../pandoc/test/writer.rst:315
+#: ../../pandoc/test/writer.rst:324
+#: ../../pandoc/test/writer.rst:335
+#: ../../pandoc/test/writer.rst:362
+#: ../../pandoc/test/writer.rst:374
+msgid "red fruit"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:307
+#: ../../pandoc/test/writer.rst:316
+#: ../../pandoc/test/writer.rst:327
+#: ../../pandoc/test/writer.rst:357
+#: ../../pandoc/test/writer.rst:369
+#: ../../pandoc/test/writer.rst:382
+msgid "orange"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:308
+#: ../../pandoc/test/writer.rst:317
+#: ../../pandoc/test/writer.rst:327
+#: ../../pandoc/test/writer.rst:340
+#: ../../pandoc/test/writer.rst:367
+#: ../../pandoc/test/writer.rst:379
+msgid "orange fruit"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:310
+#: ../../pandoc/test/writer.rst:319
+#: ../../pandoc/test/writer.rst:330
+msgid "banana"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:310
+#: ../../pandoc/test/writer.rst:319
+#: ../../pandoc/test/writer.rst:330
+msgid "yellow fruit"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:312
+msgid "Tight using tabs:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:321
+msgid "Loose:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:332
+msgid "Multiple blocks with italics:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:337
+msgid "*apple*"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:337
+msgid "contains seeds, crisp, pleasant to taste"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:348
+msgid "*orange*"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:348
+msgid "orange block quote"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:350
+msgid "Multiple definitions, tight:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:353
+msgid "red fruit computer"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:356
+msgid "orange fruit bank"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:359
+msgid "Multiple definitions, loose:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:364
+#: ../../pandoc/test/writer.rst:376
+msgid "computer"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:369
+msgid "bank"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:371
+msgid "Blank line after term, indented marker, alternate markers:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:381
+#: ../../pandoc/test/writer.rst:382
+msgid "sublist"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:391
+#: ../../pandoc/test/writer.rst:401
+#: ../../pandoc/test/writer.rst:453
+#: ../../pandoc/test/writer.rst:477
+msgid "foo"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:393
+msgid "And nested without indentation:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:405
+msgid "bar"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:407
+msgid "Interpreted markdown in a table:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:421
+msgid "This is *emphasized*"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:431
+msgid "And this is **strong**"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:449
+msgid "Here’s a simple block:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:455
+msgid "This should be a code block, though:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:463
+msgid "As should this:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:479
+msgid "This should just be an HTML comment:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:485
+msgid "Multiline:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:500
+msgid "Code block:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:506
+msgid "Just plain comment, with trailing spaces on the line:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:518
+msgid "Hr’s:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:561
+msgid "This is *emphasized*, and so *is this*."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:563
+msgid "This is **strong**, and so **is this**."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:565
+msgid "An `emphasized link </url>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:567
+#: ../../pandoc/test/writer.rst:571
+msgid "**This is strong and em.**"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:569
+#: ../../pandoc/test/writer.rst:573
+msgid "So is **this** word."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:577
+msgid "[STRIKEOUT:This is strikeout.]"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:579
+msgid "Superscripts: a\\ :sup:`bc`\\ d a\\ :sup:`hello` a\\ :sup:`hello there`."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:581
+msgid "Subscripts: H\\ :sub:`2`\\ O, H\\ :sub:`23`\\ O, H\\ :sub:`many of them`\\ O."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:583
+msgid "These should not be superscripts or subscripts, because of the unescaped spaces: a^b c^d, a~b c~d."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:589
+msgid "Smart quotes, ellipses, dashes"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:591
+msgid "“Hello,” said the spider. “‘Shelob’ is my name.”"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:593
+msgid "‘A’, ‘B’, and ‘C’ are letters."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:595
+msgid "‘Oak,’ ‘elm,’ and ‘beech’ are names of trees. So is ‘pine.’"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:597
+msgid "‘He said, “I want to go.”’ Were you alive in the 70’s?"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:599
+msgid "Here is some quoted ‘``code``’ and a “`quoted link <http://example.com/?foo=1&bar=2>`__”."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:602
+msgid "Some dashes: one—two — three—four — five."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:604
+msgid "Dashes between numbers: 5–7, 255–66, 1987–1999."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:606
+msgid "Ellipses…and…and…."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:611
+msgid "LaTeX"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:613
+msgid ":raw-latex:`\\cite[22-23]{smith.1899}`"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:614
+msgid ":math:`2+2=4`"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:615
+msgid ":math:`x \\in y`"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:616
+msgid ":math:`\\alpha \\wedge \\omega`"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:617
+msgid ":math:`223`"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:618
+msgid ":math:`p`-Tree"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:619
+msgid "Here’s some display math:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:621
+msgid "\\frac{d}{dx}f(x)=\\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:623
+msgid "Here’s one that has a line break in it: :math:`\\alpha + \\omega \\times x^2`."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:625
+msgid "These shouldn’t be math:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:627
+msgid "To get the famous equation, write ``$e = mc^2$``."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:628
+msgid "$22,000 is a *lot* of money. So is $34,000. (It worked if “lot” is emphasized.)"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:630
+msgid "Shoes ($20) and socks ($5)."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:631
+msgid "Escaped ``$``: $73 *this should be emphasized* 23$."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:633
+msgid "Here’s a LaTeX table:"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:658
+msgid "AT&T is another way to write it."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:674
+msgid "Left brace: {"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:676
+msgid "Right brace: }"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:678
+msgid "Left bracket: ["
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:680
+msgid "Right bracket: ]"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:682
+msgid "Left paren: ("
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:684
+msgid "Right paren: )"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:686
+msgid "Greater-than: >"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:688
+msgid "Hash: #"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:690
+msgid "Period: ."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:692
+msgid "Bang: !"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:694
+msgid "Plus: +"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:696
+msgid "Minus: -"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:704
+msgid "Explicit"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:706
+msgid "Just a `URL </url/>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:708
+#: ../../pandoc/test/writer.rst:710
+#: ../../pandoc/test/writer.rst:712
+msgid "`URL and title </url/>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:714
+#: ../../pandoc/test/writer.rst:716
+msgid "`URL and title </url/>`__"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:718
+msgid "`with_underscore </url/with_underscore>`__"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:720
+msgid "`Email link <mailto:nobody@nowhere.net>`__"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:722
+msgid "`Empty <>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:725
+msgid "Reference"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:727
+#: ../../pandoc/test/writer.rst:745
+msgid "Foo `bar </url/>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:729
+msgid "With `embedded [brackets] </url/>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:731
+msgid "`b </url/>`__ by itself should be a link."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:733
+msgid "Indented `once </url>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:735
+msgid "Indented `twice </url>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:737
+msgid "Indented `thrice </url>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:739
+msgid "This should [not][] be a link."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:747
+msgid "Foo `biz </url/>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:750
+msgid "With ampersands"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:752
+msgid "Here’s a `link with an ampersand in the URL <http://example.com/?foo=1&bar=2>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:755
+msgid "Here’s a link with an amersand in the link text: `AT&T <http://att.com/>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:757
+msgid "Here’s an `inline link </script?foo=1&bar=2>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:759
+msgid "Here’s an `inline link in pointy braces </script?foo=1&bar=2>`__."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:762
+msgid "Autolinks"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:764
+msgid "With an ampersand: http://example.com/?foo=1&bar=2"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:766
+msgid "In a list?"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:767
+msgid "http://example.com/"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:768
+msgid "It should."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:770
+msgid "An e-mail address: nobody@nowhere.net"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:772
+msgid "Blockquoted: http://example.com/"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:774
+msgid "Auto-links should not occur here: ``<http://example.com/>``"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:785
+msgid "From “Voyage dans la Lune” by Georges Melies (1902):"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:790
+msgid "lalune"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:799
+msgid "Here is a footnote reference, [1]_ and another. [2]_ This should *not* be a footnote reference, because it contains a space.[^my note] Here is an inline note. [3]_"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:803
+msgid "Notes can go in quotes. [4]_"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:805
+msgid "And in list items. [5]_"
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:807
+msgid "This paragraph should not be part of the note, as it is not indented."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:810
+msgid "Here is the footnote. It can go anywhere after the footnote reference. It need not be placed at the end of the document."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:814
+msgid "Here’s the long note. This one contains multiple blocks."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:816
+msgid "Subsequent blocks are indented to show that they belong to the footnote (as with list items)."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:823
+msgid "If you want, you can indent every line, but you can also be lazy and just indent the first line of each block."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:827
+msgid "This is *easier* to type. Inline notes may contain `links <http://google.com>`__ and ``]`` verbatim characters, as well as [bracketed text]."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:832
+msgid "In quote."
+msgstr ""
+
+#: ../../pandoc/test/writer.rst:835
+msgid "In list."
+msgstr ""
+
