@@ -9,6 +9,7 @@ verify_ssl = true
 sphinx-intl = "*"
 transifex-client = "*"
 sphinx = "*"
+urllib3 = ">=1.24.2"
 
 [requires]
 python_version = "3.8"
