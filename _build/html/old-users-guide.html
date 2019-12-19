@@ -945,7 +945,7 @@ Extra</a>と互換性があります。）</p>
 <li><p>その結果何も残らなければ、識別子を<code class="docutils literal notranslate"><span class="pre">section</span></code>とする</p></li>
 </ul>
 <p>よって、例えば以下のようになります：</p>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -1950,7 +1950,7 @@ ConTeXtフォーマットのみでサポートしています。</p>
 </pre></div>
 </div>
 <p>この機能を使うには、YAMLメタデータセクションの<code class="docutils literal notranslate"><span class="pre">bibliography</span></code>メタデータフィールドを使って参考文献ファイルを指定する必要があります。参考文献ファイルとしてこのようなフォーマットが使用できます：</p>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 48%" />
 <col style="width: 52%" />
@@ -2495,10 +2495,10 @@ ODTでは今のところ実装されていません。これらでは、1つの�
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>クイック検索</h3>
+  <h3 id="searchlabel">クイック検索</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="検索" />
     </form>
     </div>
@@ -2520,7 +2520,7 @@ ODTでは今のところ実装されていません。これらでは、1つの�
       &copy;2019, 日本Pandocユーザ会.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
