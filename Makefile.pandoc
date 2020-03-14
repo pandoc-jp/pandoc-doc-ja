@@ -1,9 +1,16 @@
+################################################
 # 引数
+################################################
 
 ## jgm/pandocのbranch or tag（チェックアウトしたいバージョン番号を指定する）
 PANDOC := ""
+PANDOC_VER_LOCK_FILE := ./ja-pandoc-version-lock
 
+################################################
 # ターゲット
+################################################
+
+## 初期設定
 
 # make ja-init
 # ビルドのための初期設定をする
@@ -12,24 +19,31 @@ ja-init:
 	pipenv install
 	git submodule update -i
 
-# make ja-pandoc-version
+## Pandocバージョン関連
+
+# make ja-version-jgm
 # 現在取り扱っているPandocのバージョンを表示する (pandoc/pandoc.cabalのversionを参照)
-.PHONY: ja-pandoc-version
-ja-pandoc-version:
+.PHONY: ja-version-jgm
+ja-version-jgm:
 	bash ./scripts/pandoc-version.sh
+
+# make ja-pandoc-version-lock
+# 現在取り扱っているPandocのバージョンをjgm/pandocのものに固定する (ファイルに書き出すだけ)
+.PHONY: ja-pandoc-version-lock
+ja-pandoc-version-lock:
+	bash ./scripts/pandoc-version.sh > $(PANDOC_VER_LOCK_FILE)
+
+## アップデート系
+## (原文(jgm/pandoc:MANUAL.txt)のアップデートと翻訳ファイルの更新)
 
 # make pandoc-checkout PANDOC=バージョン番号
 # jgm/pandocを特定バージョンでチェックアウト
 .PHONY: pandoc-checkout
 pandoc-checkout:
-	[ -z ${PANDOC} ] && (echo "[ERROR] specify pandoc version: make pandoc-checkout PANDOC=<VERSION>"; exit 1)
-	cd pandoc && git checkout ${PANDOC}
+	[ -z $(PANDOC) ] && (echo "[ERROR] specify pandoc version: make pandoc-checkout PANDOC=<VERSION>"; exit 1)
+	cd pandoc && git checkout $(PANDOC)
 	git submodule update
-
-# make ja-update
-# アップデート作業をまとめてする (pandoc -> intl-update)
-.PHONY: ja-update
-ja-update: pandoc intl-update
+	make ja-pandoc-version-lock
 
 # make pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
@@ -47,6 +61,13 @@ intl-update: users-guide.rst
 	pipenv run make gettext
 	pipenv run sphinx-intl update -p _build/gettext -l ja
 
+# make ja-update
+# アップデート作業をまとめてする (pandoc -> intl-update)
+.PHONY: ja-update
+ja-update: pandoc intl-update
+
+## Transifex push系
+
 # make tx-push-source
 # Transifex: 手元の更新後ソースファイル(pot)をpushする
 .PHONY: tx-push-source
@@ -59,8 +80,10 @@ tx-push-source:
 tx-push:
 	pipenv run tx push -t -l ja
 
+## ビルド
+
 # make tx-pull
-# Transifex: Transifexから翻訳ファイル(po)をpullする
+# Transifex: Transifexから最新の翻訳ファイル(po)をpullする
 .PHONY: tx-pull
 tx-pull: 
 	pipenv run tx pull -l ja
@@ -76,3 +99,9 @@ ja-html:
 .PHONY: ja-all
 ja-all: tx-pull ja-html
 
+## その他
+
+# make pipenv-requirements
+# Pipenv: requirements.txt に書き出す
+pipenv-requirements:
+	pipenv lock -r > ./requirements.txt

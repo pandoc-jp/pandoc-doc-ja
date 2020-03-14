@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 sphinx-intl = "*"
-transifex-client = "*"
+transifex-client = ">=0.13.7"
 sphinx = "*"
 urllib3 = ">=1.24.2"
 
