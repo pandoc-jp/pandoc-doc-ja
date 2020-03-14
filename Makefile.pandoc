@@ -1,26 +1,37 @@
 # 引数
 
 ## jgm/pandocのbranch or tag（チェックアウトしたいバージョン番号を指定する）
-PANDOC = 
+PANDOC := ""
 
 # ターゲット
 
-.PHONY: build
-build: tx-pull html
+# make ja-init
+# ビルドのための初期設定をする
+.PHONY: ja-init
+ja-init:
+	pipenv install
+	git submodule update -i
 
-# make -f Makefile.pandoc checkout PANDOC=バージョン番号
+# make ja-pandoc-version
+# 現在取り扱っているPandocのバージョンを表示する (pandoc/pandoc.cabalのversionを参照)
+.PHONY: ja-pandoc-version
+ja-pandoc-version:
+	bash ./scripts/pandoc-version.sh
+
+# make pandoc-checkout PANDOC=バージョン番号
 # jgm/pandocを特定バージョンでチェックアウト
-.PHONY: checkout
-checkout:
+.PHONY: pandoc-checkout
+pandoc-checkout:
+	[ -z ${PANDOC} ] && (echo "[ERROR] specify pandoc version: make pandoc-checkout PANDOC=<VERSION>"; exit 1)
 	cd pandoc && git checkout ${PANDOC}
 	git submodule update
 
-# make -f Makefile.pandoc update
+# make ja-update
 # アップデート作業をまとめてする (pandoc -> intl-update)
-.PHONY: update
-update: pandoc intl-update
+.PHONY: ja-update
+ja-update: pandoc intl-update
 
-# make -f Makefile.pandoc pandoc
+# make pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 .PHONY: pandoc
 pandoc: users-guide.rst
@@ -29,38 +40,39 @@ users-guide.rst: ./pandoc/MANUAL.txt
 	cat users-guide-header.txt $@.tmp > $@
 	rm $@.tmp
 
-# make -f Makefile.pandoc intl-update
-# users-guide.rst (原文)を更新するときに、翻訳ファイル (pot/po) をupdateする
+# make intl-update
+# users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 .PHONY: intl-update
 intl-update: users-guide.rst
 	pipenv run make gettext
 	pipenv run sphinx-intl update -p _build/gettext -l ja
 
-# make -f Makefile.pandoc tx-push-source
-# Transifex(tx): ソースファイル(pot)をpushする
-
+# make tx-push-source
+# Transifex: 手元の更新後ソースファイル(pot)をpushする
 .PHONY: tx-push-source
 tx-push-source:
 	pipenv run tx push -s
 
-# make -f Makefile.pandoc tx-push
-# Transifex(tx): 翻訳ファイル(po)をpushする
-
+# make tx-push
+# Transifex: 手元の翻訳ファイル(po)をpushする
 .PHONY: tx-push
 tx-push:
 	pipenv run tx push -t -l ja
 
-# make -f Makefile.pandoc tx-pull
-# Transifex(tx): poファイルをpullする
-
+# make tx-pull
+# Transifex: Transifexから翻訳ファイル(po)をpullする
 .PHONY: tx-pull
 tx-pull: 
 	pipenv run tx pull -l ja
 
-# make -f Makefile.pandoc html
-# Sphinx: htmlを生成する
-
-.PHONY: html
-html:
+# make ja-html
+# Sphinx: htmlをビルドする
+.PHONY: ja-html
+ja-html:
 	pipenv run make -e SPHINXOPTS="-D language='ja'" html
+
+# make ja-all
+# Transifexから翻訳ファイル(po)をpullし、そのままビルドする
+.PHONY: ja-all
+ja-all: tx-pull ja-html
 
