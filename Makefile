@@ -1,5 +1,14 @@
-# Minimal makefile for Sphinx documentation
-#
+# ----------------------------------------------------------------
+# Rules for pandoc-doc-ja (pandoc and sphinx-intl)
+# ----------------------------------------------------------------
+
+.PHONY: foo
+foo:
+	echo "foo"
+
+# ----------------------------------------------------------------
+# Rules for Sphinx
+# ----------------------------------------------------------------
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
