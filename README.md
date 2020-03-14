@@ -12,6 +12,8 @@
 
 ## 使用ツール・Webサービスまとめ
 
+- Pipenv (Python)
+    - Sphinxのために必要なライブラリを管理
 - GitHub
     - jgm/pandocのMANUAL.txt: `git submodule` で追随
     - このリポジトリ（pandoc-jp/pandoc-doc-ja）
@@ -26,6 +28,86 @@
     - 実際にテキストを翻訳（ブラウザ上で共同作業）
 - [Read the Docs](https://readthedocs.org/)
     - GitHub上のSphinxサイトをビルドして公開
+    - 必要なライブラリに関しては requirements.txt が参照される（Pipenvから要エクスポート）
+
+## 初期設定
+
+### Pythonのバージョンについて
+
+Python3系を前提とします。厳密な動作バージョンは調査していませんが、Python3.7以上であれば動くと思います。
+
+一度普段使っているPythonでPipenvを使ってみて、ダメそうならpyenvでインストール・バージョン指定してみてください。
+
+### Pythonのインストール：pyenvを使う手順
+
+もしくはpyenvでPython3系のバージョンを切り替えます（ついでに最新版もインストールする手順を示します）。
+
+※ 手元ではWSLのUbuntuのシステムPythonが該当
+
+- 必要なライブラリをインストール
+    - [Common build problems · pyenv/pyenv Wiki](https://github.com/pyenv/pyenv/wiki/Common-build-problems) を参照
+- pyenvのインストール
+    - Homebrew: `brew install pyenv`
+    - [pyenv installer](https://github.com/pyenv/pyenv-installer): `curl https://pyenv.run | bash`
+    - または手動インストール: [pyenv/pyenv](https://github.com/pyenv/pyenv) を参照
+- pyenvを使ったPythonのインストール
+
+```shell
+pyenv install -l
+(一覧が表示されるので、最新っぽいPythonのバージョンを選ぶ→今回は3.8.2)
+pyenv install 3.8.2
+pyenv global 3.8.2
+```
+
+`python -V` でバージョンを確かめてみてください（「Python 3.8.2」のようになっていればOK）。
+バージョンが変わっていなかったらPATHを通していない可能性があるので、確認の上PATHを通す。
+
+```shell
+# 確認
+echo $PYENV_ROOT
+echo $PATH
+
+# 追加
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/shims:$PATH"' >> ~/.bash_profile
+```
+
+### 必要なライブラリのインストール（Pipenv）
+
+Pipenv本体のインストール：
+
+```shell
+pip install --upgrade pip
+```
+
+既存プロジェクトの必要パッケージをPipfile.lockからインストール：
+
+```shell
+pipenv install
+```
+
+### 補足：Pipenvでインストールされたコマンドの実行
+
+`pipenv run` を先頭に付けて実行すると、Python仮想環境内で実行したことになります。
+
+```shell
+# 例：Sphinxのバージョンを確かめる
+$ pipenv run sphinx-build --version
+sphinx-build 2.3.0
+```
+
+仮想環境内のシェルに入るには`pipenv shell`を使います。
+
+```shell
+# 仮想環境シェルに入る (activate)
+$ pipenv shell
+(.venv) $ sphinx-build --version
+sphinx-build 2.3.0
+
+# 仮想環境シェルを終了
+$ deactivate
+```
 
 ## ビルド
 
@@ -66,8 +148,8 @@ PipenvというPython用パッケージマネージャを用いてアップデ�
 その後、次の手順でアップデートします。
 
 ```
-$ pipenv update
-$ pipenv lock -r > requirements.txt
+pipenv update
+pipenv lock -r > requirements.txt
 ```
 
 `requirements.txt` は、Read the Docsでビルドするために必要です。
