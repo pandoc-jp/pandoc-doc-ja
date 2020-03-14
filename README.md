@@ -5,32 +5,49 @@
 [従来の日本語訳](http://sky-y.github.io/site-pandoc-jp/users-guide/)はバージョン `1.12.4.2` 準拠（翻訳時点で2014年6月27日）ですが、
 かなり古くなってしまったので新たに翻訳しようとしています。
 
-## 翻訳するバージョン
+### Pandocのバージョンについて
 
-- Pandoc ~~2.5~~ 2.7.2
-    - それ以降に大きなアップデートがあった場合は、可能な範囲で追従する
+ここでいう「Pandocのバージョン」は3つあります。
+
+- 翻訳対象Pandocバージョン
+    - 翻訳するターゲットとなるユーザーズガイドのバージョン
+    - ja-pandoc-version-lock に記述してあります
+- 元リポジトリPandocバージョン
+    - [jgm/pandoc](https://github.com/jgm/pandoc)のバージョン (git submodule管理)
+    - `make ja-version-jgm` もしくは `./scripts/pandoc-version.sh` で表示
+- ツール用Pandocバージョン
+    - Makefileの中で使う`pandoc`のバージョン
+    - 任意だが最新版を推奨
 
 ## 使用ツール・Webサービスまとめ
 
-- Pipenv (Python)
-    - Sphinxのために必要なライブラリを管理
+- Python環境
+    - Pipenv: 必要なライブラリを管理
+    - pyenv（オプション）：Python自体のバージョンを管理
 - GitHub
     - jgm/pandocのMANUAL.txt: `git submodule` で追随
     - このリポジトリ（pandoc-jp/pandoc-doc-ja）
 - [Pandoc](http://pandoc.org/)
-    - 変換: MANUAL.txt(markdown) -> users-guide.rst(reStructuredText, reST)
-    - 後述のsphinx-intlによる国際化の恩恵を受けるためには、reSTで書く必要があります
+    - ツールとして変換
+        - MANUAL.txt (Pandoc's Markdown) -> users-guide.rst (reStructuredText)
+    - 後述のsphinx-intlによる国際化の恩恵を受けるためには、reSTで書く必要がある
 - [Sphinx](https://www.sphinx-doc.org/ja/master/index.html)
     - reSTからHTML（サイト）を構築
     - 国際化 ([sphinx-intl](https://www.sphinx-doc.org/ja/master/usage/advanced/intl.html))
-    - Sphinxのインストールに、Pythonの[Pipenv](https://pipenv-ja.readthedocs.io/ja/translate-ja/)を利用
 - [Transifex](https://www.transifex.com/)
-    - 実際にテキストを翻訳（ブラウザ上で共同作業）
+    - 事前に原文のpotファイルをアップロード
+    - 翻訳者がテキストを翻訳（ブラウザ上で共同作業）
+    - 翻訳ファイル(po)を最終的にダウンロードする
 - [Read the Docs](https://readthedocs.org/)
     - GitHub上のSphinxサイトをビルドして公開
     - 必要なライブラリに関しては requirements.txt が参照される（Pipenvから要エクスポート）
 
 ## 初期設定
+
+### ツール用Pandocのインストール
+
+Makefileの中で使う`pandoc`をあらかじめインストールしておいてください。
+（翻訳対象Pandocバージョンにかかわらず、その時点での最新版のインストールを推奨します）
 
 ### Pythonのバージョンについて
 
@@ -38,11 +55,7 @@ Python3系を前提とします。厳密な動作バージョンは調査して�
 
 一度普段使っているPythonでPipenvを使ってみて、ダメそうならpyenvでインストール・バージョン指定してみてください。
 
-### Pythonのインストール：pyenvを使う手順
-
-もしくはpyenvでPython3系のバージョンを切り替えます（ついでに最新版もインストールする手順を示します）。
-
-※ 手元ではWSLのUbuntuのシステムPythonが該当
+### Pythonのインストール：pyenvを使う手順（必要に応じて）
 
 - 必要なライブラリをインストール
     - [Common build problems · pyenv/pyenv Wiki](https://github.com/pyenv/pyenv/wiki/Common-build-problems) を参照
@@ -102,6 +115,8 @@ sphinx-build 2.3.0
 ```shell
 # 仮想環境シェルに入る (activate)
 $ pipenv shell
+
+# コマンド実行
 (.venv) $ sphinx-build --version
 sphinx-build 2.3.0
 
@@ -109,47 +124,61 @@ sphinx-build 2.3.0
 $ deactivate
 ```
 
+## txコマンド (Transifex Client) のセットアップ
+
+※ 事前にブラウザ上でTransifexにログインできる状態で以下を行ってください。
+
+- Transifexの[APIトークン](https://www.transifex.com/user/settings/api/)ページで「トークンを生成」
+    - トークン文字列を記録しておく
+- `~/.transifexrc` というファイルを新規作成し、次のように記入する
+    - 間違ってこのGitリポジトリにpushしないこと！
+
+```.transifexrc
+[https://www.transifex.com]
+api_hostname = https://api.transifex.com
+hostname = https://www.transifex.com
+token = 【トークン文字列】
+```
+
 ## ビルド
 
-`make`コマンドでビルドを行います。Makefileは2つあるので注意してください。
-
-- `Makefile`: Sphinx付属のMakefile
-- `Makefile.pandoc`: このプロジェクトで使うMakefile、こちらを使う（`-f` オプションで指定）
+`make`コマンドでビルドを行います。ここに書いてないコマンドはMakefileを参照。
+（従来はMakefileが2つありましたが、1つのMakefileに統合しました）
 
 ```
+# ビルドのための初期設定をする (pipenv install, git submodule: jgm/pandoc)
+# 注意：Transifex Client (tx) の設定を別途すること
+$ make ja-init
+
+# 元リポジトリPandocバージョンを表示する
+$ make jgm-pandoc-version
+
+# 翻訳対象Pandocバージョンを表示する
+$ make ja-pandoc-version
+
 # jgm/pandoc のtag「2.7.2」にチェックアウトする
-$ make -f Makefile.pandoc checkout PANDOC=2.7.2
+$ make jgm-pandoc-checkout PANDOC=2.7.2
 
-# Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
-make -f Makefile.pandoc pandoc
+# アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
+$ make ja-update-src
 
-# users-guide.rst (原文)を更新するときに、翻訳ファイル (pot/po) をupdateする
-make -f Makefile.pandoc intl-update
+# Transifexから翻訳ファイル(po)をpullし、そのままビルドする
+$ make ja-build
 
-# アップデート作業をまとめてする (pandoc -> intl-update)
-make -f Makefile.pandoc update
-
-# Transifex(tx): poファイルをpushする
-make -f Makefile.pandoc tx-push-source
-
-# Transifex(tx): poファイルをpullする
-make -f Makefile.pandoc tx-pull
-
-# Sphinx: htmlを生成する
-make -f Makefile.pandoc html
+# Pipenv: pipenv updateして、requirements.txt に書き出す
+$ make pipenv-update
 ```
 
 ## Sphinxのアップデート
 
 PipenvというPython用パッケージマネージャを用いてアップデートします（事前にインストールしておく）。
 
-まず `Pipfile` を書き換えて、必要なSphinxのバージョンを指定します。
+まず `Pipfile` を書き換えて、必要なパッケージのバージョンを指定します。
 
 その後、次の手順でアップデートします。
 
 ```
-pipenv update
-pipenv lock -r > requirements.txt
+make pipenv-update
 ```
 
-`requirements.txt` は、Read the Docsでビルドするために必要です。
+※ このとき生成される `requirements.txt` は、Read the Docsでビルドするために必要です。
