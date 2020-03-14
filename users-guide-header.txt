@@ -1,4 +1,15 @@
 ===========================================================
-（新・工事中）Pandocユーザーズガイド 日本語版
+Pandocユーザーズガイド 日本語版
 ===========================================================
 
+原著: John MacFarlane
+
+原著バージョン: $trans-pandoc-version$
+
+翻訳者: 
+
+- makotosan
+- Takada Atsushi
+- niszet
+- becolomochi
+- Yuki Fujiwara
