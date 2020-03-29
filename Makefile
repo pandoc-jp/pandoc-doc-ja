@@ -82,7 +82,7 @@ ja-pandoc:
 # make intl-update
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 .PHONY: intl-update
-intl-update: $(USERS_GUIDE_RST)
+intl-update:
 	pipenv run make gettext
 	pipenv run sphinx-intl update -p _build/gettext -l ja
 
