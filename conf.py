@@ -61,6 +61,7 @@ html_theme_options = {
     'logo_name': project,
     'github_user': 'pandoc-jp',
     'github_repo': 'pandoc-doc-ja',
+    'sidebar_collapse': False,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
