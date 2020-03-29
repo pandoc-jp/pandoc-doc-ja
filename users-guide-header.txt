@@ -1,16 +1,20 @@
 ===========================================================
-Pandocユーザーズガイド 日本語版 [Pandoc $trans-pandoc-version$]
+Pandocユーザーズガイド 日本語版 [$trans-pandoc-version$]
 ===========================================================
 
 原著: John MacFarlane
 
 原著バージョン: $trans-pandoc-version$
 
+更新日: $date$
+
 翻訳者（アルファベット順）:
 
-- becolomochi
-- ishibaki
-- makotosan
-- niszet
-- Takada Atsushi
-- Yuki Fujiwara
+* becolomochi
+* ishibaki
+* makotosan
+* niszet
+* Takada Atsushi
+* Yuki Fujiwara
+
+.. include:: $users-guide-rst$

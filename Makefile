@@ -2,13 +2,25 @@
 # Rules for pandoc-doc-ja (pandoc and sphinx-intl)
 # ----------------------------------------------------------------
 
+SHELL := /bin/bash
+
 ################################################
-# 引数
+# 変数
 ################################################
 
-## jgm/pandocのbranch or tag（チェックアウトしたいバージョン番号を指定する）
+# jgm/pandocのbranch or tag（チェックアウトしたいバージョン番号を指定する）
 PANDOC := ""
+
+# Pandocバージョンを格納するファイル
 PANDOC_VER_LOCK_FILE := ./ja-pandoc-version-lock
+
+# ユーザーズガイドのrstをビルドするためのファイル
+## ユーザーズガイドのヘッダ部分 (Pandocテンプレート)
+HEADER_TEMPLATE := ./users-guide-header.txt
+## ユーザーズガイドのbody部分 (翻訳対象)
+HEADER_BODY := users-guide
+## Sphinx側のユーザーズガイドrst
+HEADER_OUTPUT := users-guide-ja
 
 ################################################
 # ターゲット
@@ -60,9 +72,7 @@ jgm-pandoc-checkout:
 .PHONY: pandoc
 pandoc: users-guide.rst
 users-guide.rst: ./pandoc/MANUAL.txt
-	pandoc -f markdown -t rst --reference-links $< -o $@.tmp
-	cat users-guide-header.txt $@.tmp > $@
-	rm $@.tmp
+	pandoc -f markdown -t rst --reference-links $< -o $@
 
 # make intl-update
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
@@ -82,7 +92,20 @@ tx-push-pot:
 .PHONY: ja-update-src
 ja-update-src: pandoc intl-update tx-push-pot
 
-## ビルド
+## ビルド：ユーザーズガイド用rst
+
+# make ja-users-guide-rst
+# ユーザーズガイドのrstをビルド
+# (Pandocテンプレートのみを入力としたいため、形式的に入力ファイルを無し(/dev/null)とする)
+.PHONY: ja-users-guide-rst
+ja-users-guide-rst: $(HEADER_OUTPUT)
+	pandoc /dev/null -f markdown -t rst \
+	  --template=$(HEADER_TEMPLATE) \
+	  -V trans-pandoc-version="$(shell cat $(PANDOC_VER_LOCK_FILE))" \
+	  -V date="$(shell date "+%Y/%m/%d")" \
+	  -V users-guide-rst="$(HEADER_BODY)" > $(HEADER_OUTPUT)
+
+## ビルド：全体
 
 # make tx-pull
 # Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
