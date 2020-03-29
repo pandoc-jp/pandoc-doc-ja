@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 00:33+0900\n"
+"POT-Creation-Date: 2020-03-30 00:39+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,6 +78,10 @@ msgstr ""
 
 #: ../../users-guide-header.rst:26
 msgid "Yuki Fujiwara"
+msgstr ""
+
+#: ../../users-guide-header.rst:28
+msgid "目次"
 msgstr ""
 
 #~ msgid "正確な情報については英語の公式 User's Guide を参照してください"

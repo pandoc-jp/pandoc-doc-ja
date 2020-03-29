@@ -26,6 +26,9 @@ Pandocユーザーズガイド 日本語版 [2.7.2]
 * Takada Atsushi
 * Yuki Fujiwara
 
+.. contents:: 目次
+   :depth: 3
+
 Synopsis
 ========
 
