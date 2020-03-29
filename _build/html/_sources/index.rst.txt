@@ -35,4 +35,9 @@
    users-guide
    trans-intro
 
-   `Pandoc <https://pandoc.org/>`_ is free software, released under the GPL. Copyright 2006-2018 John MacFarlane.
+このサイトのソースコード
+------------------------
+
+GitHub: `pandoc-jp/pandoc-doc-ja <https://github.com/pandoc-jp/pandoc-doc-ja>`_
+
+   Pandoc is free software, released under the `GPL <https://www.gnu.org/licenses/gpl-3.0.html>`_. Copyright 2006–2019 `John MacFarlane <https://johnmacfarlane.net/>`_.
