@@ -66,6 +66,8 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ['_static']
 
+# フッタのソースコードへのリンク (Sphinxデフォルト) を消す
+html_show_sourcelink = False
 
 # -- sphinx-intl options -------------------------------------------------
 
