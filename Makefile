@@ -20,7 +20,7 @@ HEADER_TEMPLATE := ./users-guide-header.txt
 ## ユーザーズガイドのbody部分 (翻訳対象)
 HEADER_BODY := users-guide
 ## Sphinx側のユーザーズガイドrst
-HEADER_OUTPUT := users-guide-ja
+HEADER_OUTPUT := users-guide-header.rst
 
 # ユーザーズガイド原文
 ## jgm/pandocのMANUAL.txt
@@ -77,7 +77,10 @@ jgm-pandoc-checkout:
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 .PHONY: ja-pandoc
 ja-pandoc:
-	pandoc -f markdown -t rst --reference-links $< -o $@
+	pandoc -f markdown -t rst --reference-links $(MANUAL_TXT) -o $(USERS_GUIDE_RST).tmp
+	make ja-users-guide-rst
+	awk 'FNR==1{print ""}{print}' $(HEADER_OUTPUT) $(USERS_GUIDE_RST).tmp > $(USERS_GUIDE_RST)
+	rm -f $(USERS_GUIDE_RST).tmp
 
 # make intl-update
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する

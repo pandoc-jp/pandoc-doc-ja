@@ -1,12 +1,12 @@
 ===========================================================
-Pandocユーザーズガイド 日本語版 [$trans-pandoc-version$]
+Pandocユーザーズガイド 日本語版 [2.7.2]
 ===========================================================
 
 原著: John MacFarlane
 
-原著バージョン: $trans-pandoc-version$
+原著バージョン: 2.7.2
 
-更新日: $date$
+更新日: 2020/03/30
 
 翻訳者（アルファベット順）:
 
@@ -16,4 +16,3 @@ Pandocユーザーズガイド 日本語版 [$trans-pandoc-version$]
 * niszet
 * Takada Atsushi
 * Yuki Fujiwara
-
