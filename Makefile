@@ -76,14 +76,13 @@ jgm-pandoc-checkout:
 # make ja-pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 .PHONY: ja-pandoc
-ja-pandoc: $(USERS_GUIDE_RST)
-$(USERS_GUIDE_RST): $(MANUAL_TXT)
+ja-pandoc:
 	pandoc -f markdown -t rst --reference-links $< -o $@
 
 # make intl-update
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 .PHONY: intl-update
-intl-update: $(USERS_GUIDE_RST)
+intl-update:
 	pipenv run make gettext
 	pipenv run sphinx-intl update -p _build/gettext -l ja
 
@@ -104,7 +103,7 @@ ja-update-src: ja-pandoc intl-update tx-push-pot
 # ユーザーズガイドのrstをビルド
 # (Pandocテンプレートのみを入力としたいため、形式的に入力ファイルを無し(/dev/null)とする)
 .PHONY: ja-users-guide-rst
-ja-users-guide-rst: $(HEADER_OUTPUT)
+ja-users-guide-rst:
 	pandoc /dev/null -f markdown -t rst \
 	  --template=$(HEADER_TEMPLATE) \
 	  -V trans-pandoc-version="$(shell cat $(PANDOC_VER_LOCK_FILE))" \
