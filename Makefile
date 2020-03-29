@@ -73,10 +73,10 @@ jgm-pandoc-checkout:
 	git submodule update
 	make ja-pandoc-version-lock
 
-# make pandoc
+# make ja-pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
-.PHONY: pandoc
-pandoc: $(USERS_GUIDE_RST)
+.PHONY: ja-pandoc
+ja-pandoc: $(USERS_GUIDE_RST)
 $(USERS_GUIDE_RST): $(MANUAL_TXT)
 	pandoc -f markdown -t rst --reference-links $< -o $@
 
@@ -96,7 +96,7 @@ tx-push-pot:
 # make ja-update-src
 # アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
 .PHONY: ja-update-src
-ja-update-src: pandoc intl-update tx-push-pot
+ja-update-src: ja-pandoc intl-update tx-push-pot
 
 ## ビルド：ユーザーズガイド用rst
 
