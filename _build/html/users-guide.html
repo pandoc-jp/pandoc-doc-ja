@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>（新・工事中）Pandocユーザーズガイド 日本語版 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
+    <title>Pandocユーザーズガイド 日本語版 [2.7.2] &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,8 +34,29 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pandoc">
-<h1>（新・工事中）Pandocユーザーズガイド 日本語版<a class="headerlink" href="#pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="pandoc-2-7-2">
+<h1>Pandocユーザーズガイド 日本語版 [2.7.2]<a class="headerlink" href="#pandoc-2-7-2" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>現在の翻訳は <em>プレリリース版</em> です。不完全な翻訳を含んでいます。</p>
+<ul class="simple">
+<li><p>正確な情報については英語の公式 <a class="reference external" href="https://pandoc.org/MANUAL.html">User's Guide</a> を参照してください</p></li>
+<li><p>この翻訳に対する問題・改善案については <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/issues">GitHubリポジトリのIssue</a> に投稿してください</p></li>
+<li><p>翻訳のレビュー作業や翻訳作業へのご協力を希望の方は <a class="reference internal" href="trans-intro.html"><span class="doc">翻訳の手引 for Pandocユーザーズガイド</span></a> をご覧ください</p></li>
+</ul>
+</div>
+<p>原著: John MacFarlane</p>
+<p>原著バージョン: 2.7.2</p>
+<p>更新日: 2020/03/30</p>
+<p>翻訳者（アルファベット順）:</p>
+<ul class="simple">
+<li><p>becolomochi</p></li>
+<li><p>ishibaki</p></li>
+<li><p>makotosan</p></li>
+<li><p>niszet</p></li>
+<li><p>Takada Atsushi</p></li>
+<li><p>Yuki Fujiwara</p></li>
+</ul>
 <div class="section" id="synopsis">
 <h2>概要<a class="headerlink" href="#synopsis" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> [<em>options</em>] [<em>input-file</em>]…</p>
@@ -169,7 +190,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">fb2</span></code> (<a class="reference external" href="http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1">FictionBook2</a> 電子書籍)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gfm</span></code> (<a class="reference external" href="https://help.github.com/articles/github-flavored-markdown/">GitHub-Flavored Markdown</a>) および <code class="docutils literal notranslate"><span class="pre">markdown_github</span></code> (ただし後者は仕様が正確ではなく、非推奨です。 <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id127"><span class="problematic" id="id128">`gfm```_</span></a> がサポートしていない拡張を必要とするときのみ <a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id129"><span class="problematic" id="id130">`markdown_github```_</span></a> を使用してください)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">haddock</span></code> (<a class="reference external" href="https://www.haskell.org/haddock/doc/html/ch03s08.html">Haddock markup</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">html5</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a> 、すなわち <a class="reference external" href="http://www.w3.org/TR/html5/">HTML5</a> / XHTML <a class="reference external" href="https://www.w3.org/TR/html-polyglot/">polyglot markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">html5</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a>, i.e. <a class="reference external" href="http://www.w3.org/TR/html5/">HTML5</a>/XHTML <a class="reference external" href="https://www.w3.org/TR/html-polyglot/">polyglot
+markup</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">html4</span></code> (<a class="reference external" href="http://www.w3.org/TR/xhtml1/">XHTML</a> 1.0 Transitional)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">icml</span></code> (<a class="reference external" href="http://wwwimages.adobe.com/www.adobe.com/content/dam/acom/en/devnet/indesign/sdk/cs6/idml/idml-cookbook.pdf">InDesign ICML</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ipynb</span></code> (<a class="reference external" href="https://nbformat.readthedocs.io/en/latest/">Jupyter notebook</a>)</p></li>
@@ -723,7 +745,8 @@ procedure is:</p>
 </pre></div>
 </div>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">classoption</span></code></dt><dd><p>文書クラスのオプション (例: <code class="docutils literal notranslate"><span class="pre">oneside</span></code>); オプションは複数指定可能です:</p>
+<dt><code class="docutils literal notranslate"><span class="pre">classoption</span></code></dt><dd><p>option for document class, e.g. <code class="docutils literal notranslate"><span class="pre">oneside</span></code>; repeat for multiple
+options:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">classoption</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">twocolumn</span>
@@ -734,7 +757,8 @@ procedure is:</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">documentclass</span></code></dt><dd><p>文書クラス。通常は <code class="docutils literal notranslate"><span class="pre">`article```_,</span> <span class="pre">```book```_,</span> <span class="pre">```report```_</span> <span class="pre">のうちいずれか文書クラスを指定します。</span> <span class="pre">`KOMA-Script`_</span> <span class="pre">では</span> <span class="pre">``scrartcl</span></code>, <code class="docutils literal notranslate"><span class="pre">scrbook</span></code>,  <code class="docutils literal notranslate"><span class="pre">scrreprt</span></code> に対応し、既定では最も小さいマージンを用います。 <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id141"><span class="problematic" id="id142">`memoir```_</span></a> も利用できます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">geometry</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">`geometry```_</span> <span class="pre">パッケージのオプション</span> <span class="pre">(例:</span> <span class="pre">``margin=1in</span></code>); 複数のオプションを指定できます:</p>
+<dt><code class="docutils literal notranslate"><span class="pre">geometry</span></code></dt><dd><p>option for <code class="docutils literal notranslate"><span class="pre">`geometry```_</span> <span class="pre">package,</span> <span class="pre">e.g. ``margin=1in</span></code>; repeat for
+multiple options:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">geometry</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">top</span><span class="o">=</span><span class="mi">30</span><span class="n">mm</span>
@@ -746,13 +770,14 @@ procedure is:</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">indent</span></code> <em>[boolean]</em></dt><dd><p>インデントに関する文書クラスの設定 (設定がない場合、Pandoc既定のLaTeXテンプレートはパラグラフ間のインデントと空白を削除します)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">`setspace```_</span>&#160; <span class="pre">パッケージを用いて行送り幅</span> <span class="pre">(line</span> <span class="pre">spacing)</span> <span class="pre">を調整します</span> <span class="pre">(例:</span> <span class="pre">``1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code>)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p>adjusts line spacing using the <code class="docutils literal notranslate"><span class="pre">`setspace```_</span> <span class="pre">package,</span>
+<span class="pre">e.g. ``1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">margin-left</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-right</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-top</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-bottom</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">geometry</span></code> を使用しない場合のマージン (設定がない場合、 <code class="docutils literal notranslate"><span class="pre">geometry</span></code> がこれらを上書きします)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">pagestyle</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">\pagestyle{}</span></code> を制御します (訳注: 文書全体のページ形式の指定: ノンブル (ページ番号) や柱を設定できる)。既定のarticleクラスでは <code class="docutils literal notranslate"><span class="pre">plain</span></code> (既定の値), <code class="docutils literal notranslate"><span class="pre">empty</span></code> (柱やノンブルなどを付けない) および <code class="docutils literal notranslate"><span class="pre">headings</span></code> (柱にセクション名) が利用できます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>用紙サイズ (例: <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">a4</span></code>)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>paper size, e.g. <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">a4</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">secnumdepth</span></code></dt><dd><p>セクションなどに対する番号づけの深さ (depth) (<code class="docutils literal notranslate"><span class="pre">--number-sections</span></code> または <code class="docutils literal notranslate"><span class="pre">numbersections</span></code> 変数の有効時のみ)</p>
 </dd>
@@ -843,15 +868,19 @@ procedure is:</p>
 <dt><code class="docutils literal notranslate"><span class="pre">headertext</span></code>, <code class="docutils literal notranslate"><span class="pre">footertext</span></code></dt><dd><p>(それぞれページの天と地の) 柱に配置されるテキスト (<a class="reference external" href="https://wiki.contextgarden.net/Headers_and_Footers">ConTeXt Headers and Footers</a> を参照)。異なる場所に対して4つまで繰り返し指定可能
 text to be placed in running header or footer (see <a class="reference external" href="https://wiki.contextgarden.net/Headers_and_Footers">ConTeXt Headers and Footers</a>); repeat up to four times for different placement</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">indenting</span></code></dt><dd><p>パラグラフのインデントを制御します。例: <code class="docutils literal notranslate"><span class="pre">yes,small,next</span></code> (<a class="reference external" href="https://wiki.contextgarden.net/Indentation">ConTeXt Indentation</a> を参照) 複数回指定可能</p>
+<dt><code class="docutils literal notranslate"><span class="pre">indenting</span></code></dt><dd><p>controls indentation of paragraphs, e.g. <code class="docutils literal notranslate"><span class="pre">yes,small,next</span></code> (see
+<a class="reference external" href="https://wiki.contextgarden.net/Indentation">ConTeXt Indentation</a>); repeat for multiple options</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">interlinespace</span></code></dt><dd><p>行間を制御します。例: <code class="docutils literal notranslate"><span class="pre">4ex</span></code> (<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id151"><span class="problematic" id="id152">`setupinterlinespace```_</span></a> を利用) 複数回指定可能</p>
+<dt><code class="docutils literal notranslate"><span class="pre">interlinespace</span></code></dt><dd><p>adjusts line spacing, e.g. <code class="docutils literal notranslate"><span class="pre">4ex</span></code> (using
+<a href="#id57"><span class="problematic" id="id58">``</span></a><a href="#id151"><span class="problematic" id="id152">`setupinterlinespace```_</span></a>); repeat for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">layout</span></code></dt><dd><p>ページのマージンとテキスト配置のためのオプション (<a class="reference external" href="https://wiki.contextgarden.net/Layout">ConTeXt Layout</a> を参照) 複数回指定可能</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linkcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">contrastcolor</span></code></dt><dd><p>ページの外部および内部に向けたリンクの色。例: <code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> (<a class="reference external" href="https://wiki.contextgarden.net/Color">ConTeXt Color</a> を参照)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">linkcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">contrastcolor</span></code></dt><dd><p>color for links outside and inside a page, e.g. <code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code>
+(see <a class="reference external" href="https://wiki.contextgarden.net/Color">ConTeXt Color</a>)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linkstyle</span></code></dt><dd><p>リンクの書体。例: <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">bold</span></code>, <code class="docutils literal notranslate"><span class="pre">slanted</span></code>, <code class="docutils literal notranslate"><span class="pre">boldslanted</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">cap</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">linkstyle</span></code></dt><dd><p>typeface style for links, e.g. <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">bold</span></code>, <code class="docutils literal notranslate"><span class="pre">slanted</span></code>,
+<code class="docutils literal notranslate"><span class="pre">boldslanted</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">cap</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">lof</span></code>, <code class="docutils literal notranslate"><span class="pre">lot</span></code> <em>[boolean]</em></dt><dd><p>図目次および表目次を挿入します。</p>
 </dd>
@@ -861,13 +890,15 @@ text to be placed in running header or footer (see <a class="reference external"
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">pagenumbering</span></code></dt><dd><p>ページ番号のスタイルと場所 (<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id153"><span class="problematic" id="id154">`setuppagenumbering```_</span></a> を利用) 複数回指定可能</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>ページサイズ。例: <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">A4</span></code>, <code class="docutils literal notranslate"><span class="pre">landscape</span></code> (<a class="reference external" href="https://wiki.contextgarden.net/PaperSetup">ConTeXt Paper Setup</a> を参照) 複数回指定可能</p>
+<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>paper size, e.g. <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">A4</span></code>, <code class="docutils literal notranslate"><span class="pre">landscape</span></code> (see <a class="reference external" href="https://wiki.contextgarden.net/PaperSetup">ConTeXt
+Paper Setup</a>); repeat for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">pdfa</span></code></dt><dd><p>プリアンブルに対して、PDF/A-1b:2005 の生成に必要なセットアップを追加。PDF/Aを正しく生成するためには、ICCカラープロファイルが必須であり、コンテンツおよびすべての付属ファイル (画像など) も規格に準拠する必要があります。ICCプロファイルは  <a class="reference external" href="https://wiki.contextgarden.net/PDFX#ICC_profiles">ConTeXt ICC Profiles</a> から得られます。詳細は  <a class="reference external" href="https://wiki.contextgarden.net/PDF/A">ConTeXt PDFA</a> を参照。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">toc</span></code> <em>[boolean]</em></dt><dd><p>目次を挿入します。(<code class="docutils literal notranslate"><span class="pre">--toc/--table-of-contents</span></code> でも設定可能)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">whitespace</span></code></dt><dd><p>パラグラフ間の空白。例: <code class="docutils literal notranslate"><span class="pre">none</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code> (<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id155"><span class="problematic" id="id156">`setupwhitespace```_</span></a> を利用)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">whitespace</span></code></dt><dd><p>spacing between paragraphs, e.g. <code class="docutils literal notranslate"><span class="pre">none</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code> (using
+<a href="#id61"><span class="problematic" id="id62">``</span></a><a href="#id155"><span class="problematic" id="id156">`setupwhitespace```_</span></a>)</p>
 </dd>
 </dl>
 </div>
@@ -2693,7 +2724,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 </div>
 <div class="section" id="producing-slide-shows-with-pandoc">
 <h2>スライドショーをPandocで生成する<a class="headerlink" href="#producing-slide-shows-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Pandocを使うと、Webブラウザで閲覧可能なHTML + JavaScript のスライドプレゼンテーションを生成できます。スライドには、 <a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a>, <a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a>, <a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a>, <a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a>, <a href="#id165"><span class="problematic" id="id166">`reveal.js `_ の5つの形式があります。あるいは、LaTeX ```beamer```_</span></a> によるPDFスライドや、Microsoft <a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> 形式のスライドを生成することもできます。</p>
+<p>Pandocを使うと、Webブラウザで閲覧可能なHTML + JavaScript のスライドプレゼンテーションを生成できます。スライドには、 <a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a>, <a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a>, <a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a>, <a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a>, <a class="reference external" href="http://lab.hakim.se/reveal-js/">reveal.js `_ の5つの形式があります。あるいは、LaTeX ```beamer``</a> によるPDFスライドや、Microsoft <a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> 形式のスライドを生成することもできます。</p>
 <p>シンプルなスライドショーを作成するMarkdownソース  <code class="docutils literal notranslate"><span class="pre">habits.txt</span></code> の例を示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% Habits
 % John Doe
@@ -3362,7 +3393,7 @@ line between list items.</p>
 <li class="toctree-l2"><a class="reference internal" href="index.html#id3">このサイトのソースコード</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">（新・工事中）Pandocユーザーズガイド 日本語版</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pandocユーザーズガイド 日本語版 [2.7.2]</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#synopsis">概要</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#description">説明</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#options">オプション</a></li>

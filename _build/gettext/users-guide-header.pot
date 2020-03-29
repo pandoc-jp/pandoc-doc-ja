@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, 日本Pandocユーザ会
+# This file is distributed under the same license as the 日本Pandocユーザ会 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 日本Pandocユーザ会 \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-30 00:33+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../users-guide-header.rst:3
+msgid "Pandocユーザーズガイド 日本語版 [2.7.2]"
+msgstr ""
+
+#: ../../users-guide-header.rst:7
+msgid "現在の翻訳は *プレリリース版* です。不完全な翻訳を含んでいます。"
+msgstr ""
+
+#: ../../users-guide-header.rst:9
+msgid "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgstr ""
+
+#: ../../users-guide-header.rst:10
+msgid "この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-doc-ja/issues>`_ に投稿してください"
+msgstr ""
+
+#: ../../users-guide-header.rst:11
+msgid "翻訳のレビュー作業や翻訳作業へのご協力を希望の方は :doc:`trans-intro` をご覧ください"
+msgstr ""
+
+#: ../../users-guide-header.rst:13
+msgid "原著: John MacFarlane"
+msgstr ""
+
+#: ../../users-guide-header.rst:15
+msgid "原著バージョン: 2.7.2"
+msgstr ""
+
+#: ../../users-guide-header.rst:17
+msgid "更新日: 2020/03/30"
+msgstr ""
+
+#: ../../users-guide-header.rst:19
+msgid "翻訳者（アルファベット順）:"
+msgstr ""
+
+#: ../../users-guide-header.rst:21
+msgid "becolomochi"
+msgstr ""
+
+#: ../../users-guide-header.rst:22
+msgid "ishibaki"
+msgstr ""
+
+#: ../../users-guide-header.rst:23
+msgid "makotosan"
+msgstr ""
+
+#: ../../users-guide-header.rst:24
+msgid "niszet"
+msgstr ""
+
+#: ../../users-guide-header.rst:25
+msgid "Takada Atsushi"
+msgstr ""
+
+#: ../../users-guide-header.rst:26
+msgid "Yuki Fujiwara"
+msgstr ""

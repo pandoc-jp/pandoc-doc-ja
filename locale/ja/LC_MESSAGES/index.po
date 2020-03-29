@@ -9,91 +9,128 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 20:05+0900\n"
+"POT-Creation-Date: 2020-03-30 00:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.8.0\n"
 
 #: ../../index.rst:7
-msgid "（新装工事中）日本Pandocユーザ会"
+msgid "日本Pandocユーザ会"
 msgstr ""
 
 #: ../../index.rst:9
-msgid "注意：このサイトは工事中です。正式なものではありません。"
+msgid ""
+"日本Pandocユーザ会は、日本（日本語圏）において文書変換ツール `Pandoc <https://pandoc.org/>`_ "
+"の普及活動を行う任意団体です。"
 msgstr ""
 
 #: ../../index.rst:11
 msgid ""
-"このサイトは `Pandoc User’s Guide <https://pandoc.org/MANUAL.html>`_ "
-"(Pandocユーザーズガイド)の日本語訳をホスティングする予定の場所です。"
-msgstr ""
-
-#: ../../index.rst:13
-msgid ""
-"現時点（2018年12月）ではPandoc最新バージョンは「2.5」です。 しかし、以前に翻訳された `Pandoc ユーザーズガイド 日本語版 "
-"<http://sky-y.github.io/site-pandoc-jp/users-guide/>`_ は、 Pandoc 1.12.4.2"
-" という古いバージョンにおける情報であり、初心者にとって混乱を招きつつある状況です。"
-msgstr ""
-
-#: ../../index.rst:17
-msgid ""
-"日本Pandocユーザ会では、最新の知見を踏まえてこのPandocユーザーズガイドを一から翻訳し、 "
+"現在は `Pandoc User’s Guide <https://pandoc.org/MANUAL.html>`_ の日本語版 (:doc"
+":`users-guide`) をホスティング・翻訳しています。 最新の知見を踏まえてこのPandocユーザーズガイドを一から翻訳し、 "
 "将来的には持続的な翻訳・リリースが可能な体制を作っていく予定です。"
 msgstr ""
 
-#: ../../index.rst:21
-msgid "管理者（日本Pandocユーザ会 代表）"
-msgstr ""
-
-#: ../../index.rst:21
-msgid "藤原 惟 / Yuki Fujiwara"
-msgstr ""
-
-#: ../../index.rst:24
-msgid "Twitter"
+#: ../../index.rst:19
+msgid ""
+"**日本Pandocユーザ会にはSlackがあります。** 気軽にPandocや各種文書形式・ツールに関する質問・雑談ができる場所です。 "
+"誰でもご自由にご参加ください！"
 msgstr ""
 
 #: ../../index.rst:24
-msgid "`@skyy_writing <https://twitter.com/skyy_writing>`_"
-msgstr ""
-
-#: ../../index.rst:27
 msgid "日本Pandocユーザ会 Slack（参加自由・お気軽にご参加ください）"
 msgstr ""
 
-#: ../../index.rst:27
+#: ../../index.rst:24
 msgid ""
 "`Slack参加用リンク "
 "<https://join.slack.com/t/jpang/shared_invite/enQtNDUxMTY0NzU1ODc1LTMyYmFjNmY2NmI2ZDI0MDUwZTU2MzgyNzUzMGE4Y2E5M2QxN2RiYWE5NjNmNjhkNjE1MmI1NWY3ODc5MjQxZmQ>`_"
 msgstr ""
 
-#: ../../index.rst:29
-msgid ""
-"`Pandoc <https://pandoc.org/>`_ is free software, released under the GPL."
-" Copyright 2006-2018 John MacFarlane."
+#: ../../index.rst:27
+msgid "管理者（日本Pandocユーザ会 代表）"
 msgstr ""
 
-#: ../../index.rst:31
-msgid "Contents:"
+#: ../../index.rst:27
+msgid "藤原 惟 / Yuki Fujiwara (`@skyy_writing <https://twitter.com/skyy_writing>`_)"
+msgstr ""
+
+#: ../../index.rst:30
+msgid "目次"
 msgstr ""
 
 #: ../../index.rst:40
-msgid "Indices and tables"
+msgid "このサイトのソースコード"
 msgstr ""
 
 #: ../../index.rst:42
-msgid ":ref:`genindex`"
-msgstr ""
-
-#: ../../index.rst:43
-msgid ":ref:`modindex`"
+msgid ""
+"GitHub: `pandoc-jp/pandoc-doc-ja <https://github.com/pandoc-jp/pandoc-"
+"doc-ja>`_"
 msgstr ""
 
 #: ../../index.rst:44
-msgid ":ref:`search`"
+msgid ""
+"Pandoc is free software, released under the `GPL "
+"<https://www.gnu.org/licenses/gpl-3.0.html>`_. Copyright 2006–2019 `John "
+"MacFarlane <https://johnmacfarlane.net/>`_."
 msgstr ""
+
+#~ msgid "（新装工事中）日本Pandocユーザ会"
+#~ msgstr ""
+
+#~ msgid "注意：このサイトは工事中です。正式なものではありません。"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "このサイトは `Pandoc User’s Guide "
+#~ "<https://pandoc.org/MANUAL.html>`_ "
+#~ "(Pandocユーザーズガイド)の日本語訳をホスティングする予定の場所です。"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "現時点（2018年12月）ではPandoc最新バージョンは「2.5」です。 しかし、以前に翻訳された `Pandoc"
+#~ " ユーザーズガイド 日本語版 <http://sky-y.github.io/site-"
+#~ "pandoc-jp/users-guide/>`_ は、 Pandoc "
+#~ "1.12.4.2 という古いバージョンにおける情報であり、初心者にとって混乱を招きつつある状況です。"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "日本Pandocユーザ会では、最新の知見を踏まえてこのPandocユーザーズガイドを一から翻訳し、 "
+#~ "将来的には持続的な翻訳・リリースが可能な体制を作っていく予定です。"
+#~ msgstr ""
+
+#~ msgid "藤原 惟 / Yuki Fujiwara"
+#~ msgstr ""
+
+#~ msgid "Twitter"
+#~ msgstr ""
+
+#~ msgid "`@skyy_writing <https://twitter.com/skyy_writing>`_"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Pandoc <https://pandoc.org/>`_ is free "
+#~ "software, released under the GPL. "
+#~ "Copyright 2006-2018 John MacFarlane."
+#~ msgstr ""
+
+#~ msgid "Contents:"
+#~ msgstr ""
+
+#~ msgid "Indices and tables"
+#~ msgstr ""
+
+#~ msgid ":ref:`genindex`"
+#~ msgstr ""
+
+#~ msgid ":ref:`modindex`"
+#~ msgstr ""
+
+#~ msgid ":ref:`search`"
+#~ msgstr ""
 

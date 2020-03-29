@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 20:05+0900\n"
+"POT-Creation-Date: 2020-03-30 00:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.8.0\n"
 
 #: ../../trans-intro.rst:3
 msgid "翻訳の手引 for Pandocユーザーズガイド"
@@ -31,172 +31,452 @@ msgid "Pandocユーザーズガイドの翻訳作業に参加される方向け�
 msgstr ""
 
 #: ../../trans-intro.rst:10
-msgid "前提"
+msgid "サイトまとめ"
 msgstr ""
 
 #: ../../trans-intro.rst:12
-msgid "**reStructuredText (reST)** という、Markdownよりも高機能な記法を使います"
+msgid "Slack"
 msgstr ""
 
 #: ../../trans-intro.rst:14
+msgid "Pandocユーザ会のSlackで、連絡などを行っています"
+msgstr ""
+
+#: ../../trans-intro.rst:15
+msgid ""
+"招待リンク: "
+"https://join.slack.com/t/jpang/shared_invite/enQtNjE1MTgzOTkxMjgyLWEzNGVhMmZhODE4ZTVjNDhiYmU1OGNkYzJlZjMwM2NlNmNlNzJmOGY4YzFmYjQ1MTVlNjJiNzk1MzI3ODdmNmY"
+msgstr ""
+
+#: ../../trans-intro.rst:17
+msgid "GitHub"
+msgstr ""
+
+#: ../../trans-intro.rst:19
+msgid ""
+"`jgm/pandocのMANUAL.txt "
+"<https://github.com/jgm/pandoc/blob/master/MANUAL.txt>`_"
+msgstr ""
+
+#: ../../trans-intro.rst:20
+msgid ""
+"`pandoc-jp/pandoc-doc-ja: 日本語訳のSphinxサイト <https://github.com/pandoc-jp"
+"/pandoc-doc-ja>`_"
+msgstr ""
+
+#: ../../trans-intro.rst:22
+msgid "Transifex（クラウド上で共同翻訳するためのWebアプリ）"
+msgstr ""
+
+#: ../../trans-intro.rst:24
+msgid ""
+"`Transifex: Pandoc User’s Guide プロジェクト <https://www.transifex.com/jpang"
+"/pandoc-users-guide/dashboard/>`__"
+msgstr ""
+
+#: ../../trans-intro.rst:25
+msgid "参加希望者は招待します。「参加方法」を参照。"
+msgstr ""
+
+#: ../../trans-intro.rst:27
+msgid "Read the Docs（翻訳後のドキュメントをデプロイする先）"
+msgstr ""
+
+#: ../../trans-intro.rst:29
+msgid ""
+"`（新装工事中）日本Pandocユーザ会 — 日本Pandocユーザ会 2019.02.21 ドキュメント <https://pandoc-"
+"doc-ja.readthedocs.io/ja/latest/index.html>`__"
+msgstr ""
+
+#: ../../trans-intro.rst:30
+msgid "いまお読みのドキュメントが、Read the Docsにデプロイされています"
+msgstr ""
+
+#: ../../trans-intro.rst:31
+msgid "デプロイは藤原が行います"
+msgstr ""
+
+#: ../../trans-intro.rst:34
+msgid "前提"
+msgstr ""
+
+#: ../../trans-intro.rst:36
+msgid "**reStructuredText (reST)** という、Markdownよりも高機能な記法を使います"
+msgstr ""
+
+#: ../../trans-intro.rst:38
 msgid ""
 "詳しくは `早わかり reStructuredText <https://quick-"
 "restructuredtext.readthedocs.io/en/latest/>`_ を参考にしてください"
 msgstr ""
 
-#: ../../trans-intro.rst:15
+#: ../../trans-intro.rst:39
 msgid ""
 "なぜ？→ `Sphinx <http://sphinx-users.jp/>`_ "
 "というドキュメントビルダーの機能をフルに使いたいので（特に翻訳関係）"
 msgstr ""
 
-#: ../../trans-intro.rst:17
+#: ../../trans-intro.rst:41
 msgid "実際には **Transifex** というWebアプリを使って、翻訳作業を進めていただきます"
 msgstr ""
 
-#: ../../trans-intro.rst:20
+#: ../../trans-intro.rst:44
 msgid "参加方法"
 msgstr ""
 
-#: ../../trans-intro.rst:22
+#: ../../trans-intro.rst:46
 msgid ""
 "`Pandocユーザーズガイド日本語版 翻訳ボランティア 登録フォーム <https://docs.google.com/forms/d/e"
 "/1FAIpQLScOdbrRWXKWAOHop7yyxrmq-D8DcwHo6u8aNAywRgfd3pX6dQ/viewform>`_ "
 "よりご参加ください。"
 msgstr ""
 
-#: ../../trans-intro.rst:24
+#: ../../trans-intro.rst:48
 msgid "管理者（藤原）が下記に登録します。"
 msgstr ""
 
-#: ../../trans-intro.rst:26
+#: ../../trans-intro.rst:50
 msgid "Transifex（翻訳用のWebアプリ）"
 msgstr ""
 
-#: ../../trans-intro.rst:28
+#: ../../trans-intro.rst:52
 msgid "初めての方は、招待後に送られるリンクから、Transifexのアカウントを作成してください"
 msgstr ""
 
-#: ../../trans-intro.rst:30
+#: ../../trans-intro.rst:54
 msgid "Pandocユーザ会 Slack"
 msgstr ""
 
-#: ../../trans-intro.rst:33
+#: ../../trans-intro.rst:57
 msgid "作業手順"
 msgstr ""
 
-#: ../../trans-intro.rst:36
+#: ../../trans-intro.rst:60
 msgid "Transifexのトップ（「翻訳」を選ぶ）"
 msgstr ""
 
-#: ../../trans-intro.rst:42
-msgid "Transifexの開始時（言語を選ぶ）"
+#: ../../trans-intro.rst:64
+msgid "Transifexの開始時に言語を選ぶ画面が出てきた場合は ``Japanese (ja)`` を選択してください。"
 msgstr ""
 
-#: ../../trans-intro.rst:47
+#: ../../trans-intro.rst:66
+msgid "``Japanese (Japan) (ja_JP)`` は使用せず、 ``Japanese (ja)`` に統一しました。"
+msgstr ""
+
+#: ../../trans-intro.rst:69
 msgid "ケース1: 普通に翻訳する場合"
 msgstr ""
 
-#: ../../trans-intro.rst:51
+#: ../../trans-intro.rst:73
 msgid "左側：訳したい文字列を選択（自分が訳せそうなもののみでOKです）"
 msgstr ""
 
-#: ../../trans-intro.rst:52
+#: ../../trans-intro.rst:74
 msgid "右上：原文（英語）の文字列が出ているのを確認"
 msgstr ""
 
-#: ../../trans-intro.rst:53
+#: ../../trans-intro.rst:75
 msgid "右下：訳文（日本語）の文字列を入力"
 msgstr ""
 
-#: ../../trans-intro.rst:54
+#: ../../trans-intro.rst:76
 msgid "「変更を保存」をクリック（自信がない場合は「提案として保存」でもOK）"
 msgstr ""
 
-#: ../../trans-intro.rst:55
+#: ../../trans-intro.rst:77
 msgid "1に戻る。 **適当なところで切り上げる** （キリがないので）"
 msgstr ""
 
-#: ../../trans-intro.rst:57
+#: ../../trans-intro.rst:79
 msgid "※ 最終的に責任者（藤原）がレビューします"
 msgstr ""
 
-#: ../../trans-intro.rst:59
+#: ../../trans-intro.rst:81
 msgid "原文の `Pandoc User’s Guide <https://pandoc.org/MANUAL.html>`_ もあわせて確認してください"
 msgstr ""
 
-#: ../../trans-intro.rst:61
+#: ../../trans-intro.rst:83
 msgid "文脈がよくわからなくなるので（余裕があれば、Transifexの「文脈」にメモを残してくれると嬉しいです）"
 msgstr ""
 
-#: ../../trans-intro.rst:63
+#: ../../trans-intro.rst:85
 msgid "よくわからないテキストは放置してください。"
 msgstr ""
 
-#: ../../trans-intro.rst:64
+#: ../../trans-intro.rst:86
 msgid "訳したいけどわからない場合は、Slack ``#users-guide-trans`` で質問してください。"
 msgstr ""
 
-#: ../../trans-intro.rst:67
+#: ../../trans-intro.rst:89
 msgid "ケース2: reST記法を含む場合"
 msgstr ""
 
-#: ../../trans-intro.rst:71
+#: ../../trans-intro.rst:93
 msgid "reST記法を含む場合は、 **元のreST記法（特にリンク）を崩さないようにしてください**"
 msgstr ""
 
-#: ../../trans-intro.rst:73
+#: ../../trans-intro.rst:95
 msgid "リンク（\\`リンク文字列 <URL>\\`_ など、いくつか種類がある）"
 msgstr ""
 
-#: ../../trans-intro.rst:74
+#: ../../trans-intro.rst:96
 msgid "コード（バッククォート2つで囲む）"
 msgstr ""
 
-#: ../../trans-intro.rst:75
-msgid "見出し（見出しの次の行に ``=`` または ``-`` をたくさん並べる。Transifexの文字列には現れないので注意）"
-msgstr ""
-
-#: ../../trans-intro.rst:76
+#: ../../trans-intro.rst:97
 msgid "太字、リストは大体同じ（ただしリストの入れ子は空行必須）"
 msgstr ""
 
-#: ../../trans-intro.rst:77
+#: ../../trans-intro.rst:98
 msgid ""
 "詳しくは: `早わかり reStructuredText <https://quick-"
 "restructuredtext.readthedocs.io/en/latest/>`_"
 msgstr ""
 
-#: ../../trans-intro.rst:78
+#: ../../trans-intro.rst:99
 msgid "その他、よくわからない記号は基本的にいじらないようにしてください（レビューで修正します）"
 msgstr ""
 
-#: ../../trans-intro.rst:81
+#: ../../trans-intro.rst:101
+msgid "**reST記法の前後には、半角スペースを入れてください。**"
+msgstr ""
+
+#: ../../trans-intro.rst:103
+msgid "悪い例::"
+msgstr ""
+
+#: ../../trans-intro.rst:107
+msgid "よい例 (「など」の手前に半角スペース)::"
+msgstr ""
+
+#: ../../trans-intro.rst:111
+msgid ""
+"また、reSTの見出し（見出しの次の行に ``=`` または ``-`` をたくさん並べる）は **Transifexの文字列には現れない** "
+"ので注意してください。"
+msgstr ""
+
+#: ../../trans-intro.rst:113
+msgid ""
+"(原文のreST版 `users-guide.rst <https://github.com/pandoc-jp/pandoc-doc-"
+"ja/blob/master/users-guide.rst>`_ を見ると、見出しの様子がわかります)"
+msgstr ""
+
+#: ../../trans-intro.rst:117
+msgid "ケース3: (reST記法) 内部ハイパーリンクターゲット"
+msgstr ""
+
+#: ../../trans-intro.rst:119
+msgid ""
+"PandocでMarkdown → reSTに変換する際、現在は ``--reference-links`` というオプションを付けています。 "
+"これにより、リンクは原則として \\`foo\\`\\_ という形式（参照リンク・内部リンク）として現れます。"
+msgstr ""
+
+#: ../../trans-intro.rst:122
+msgid "この場合、テキスト (``foo``) もそのままにしてください！"
+msgstr ""
+
+#: ../../trans-intro.rst:124
+msgid "例::"
+msgstr ""
+
+#: ../../trans-intro.rst:129
+msgid ""
+"ただし、リンクの参照元がTransifexに表示されないので（原因調査中）、翻訳の際は下記の原文も参照してください。 "
+"(レビュー時にまとめて修正します)"
+msgstr ""
+
+#: ../../trans-intro.rst:132
+msgid ""
+"原文 Markdown版: `jgm/pandoc: MANUAL.txt "
+"<https://github.com/jgm/pandoc/blob/master/MANUAL.txt>`_"
+msgstr ""
+
+#: ../../trans-intro.rst:133
+msgid ""
+"原文 reST版: `pandoc-jp/pandoc-doc-ja: users-guide.rst <https://github.com"
+"/pandoc-jp/pandoc-doc-ja/blob/master/users-guide.rst>`_"
+msgstr ""
+
+#: ../../trans-intro.rst:136
+msgid "お礼について"
+msgstr ""
+
+#: ../../trans-intro.rst:138
+msgid "**金銭的なお礼はありません。** あらかじめご了承ください。"
+msgstr ""
+
+#: ../../trans-intro.rst:140
+msgid ""
+"翻訳・レビューにおいて貢献実績が確認された方には、お名前・Twitter ID・リンクなど（あれば）をサイトに掲載するようにします。 "
+"（掲載時にお伺いします。「掲載しない」でも可能です）"
+msgstr ""
+
+#: ../../trans-intro.rst:143
+msgid ""
+"補足: 2019-04-27時点で、藤原のミスでTransifex上の翻訳者名が消失してしまっています。申し訳ありません。 "
+"以下の方々に関しては、翻訳による貢献を確認しているので、成果物にはお名前を含める予定です。"
+msgstr ""
+
+#: ../../trans-intro.rst:146
+msgid "makotosanさん"
+msgstr ""
+
+#: ../../trans-intro.rst:147
+msgid "niszetさん"
+msgstr ""
+
+#: ../../trans-intro.rst:148
+msgid "べこさん (becolomochi)"
+msgstr ""
+
+#: ../../trans-intro.rst:151
 msgid "Q&A"
 msgstr ""
 
-#: ../../trans-intro.rst:83
+#: ../../trans-intro.rst:153
 msgid "Q: Issueを見つけた。どうしたらいい？"
 msgstr ""
 
-#: ../../trans-intro.rst:85
+#: ../../trans-intro.rst:155
 msgid ""
 "`Issues · pandoc-jp/pandoc-doc-ja <https://github.com/pandoc-jp/pandoc-"
 "doc-ja/issues>`_ にまとめています。 "
 "必要であれば、Issueを追加してください。また、過去のIssueも少しあるので参考にしてください。"
 msgstr ""
 
-#: ../../trans-intro.rst:89
-msgid "お礼について"
+#: ../../trans-intro.rst:158
+msgid "もしくは、Slack ``#users-guide-trans`` に直接質問ください。"
 msgstr ""
 
-#: ../../trans-intro.rst:91
-msgid "**金銭的なお礼はありません。** あらかじめご了承ください。"
+#: ../../trans-intro.rst:161
+msgid "参考"
 msgstr ""
 
-#: ../../trans-intro.rst:93
+#: ../../trans-intro.rst:164
+msgid "ビルド・デプロイに使用しているツールまとめ"
+msgstr ""
+
+#: ../../trans-intro.rst:166
+msgid "Pandoc"
+msgstr ""
+
+#: ../../trans-intro.rst:168
+msgid "変換: MANUAL.txt(markdown) -> users-guide.rst(reStructuredText)"
+msgstr ""
+
+#: ../../trans-intro.rst:170
+msgid "Sphinx"
+msgstr ""
+
+#: ../../trans-intro.rst:172
+msgid "rstからHTML（サイト）を構築"
+msgstr ""
+
+#: ../../trans-intro.rst:173
+msgid "国際化(sphinx-intl)"
+msgstr ""
+
+#: ../../trans-intro.rst:175
+msgid "Transifex"
+msgstr ""
+
+#: ../../trans-intro.rst:177
+msgid "実際にテキストを翻訳（共同）"
+msgstr ""
+
+#: ../../trans-intro.rst:179
+msgid "Read the Docs"
+msgstr ""
+
+#: ../../trans-intro.rst:181
+msgid "GitHub上のSphinxサイトをビルドして公開"
+msgstr ""
+
+#: ../../trans-intro.rst:184
+msgid "機械翻訳について"
+msgstr ""
+
+#: ../../trans-intro.rst:186
 msgid ""
-"翻訳・レビューにおいて貢献実績が確認された方には、お名前・Twitter ID・リンクなど（あれば）をサイトに掲載するようにします。 "
-"（掲載時にお伺いします。「掲載しない」でも可能です）"
+"機械翻訳は **各自の責任において、参考・補助のために** 利用可能とします。ただし、各自で最終的には "
+"**Transifex上に訳文を反映させてください** 。 (訳文のマスターデータ[.poファイル]は、Transifexにあるものとします)"
 msgstr ""
+
+#: ../../trans-intro.rst:189
+msgid "Ubuntuコミュニティでこういう事件もあったために、「レビューは人力でやる ＆ 藤原が最終責任を持つ」という体制は崩さないようにしようと思います。"
+msgstr ""
+
+#: ../../trans-intro.rst:191
+msgid "`Ubuntu英日翻訳にGoogle翻訳の成果物を突っ込む人物が現れライセンスがなんじゃもんじゃでつらい - Togetter"
+msgstr ""
+
+#: ../../trans-intro.rst:192
+msgid "<https://togetter.com/li/1084225>`_"
+msgstr ""
+
+#: ../../trans-intro.rst:194
+msgid "目安（グレーゾーン判定は藤原がやります）"
+msgstr ""
+
+#: ../../trans-intro.rst:196
+msgid "OK「翻訳者の責任で、翻訳テキストを書く」"
+msgstr ""
+
+#: ../../trans-intro.rst:197
+msgid "グレーゾーン「Google翻訳を「参考」として利用する」（程度問題）"
+msgstr ""
+
+#: ../../trans-intro.rst:198
+msgid "グレーゾーン「Google翻訳が出したテキストを、一部利用する」（程度問題）"
+msgstr ""
+
+#: ../../trans-intro.rst:199
+msgid "NG「Google翻訳の「結果」を、100%そのまま利用する」"
+msgstr ""
+
+#: ../../trans-intro.rst:202
+msgid ""
+"ツールの参考: `Google翻訳者ツールキット <https://translate.google.com/toolkit/>`_ (by "
+"makotosan さん)"
+msgstr ""
+
+#: ../../trans-intro.rst:204
+msgid ""
+"> Transifexは原文のエレメント単位で翻訳する仕様なので、長文のブロックが非常に翻訳しづらくなります。 > "
+"翻訳者ツールキットは、原文を分割することができるので、 > > 1. TransifexからPOをダウンロードして翻訳者ツールキットで読み込み >"
+" 2. 翻訳者ツールキット上で原文を分割=>機械翻訳もしくは@sky_y さんの旧バージョンのユーザーガイドからテキスト拝借 > 3. "
+"訳文をリライト > 4. エレメント単位の翻訳完了後、翻訳者ツールキットからTransifexにコピペ > > で長文を乗り切ることができました。"
+" > 良ければ試してみてください。"
+msgstr ""
+
+#: ../../trans-intro.rst:216
+msgid "textlintについて"
+msgstr ""
+
+#: ../../trans-intro.rst:218
+msgid ""
+"日本語を自動的に校正してくれるツール `textlint <https://textlint.github.io/>`_ については、 "
+"現状のプロジェクトとしては導入していませんが、現状各自で利用してかまいません。"
+msgstr ""
+
+#: ../../trans-intro.rst:221
+msgid "Transifexやpoファイルとの兼ね合いがうまくいかないので……。"
+msgstr ""
+
+#: ../../trans-intro.rst:222
+msgid "レビュー時に一度適用してみようと思います。"
+msgstr ""
+
+#: ../../trans-intro.rst:224
+msgid ""
+"ルールを利用する際は `textlint-rule-preset-ja-technical-writing <https://github.com"
+"/textlint-ja/textlint-rule-preset-ja-technical-writing>`_ "
+"というプリセットを利用してください。"
+msgstr ""
+
+#~ msgid "Transifexの開始時（言語を選ぶ）"
+#~ msgstr ""
+
+#~ msgid "見出し（見出しの次の行に ``=`` または ``-`` をたくさん並べる。Transifexの文字列には現れないので注意）"
+#~ msgstr ""
 
