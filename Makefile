@@ -20,13 +20,13 @@ HEADER_TEMPLATE := ./users-guide-header.txt
 ## ユーザーズガイドのbody部分 (翻訳対象)
 HEADER_BODY := users-guide
 ## Sphinx側のユーザーズガイドrst
-HEADER_OUTPUT := users-guide-ja
+HEADER_OUTPUT := ./users-guide-ja.rst
 
 # ユーザーズガイド原文
 ## jgm/pandocのMANUAL.txt
 MANUAL_TXT := ./pandoc/MANUAL.txt
 ## pandoc -f markdown -t rst したもの
-USERS_GUIDE_RST := users-guide.rst
+USERS_GUIDE_RST := $(HEADER_BODY).rst
 
 ################################################
 # ターゲット
@@ -75,10 +75,9 @@ jgm-pandoc-checkout:
 
 # make pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
-.PHONY: pandoc
-pandoc: $(USERS_GUIDE_RST)
-$(USERS_GUIDE_RST): $(MANUAL_TXT)
-	pandoc -f markdown -t rst --reference-links $< -o $@
+.PHONY: ja-pandoc
+ja-pandoc:
+	pandoc -f markdown -t rst --reference-links $(MANUAL_TXT) -o $(USERS_GUIDE_RST)
 
 # make intl-update
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
@@ -104,7 +103,7 @@ ja-update-src: pandoc intl-update tx-push-pot
 # ユーザーズガイドのrstをビルド
 # (Pandocテンプレートのみを入力としたいため、形式的に入力ファイルを無し(/dev/null)とする)
 .PHONY: ja-users-guide-rst
-ja-users-guide-rst: $(HEADER_OUTPUT)
+ja-users-guide-rst:
 	pandoc /dev/null -f markdown -t rst \
 	  --template=$(HEADER_TEMPLATE) \
 	  -V trans-pandoc-version="$(shell cat $(PANDOC_VER_LOCK_FILE))" \
