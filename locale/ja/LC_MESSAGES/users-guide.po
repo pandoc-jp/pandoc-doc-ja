@@ -5,9 +5,10 @@
 # 
 # Translators:
 # makotosan <makotokanamoto@yahoo.co.jp>, 2019
-# Takada Atsushi <takada-at@klab.com>, 2019
 # niszet <niszet0016@gmail.com>, 2019
-# Yuki Fujiwara <sky.y.0079@gmail.com>, 2019
+# Takada Atsushi <takada-at@klab.com>, 2019
+# 石橋 朋樹 <iroirotomoki@gmail.com>, 2020
+# Yuki Fujiwara <sky.y.0079@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -15,8 +16,8 @@ msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-27 17:43+0900\n"
-"PO-Revision-Date: 2018-12-12 07:17+0000\n"
-"Last-Translator: Yuki Fujiwara <sky.y.0079@gmail.com>, 2019\n"
+"PO-Revision-Date: 2019-12-19 09:31+0000\n"
+"Last-Translator: Yuki Fujiwara <sky.y.0079@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1994,12 +1995,14 @@ msgid ""
 "``.potx`` extension) are known to work, as are most templates derived from "
 "these."
 msgstr ""
+"Microsoft PowerPoint 2013に含まれるテンプレート ( ``.pptx`` もしくは ``.potx`` のいずれかの拡張子) "
+"は、これから派生したほとんどのテンプレートと同様に機能するはずです。"
 
 #: ../../users-guide.rst:934
 msgid ""
 "The specific requirement is that the template should begin with the "
 "following first four layouts:"
-msgstr ""
+msgstr "PowerPointのテンプレートは、特に、以下の4枚のレイアウトスライドで始まる必要があります: "
 
 #: ../../users-guide.rst:937
 msgid "Title Slide"
@@ -2032,6 +2035,10 @@ msgid ""
 "modify ``custom-reference.pptx`` in MS PowerPoint (pandoc will use the first"
 " four layout slides, as mentioned above)."
 msgstr ""
+"デフォルトの ``reference.pptx`` を編集することも可能です: まず ``pandoc -o custom-reference.pptx"
+" --print-default-data-file reference.pptx`` を実行し、生成された ``custom-"
+"reference.pptx`` を、MS PowerPointを用いて編集してください "
+"(上述したように、Pandocは、最初の4つのスライドレイアウトを参照します)。"
 
 #: ../../users-guide.rst:955
 msgid "``--epub-cover-image=``\\ *FILE*"
@@ -2044,6 +2051,9 @@ msgid ""
 "document you can also specify ``cover-image`` in a YAML metadata block (see "
 "`EPUB Metadata`_, below)."
 msgstr ""
+"EPUBの表紙として、指定された画像を用います。縦横1000 "
+"px以内の画像サイズが推奨されます。ソースとなるMarkdown文書のYAMLメタデータブロックにおいて、 ``cover-image`` "
+"として表紙画像を指定することも可能です (下記の `EPUB Metadata`_ を参照してください)。"
 
 #: ../../users-guide.rst:975
 msgid "``--epub-metadata=``\\ *FILE*"
@@ -2054,6 +2064,8 @@ msgid ""
 "Look in the specified XML file for metadata for the EPUB. The file should "
 "contain a series of `Dublin Core elements`_. For example:"
 msgstr ""
+"指定されたEPUBメタデータのXMLファイルを参照します。一連の `Dublin Core elements`_ "
+"を含める必要があります。次に例を示します："
 
 #: ../../users-guide.rst:966
 msgid ""
@@ -2065,12 +2077,19 @@ msgid ""
 "generated UUID). Any of these may be overridden by elements in the metadata "
 "file."
 msgstr ""
+"デフォルトでは、Pandocは以下のメタデータ要素を含みます: ``<dc:title>`` (文書のタイトルから取得)、 "
+"``<dc:creator>`` (文書の著者から取得)、 ``<dc:date>`` (文書の日付 (`ISO 8601 format`_ に準拠) "
+"から取得), ``<dc:language>`` (``lang`` 変数から取得、``lang`` 変数が設定されていない場合はロケールから取得), "
+"and ``<dc:identifier id=\"BookId\">`` (ランダムに生成された "
+"UUID)。なお、これらの要素はメタデータファイル中で明示的に設定できますが、その場合はメタデータファイルによる設定が優先されます。"
 
 #: ../../users-guide.rst:974
 msgid ""
 "Note: if the source document is Markdown, a YAML metadata block in the "
 "document can be used instead. See below under `EPUB Metadata`_."
 msgstr ""
+"注意: ソースファイル文書がMarkdown形式の場合、文書中のYAMLメタデータブロックが代わりに用いられます。詳しくは下記の `EPUB "
+"Metadata`_ を参照してください。"
 
 #: ../../users-guide.rst:1012
 msgid "``--epub-embed-font=``\\ *FILE*"
@@ -2086,10 +2105,14 @@ msgid ""
 "will need to add declarations like the following to your CSS (see "
 "``--css``):"
 msgstr ""
+"EPUBファイルに指定したフォントを埋め込みます。複数のフォントを埋め込みたい場合は、このオプションを複数回用いてください。ワイルドカードも使用できます:"
+" たとえば、 ``DejaVuSans-*.ttf`` "
+"と指定することで、DejaVuSansフォントファミリーを埋め込むことができます。ただし、コマンドライン上でワイルドカードを使用する場合は、シェル上で解釈されないように、ワイルドカードをエスケープするか、フォントファイル名をシングルクォートで囲む必要があります。埋め込みフォントを使用するためには、CSSファイルに以下のような宣言を追加する必要があります"
+" (``--css`` を参照してください):"
 
 #: ../../users-guide.rst:1021
 msgid "``--epub-chapter-level=``\\ *NUMBER*"
-msgstr ""
+msgstr "``--epub-chapter-level=``\\ *NUMBER*"
 
 #: ../../users-guide.rst:1015
 msgid ""
@@ -2100,10 +2123,12 @@ msgid ""
 "the chapter files are too large, so for large documents with few level-1 "
 "headings, one might want to use a chapter level of 2 or 3."
 msgstr ""
+"EPUBを個別の “chapter(章)” "
+"ファイルに分割する見出しのレベルを設定します。デフォルトでは、レベル1の見出しごとに章ファイルが分割されます。このオプションは、EPUBの内部構成にのみ影響するものであり、ユーザサイドでの章や節の表示方法には影響しません。章ファイルのサイズが大きすぎると、一部のEPUBリーダの動作が遅くなることがあります。そのため、EPUBに変換するドキュメントのファイルサイズが大きく，かつレベル1の見出しが少ない場合、レベル2か3の見出しレベルを設定したほうがよいでしょう。"
 
 #: ../../users-guide.rst:1026
 msgid "``--epub-subdirectory=``\\ *DIRNAME*"
-msgstr ""
+msgstr "``--epub-subdirectory=``\\ *DIRNAME*"
 
 #: ../../users-guide.rst:1024
 msgid ""
@@ -2111,10 +2136,12 @@ msgid ""
 "specific contents. The default is ``EPUB``. To put the EPUB contents in the "
 "top level, use an empty string."
 msgstr ""
+"EPUBに固有のコンテンツを含むOCFコンテナのサブディレクトリを指定します。デフォルトは ``EPUB`` です。 "
+"EPUBのコンテンツを最上位に配置したい場合は、空の文字列を使用してください。"
 
 #: ../../users-guide.rst:1033
 msgid "``--ipynb-output=all|none|best``"
-msgstr ""
+msgstr "``--ipynb-output=all|none|best``"
 
 #: ../../users-guide.rst:1029
 msgid ""
@@ -2124,10 +2151,14 @@ msgid ""
 "pick the richest data block in each output cell that is compatible with the "
 "output format. The default is ``best``."
 msgstr ""
+"入力されたipynbファイルにおける出力セルの処理方法を決定します。 ``all`` を指定すると、元ファイルに含まれるデータ形式がすべて保持されます。"
+" ``none`` を指定すると、データセルの内容が省略されます。 ``best`` "
+"を指定すると、Pandocは、それぞれの出力セルに対して、出力形式と互換性のある最もリッチな表現を可能とするデータブロックを選択しようとします。デフォルトは"
+" ``best`` です。"
 
 #: ../../users-guide.rst:1040
 msgid "``--pdf-engine=``\\ *PROGRAM*"
-msgstr ""
+msgstr "``--pdf-engine=``\\ *PROGRAM*"
 
 #: ../../users-guide.rst:1036
 msgid ""
@@ -2137,6 +2168,9 @@ msgid ""
 "The default is ``pdflatex``. If the engine is not in your PATH, the full "
 "path of the engine may be specified here."
 msgstr ""
+"PDFを生成する際に、LaTeXエンジンを指定します。指定可能な値は、 ``pdflatex`` , ``lualatex`` , ``xelatex`` , ``latexmk`` , ``tectonic`` , ``wkhtmltopdf`` , ``weasyprint`` , ``prince`` , ``context`` , および ``pdfroff`` です。既定値は `` pdflatex`` です。指定したLaTeXエンジンがPATHにない場合、そのエンジンのフルパスを指定することもできます。\n"
+"\n"
+"訳注: 日本語のPDF文書を生成する際は、 ``lualatex`` の指定が推奨されます。`メモ: Pandoc+LaTeXで気軽に日本語PDFを出力する - Qiita <https://qiita.com/sky_y/items/15bf7737f4b37da50372>`"
 
 #: ../../users-guide.rst:1047
 msgid "``--pdf-engine-opt=``\\ *STRING*"
@@ -2149,10 +2183,13 @@ msgid ""
 "auxiliary files, use ``--pdf-engine-opt=-outdir=foo``. Note that no check "
 "for duplicate options is done."
 msgstr ""
+"``pdf-engine`` に対するコマンドライン引数を与えます。たとえば ``latexmk`` "
+"の補助ファイルを保存するためのディレクトリを指定するには ``--pdf-engine-opt=-outdir=foo`` "
+"と指定します。注意：オプション引数の重複チェックは行いません。"
 
 #: ../../users-guide.rst:1050
 msgid "Citation rendering"
-msgstr ""
+msgstr "引用文献の生成"
 
 #: ../../users-guide.rst:1060
 msgid "``--bibliography=``\\ *FILE*"
@@ -2168,10 +2205,15 @@ msgid ""
 "``--metadata bibliography=FILE``. If you supply this argument multiple "
 "times, each *FILE* will be added to bibliography."
 msgstr ""
+"文書中のメタデータ ``bibliography`` を *FILE* で上書きし、 ``pandoc-citeproc`` "
+"を用いて引用文献を処理します (これは ``--metadata bibliography=FILE --filter pandoc-"
+"citeproc`` と等価です)。 `` --natbib`` もしくは `` --biblatex`` が指定されている場合、 ``pandoc-"
+"citeproc`` が使用されず、 `` --metadata bibliography = FILE`` "
+"という設定と等価になります。この引数が複数回指定された場合、それぞれの *FILE* が引用文献に追加されます。"
 
 #: ../../users-guide.rst:1066
 msgid "``--csl=``\\ *FILE*"
-msgstr ""
+msgstr "``--csl=``\\ *FILE*"
 
 #: ../../users-guide.rst:1063
 msgid ""
@@ -2179,6 +2221,8 @@ msgid ""
 "value set in the metadata. (This is equivalent to ``--metadata csl=FILE``.) "
 "This option is only relevant with ``pandoc-citeproc``."
 msgstr ""
+"文書中のメタデータ ``csl`` を*FILE* で上書きします (これは ``--metadata csl=FILE`` "
+"と等価です)。このオプションは、 ``pandoc-citeproc`` のみに影響します。"
 
 #: ../../users-guide.rst:1072
 msgid "``--citation-abbreviations=``\\ *FILE*"
@@ -2191,6 +2235,8 @@ msgid ""
 "``--metadata citation-abbreviations=FILE``.) This option is only relevant "
 "with ``pandoc-citeproc``."
 msgstr ""
+"文書中のメタデータ ``citation-abbreviations`` を*FILE* で上書きします (これは ``--metadata "
+"citation-abbreviations=FILE`` と等価です)。このオプションは、 ``pandoc-citeproc`` のみに影響します。"
 
 #: ../../users-guide.rst:1078
 msgid "``--natbib``"
@@ -2202,10 +2248,13 @@ msgid ""
 "with the ``pandoc-citeproc`` filter or with PDF output. It is intended for "
 "use in producing a LaTeX file that can be processed with ```bibtex```_."
 msgstr ""
+"LaTeX出力の際、 ```natbib```_ を引用に利用します。このオプションは、 ```bibtex```_ "
+"で処理するLaTeXファイルを生成するために用いることを想定しており、 ``pandoc-citeproc`` "
+"フィルタやPDF出力とともに用いるものではありません。"
 
 #: ../../users-guide.rst:1084
 msgid "``--biblatex``"
-msgstr ""
+msgstr "``--biblatex``"
 
 #: ../../users-guide.rst:1081
 msgid ""
@@ -2214,10 +2263,13 @@ msgid ""
 "for use in producing a LaTeX file that can be processed with ```bibtex```_ "
 "or ```biber```_."
 msgstr ""
+"LaTeX出力の際、 ```biblatex```_ を引用に利用します。このオプションは、 ```bibtex```_ もしくは "
+"```biber```_ で処理するLaTeXファイルを生成するために用いることを想定しており、 ``pandoc-citeproc`` "
+"フィルタやPDF出力とともに用いるものではありません。"
 
 #: ../../users-guide.rst:1087
 msgid "Math rendering in HTML"
-msgstr ""
+msgstr "HTMLにおける数式の生成"
 
 #: ../../users-guide.rst:1089
 msgid ""
@@ -2227,10 +2279,14 @@ msgid ""
 "However, this gives acceptable results only for basic math, usually you will"
 " want to use ``--mathjax`` or another of the following options."
 msgstr ""
+"デフォルトでは、可能な限りUnicode文字を用いてTeX数式を生成します。数式は、 ``class = \"math\"`` としてクラス指定された "
+"``span`` "
+"タグ内に置かれます。このため、必要に応じて、数式をそれ以外のテキストとは異なるスタイルにすることができます。ただし、この方法によって妥当な数式が生成されるのは、基本的な数式においてのみであり、通常は"
+" ``--mathjax`` もしくは次のオプションのいずれかを使用するのが好ましいです。"
 
 #: ../../users-guide.rst:1101
 msgid "``--mathjax``\\ [``=``\\ *URL*]"
-msgstr ""
+msgstr "``--mathjax``\\ [``=``\\ *URL*]"
 
 #: ../../users-guide.rst:1096
 msgid ""
@@ -2241,10 +2297,15 @@ msgid ""
 " script. If a *URL* is not provided, a link to the Cloudflare CDN will be "
 "inserted."
 msgstr ""
+"HTML出力に埋め込まれたTeX数式を、 `MathJax`_ を用いて表示します。 TeX数式は、インライン数式モードの場合は ``\\(`` と "
+"``\\)`` の間に、ディスプレイ数式モードの場合は ``\\[`` と ``\\]`` の間に置かれ、さらにそれらが ``math`` "
+"クラスが指定された ``<span>`` タグ内に置かれます。これはその後、MathJax JavaScriptによって数式表示されます。 *URL* "
+"には、 ``MathJax.js`` のスクリプトを呼び出すサーバを指定する必要があります。 *URL*が指定されていない場合、Cloudflare "
+"CDNへのリンクが挿入されます。"
 
 #: ../../users-guide.rst:1107
 msgid "``--mathml``"
-msgstr ""
+msgstr "``--mathml``"
 
 #: ../../users-guide.rst:1104
 msgid ""
@@ -2253,10 +2314,14 @@ msgid ""
 "Note that currently only Firefox and Safari (and select e-book readers) "
 "natively support MathML."
 msgstr ""
+"``epub3`` 、``docbook4`` 、 ``docbook5``、``jats`` 、 ``html4`` および ``html5`` "
+"において、TeX数式を `MathML`_ に変換します。これは、 ``odt`` "
+"出力におけるデフォルトです。現在のところ、MathMLをネイティブでサポートしているのは、FirefoxとSafari (および一部の電子書籍リーダー)"
+" のみであることに注意してください。"
 
 #: ../../users-guide.rst:1119
 msgid "``--webtex``\\ [``=``\\ *URL*]"
-msgstr ""
+msgstr "``--webtex``\\ [``=``\\ *URL*]"
 
 #: ../../users-guide.rst:1110
 msgid ""
@@ -2272,7 +2337,7 @@ msgstr ""
 
 #: ../../users-guide.rst:1125
 msgid "``--katex``\\ [``=``\\ *URL*]"
-msgstr ""
+msgstr "``--katex``\\ [``=``\\ *URL*]"
 
 #: ../../users-guide.rst:1122
 msgid ""
@@ -2281,10 +2346,14 @@ msgid ""
 "``katex.min.js`` and a ``katex.min.css`` file. If a *URL* is not provided, a"
 " link to the KaTeX CDN will be inserted."
 msgstr ""
+"`KaTeX`_ を使用して、埋め込みTeX数式をHTML出力に表示します。 *URL* "
+"は、KaTeXライブラリのURLを指定します。指定したKaTeXライブラリディレクトリには、 ``katex.min.js`` と "
+"``katex.min.css`` ファイルが含まれている必要があります。 *URL* が与えられていない場合、KaTeX "
+"CDNへのリンクが挿入されます。"
 
 #: ../../users-guide.rst:1137
 msgid "``--gladtex``"
-msgstr ""
+msgstr "``--gladtex``"
 
 #: ../../users-guide.rst:1128
 msgid ""
@@ -2295,11 +2364,11 @@ msgstr ""
 
 #: ../../users-guide.rst:1140
 msgid "Options for wrapper scripts"
-msgstr ""
+msgstr "ラッパースクリプト向けのオプション"
 
 #: ../../users-guide.rst:1151
 msgid "``--dump-args``"
-msgstr ""
+msgstr "``--dump-args``"
 
 #: ../../users-guide.rst:1143
 msgid ""
@@ -2312,16 +2381,22 @@ msgid ""
 "arguments, but do include any options appearing after a ``--`` separator at "
 "the end of the line."
 msgstr ""
+"*標準出力*  にコマンドライン引数に関する情報を出力して終了します。このオプションは主にラッパースクリプト向けです。出力の1行目は ``-o``  "
+"オプションで指定される出力ファイル名、もしくは出力ファイルが指定されていない場合の ``-`` (*標準出力*) です。残りの行はコマンドライン引数 "
+"(訳注: 入力ファイル) が1行ごとに引数が出現した順に並びます。通常のPandocオプションとそのパラメータは含まれません。コマンド行の末尾に "
+"``--`` セパレータを付けたときは、その後続のオプションは必ず含まれます。"
 
 #: ../../users-guide.rst:1165
 msgid "``--ignore-args``"
-msgstr ""
+msgstr "``--ignore-args``"
 
 #: ../../users-guide.rst:1154
 msgid ""
 "Ignore command-line arguments (for use in wrapper scripts). Regular pandoc "
 "options are not ignored. Thus, for example,"
 msgstr ""
+"コマンドライン引数 (訳注: 入力ファイル) "
+"を無視します。ラッパースクリプト向け。通常のPandocオプションは無視されます。つまり次のようになります："
 
 #: ../../users-guide.rst:1168
 msgid "Templates"
@@ -3205,93 +3280,96 @@ msgstr ""
 
 #: ../../users-guide.rst:1579
 msgid "``footer-html``, ``header-html``"
-msgstr ""
+msgstr "``footer-html`` と ``header-html``"
 
 #: ../../users-guide.rst:1580
 msgid "add information to the header and footer"
-msgstr ""
+msgstr "ヘッダとフッタに情報を付け加える"
 
 #: ../../users-guide.rst:1582
 msgid "set the page margins"
-msgstr ""
+msgstr "用紙の余白を設定する"
 
 #: ../../users-guide.rst:1584
 msgid "sets the PDF paper size"
-msgstr ""
+msgstr "用紙のサイズを設定する"
 
 #: ../../users-guide.rst:1587
 msgid "Variables for man pages"
-msgstr ""
+msgstr "manページ用の変数"
 
 #: ../../users-guide.rst:1590
 msgid "``adjusting``"
-msgstr ""
+msgstr "``adjusting``"
 
 #: ../../users-guide.rst:1590
 msgid ""
 "adjusts text to left (``l``), right (``r``), center (``c``), or both (``b``)"
 " margins"
-msgstr ""
+msgstr "テキストを左揃え(``l``)、右揃え(``r``)、中央揃え(``c``)、もしくは両端揃え(``b``)にする"
 
 #: ../../users-guide.rst:1592
 msgid "``footer``"
-msgstr ""
+msgstr "``footer``"
 
 #: ../../users-guide.rst:1593
 msgid "footer in man pages"
-msgstr ""
+msgstr "manページにおけるフッタ"
 
 #: ../../users-guide.rst:1594
 msgid "``header``"
-msgstr ""
+msgstr "``header``"
 
 #: ../../users-guide.rst:1595
 msgid "header in man pages"
-msgstr ""
+msgstr "manページにおけるヘッダ"
 
 #: ../../users-guide.rst:1596
 msgid "``hyphenate``"
-msgstr ""
+msgstr "``hyphenate``"
 
 #: ../../users-guide.rst:1597
 msgid "if ``true`` (the default), hyphenation will be used"
-msgstr ""
+msgstr "``true`` の場合(デフォルト)、ハイフネーションによる分綴を行う"
 
 #: ../../users-guide.rst:1599 ../../users-guide.rst:1846
 msgid "``section``"
-msgstr ""
+msgstr "``section``"
 
 #: ../../users-guide.rst:1599
 msgid "section number in man pages"
-msgstr ""
+msgstr "manページにおけるセクション数"
 
 #: ../../users-guide.rst:1602
 msgid "Variables for ms"
-msgstr ""
+msgstr "roff ms用の変数"
 
 #: ../../users-guide.rst:1605
 msgid "font family (e.g. ``T`` or ``P``)"
 msgstr ""
+"フォントファミリー (例: ``T`` や ``P`` など)\n"
+"\n"
+"(訳注: 利用可能なフォントは、一般的に ``/usr/share/groff/<version>/font`` ディレクトリ中にある。)"
 
 #: ../../users-guide.rst:1607
 msgid "paragraph indent (e.g. ``2m``)"
-msgstr ""
+msgstr "パラグラフのインデント (例: ``2m``)"
 
 #: ../../users-guide.rst:1608
 msgid "``lineheight``"
-msgstr ""
+msgstr "``lineheight``"
 
 #: ../../users-guide.rst:1609
 msgid "line height (e.g. ``12p``)"
-msgstr ""
+msgstr "行の高さ (例: ``12p``)"
 
 #: ../../users-guide.rst:1611
 msgid "``pointsize``"
-msgstr ""
+msgstr "``pointsize``"
 
 #: ../../users-guide.rst:1611
 msgid "point size (e.g. ``10p``)"
-msgstr ""
+msgstr "文字サイズ (例: ``10p``)"
 
 #: ../../users-guide.rst:1614
 msgid "Structural variables"
@@ -3303,6 +3381,8 @@ msgid ""
 "document contents; users can also modify them. These vary depending on the "
 "output format, and include the following:"
 msgstr ""
+"Pandocは、`options`_ "
+"もしくは文書の内容に応じて、以下の変数を自動的に設定します。ユーザはそれらの変数を変更することもできます。自動的に設定される変数には以下の変数が含まれ、出力形式によって使われる変数は異なります:"
 
 #: ../../users-guide.rst:1620
 msgid "``body``"
@@ -3314,7 +3394,7 @@ msgstr "文書の本文(body)"
 
 #: ../../users-guide.rst:1629
 msgid "``date-meta``"
-msgstr ""
+msgstr "``date-meta``"
 
 #: ../../users-guide.rst:1623
 msgid ""
@@ -3326,6 +3406,12 @@ msgid ""
 " ``April 02, 2018),``\\ yyyy[mm[dd]]]\\ ``(e.g.``\\ 20180402, ``201804`` or "
 "``2018``)."
 msgstr ""
+"``date`` 変数は、HTMLベースのフォーマット (dzslides, epub, html, html4, html5, revealjs, "
+"s5, slideous, slidy) において、ISO 8601形式である YYYY-MM-DD に変換されます。 ``date`` "
+"変数として、次の形式が認識されます: ``mm/dd/yyyy``, ``mm/dd/yy``, ``yyyy-mm-dd`` (ISO "
+"8601形式), ``dd MM yyyy`` (例: ``02 Apr 2018`` もしくは ``02 April 2018`` ), ``MM "
+"dd, yyyy`` (例: ``Apr. 02, 2018`` もしくは ``April 02, 2018``), ``\\ "
+"yyyy[mm[dd]]\\ `` (例: ``\\ 20180402``, ``201804`` もしくは ``2018`` )"
 
 #: ../../users-guide.rst:1632
 msgid "``header-includes``"
@@ -3334,7 +3420,7 @@ msgstr "``header-includes``"
 #: ../../users-guide.rst:1632
 msgid ""
 "contents specified by ``-H/--include-in-header`` (may have multiple values)"
-msgstr ""
+msgstr " ``-H/--include-in-header`` によって指定される内容 (複数の値をとることがあります)"
 
 #: ../../users-guide.rst:1635
 msgid "``include-before``"
@@ -3344,7 +3430,7 @@ msgstr "``include-before``"
 msgid ""
 "contents specified by ``-B/--include-before-body`` (may have multiple "
 "values)"
-msgstr ""
+msgstr " ``-B/--include-before-body`` によって指定される内容 (複数の値をとることがあります)"
 
 #: ../../users-guide.rst:1638
 msgid "``include-after``"
@@ -3353,29 +3439,29 @@ msgstr "include-after"
 #: ../../users-guide.rst:1638
 msgid ""
 "contents specified by ``-A/--include-after-body`` (may have multiple values)"
-msgstr ""
+msgstr " ``-B/--include-after-body`` によって指定される内容 (複数の値をとることがあります)"
 
 #: ../../users-guide.rst:1641
 msgid "``meta-json``"
-msgstr ""
+msgstr "``meta-json``"
 
 #: ../../users-guide.rst:1641
 msgid ""
 "JSON representation of all of the document’s metadata. Field values are "
 "transformed to the selected output format."
-msgstr ""
+msgstr "文書中の全てのメタデータのJSON表現。フィールドの値は、選択した出力形式に変換されます。"
 
 #: ../../users-guide.rst:1643
 msgid "``numbersections``"
-msgstr ""
+msgstr "``numbersections``"
 
 #: ../../users-guide.rst:1644
 msgid "non-null value if ``-N/--number-sections`` was specified"
-msgstr ""
+msgstr "``-N/--number-sections`` が指定されていた場合、非ヌルの値"
 
 #: ../../users-guide.rst:1662
 msgid "``sourcefile``, ``outputfile``"
-msgstr ""
+msgstr "``sourcefile``, ``outputfile``"
 
 #: ../../users-guide.rst:1646
 msgid ""
@@ -3384,10 +3470,12 @@ msgid ""
 "empty if input is from stdin. You can use the following snippet in your "
 "template to distinguish them:"
 msgstr ""
+"コマンドラインから与えられる入力および出力ファイル名。 ``sourcefile`` "
+"は複数ファイルの場合に配列となり、標準入力の場合に空になります。ユーザがテンプレート内でこれらを区別するために、次のスニペットを利用できます："
 
 #: ../../users-guide.rst:1661
 msgid "Similarly, ``outputfile`` can be ``-`` if output goes to the terminal."
-msgstr ""
+msgstr "同様に ``outputfile`` は標準出力の場合に ``-`` となります。"
 
 #: ../../users-guide.rst:1665
 msgid "non-null value if ``--toc/--table-of-contents`` was specified"
@@ -3413,18 +3501,21 @@ msgid ""
 "with a letter. A variable name surrounded by ``$`` signs will be replaced by"
 " its value. For example, the string ``$title$`` in"
 msgstr ""
+"変数名に使用できる文字は、英数字、 ``-`` (ハイフン)、および ``_`` "
+"(アンダースコア)であり、変数名は、一文字目が英字で始まる文字列である必要があります。 ``$`` "
+"記号によって囲まれた変数名は、その値で置換されます。例えば、 ``$title$`` は、"
 
 #: ../../users-guide.rst:1681
 msgid "will be replaced by the document title."
-msgstr ""
+msgstr "文書のタイトルで置換されます。"
 
 #: ../../users-guide.rst:1683
 msgid "To write a literal ``$`` in a template, use ``$$``."
-msgstr ""
+msgstr "リテラル ``$`` をテンプレートで使用したい場合は、 ``$$`` を使ってください。"
 
 #: ../../users-guide.rst:1685
 msgid "Templates may contain conditionals. The syntax is as follows:"
-msgstr ""
+msgstr "テンプレートは、条件分岐を含めることができます。条件分岐の構文は以下のとおりです:"
 
 #: ../../users-guide.rst:1695
 msgid ""
@@ -3432,22 +3523,24 @@ msgid ""
 "otherwise it will include ``Y``. Here a truthy value is any of the "
 "following:"
 msgstr ""
+"この例の場合、 ``variable`` が truthy な値の場合、テンプレートは ``X`` をインクルードし、そうでない場合は ``Y`` "
+"をインクルードします。truthy な値とは、以下のいずれかです:"
 
 #: ../../users-guide.rst:1699
 msgid "a string that is not entirely white space,"
-msgstr ""
+msgstr "空白文字のみからなる文字列以外のあらゆる文字列"
 
 #: ../../users-guide.rst:1700
 msgid "a non-empty array where the first value is truthy,"
-msgstr ""
+msgstr "最初の値が truthy な空でない配列"
 
 #: ../../users-guide.rst:1701
 msgid "any number (including zero),"
-msgstr ""
+msgstr "(ゼロを含む) すべての数値"
 
 #: ../../users-guide.rst:1702
 msgid "any object,"
-msgstr ""
+msgstr "すべてのオブジェクト"
 
 #: ../../users-guide.rst:1703
 msgid ""
@@ -3505,17 +3598,17 @@ msgstr ""
 msgid ""
 "Templates may contain comments: anything on a line after ``$--`` will be "
 "treated as a comment and ignored."
-msgstr ""
+msgstr "テンプレートでは、コメントが使用できます。 ``$--`` から始まるあらゆる行は、コメントとして処理されて無視されます。"
 
 #: ../../users-guide.rst:1751
 msgid "Extensions"
-msgstr ""
+msgstr "拡張"
 
 #: ../../users-guide.rst:1753
 msgid ""
 "The behavior of some of the readers and writers can be adjusted by enabling "
 "or disabling various extensions."
-msgstr ""
+msgstr "ReaderとWriterの動作の一部は、さまざまな拡張を有効もしくは無効にすることで調整できます。"
 
 #: ../../users-guide.rst:1756
 msgid ""
@@ -3525,6 +3618,11 @@ msgid ""
 " ``--from markdown-footnotes-pipe_tables`` is pandoc’s Markdown without "
 "footnotes or pipe tables."
 msgstr ""
+"拡張機能を有効にするには、ファイル形式に ``+EXTENSION`` を追加し、無効にするときは 、 ``-EXTENSION`` "
+"を追加します。たとえば、 ``--from markdown_strict+footnotes`` は、オリジナルのMarkdown "
+"(``markdown_strict``) 形式にfootnotes拡張を有効にしたものを意味し、 ``--from markdown-"
+"footnotes-pipe_tables`` は、Pandoc "
+"Markdown形式から、footnotes拡張とpipe_tables拡張を無効にしたものを意味しています。"
 
 #: ../../users-guide.rst:1762
 msgid ""
@@ -3533,6 +3631,9 @@ msgid ""
 "Markdown`_ below (See `Markdown variants`_ for ``commonmark`` and ``gfm``.) "
 "In the following, extensions that also work for other formats are covered."
 msgstr ""
+"Markdown ReaderおよびWriterは、拡張を最も使用しています。そのような拡張は、下記の `Pandoc’s Markdown`_ "
+"セクションで網羅されます (``commonmark`` と ``gfm`` については `Markdown variants`_ も参照) "
+"。次に説明する拡張は、他の形式でも利用できるものを含みます。"
 
 #: ../../users-guide.rst:1768
 msgid ""
@@ -3540,10 +3641,12 @@ msgid ""
 "cells in Jupyter notebooks (as do command-line options like ``--atx-"
 "headers``)."
 msgstr ""
+"注意： ``ipynb`` 形式に対するMarkdown拡張は、Jupyter notebooksのMarkdownセルに対して影響を与えます "
+"(``--atx-headers`` のようなコマンドラインオプションも同様)。"
 
 #: ../../users-guide.rst:1773
 msgid "Typography"
-msgstr ""
+msgstr "タイポグラフィ"
 
 #: ../../users-guide.rst:1778
 msgid ""
@@ -3551,6 +3654,9 @@ msgid ""
 "en-dashes, and ``...`` as ellipses. Nonbreaking spaces are inserted after "
 "certain abbreviations, such as “Mr.”"
 msgstr ""
+"直線形の引用符( ``'...'`` や ``\"...\"`` )を曲線形の引用符 (``‘...’`` や ``“...”``)に、 ``---``"
+" を emダッシュ (``—``)に、``--`` を enダッシュ (``–``)に、そして ``...`` を三点リーダー "
+"(``…``)に変換します。また、“Mr.” などの省略語の直後にノーブレークスペースを挿入します。"
 
 #: ../../users-guide.rst:1782 ../../users-guide.rst:1814
 #: ../../users-guide.rst:1973 ../../users-guide.rst:2040
@@ -3561,37 +3667,41 @@ msgstr "この拡張は、下記の形式について有効/無効を切り替�
 #: ../../users-guide.rst:1930 ../../users-guide.rst:1975
 #: ../../users-guide.rst:2042 ../../users-guide.rst:2058
 msgid "input formats"
-msgstr ""
+msgstr "入力フォーマット"
 
 #: ../../users-guide.rst:1785
 msgid ""
 "``markdown``, ``commonmark``, ``latex``, ``mediawiki``, ``org``, ``rst``, "
 "``twiki``"
 msgstr ""
+"``markdown``, ``commonmark``, ``latex``, ``mediawiki``, ``org``, ``rst``, "
+"``twiki``"
 
 #: ../../users-guide.rst:1787 ../../users-guide.rst:1818
 #: ../../users-guide.rst:1933 ../../users-guide.rst:1978
 #: ../../users-guide.rst:2045
 msgid "output formats"
-msgstr ""
+msgstr "出力フォーマット"
 
 #: ../../users-guide.rst:1788
 msgid "``markdown``, ``latex``, ``context``, ``rst``"
-msgstr ""
+msgstr "``markdown``, ``latex``, ``context``, ``rst``"
 
 #: ../../users-guide.rst:1790 ../../users-guide.rst:1821
 msgid "enabled by default in"
-msgstr ""
+msgstr "デフォルトで有効になっているフォーマット"
 
 #: ../../users-guide.rst:1790
 msgid "``markdown``, ``latex``, ``context`` (both input and output)"
-msgstr ""
+msgstr "``markdown``, ``latex``, ``context`` (入出力の両方で有効)"
 
 #: ../../users-guide.rst:1792
 msgid ""
 "Note: If you are *writing* Markdown, then the ``smart`` extension has the "
 "reverse effect: what would have been curly quotes comes out straight."
 msgstr ""
+"注意: Markdownを入力フォーマットにする場合、 ``smart`` "
+"拡張は、これとは逆の効果をもたらします。たとえば曲線形の引用符が直線形に変換されます。"
 
 #: ../../users-guide.rst:1796
 msgid ""
@@ -3603,118 +3713,124 @@ msgid ""
 "pandoc to use the ligatures when possible; if ``smart`` is disabled pandoc "
 "will use unicode quotation mark and dash characters."
 msgstr ""
+"LaTeXにおいて ``smart`` はTeXにおける標準的な合字の使用を意味します。つまりクォーテーションマーク (ダブルクォートの "
+":literal:`\\`\\`` と ``''`` 、シングルクォートの :literal:`\\`` と ``'``) およびダッシュ "
+"(enダッシュ ``--`` と emダッシュ ``---``) を利用します。 ``smart`` "
+"が無効の場合は、PandocはLaTeX入力において文字通りに解釈します。LaTeX出力において ``smart`` "
+"を有効にした場合は、Pandocは可能な限りTeXの合字を利用します。 ``smart`` "
+"が無効の場合はUnicodeのクォーテーション文字およびダッシュ文字を利用します。"
 
 #: ../../users-guide.rst:1806
 msgid "Headings and sections"
-msgstr ""
+msgstr "見出しと章"
 
 #: ../../users-guide.rst:1811
 msgid ""
 "A heading without an explicitly specified identifier will be automatically "
 "assigned a unique identifier based on the heading text."
-msgstr ""
+msgstr "識別子が明示的に指定されていない見出しには、自動的に見出しのテキストに基づいたユニークな識別子が割り当てられます。"
 
 #: ../../users-guide.rst:1817
 msgid "``markdown``, ``latex``, ``rst``, ``mediawiki``, ``textile``"
-msgstr ""
+msgstr "``markdown``, ``latex``, ``rst``, ``mediawiki``, ``textile``"
 
 #: ../../users-guide.rst:1819 ../../users-guide.rst:1821
 msgid "``markdown``, ``muse``"
-msgstr ""
+msgstr "``markdown``, ``muse``"
 
 #: ../../users-guide.rst:1823
 msgid ""
 "The default algorithm used to derive the identifier from the heading text "
 "is:"
-msgstr ""
+msgstr "見出しのテキストから識別子を作成する際に用いられるデフォルトのアルゴリズムは次のとおりです:"
 
 #: ../../users-guide.rst:1826
 msgid "Remove all formatting, links, etc."
-msgstr ""
+msgstr "すべての修飾やリンクなどを削除する"
 
 #: ../../users-guide.rst:1827
 msgid "Remove all footnotes."
-msgstr ""
+msgstr "すべての脚注を削除する"
 
 #: ../../users-guide.rst:1828
 msgid ""
 "Remove all non-alphanumeric characters, except underscores, hyphens, and "
 "periods."
-msgstr ""
+msgstr "アンダーバー、ハイフン、ピリオドを除く「英数字ではない文字」を削除する"
 
 #: ../../users-guide.rst:1830
 msgid "Replace all spaces and newlines with hyphens."
-msgstr ""
+msgstr "すべての空白と改行をハイフンで置換する"
 
 #: ../../users-guide.rst:1831
 msgid "Convert all alphabetic characters to lowercase."
-msgstr ""
+msgstr "すべてのアルファベットを小文字に変換する"
 
 #: ../../users-guide.rst:1832
 msgid ""
 "Remove everything up to the first letter (identifiers may not begin with a "
 "number or punctuation mark)."
-msgstr ""
+msgstr "テキストのはじまりが英字になるまで文頭の数字や句読点を除く(識別子は数字や句読点で始まることができないため)"
 
 #: ../../users-guide.rst:1834
 msgid "If nothing is left after this, use the identifier ``section``."
-msgstr ""
+msgstr "何も残らなかった場合は、 ``section`` を識別子として用いる"
 
 #: ../../users-guide.rst:1836
 msgid "Thus, for example,"
-msgstr ""
+msgstr "このアルゴリズムに従うと、例えば以下のような見出しと識別子の対応が得られます:"
 
 #: ../../users-guide.rst:1839
 msgid "Heading"
-msgstr ""
+msgstr "見出し"
 
 #: ../../users-guide.rst:1839
 msgid "Identifier"
-msgstr ""
+msgstr "識別子"
 
 #: ../../users-guide.rst:1841
 msgid "``Heading identifiers in HTML``"
-msgstr ""
+msgstr "``Heading identifiers in HTML``"
 
 #: ../../users-guide.rst:1841
 msgid "``heading-identifiers-in-html``"
-msgstr ""
+msgstr "``heading-identifiers-in-html``"
 
 #: ../../users-guide.rst:1842
 msgid "``Maître d'hôtel``"
-msgstr ""
+msgstr "``Maître d'hôtel``"
 
 #: ../../users-guide.rst:1842
 msgid "``maître-dhôtel``"
-msgstr ""
+msgstr "``maître-dhôtel``"
 
 #: ../../users-guide.rst:1843
 msgid "``*Dogs*?--in *my* house?``"
-msgstr ""
+msgstr "``*Dogs*?--in *my* house?``"
 
 #: ../../users-guide.rst:1843
 msgid "``dogs--in-my-house``"
-msgstr ""
+msgstr "``dogs--in-my-house``"
 
 #: ../../users-guide.rst:1844
 msgid "``[HTML], [S5], or [RTF]?``"
-msgstr ""
+msgstr "``[HTML], [S5], or [RTF]?``"
 
 #: ../../users-guide.rst:1844
 msgid "``html-s5-or-rtf``"
-msgstr ""
+msgstr "``html-s5-or-rtf``"
 
 #: ../../users-guide.rst:1845
 msgid "``3. Applications``"
-msgstr ""
+msgstr "``3. Applications``"
 
 #: ../../users-guide.rst:1845
 msgid "``applications``"
-msgstr ""
+msgstr "``applications``"
 
 #: ../../users-guide.rst:1846
 msgid "``33``"
-msgstr ""
+msgstr "``33``"
 
 #: ../../users-guide.rst:1849
 msgid ""
@@ -3724,12 +3840,15 @@ msgid ""
 " second will get the same identifier with ``-1`` appended; the third with "
 "``-2``; and so on."
 msgstr ""
+"ほとんどの場合、上述したアルゴリズムによって見出しのテキストから識別子を決定できます。例外は、同一のテキストが複数の見出しに使われている場合です。この場合、一番はじめの見出しが、上記のアルゴリズムによって決められた識別子を取得します。2つめの見出しは、"
+" ``-1`` が末尾に追加された同じ識別子を取得します。このようにして、3つめ以降の見出しも ``-2``, ``-3`` "
+"...が追加された識別子が与えられます。"
 
 #: ../../users-guide.rst:1855
 msgid ""
 "(However, a different algorithm is used if ``gfm_auto_identifiers`` is "
 "enabled; see below.)"
-msgstr "（しかし、 ``gfm_auto_identifiers`` を有効にした場合、異なるアルゴリズムが使われます。下記を参照してください）"
+msgstr "（ただし、 ``gfm_auto_identifiers`` を有効にした場合、異なるアルゴリズムが使われます。下記を参照してください）"
 
 #: ../../users-guide.rst:1858
 msgid ""
@@ -3738,12 +3857,14 @@ msgid ""
 "easy to provide links from one section of a document to another. A link to "
 "this section, for example, might look like this:"
 msgstr ""
+"これらの識別子は、 ``--toc|--table-of-contents`` "
+"オプションを有効にしたときに作成される目次のリンクに用いられます。異なる文書中のセクションへのリンクを作成するときにも便利です。たとえば、このセクションへのリンクは次のようになります:"
 
 #: ../../users-guide.rst:1868
 msgid ""
 "Note, however, that this method of providing links to sections works only in"
 " HTML, LaTeX, and ConTeXt formats."
-msgstr ""
+msgstr "ただし、セクションへのリンクを張るこの方法は、HTML、LaTeX、およびConTeXt形式でのみ機能することに注意してください。"
 
 #: ../../users-guide.rst:1871
 msgid ""
@@ -3753,6 +3874,9 @@ msgid ""
 "tag rather than the heading itself. This allows entire sections to be "
 "manipulated using JavaScript or treated differently in CSS."
 msgstr ""
+"``--section-divs`` オプションが指定された場合、それぞれのセクションは ``section`` (``html4`` 形式の場合は "
+"``div``) で囲まれます。その見出しの識別子は、見出しそのものではなく外側の ``<section>`` (または ``<div>``) "
+"タグに付与されます。これによりすべてのセクションをJavaScriptで操作したり、CSSで個別に取り扱えたりできます。"
 
 #: ../../users-guide.rst:1881
 msgid ""
@@ -3760,6 +3884,8 @@ msgid ""
 "Accents are stripped off of accented Latin letters, and non-Latin letters "
 "are omitted."
 msgstr ""
+"``auto_identifiers`` "
+"によって生成される識別子を、純粋なASCII文字にします。すなわち、アクセント付きラテン文字からアクセントを取り除き、また、非ラテン文字も取り除かれます。"
 
 #: ../../users-guide.rst:1888
 msgid ""
@@ -3768,10 +3894,13 @@ msgid ""
 "lowercase characters, and punctuation characters other than ``-`` and ``_`` "
 "are removed."
 msgstr ""
+"``auto_identifiers`` "
+"によって識別子を生成するアルゴリズムを、Githubで用いられているアルゴリズムに変更します。すなわち、空白文字をハイフン (``-``) "
+"に変換し、大文字を小文字に変換し、``-`` と ``_`` 以外の記号文字を取り除きます。"
 
 #: ../../users-guide.rst:1894
 msgid "Math Input"
-msgstr ""
+msgstr "数式の入力"
 
 #: ../../users-guide.rst:1896
 msgid ""
@@ -3798,12 +3927,15 @@ msgid ""
 "are also described in more detail in their respective sections of `Pandoc’s "
 "Markdown`_."
 msgstr ""
+"以下の拡張について (特にMarkdownの入出力にどのように影響するのかについて) は、 `Pandoc's Markdown`_ "
+"の対応するセクションでも詳しく説明されています。"
 
 #: ../../users-guide.rst:1915
 msgid ""
 "When converting from HTML, parse elements to raw HTML which are not "
 "representable in pandoc’s AST. By default, this is disabled for HTML input."
 msgstr ""
+"HTMLから変換する場合、PandocのASTで表現できない要素を、生のHTMLとして構文解析します。HTML形式のファイルを入力する際、デフォルトではこれは無効になっています。"
 
 #: ../../users-guide.rst:1924
 msgid "Allows raw LaTeX, TeX, and ConTeXt to be included in a document."
@@ -3820,6 +3952,8 @@ msgid ""
 "``latex``, ``org``, ``textile``, ``html`` (environments, ``\\ref``, and "
 "``\\eqref`` only), ``ipynb``"
 msgstr ""
+"``latex``, ``org``, ``textile``, ``html`` (LaTeX環境 ``\\ref``, ``\\eqref`` "
+"のみ), ``ipynb``"
 
 #: ../../users-guide.rst:1933
 msgid "``textile``, ``commonmark``"
@@ -3834,6 +3968,11 @@ msgid ""
 "disable ``raw_html`` and ``raw_tex`` when converting to formats like "
 "``docx`` which don’t allow raw ``html`` or ``tex``."
 msgstr ""
+"注意： ``ipynb``, ``raw_html`` および ``raw_tex`` "
+"形式の適用は、Markdownセル内の生のTeXだけでなく、出力セルの ``text/html`` mime type データにも影響を与えます。 "
+"``ipynb`` Readerはいくつかのオプションが与えられたときに、できるだけリッチな出力を保持しようとします。そのため ``docx`` "
+"のように生の ``html`` や ``tex`` を利用できない形式へ変換しようとする際には、よい出力結果を得るために ``raw_html`` と "
+"``raw_tex`` を無効にするとよいでしょう。"
 
 #: ../../users-guide.rst:1947
 msgid ""
@@ -3841,32 +3980,34 @@ msgid ""
 "``div``\\ s are parsed to pandoc native elements. (Alternatively, you can "
 "parse them to raw HTML using ``-f html-native_divs+raw_html``.)"
 msgstr ""
+"HTMLが入力される際、この拡張機能はデフォルトで有効です。これにより、 ``div`` はPandocのネイティブな要素として解析されます ( "
+"``-f html-native_divs+raw_html`` オプションを使用して、生のHTMLとして ``div`` を解析することも可能です)。"
 
 #: ../../users-guide.rst:1951
 msgid ""
 "When converting HTML to Markdown, for example, you may want to drop all "
 "``div``\\ s and ``span``\\ s:"
-msgstr ""
+msgstr "HTMLをMarkdownへ変換するとき、たとえば全ての ``div`` と ``span`` を取り除きたければこのようにします:"
 
 #: ../../users-guide.rst:1963
 msgid "Analogous to ``native_divs`` above."
-msgstr ""
+msgstr "上記の ``native_divs`` と類似の拡張です。"
 
 #: ../../users-guide.rst:1966
 msgid "Literate Haskell support"
-msgstr ""
+msgstr "Literate Haskellのサポート"
 
 #: ../../users-guide.rst:1971
 msgid "Treat the document as literate Haskell source."
-msgstr ""
+msgstr "文書をLiterate Haskellソースコードとして扱います。"
 
 #: ../../users-guide.rst:1976
 msgid "``markdown``, ``rst``, ``latex``"
-msgstr ""
+msgstr "``markdown``, ``rst``, ``latex``"
 
 #: ../../users-guide.rst:1978
 msgid "``markdown``, ``rst``, ``latex``, ``html``"
-msgstr ""
+msgstr "``markdown``, ``rst``, ``latex``, ``html``"
 
 #: ../../users-guide.rst:1980
 msgid ""
@@ -3874,6 +4015,8 @@ msgid ""
 "above, pandoc will treat the document as literate Haskell source. This means"
 " that"
 msgstr ""
+"上記の形式に対して ``+lhs`` (または ``+literate_haskell``) を追加した場合、Pandocは文書をLiterate "
+"Haskellソースコードと認識します。つまり次のようになります："
 
 #: ../../users-guide.rst:1984
 msgid ""
@@ -3882,6 +4025,9 @@ msgid ""
 "``\\end{code}`` will also be treated as Haskell code. For ATX-style headings"
 " the character ‘=’ will be used instead of ‘#’."
 msgstr ""
+"Markdown入力において ``>`` 記号から始まる部分は、ブロック引用ではなくHaskellコードとして解釈します。 "
+"``\\begin{code}`` と ``\\end{code}`` で挟まれた部分も同様です。ATX形式の見出しに関しては、かわりに ‘=’ "
+"が利用されます。"
 
 #: ../../users-guide.rst:1989
 msgid ""
@@ -3892,52 +4038,60 @@ msgid ""
 "style (with ‘#’ characters). (This is because ghc treats ‘#’ characters in "
 "column 1 as introducing line numbers.)"
 msgstr ""
+"Markdown出力において ``haskell`` および ``literate`` クラスが付いているコードブロックは ``>`` "
+"記号から始まる形で出力されます。ブロック引用は1つの空白でインデントされるためHaskellソースコードとして認識されない形となります。さらに見出しはATX形式"
+" (``#`` が付く) ではなくsetext形式 (下線が付く) として出力されます。(GHCは ``#`` "
+"文字を行番号の1文字目として利用するため)"
 
 #: ../../users-guide.rst:1997
 msgid ""
 "In restructured text input, “bird track” sections will be parsed as Haskell "
 "code."
-msgstr ""
+msgstr "reStructuredText入力では ``>`` 記号から始まる部分はHaskellコードとして解釈されます。"
 
 #: ../../users-guide.rst:2000
 msgid ""
 "In restructured text output, code blocks with class ``haskell`` will be "
 "rendered using bird tracks."
-msgstr ""
+msgstr "reStructuredText出力では ``haskell`` クラス付きコードブロックは ``>`` 記号を使って出力されます。"
 
 #: ../../users-guide.rst:2003
 msgid ""
 "In LaTeX input, text in ``code`` environments will be parsed as Haskell "
 "code."
-msgstr ""
+msgstr "LaTeX入力では ``code`` 環境内のテキストがHaskellコードとして解釈されます。"
 
 #: ../../users-guide.rst:2006
 msgid ""
 "In LaTeX output, code blocks with class ``haskell`` will be rendered inside "
 "``code`` environments."
-msgstr ""
+msgstr "LaTeX出力では ``haskell`` クラス付きのコードブロックが ``code`` 環境の中に出力されます。"
 
 #: ../../users-guide.rst:2009
 msgid ""
 "In HTML output, code blocks with class ``haskell`` will be rendered with "
 "class ``literatehaskell`` and bird tracks."
 msgstr ""
+"HTML出力では ``haskell`` クラス付きのコードブロックが ``>`` 記号とともに ``literatehaskell`` "
+"クラスとして出力されます。"
 
 #: ../../users-guide.rst:2012
 msgid "Examples:"
-msgstr ""
+msgstr "例:"
 
 #: ../../users-guide.rst:2018
 msgid ""
 "reads literate Haskell source formatted with Markdown conventions and writes"
 " ordinary HTML (without bird tracks)."
 msgstr ""
+"はMarkdown規約に基づいたLiterate Haskellソースコードを入力し、通常のHTML (``>`` 記号がない形) に出力します。"
 
 #: ../../users-guide.rst:2025
 msgid ""
 "writes HTML with the Haskell code in bird tracks, so it can be copied and "
 "pasted as literate Haskell source."
 msgstr ""
+"は ``>`` 記号付きのHaskellコードを含むHTMLを出力するため、Literate Haskellソースコードとしてコピー＆ペースト可能です。"
 
 #: ../../users-guide.rst:2028
 msgid ""
@@ -3945,14 +4099,16 @@ msgid ""
 "literate code blocks (e.g. inside an itemized environment) will not be "
 "picked up by the Haskell compiler."
 msgstr ""
+"注意：GHCは ``>`` 記号が1文字目にあることを期待します。したがってインデントされたLiterateコードブロック "
+"(例：箇条書きの環境内)はHaskellコンパイラに認識されません。 "
 
 #: ../../users-guide.rst:2033
 msgid "Other extensions"
-msgstr ""
+msgstr "その他の拡張"
 
 #: ../../users-guide.rst:2038
 msgid "Allows empty paragraphs. By default empty paragraphs are omitted."
-msgstr ""
+msgstr "空の段落を許します。デフォルトでは、空の段落は省略されます。"
 
 #: ../../users-guide.rst:2043
 msgid "``docx``, ``html``"
@@ -3969,6 +4125,9 @@ msgid ""
 "understands the meaning of these styles. This can be used with `docx custom "
 "styles`_. Disabled by default."
 msgstr ""
+"docx形式から変換する場合、Pandocは、docxファイル中のスタイルの意味に関係なく、すべてのdocxのスタイルをdivスタイル "
+"(docxファイル中で段落スタイルだった場合) もしくはspanスタイル (docxファイル中で文字列スタイルだった場合) として読み取ります。これは、"
+" `docx custom styles`_ と同時に使用できます。デフォルトでは無効になっています。"
 
 #: ../../users-guide.rst:2058
 msgid "``docx``"
@@ -3978,13 +4137,13 @@ msgstr "``docx``"
 msgid ""
 "In the ``muse`` input format, this enables Text::Amuse extensions to Emacs "
 "Muse markup."
-msgstr ""
+msgstr "``muse`` 入力形式においてEmacs MuseマークアップのText::Amuse拡張を有効にします。"
 
 #: ../../users-guide.rst:2071
 msgid ""
 "Some aspects of `Pandoc’s Markdown citation syntax`_ are also accepted in "
 "``org`` input."
-msgstr ""
+msgstr "`Pandoc’s Markdown citation syntax`_ の一部を ``org`` 形式での入力でも可能にします。"
 
 #: ../../users-guide.rst:2077
 msgid ""
@@ -3993,6 +4152,9 @@ msgid ""
 " allow more fine-grained global customization but come at a performance "
 "penalty compared to extreme tables."
 msgstr ""
+"``context`` 出力形式において、既定の `Extreme Tables (xtables)`_ ではなく`Natural Tables "
+"(TABLE)`_ を利用します。Natural Tables はよりきめ細かいグローバルカスタマイズを実現しますが、Extreme "
+"Tablesに比べるとパフォーマンスに難があります。"
 
 #: ../../users-guide.rst:2083
 msgid "Pandoc’s Markdown"
@@ -4008,16 +4170,23 @@ msgid ""
 "granularly. They are described in the following. See also `Extensions`_ "
 "above, for extensions that work also on other formats."
 msgstr ""
+"Pandocは、拡張と少しの改訂が加えられたJohn Gruberの `Markdown`_ 文法を解釈します。ここでは、John "
+"GruberのMarkdown文法と、標準Markdown文法との違いについて説明します。特に注意が無い限り、 ``markdown`` "
+"フォーマットの代わりに ``markdown_strict`` "
+"フォーマットを用いることで、標準Markdown文法に従った解釈に変更できます。拡張機能を有効もしくは無効にすることで、Pandocの動作をより詳細に設定できます。以下では、Markdown形式における拡張機能について説明します。他の形式でも機能する拡張機能に関しては、上述の"
+" `Extensions`_ を参照してください。"
 
 #: ../../users-guide.rst:2095
 msgid "Philosophy"
-msgstr ""
+msgstr "哲学"
 
 #: ../../users-guide.rst:2097
 msgid ""
 "Markdown is designed to be easy to write, and, even more importantly, easy "
 "to read:"
 msgstr ""
+"Markdownは、書きやすく設計されているだけでなく、より重要なこととして、Markdownで書かれた文書をそのまま容易に読めるようにも設計されています:"
+" "
 
 #: ../../users-guide.rst:2100
 msgid ""
@@ -4025,12 +4194,14 @@ msgid ""
 "without looking like it’s been marked up with tags or formatting "
 "instructions. – `John Gruber`_"
 msgstr ""
+"Markdown形式の文書は、タグなどでマークアップされているように見えることなく、プレーンテキストとしてそのまま見せても通用するように書かれるべきである。"
+" – `John Gruber`_"
 
 #: ../../users-guide.rst:2104
 msgid ""
 "This principle has guided pandoc’s decisions in finding syntax for tables, "
 "footnotes, and other extensions."
-msgstr ""
+msgstr "この原則は、Pandocにおいて、表や脚注、その他の拡張機能についての文法を設計する上での指針となっています。"
 
 #: ../../users-guide.rst:2107
 msgid ""
@@ -4041,10 +4212,11 @@ msgid ""
 "provides other, non-HTMLish ways of representing important document elements"
 " like definition lists, tables, mathematics, and footnotes."
 msgstr ""
+"しかしながら、ある1点において、Pandocの目指すものとオリジナルのMarkdownが目指すものは異なります。Markdownは、もともとHTMLを生成するために設計されたのに対し、Pandocは、様々なフォーマットへと出力することを目的として設計されています。この目的から、Pandocでは、文書中に埋め込まれた生のHTMLを解釈することはできますが、それを推奨せず、その代わりにHTMLらしくない方法で、定義リスト、表、数式、脚注などの文章に重要な構成要素を表現します。"
 
 #: ../../users-guide.rst:2116
 msgid "Paragraphs"
-msgstr ""
+msgstr "段落"
 
 #: ../../users-guide.rst:2118
 msgid ""
@@ -4053,6 +4225,7 @@ msgid ""
 "you like. If you need a hard line break, put two or more spaces at the end "
 "of a line."
 msgstr ""
+"段落は、1行以上のテキストと、それに続く1行以上の空行からなります。単なる改行は、スペースとして扱われます。これにより、ユーザの好きなように改行を行って段落を構成することが可能です。もしも強制改行(ソフトリターン)が必要な場合は、行末に2つ以上のスペースを置いてください。"
 
 #: ../../users-guide.rst:2126
 msgid ""
@@ -4060,34 +4233,38 @@ msgid ""
 "multiline and grid table cells, this is the only way to create a hard line "
 "break, since trailing spaces in the cells are ignored."
 msgstr ""
+"改行の後にバックスラッシュを置いた場合も、強制改行として処理されます。注意: "
+"マルチラインテーブルおよびグリッドテーブルのセルでは、行末のスペースが無視されるため、これが唯一の強制改行を行う方法です。"
 
 #: ../../users-guide.rst:2131
 msgid "Headings"
-msgstr ""
+msgstr "見出し"
 
 #: ../../users-guide.rst:2133
 msgid "There are two kinds of headings: Setext and ATX."
-msgstr ""
+msgstr "Pandocでは、Setext形式とATX形式の2つの見出し記法を用いることができます。"
 
 #: ../../users-guide.rst:2136
 msgid "Setext-style headings"
-msgstr ""
+msgstr "Setext形式の見出し"
 
 #: ../../users-guide.rst:2138
 msgid ""
 "A setext-style heading is a line of text “underlined” with a row of ``=`` "
 "signs (for a level-one heading) or ``-`` signs (for a level-two heading):"
 msgstr ""
+"Setex形式では、\"下線が引かれた\"行が見出しとなります。 ``=`` 記号で下線を引くとレベル1の見出しに、 ``-`` "
+"記号で下線を引くとレベル2の見出しになります: "
 
 #: ../../users-guide.rst:2150
 msgid ""
 "The heading text can contain inline formatting, such as emphasis (see "
 "`Inline formatting`_, below)."
-msgstr ""
+msgstr "見出しとなるテキストは、強調や斜体などのインライン修飾が可能です (詳細は下記の `Inline formatting`_ を参照)。"
 
 #: ../../users-guide.rst:2154
 msgid "ATX-style headings"
-msgstr ""
+msgstr "ATX形式の見出し"
 
 #: ../../users-guide.rst:2156
 msgid ""
@@ -4095,15 +4272,17 @@ msgid ""
 "optionally followed by any number of ``#`` signs. The number of ``#`` signs "
 "at the beginning of the line is the heading level:"
 msgstr ""
+"ATX形式の見出しは、1から6個の連続した ``#`` 記号と、それに続く1行のテキストから成ります。ATX形式の見出しでは、行末に任意の数の "
+"``#`` 記号があっても構いません。行頭に置かれた ``#`` 記号の数が、見出しのレベルを決めます:"
 
 #: ../../users-guide.rst:2166
 msgid ""
 "As with setext-style headings, the heading text can contain formatting:"
-msgstr ""
+msgstr "Setext形式の見出しと同様に、ATX形式の見出しもインライン修飾が可能です: "
 
 #: ../../users-guide.rst:2173
 msgid "Extension: ``blank_before_header``"
-msgstr ""
+msgstr "拡張: ``blank_before_header``"
 
 #: ../../users-guide.rst:2175
 msgid ""
@@ -4113,10 +4292,13 @@ msgid ""
 "``#`` to end up at the beginning of a line by accident (perhaps through line"
 " wrapping). Consider, for example:"
 msgstr ""
+"標準Markdown文法では設けられていない制約ですが、Pandocでは、見出し行の前に空行が挿入される必要があります "
+"(ただし、文書のはじめの1行だけは例外です)。なぜならば、行頭に誤って ``#`` 記号を置くことがよくあるためです "
+"(行の折返し設定をしているエディタでも同様のことが起こるかもしれません)。以下の例について考えてみましょう:"
 
 #: ../../users-guide.rst:2187
 msgid "Extension: ``space_in_atx_header``"
-msgstr ""
+msgstr "拡張: ``space_in_atx_header``"
 
 #: ../../users-guide.rst:2189
 msgid ""
@@ -4125,34 +4307,38 @@ msgid ""
 "``#hashtag`` count as headings. With this extension, pandoc does require the"
 " space."
 msgstr ""
+"多くのMarkdown方言では、ATX形式の見出しにおいて、 ``#`` "
+"記号と見出しとなるテキストの間にスペースがなくても、見出しとして処理されます。しかしこれでは、 ``#5 bolt`` や ``#hashtag`` "
+"といった行も見出しとして処理されてしまいます。この拡張によって、Pandocは、 ``#`` "
+"記号と見出しとなるテキストの間にスペースがある行を見出しとして処理します。"
 
 #: ../../users-guide.rst:2195
 msgid "Heading identifiers"
-msgstr ""
+msgstr "見出しの識別子"
 
 #: ../../users-guide.rst:2197
 msgid "See also the ```auto_identifiers`` extension`_ above."
-msgstr ""
+msgstr "上述した ```auto_identifiers`` extension`_ も参照してください。"
 
 #: ../../users-guide.rst:2200
 msgid "Extension: ``header_attributes``"
-msgstr ""
+msgstr "拡張: ``header_attributes``"
 
 #: ../../users-guide.rst:2202
 msgid ""
 "Headings can be assigned attributes using this syntax at the end of the line"
 " containing the heading text:"
-msgstr ""
+msgstr "見出しのテキストを含む行の行末にこの文法を用いることで、見出しに属性をつけることができます。"
 
 #: ../../users-guide.rst:2209
 msgid ""
 "Thus, for example, the following headings will all be assigned the "
 "identifier ``foo``:"
-msgstr ""
+msgstr "例えば、以下の見出しは ``foo`` 識別子が与えられます:"
 
 #: ../../users-guide.rst:2221
 msgid "(This syntax is compatible with `PHP Markdown Extra`_.)"
-msgstr ""
+msgstr "(この文法は `PHP Markdown Extra`_ と互換性があります。)"
 
 #: ../../users-guide.rst:2223
 msgid ""
@@ -4162,6 +4348,8 @@ msgid ""
 "based formats such as EPUB and slidy. Identifiers are used for labels and "
 "link anchors in the LaTeX, ConTeXt, Textile, and AsciiDoc writers."
 msgstr ""
+"この文法は、クラスとキー/値の属性をつけることができますが、Pandoc "
+"Writerは必ずしも全ての属性を用いるわけではないことに注意してください。識別子、クラス、キー/値の属性は、HTMLおよびEPUBやslidyなどHTMLベースの形式において用いられます。Latex、ConTeXt、Textile、およびAsciiDocのWriterは、識別子をラベルとアンカー文字列に用います。"
 
 #: ../../users-guide.rst:2230
 msgid ""
@@ -4170,33 +4358,37 @@ msgid ""
 "context is equivalent to ``.unnumbered``, and preferable in non-English "
 "documents. So,"
 msgstr ""
+"``unnumbered`` クラスが付いた見出しには、たとえ ``--number-sections`` "
+"オプションが指定されていても、見出し番号が付きません。単一のハイフン ( ``-`` )が属性として用いられている場合は、 "
+"``.unnumbered`` と等価です (非英語圏の文書には、単一のハイフンによる識別子が適しています。)。よって、"
 
 #: ../../users-guide.rst:2239
 msgid "is just the same as"
-msgstr ""
+msgstr "は、以下と等価です"
 
 #: ../../users-guide.rst:2246
 msgid "Extension: ``implicit_header_references``"
-msgstr ""
+msgstr "拡張: ``implicit_header_references``"
 
 #: ../../users-guide.rst:2248
 msgid ""
 "Pandoc behaves as if reference links have been defined for each heading. So,"
 " to link to a heading"
 msgstr ""
+"Pandocは、それぞれの見出しに対して参照リンクが定義されているかのように振る舞います。そのため、以下のような識別子による明示的な見出しへのリンク"
 
 #: ../../users-guide.rst:2255
 msgid "you can simply write"
-msgstr ""
+msgstr "を、"
 
 #: ../../users-guide.rst:2261 ../../users-guide.rst:2267
 #: ../../users-guide.rst:3899 ../../users-guide.rst:4702
 msgid "or"
-msgstr ""
+msgstr "や"
 
 #: ../../users-guide.rst:2274
 msgid "instead of giving the identifier explicitly:"
-msgstr ""
+msgstr "のように、簡略化して書くことができます: "
 
 #: ../../users-guide.rst:2280
 msgid ""
@@ -4204,10 +4396,11 @@ msgid ""
 "reference will link to the first one only, and you will need to use explicit"
 " links to link to the others, as described above."
 msgstr ""
+"複数の見出しが同一のテキストからなる場合、最初の見出しに対してリンクされます。それ以外の見出しに対してリンクしたい場合は、上述したような明示的なリンクを用いる必要があります。"
 
 #: ../../users-guide.rst:2284
 msgid "Like regular reference links, these references are case-insensitive."
-msgstr ""
+msgstr "標準的な参照リンクのように、この参照は大文字・小文字を区別します。"
 
 #: ../../users-guide.rst:2286
 msgid ""
@@ -4215,10 +4408,12 @@ msgid ""
 "heading references. So, in the following example, the link will point to "
 "``bar``, not to ``#foo``:"
 msgstr ""
+"明示的な参照リンクの定義は、常に暗黙的な見出しの参照リンクよりも優先されます。そのため、以下の例では、リンクは ``#foo`` ではなく "
+"``bar``を指します:"
 
 #: ../../users-guide.rst:2299
 msgid "Block quotations"
-msgstr ""
+msgstr "引用"
 
 #: ../../users-guide.rst:2301
 msgid ""
@@ -4228,18 +4423,21 @@ msgid ""
 "space. (The ``>`` need not start at the left margin, but it should not be "
 "indented more than three spaces.)"
 msgstr ""
+"Markdownは、Eメールで慣習的に用いられてきた引用の記法を採用しています。引用は、ひとつ以上の段落もしくはブロック要素(リストや見出しなど)からなり、それらの各行は、"
+" ``>`` で始まる必要があります。 ``>``記号の直後には、1つの空白文字を入れてもかまいません。( ``>`` "
+"記号は、行頭から始まる必要はありませんが、4つ以上の空白文字によってインデントされてはなりません。)"
 
 #: ../../users-guide.rst:2315
 msgid ""
 "A “lazy” form, which requires the ``>`` character only on the first line of "
 "each block, is also allowed:"
-msgstr ""
+msgstr "簡略化したやり方(a \"\"lazy\"\" form)として、 ``>``を各ブロックの最初の行に置くだけでも引用として処理されます:"
 
 #: ../../users-guide.rst:2326
 msgid ""
 "Among the block elements that can be contained in a block quote are other "
 "block quotes. That is, block quotes can be nested:"
-msgstr ""
+msgstr "引用の中に、引用を置くことも可能です。つまり、引用はネストすることができます: "
 
 #: ../../users-guide.rst:2335
 msgid ""
@@ -4248,6 +4446,9 @@ msgid ""
 " the contents. Thus, to put an indented code block in a block quote, you "
 "need five spaces after the ``>``:"
 msgstr ""
+"``>`` "
+"という文字列に続く1つの空白文字は、引用ブロックの開始を示す記号の一部として認識され、引用文のインデントの一部としては換算されません。よって、引用ブロック内にインデントされたコードブロックを置きたい場合は、"
+" ``>`` に続けて5つの空白文字を置く必要があります:"
 
 #: ../../users-guide.rst:2347
 msgid ""
@@ -4258,6 +4459,10 @@ msgid ""
 " wrapping). So, unless the ``markdown_strict`` format is used, the following"
 " does not produce a nested block quote in pandoc:"
 msgstr ""
+"標準Markdown記法では設けられていない制約ですが、Pandocでは、引用の前に空行が挿入される必要があります "
+"(ただし、文章のはじめの1行だけは例外です)。なぜならば、誤って行頭に ``>`` "
+"記号を置くことがよくあるためです(行の折返し設定をしているエディタでも同様のことが起こるかもしれません)。そのため、 "
+"``markdown_strict`` 形式が用いられていない限り、Pandocは以下の文書をネストされた引用として解釈しません:"
 
 #: ../../users-guide.rst:2360
 msgid "Verbatim (code) blocks"
@@ -4273,21 +4478,23 @@ msgid ""
 "text: that is, special characters do not trigger special formatting, and all"
 " spaces and line breaks are preserved. For example,"
 msgstr ""
+"4つの空白文字(もしくは1つのタブ文字)によってインデントされた文字列は、そのまま文字通りに処理されます。すなわち、 ``*`` や ``_`` "
+"などの特別な文字が、斜体や太字などの文字列の修飾には用いられずに、そのまま文字通りに出力されます。また、全ての空白文字や改行も、そのまま保持されます。たとえば、"
 
 #: ../../users-guide.rst:2375
 msgid ""
 "The initial (four space or one tab) indentation is not considered part of "
 "the verbatim text, and is removed in the output."
-msgstr ""
+msgstr "行頭のインデント(4つの空白文字もしくはタブ文字)は、コードブロックとして扱われず、出力の際に削除されます。"
 
 #: ../../users-guide.rst:2378
 msgid ""
 "Note: blank lines in the verbatim text need not begin with four spaces."
-msgstr ""
+msgstr "注意: コードブロックにおいて空行を表現するとき、その行は4つのスペースもしくはタブ文字でインデントされている必要はありません。"
 
 #: ../../users-guide.rst:2381
 msgid "Fenced code blocks"
-msgstr ""
+msgstr "囲いコードブロック (Fenced code blocks)"
 
 #: ../../users-guide.rst:2384
 msgid "Extension: ``fenced_code_blocks``"
@@ -4309,13 +4516,13 @@ msgstr ""
 msgid ""
 "Like regular code blocks, fenced code blocks must be separated from "
 "surrounding text by blank lines."
-msgstr ""
+msgstr "通常のコードブロックと同様に、囲いコードブロックと周辺のテキストの間には空行が入らなければなりません。"
 
 #: ../../users-guide.rst:2403
 msgid ""
 "If the code itself contains a row of tildes or backticks, just use a longer "
 "row of tildes or backticks at the start and end:"
-msgstr ""
+msgstr "コード自体にチルダやバッククォートを並べたものが入っている場合は、単純に最初と最後のチルダまたはバッククォートをもっと長くしてください。"
 
 #: ../../users-guide.rst:2415
 msgid "Extension: ``backtick_code_blocks``"
@@ -4331,13 +4538,13 @@ msgstr ""
 
 #: ../../users-guide.rst:2421
 msgid "Extension: ``fenced_code_attributes``"
-msgstr ""
+msgstr "拡張: ``fenced_code_attributes``"
 
 #: ../../users-guide.rst:2423
 msgid ""
 "Optionally, you may attach attributes to fenced or backtick code block using"
 " this syntax:"
-msgstr ""
+msgstr "必要に応じて、以下の構文を用いることで囲いコードブロックやバッククォートによるコードブロックに属性を与えることができます:"
 
 #: ../../users-guide.rst:2434
 msgid ""
@@ -4351,6 +4558,13 @@ msgid ""
 "highlight-languages``.) Otherwise, the code block above will appear as "
 "follows:"
 msgstr ""
+"ここでは、 ``mycode`` が識別子で、 ``haskell`` および ``numberLines`` がクラス、そして "
+"``startFrom`` 属性は値 ``100`` "
+"の属性です。いくつかの出力形式では、これらの情報を用いてシンタックスハイライトが適用されます。現在のところ、この情報を利用する出力形式は、HTML, "
+"LaTeX, Docx, Ms, "
+"およびPowerPointだけです。シンタックスハイライトが出力形式および用いた言語でサポートされている場合、上記のコードブロックは行番号付きでシンタックスハイライトが適用されます"
+" (どの言語でシンタックスハイライトがサポートされているかを知るためには、 ``pandoc --list-highlight-languages`` "
+"を実行してください)。シンタックスハイライトがサポートされていない出力形式や言語を用いた場合、以下のように表示されます:"
 
 #: ../../users-guide.rst:2452
 msgid ""
@@ -4359,16 +4573,19 @@ msgid ""
 "``startFrom`` attribute. The ``lineAnchors`` (or ``line-anchors``) class "
 "will cause the lines to be clickable anchors in HTML output."
 msgstr ""
+"``numberLines`` (もしくは ``number-lines`` )クラスのコードブロックでは、 ``1`` もしくは "
+"``startFrom`` 属性の数値から始まる行番号が表示されます。 ``lineAnchors`` (もしくは ``line-anchors`` )"
+" クラスのコードブロックをHTML出力すると、行がクリック可能なアンカーになります。"
 
 #: ../../users-guide.rst:2457
 msgid ""
 "A shortcut form can also be used for specifying the language of the code "
 "block:"
-msgstr ""
+msgstr "コードブロック内の言語を指定するときには、以下のような短縮形も利用できます:"
 
 #: ../../users-guide.rst:2466
 msgid "This is equivalent to:"
-msgstr ""
+msgstr "これは、以下と等価です:"
 
 #: ../../users-guide.rst:2474
 msgid ""
@@ -4383,10 +4600,13 @@ msgid ""
 "highlighting style, use ``--highlight-style``. For more information on "
 "highlighting, see `Syntax highlighting`_, below."
 msgstr ""
+"コードブロックのハイライトをさせたくない場合は、 ``--no-highlight`` フラグを使用してください。ハイライトのスタイル "
+"(カラースキーム)を設定したいときは、 ``--highlight-style`` フラグを使用します。詳しくは、下記の `Syntax "
+"highlighting`_ を参照してください。"
 
 #: ../../users-guide.rst:2483
 msgid "Line blocks"
-msgstr ""
+msgstr "ラインブロック"
 
 #: ../../users-guide.rst:2488
 msgid ""
@@ -4395,56 +4615,66 @@ msgid ""
 "output, as will any leading spaces; otherwise, the lines will be formatted "
 "as Markdown. This is useful for verse and addresses:"
 msgstr ""
+"ラインブロックは、縦線 (``|``) "
+"と1つのスペースで始まる一連の行からなります。行の分割や行頭のスペースは保持され、そのまま出力されます。これらの点以外は、Markdown記法に従って修飾されます。ラインブロックは、詩や住所などを書く際に便利な記法です:"
 
 #: ../../users-guide.rst:2504
 msgid ""
 "The lines can be hard-wrapped if needed, but the continuation line must "
 "begin with a space."
 msgstr ""
+"ラインブロック中の行をハードブロックで折り返したい場合は、折り返した行の行頭に1つのスペースを置いてください。\n"
+"\n"
+"(訳注: ここでのハードブロック折り返しとは、エディタなどで文書を見やすくするために入れる改行のこと。エディタ上では改行するが、出力するラインブロックにはその改行を反映させたくない場合に用いる。)"
 
 #: ../../users-guide.rst:2514
 msgid "This syntax is borrowed from `reStructuredText`_."
-msgstr ""
+msgstr "この文法は、 `reStructuredText`_ から借用されています。"
 
 #: ../../users-guide.rst:2517
 msgid "Lists"
-msgstr ""
+msgstr "リスト"
 
 #: ../../users-guide.rst:2520
 msgid "Bullet lists"
-msgstr ""
+msgstr "箇条書きリスト"
 
 #: ../../users-guide.rst:2522
 msgid ""
 "A bullet list is a list of bulleted list items. A bulleted list item begins "
 "with a bullet (``*``, ``+``, or ``-``). Here is a simple example:"
 msgstr ""
+"箇条書きリストは、各項目の行頭に点記号が付されたリストのことを指します。箇条書きリストの各項目は、箇条記号( ``*`` 、 ``+`` 、もしくは "
+"``-`` のどれか)が行頭に置かれる必要があります。例を以下に示します:"
 
 #: ../../users-guide.rst:2531
 msgid ""
 "This will produce a “compact” list. If you want a “loose” list, in which "
 "each item is formatted as a paragraph, put spaces between the items:"
 msgstr ""
+"これは、「コンパクト」なリストを生成します。「ゆるい "
+"(loose)」リスト、すなわち各項目が段落として処理されたようなリストが必要ならば、空行を項目の間に入れてください:"
 
 #: ../../users-guide.rst:2542
 msgid ""
 "The bullets need not be flush with the left margin; they may be indented "
 "one, two, or three spaces. The bullet must be followed by whitespace."
 msgstr ""
+"箇条記号は、かならずしも左端で揃っている必要はなく、1つから3つのスペースでインデントされていても構いません。ただし、箇条記号の直後には必ずスペースが挿入されていなければいけません。"
 
 #: ../../users-guide.rst:2545
 msgid ""
 "List items look best if subsequent lines are flush with the first line "
 "(after the bullet):"
-msgstr ""
+msgstr "リストは、(箇条記号を除いた)テキスト部分が先頭のリスト項目と揃っているのが最適な記法です:"
 
 #: ../../users-guide.rst:2554
 msgid "But Markdown also allows a “lazy” format:"
-msgstr ""
+msgstr "しかし、下記のような「怠惰な(lazy)」記法も可能です:"
 
 #: ../../users-guide.rst:2563
 msgid "Block content in list items"
-msgstr ""
+msgstr "リスト項目として可能なブロック要素"
 
 #: ../../users-guide.rst:2565
 msgid ""
@@ -4452,6 +4682,7 @@ msgid ""
 "However, subsequent paragraphs must be preceded by a blank line and indented"
 " to line up with the first non-space content after the list marker."
 msgstr ""
+"リスト項目には、複数の段落や異なるブロック要素(引用やコードブロックなど)を含めることが可能です。ただし、後続の段落は、空行で区切り、先頭のリスト項目のテキスト開始点に合わせてインデントする必要があります。"
 
 #: ../../users-guide.rst:2581
 msgid ""
@@ -4459,6 +4690,8 @@ msgid ""
 "must begin 5 spaces after the list marker, then subsequent paragraphs must "
 "begin two columns after the last character of the list marker:"
 msgstr ""
+"例外: "
+"もしもインデントされたコードブロックをリスト項目にする場合、箇条記号に続けて5つの空白(すなわち、箇条記号とそれに続く1つのスペース、そしてインデントを表す4つのスペース)を置いてください。この項目に続けて段落を挿入するときは、コードブロックのテキスト開始点に合わせてインデントするのではなく、コードブロックのインデント開始点に合わせてインデントしてください:"
 
 #: ../../users-guide.rst:2592
 msgid ""
@@ -4466,6 +4699,9 @@ msgid ""
 " optional. The nested list must be indented to line up with the first non-"
 "space character after the list marker of the containing list item."
 msgstr ""
+"リストは入れ子にすることが可能です。入れ子となるリストは、空行で区切られている必要はありません。リストを入れ子にするためには、上位のリスト項目のテキスト開始点に合わせてインデントする必要があります。\n"
+"\n"
+"(訳注: インデントされたコードブロックが上位となるリスト項目である場合、上述の例外が適用されます。)"
 
 #: ../../users-guide.rst:2609
 msgid ""
@@ -4473,16 +4709,18 @@ msgid ""
 " indenting continuation lines. However, if there are multiple paragraphs or "
 "other blocks in a list item, the first line of each must be indented."
 msgstr ""
+"上述したように、Markdownでは「怠惰 "
+"(lazily)」なリスト記法が可能であり、必ずしも後続する行がインデントされている必要はありません。しかし、リスト項目に複数の段落を含めたい場合はその限りではなく、リスト項目となる段落はインデントされていなければなりません。"
 
 #: ../../users-guide.rst:2626
 msgid "Ordered lists"
-msgstr ""
+msgstr "順序付きリスト"
 
 #: ../../users-guide.rst:2628
 msgid ""
 "Ordered lists work just like bulleted lists, except that the items begin "
 "with enumerators rather than bullets."
-msgstr ""
+msgstr "順序付きリストは、箇条書きリストと似ていますが、項目の先頭は記号でなく数値が割り振られます。"
 
 #: ../../users-guide.rst:2631
 msgid ""
@@ -4490,14 +4728,15 @@ msgid ""
 "and a space. The numbers themselves are ignored, so there is no difference "
 "between this list:"
 msgstr ""
+"標準Markdownでは、順序付きリストの行頭に10進の数値と，それに続く1つのピリオドおよび1つの空白を置きます。数値そのものの値は無視されるため、以下の順序付きリストは"
 
 #: ../../users-guide.rst:2641
 msgid "and this one:"
-msgstr ""
+msgstr "以下の順序付きリストと等価です:"
 
 #: ../../users-guide.rst:2650
 msgid "Extension: ``fancy_lists``"
-msgstr ""
+msgstr "拡張: ``fancy_lists``"
 
 #: ../../users-guide.rst:2652
 msgid ""
@@ -4508,16 +4747,18 @@ msgid ""
 "that follows by at least one space, and, if the list marker is a capital "
 "letter with a period, by at least two spaces. [1]_"
 msgstr ""
+"標準Markdownとは異なり、Pandocは、大文字もしくは小文字のアルファベット、およびローマ数字といった順序記号を用いて順序付きリストを作成することも可能です。この場合、これらの順序記号を括弧で囲むか、順序記号の直後に閉じ括弧もしくはピリオドを置いてください。これらの順序記号とリスト項目となるテキストは、少なくとも1つのスペースで区切られる必要があります。ただし、順序記号として大文字の英字を用いる場合は、2つ以上のスペースで区切ってください。"
+" [1]_"
 
 #: ../../users-guide.rst:2659
 msgid ""
 "The ``fancy_lists`` extension also allows ‘``#``’ to be used as an ordered "
 "list marker in place of a numeral:"
-msgstr ""
+msgstr "``fancy_lists`` 拡張では、数値の代わりに ‘ ``#`` ’ 記号を順序記号として用いることも可能です:"
 
 #: ../../users-guide.rst:2668
 msgid "Extension: ``startnum``"
-msgstr ""
+msgstr "拡張: ``startnum``"
 
 #: ../../users-guide.rst:2670
 msgid ""
@@ -4527,39 +4768,40 @@ msgid ""
 "single parenthesis, starting with 9, and a sublist with lowercase roman "
 "numerals:"
 msgstr ""
+"Pandocは、リスト記号の型および順序の出だしを認識し、可能な限りそれらを保持して出力します。すなわち、下記の例では、閉じ括弧つきの9から始まる順序付きリスト、および小文字のローマ数字を用いた順序付きサブリストが得られます:"
 
 #: ../../users-guide.rst:2685
 msgid ""
 "Pandoc will start a new list each time a different type of list marker is "
 "used. So, the following will create three lists:"
-msgstr ""
+msgstr "Pandocは、異なる型のリスト記号が用いられるたびに新しいリストを開始します。よって、次の例では3つのリストが作成されます:"
 
 #: ../../users-guide.rst:2695
 msgid "If default list markers are desired, use ``#.``:"
-msgstr ""
+msgstr "デフォルトのリスト記号を使用したい場合は、 ``#.`` を使ってください:"
 
 #: ../../users-guide.rst:2704
 msgid "Extension: ``task_lists``"
-msgstr ""
+msgstr "拡張: ``task_lists``"
 
 #: ../../users-guide.rst:2706
 msgid ""
 "Pandoc supports task lists, using the syntax of GitHub-Flavored Markdown."
-msgstr ""
+msgstr "Pandocは、GitHub-Flavored Markdown文法を用いて、タスクリストをサポートしています。"
 
 #: ../../users-guide.rst:2715
 msgid "Definition lists"
-msgstr ""
+msgstr "定義リスト"
 
 #: ../../users-guide.rst:2718
 msgid "Extension: ``definition_lists``"
-msgstr ""
+msgstr "拡張: ``definition_lists``"
 
 #: ../../users-guide.rst:2720
 msgid ""
 "Pandoc supports definition lists, using the syntax of `PHP Markdown Extra`_ "
 "with some extensions. [2]_"
-msgstr ""
+msgstr "Pandocは、 `PHP Markdown Extra`_ 文法といくつかの拡張機能を用いて、定義リストをサポートしています。 [2]_"
 
 #: ../../users-guide.rst:2737
 msgid ""
@@ -4567,6 +4809,7 @@ msgid ""
 "line, and must be followed by one or more definitions. A definition begins "
 "with a colon or tilde, which may be indented one or two spaces."
 msgstr ""
+"各用語は、1行に収まっている必要があり、用語の後ろには1つ以上の定義を置く必要があります。用語と定義の間には、1つの空行を置いても構いません。定義は、1つのコロンもしくはチルダ記号ではじめます。行頭に1つもしくは2つのスペースを置いてインデントしても構いません。"
 
 #: ../../users-guide.rst:2742
 msgid ""
@@ -4577,6 +4820,7 @@ msgid ""
 "However, as with other Markdown lists, you can “lazily” omit indentation "
 "except at the beginning of a paragraph or other block element:"
 msgstr ""
+"用語は、複数の定義を持つことが可能で、各定義は、さらに複数のブロック要素(段落やコードブロック、リストなど)を持つことが可能です。定義内に複数のブロック要素を含める場合は、それらのブロックは4つの空白もしくは1つのタブでインデントされる必要があります。定義の本体(最初の行から行頭のコロンもしくはチルダ記号を除いたものも含む)は、4つの空白でインデントされる必要があります。しかし、これ以外のMarkdownリストと同様に、段落などのブロック要素の開始地点を除き、インデントを省いた「怠惰な(lazily)」書き方も可能です:"
 
 #: ../../users-guide.rst:2759
 msgid ""
@@ -4585,6 +4829,7 @@ msgid ""
 "this will mean greater spacing between term/definition pairs. For a more "
 "compact definition list, omit the space before the definition:"
 msgstr ""
+"(上述したとおり、)定義の前にスペースを置いた場合、その定義テキストは段落として扱われます。このように定義を段落として扱った場合、いくつかの出力形式では、用語と定義の間に置かれる間隔が通常よりも広く設定されます。よりコンパクトな定義リストを用いたい場合は、定義の直前にスペースを置いてはいけません:"
 
 #: ../../users-guide.rst:2774
 msgid ""
@@ -4593,14 +4838,18 @@ msgid ""
 "activated with ``compact_definition_lists``: see `Non-pandoc extensions`_, "
 "below.)"
 msgstr ""
+"定義リストの項目の間には空行が必要であることに注意してください。(この要件を緩和したい場合は、 ``compact_definition_lists``"
+" を有効にしてください。ただし、 ``compact_definition_lists`` "
+"を有効にすると、インデントを省く「怠惰(lazy)」な行折り返しは使用できなくなります。詳しくは、下記の `Non-pandoc "
+"extensions`_ を参照してください。)"
 
 #: ../../users-guide.rst:2780
 msgid "Numbered example lists"
-msgstr ""
+msgstr "順序付き用例リスト"
 
 #: ../../users-guide.rst:2783
 msgid "Extension: ``example_lists``"
-msgstr ""
+msgstr "拡張: ``example_lists``"
 
 #: ../../users-guide.rst:2785
 msgid ""
@@ -4610,17 +4859,21 @@ msgid ""
 " occur in a single list; each new list using ``@`` will take up where the "
 "last stopped. So, for example:"
 msgstr ""
+"特別なリスト記号である ``@`` は、連番の順序付き用例リストに用いられます。文書中にはじめて出てくる ``@`` 記号には ‘1’ "
+"が割り振られ、その次の記号には ‘2’ "
+"が割り振られ...というように、文書中を通して連番が付されたリストが生成されます。連番が付された用例は、単一のリストにまとめる必要はありません。すなわち、新しい順序付き用例リストのはじめに出てくる``@``"
+" 記号には、一つ前の順序付き用例リストで最後に割り振られた連番の次の番号が割り振られます。例えば:"
 
 #: ../../users-guide.rst:2800
 msgid ""
 "Numbered examples can be labeled and referred to elsewhere in the document:"
-msgstr ""
+msgstr "順序付き用例リストは、ラベル付けが可能であり、そのラベルは文書中の任意の場所で参照できます:"
 
 #: ../../users-guide.rst:2809
 msgid ""
 "The label can be any string of alphanumeric characters, underscores, or "
 "hyphens."
-msgstr ""
+msgstr "アルファベット、アンダーバー、もしくはハイフンからなる任意の文字列をラベルに使用することができます。"
 
 #: ../../users-guide.rst:2812
 msgid ""
@@ -4633,13 +4886,14 @@ msgstr ""
 
 #: ../../users-guide.rst:2820
 msgid "Compact and loose lists"
-msgstr ""
+msgstr "コンパクトリスト(compact list)とルーズリスト(loose list)"
 
 #: ../../users-guide.rst:2822
 msgid ""
 "Pandoc behaves differently from ``Markdown.pl`` on some “edge cases” "
 "involving lists. Consider this source:"
 msgstr ""
+"Pandocは、リストに関係する一部のエッジケースで、 ``Markdown.pl`` とは異なる動作をします。 以下のソースについて考えてみます:"
 
 #: ../../users-guide.rst:2835
 msgid ""
@@ -4657,11 +4911,11 @@ msgstr ""
 
 #: ../../users-guide.rst:2848
 msgid "Ending a list"
-msgstr ""
+msgstr "リストの終わらせ方"
 
 #: ../../users-guide.rst:2850
 msgid "What if you want to put an indented code block after a list?"
-msgstr ""
+msgstr "リストの後にインデントされたコードブロックを置いた場合、何が起こるでしょうか。"
 
 #: ../../users-guide.rst:2859
 msgid ""
@@ -4669,33 +4923,36 @@ msgid ""
 " code block }`` as the second paragraph of item two, and not as a code "
 "block."
 msgstr ""
+"おっと! この例では、Pandocは(他のMarkdown実装と同様) ``{ my code block }`` "
+"をコードブロックではなく2番目のリスト項目の第2段落として扱います。"
 
 #: ../../users-guide.rst:2863
 msgid ""
 "To “cut off” the list after item two, you can insert some non-indented "
 "content, like an HTML comment, which won’t produce visible output in any "
 "format:"
-msgstr ""
+msgstr "2番目の項目でリストを終えるためには、HTMLコメントなどの出力に反映されない文字列を、インデントせずにリストの後に置いてください:"
 
 #: ../../users-guide.rst:2876
 msgid ""
 "You can use the same trick if you want two consecutive lists instead of one "
 "big list:"
-msgstr ""
+msgstr "この方法は、2つのリストを、ひとつながりのリストではなく異なるリストとして扱いたい時にも使えます:"
 
 #: ../../users-guide.rst:2892
 msgid "Horizontal rules"
-msgstr ""
+msgstr "水平線"
 
 #: ../../users-guide.rst:2894
 msgid ""
 "A line containing a row of three or more ``*``, ``-``, or ``_`` characters "
 "(optionally separated by spaces) produces a horizontal rule:"
 msgstr ""
+"3つ以上の ``*``, ``-`` もしくは ``_`` 記号を含む行(これらの記号は空白で分けられていても構いません)は、水平線を生成します。"
 
 #: ../../users-guide.rst:2904
 msgid "Tables"
-msgstr ""
+msgstr "表"
 
 #: ../../users-guide.rst:2906
 msgid ""
@@ -4703,6 +4960,8 @@ msgid ""
 "of a fixed-width font, such as Courier. The fourth kind can be used with "
 "proportionally spaced fonts, as it does not require lining up columns."
 msgstr ""
+"4種類の表が使用可能です。最初の3種類の表は、Courierなどの等幅フォントの使用を前提としています。 "
+"4番目の表は、列を並べる必要がないため、プロポーショナルフォントでも使用できます。"
 
 #: ../../users-guide.rst:2914
 msgid ""
@@ -4711,10 +4970,13 @@ msgid ""
 "the string ``Table:`` (or just ``:``), which will be stripped off. It may "
 "appear either before or after the table."
 msgstr ""
+"4種類の表すべてに、オプションとして(以下の例で示すように)キャプションを与えることができます。 ``Table:`` (もしくは単に ``:`` "
+")で始まる段落がキャプションとして扱われ、行頭の ``Table:`` や ``:`` "
+"は、キャプションを生成する際に削除されます。キャプションは、表の直前もしくは直後に表示されます。"
 
 #: ../../users-guide.rst:2922
 msgid "Simple tables look like this:"
-msgstr ""
+msgstr "シンプルテーブルは、このように書きます:"
 
 #: ../../users-guide.rst:2934
 msgid ""
@@ -4722,12 +4984,14 @@ msgid ""
 "determined by the position of the header text relative to the dashed line "
 "below it: [3]_"
 msgstr ""
+"見出し行も含めたすべてのセルの内容が、それぞれ1行に収まっている必要があります。文字の左右寄せ・中央揃えは、見出し行のテキストが、その直下の `-` "
+"からなる表見出しの下線に対してどこに位置するかで決定されます: [3]_"
 
 #: ../../users-guide.rst:2938
 msgid ""
 "If the dashed line is flush with the header text on the right side but "
 "extends beyond it on the left, the column is right-aligned."
-msgstr ""
+msgstr "表見出しの下線と表見出しのテキストが右側で揃っており、表見出しの下線が左側にはみ出している場合は、列は右寄せとなります。"
 
 #: ../../users-guide.rst:2940
 msgid ""
@@ -4739,25 +5003,26 @@ msgstr "表見出しの下線と表見出しのテキストが左側で揃って
 msgid ""
 "If the dashed line extends beyond the header text on both sides, the column "
 "is centered."
-msgstr ""
+msgstr "表見出しの下線が、表見出しのテキストの左右両端にはみ出している場合は、列は中央揃えとなります。"
 
 #: ../../users-guide.rst:2944
 msgid ""
 "If the dashed line is flush with the header text on both sides, the default "
 "alignment is used (in most cases, this will be left)."
-msgstr ""
+msgstr "表見出しの下線と表見出しのテキストが左右両端で揃っている場合は、デフォルトの方法で列が揃えられます(ほとんどの場合、左寄せになります)。"
 
 #: ../../users-guide.rst:2947
 msgid ""
 "The table must end with a blank line, or a line of dashes followed by a "
 "blank line."
 msgstr ""
+"表は、空行で終わる必要があります。もしくは、表見出しの下線のように、連続した `-` からなる区切り線の行を直前に置いた空行で終わることもできます。"
 
 #: ../../users-guide.rst:2950
 msgid ""
 "The column header row may be omitted, provided a dashed line is used to end "
 "the table. For example:"
-msgstr ""
+msgstr "表見出しのテキストは省略可能ですが、`-` からなる区切り線を表の最後に付け加える必要があります。たとえば:"
 
 #: ../../users-guide.rst:2961
 msgid ""
@@ -4765,6 +5030,7 @@ msgid ""
 "basis of the first line of the table body. So, in the tables above, the "
 "columns would be right, left, center, and right aligned, respectively."
 msgstr ""
+"表見出しのテキストが省略されている場合、左右寄せ・中央揃えの方法は、表の1行目の揃え方によって決まります。そのため、上記の表の列はそれぞれ、右寄せ、左寄せ、中央揃え、右寄せになります。"
 
 #: ../../users-guide.rst:2968
 msgid ""
@@ -4772,24 +5038,25 @@ msgid ""
 "(but cells that span multiple columns or rows of the table are not "
 "supported). Here is an example:"
 msgstr ""
+"マルチラインテーブルでは、見出し行も含めたすべてのセルに複数行のテキストを置くことが可能です(ただし、セルの結合はサポートしていません)。例を示します:"
 
 #: ../../users-guide.rst:2989
 msgid "These work like simple tables, but with the following differences:"
-msgstr ""
+msgstr "マルチラインテーブルは、シンプルテーブルと同じように働きますが、以下の点でシンプルテーブルと異なります:"
 
 #: ../../users-guide.rst:2991
 msgid ""
 "They must begin with a row of dashes, before the header text (unless the "
 "header row is omitted)."
-msgstr ""
+msgstr "見出し行の直前に、連続した `-` からなる区切り線を置く必要がある(ただし、見出し行を省略する場合は除く)。"
 
 #: ../../users-guide.rst:2993
 msgid "They must end with a row of dashes, then a blank line."
-msgstr ""
+msgstr "表の終わりに、連続した `-` からなる区切り線と、それに続く空行を置く必要がある。"
 
 #: ../../users-guide.rst:2994
 msgid "The rows must be separated by blank lines."
-msgstr ""
+msgstr "それぞれの行を、空行で区切る必要がある。"
 
 #: ../../users-guide.rst:2996
 msgid ""
@@ -4798,11 +5065,12 @@ msgid ""
 "output. So, if you find that one of the columns is too narrow in the output,"
 " try widening it in the Markdown source."
 msgstr ""
+"マルチラインテーブルにおいて、Pandocのパーサは列幅をチェックしており、表を出力する際、Writerは表の各列の相対的な幅をなるべく再現しようとします。出力された表の列幅が狭すぎる場合は、Markdownのソースファイル中で列幅を広げてみてください。"
 
 #: ../../users-guide.rst:3001
 msgid ""
 "The header may be omitted in multiline tables as well as simple tables:"
-msgstr ""
+msgstr "マルチラインテーブルでも、シンプルテーブルと同様、見出し行を省略することが可能です:"
 
 #: ../../users-guide.rst:3016
 msgid ""
@@ -4810,10 +5078,11 @@ msgid ""
 "should be followed by a blank line (and then the row of dashes that ends the"
 " table), or the table may be interpreted as a simple table."
 msgstr ""
+"マルチラインテーブルでは、必ずしもすべてのセルに複数行のテキストを置く必要はなく、1行だけのテキストを置くことも可能です。ただし、シンプルテーブルとして変換されてしまわないように、セルが1行だけだったとしても空行でそれぞれの行を区切るべき(および、表の最後は区切り線を置くべき)です。"
 
 #: ../../users-guide.rst:3023
 msgid "Grid tables look like this:"
-msgstr ""
+msgstr "グリッドテーブルは、このように書きます:"
 
 #: ../../users-guide.rst:3039
 msgid ""
@@ -4823,16 +5092,19 @@ msgid ""
 "Cells that span multiple columns or rows are not supported. Grid tables can "
 "be created easily using `Emacs table mode`_."
 msgstr ""
+"複数の ``=`` からなる行が、見出しと表の本体とを分割します。見出しを省略する場合は、 ``=`` "
+"からなる行は必要ありません。グリッドテーブルのセルには、任意の要素をいれることができます(複数行からなる段落、コードブロック、リストなど)。セルの結合には対応していません。グリッドテーブルは、"
+" `Emacs table mode`_ を使用することで、簡単に作成できます。"
 
 #: ../../users-guide.rst:3045
 msgid ""
 "Alignments can be specified as with pipe tables, by putting colons at the "
 "boundaries of the separator line after the header:"
-msgstr ""
+msgstr "区切り線の境界にコロンを置くことにで、パイプテーブルと同様に、テキストの左右寄せ・中央揃えを指定できます:"
 
 #: ../../users-guide.rst:3056
 msgid "For headerless tables, the colons go on the top line instead:"
-msgstr ""
+msgstr "見出しのない表の場合は、一番上の行にコロンを置きます:"
 
 #: ../../users-guide.rst:3067
 msgid ""
@@ -4843,10 +5115,12 @@ msgid ""
 " each column. For example, the Docutils `sample grid tables`_ will not "
 "render as expected with Pandoc."
 msgstr ""
+"Pandocは、行や列の結合をサポートしていません。これは、Pandocでは、行数を列ごとに変えたり、列数を行ごとに変えたりすることができないということです。グリッドテーブルでは、各行の列数および各列の行数がそれぞれ同じである必要があります。たとえば、Docutilsの"
+" `sample grid tables`_ は、Pandocでは思ったとおりにレンダリングされません。"
 
 #: ../../users-guide.rst:3077
 msgid "Pipe tables look like this:"
-msgstr ""
+msgstr "パイプテーブルは、このように書きます:"
 
 #: ../../users-guide.rst:3089
 msgid ""
@@ -4855,6 +5129,8 @@ msgid ""
 "columns. The colons indicate column alignment as shown. The header cannot be"
 " omitted. To simulate a headerless table, include a header with blank cells."
 msgstr ""
+"パイプテーブルは、 `PHP Markdown Extra tables`_ "
+"と同じ文法です。表の左端と右端に置くパイプ文字の列はオプションである一方で、列の間には必ずパイプ文字を置く必要があります。コロンは、上で示したように、文字列の左右寄せ・中央揃えを指定します。パイプテーブルでは、見出し行は省略できません。見出し行のないテーブルをシミュレートするには、見出しとして空白のセルを置いてください。"
 
 #: ../../users-guide.rst:3095
 msgid ""
@@ -4862,6 +5138,7 @@ msgid ""
 "aligned, as they are in the above example. So, this is a perfectly legal "
 "(though ugly) pipe table:"
 msgstr ""
+"パイプ文字は列の境界を示すため、上の例のようにパイプテーブルの列を縦に揃える必要はありません。よって、以下は文法的に完全に正しい(しかし見栄えが悪い(ugly))パイプテーブルの記述です:"
 
 #: ../../users-guide.rst:3107
 msgid ""
@@ -4876,12 +5153,17 @@ msgid ""
 "cell contents will not be wrapped, and the cells will be sized to their "
 "contents."
 msgstr ""
+"パイプテーブルのセルでは、段落やリストなどのブロック要素を置くことはできず、文字列が複数行にまたがることもできません。パイプテーブルのどこかの行が、全列幅よりも横幅の広いコンテンツを含んでいる場合"
+" (``--columns`` "
+"を参照してください)、そのパイプテーブルは、テキストが収まる全横幅を占有します。この際、セルの内容は折り返され、各列の区切り線の長さに相対的な列幅が与えられます"
+" (たとえば、区切り線が ``---|-` "
+"の表では、1列目の列幅はテキスト入力が可能な全横幅の3/4倍に、2列目の列幅は1/4倍になります)。一方、全列幅よりも広い横幅を持つ行がない場合は、セルの内容は折り返されず、また、セルに含まれる内容に合わせて列幅が調整されます。"
 
 #: ../../users-guide.rst:3118
 msgid ""
 "Note: pandoc also recognizes pipe tables of the following form, as can be "
 "produced by Emacs’ orgtbl-mode:"
-msgstr ""
+msgstr "注意: Pandocは、以下に示したようなEmacs orgtbl-modeによって作成される形式の表もパイプテーブルとして認識します:"
 
 #: ../../users-guide.rst:3128
 msgid ""
@@ -4889,14 +5171,16 @@ msgid ""
 " are not supported. In particular, to get non-default column alignment, "
 "you’ll need to add colons as above."
 msgstr ""
+"違いは、 ``|`` の代わりに ``+`` "
+"が使用される点です。この他のorgtbl機能はサポートされていません。特別な点として、デフォルトでない文字列の左右寄せ・中央揃えを設定するためには、上記のようにコロンを区切り線に追加する必要があります。"
 
 #: ../../users-guide.rst:3133
 msgid "Metadata blocks"
-msgstr ""
+msgstr "メタデータブロック"
 
 #: ../../users-guide.rst:3138
 msgid "If the file begins with a title block"
-msgstr ""
+msgstr "ファイルがタイトルブロックから開始している場合、"
 
 #: ../../users-guide.rst:3146
 msgid ""
@@ -4906,12 +5190,14 @@ msgid ""
 "elements. If you want to include an author but no title, or a title and a "
 "date but no author, you need a blank line:"
 msgstr ""
+"タイトルブロックは、通常のテキストではなく書誌情報として解析されます "
+"(たとえば、スタンドアロンのLaTeXもしくはHTML出力のタイトルとして使用されます)。タイトルブロックには、タイトルのみ、タイトルと著者、もしくは3つの要素すべて(タイトルと著者と日付)を含めることが可能です。著者を含めるがタイトルを含めない場合や、タイトルと日付を含めるが著者を含めない場合には、該当の行を空白にします:"
 
 #: ../../users-guide.rst:3161
 msgid ""
 "The title may occupy multiple lines, but continuation lines must begin with "
 "leading space, thus:"
-msgstr ""
+msgstr "複数行からなるタイトルを設定することもできますが、その場合、2行目以降の行頭はスペースで始める必要があります:"
 
 #: ../../users-guide.rst:3169
 msgid ""
@@ -4919,16 +5205,17 @@ msgid ""
 " with leading space, or separated by semicolons, or both. So, all of the "
 "following are equivalent:"
 msgstr ""
+"著者名を複数設定したいる場合、行頭にスペースを加えた上で著者名を複数行に分けるか、セミコロンで区切るか、もしくはその両方にすることが可能です。よって、以下はすべて同等に処理されます:"
 
 #: ../../users-guide.rst:3183
 msgid "The date must fit on one line."
-msgstr ""
+msgstr "日付は、1行で記載する必要があります。"
 
 #: ../../users-guide.rst:3185
 msgid ""
 "All three metadata fields may contain standard inline formatting (italics, "
 "links, footnotes, etc.)."
-msgstr ""
+msgstr "3つのメタデータフィールドは、どれもインライン修飾が可能です(イタリック、リンク、脚注など)。"
 
 #: ../../users-guide.rst:3188
 msgid ""
@@ -4943,6 +5230,14 @@ msgid ""
 "title block appears in the document, the title prefix will be used by itself"
 " as the HTML title."
 msgstr ""
+"タイトルブロックは常に処理されますが、 ``-standalone`` (``-s``) "
+"オプションが選択された場合に限り、出力に影響を与えます。HTML出力では、タイトルは2箇所に表示されます。ひとつは、 ``<head>`` "
+"タグ内部で、これはブラウザのウィンドウ上部に表示されます。もうひとつは、 ``<body>`` "
+"タグの直後で、これは出力したHTMLをブラウザで表示した時、ページの先頭に表示されます。 ``<head>`` "
+"タグ内部のタイトルには、オプションで接頭辞を付けることが可能です (`` --title-prefix`` もしくは ``-T`` オプション)。 "
+"``<body>`` タグ内部のタイトルは、 ``class=\"title\"`` "
+"のH1要素として表示されるため、CSSを用いて削除したり書式を変更したりすることが可能です。タイトルの接頭辞が ``-T`` "
+"オプションで指定されているがタイトルブロックが文書中に存在しない場合、タイトル接頭辞そのものがHTMLのタイトルとして使用されます。"
 
 #: ../../users-guide.rst:3199
 msgid ""
@@ -4954,18 +5249,20 @@ msgid ""
 " additional footer and header text. A single pipe character (``|``) should "
 "be used to separate the footer text from the header text. Thus,"
 msgstr ""
+"manのWriterは、タイトル行からmanページタイトル、セクション番号、ヘッダおよびフッタ情報を取得します。タイトル行の最初の単語が、manページタイトルとして解釈されます。オプションとして、manページにセクション番号を与える場合は、括弧で囲んだ(1桁の)数字を語末に置いてください(セクション番号とタイトルとなる単語の間にスペースを置いてはいけません)。これらの後に置かれる全てのテキストは、フッタもしくはヘッダとして解釈されます。パイプ記号"
+" (``|``) は、フッタテキストとヘッダテキストを区切る記号として働きます。そのため、"
 
 #: ../../users-guide.rst:3211
 msgid "will yield a man page with the title ``PANDOC`` and section 1."
-msgstr ""
+msgstr "は、 ``PANDOC`` をタイトルとするセクション番号1のmanページをもたらします。"
 
 #: ../../users-guide.rst:3217
 msgid "will also have “Pandoc User Manuals” in the footer."
-msgstr ""
+msgstr "は、上記に加えて、\"Pandoc User Manuals\"がフッタになります。"
 
 #: ../../users-guide.rst:3223
 msgid "will also have “Version 4.0” in the header."
-msgstr ""
+msgstr "は、さらに上記に加えて、\"Version 4.0\"がヘッダになります。"
 
 #: ../../users-guide.rst:3228
 msgid ""
@@ -4977,6 +5274,11 @@ msgid ""
 "when several are provided, you may also keep the metadata in a separate YAML"
 " file and pass it to pandoc as an argument, along with your Markdown files:"
 msgstr ""
+"YAMLメタデータブロックは、有効なYAMLで書かれたブロックであり、最初の行が3つのハイフン (``---``) 、そして最後の行が3つのハイフン "
+"(``---``) もしくは3つのドット (``...``) "
+"で囲まれます。YAMLメタデータブロックは、文書中の任意の場所に置くことができますが、文書の先頭に置く場合を除き、必ず空行の直後に位置している必要があります。"
+" (Pandocは、複数のファイルが入力として与えられたときに、それらのファイルを連結 "
+"(concatenate)してから以後の処理を行います。よって、メタデータを独立したYAMLファイルとして記載し、それをMarkdownファイルと共に引数としてPandocに渡すこともできます:"
 
 #: ../../users-guide.rst:3241
 msgid ""
@@ -4985,6 +5287,10 @@ msgid ""
 "that approach however, you cannot reference content (like footnotes) from "
 "the main markdown input document."
 msgstr ""
+"この時、YAMLファイルが ``---`` ではじまり、 ``---`` もしくは ``...`` で終わることを確認してください。) あるいは、 "
+"``metadata-file`` "
+"オプションを使用してYAMLファイルを指定することも可能です。ただし、この方法を用いた場合、入力するMarkdown文書中のコンテンツ (脚注など) "
+"を参照することができなくなります。"
 
 #: ../../users-guide.rst:3246
 msgid ""
@@ -4996,6 +5302,11 @@ msgid ""
 "as YAML numbers or boolean values (so, for example, ``yes``, ``True``, and "
 "``15`` cannot be used as field names)."
 msgstr ""
+"メタデータは、YAMLオブジェクトのフィールドから取得され、文書中の既存のメタデータに追加されます。メタデータには、リストやオブジェクトを含めることができます"
+" "
+"(適宜、入れ子にもできます)。また、全ての文字列スカラ値は、Markdownとして解釈されます。フィールド名がアンダースコアで終わっている場合は、Pandocはその名前付きフィールドを無視します"
+" (これらは、外部の処理系によって与えられることがあります)。フィールド名は、YAMLの数値や真偽値として解釈されないように命名する必要があります "
+"(そのため、たとえば ``yes``, ``True`` や ``15`` は、フィールド名として使用できません) 。"
 
 #: ../../users-guide.rst:3254
 msgid ""
@@ -5003,6 +5314,8 @@ msgid ""
 " combined through a *left-biased union*: if two metadata blocks attempt to "
 "set the same field, the value from the first block will be taken."
 msgstr ""
+"1つの文書に複数のメタデータブロックを含めることが可能です。複数のメタデータフィールドは、 *left-biased union* "
+"ルールによって統合されます。すなわち、2つのメタデータブロックが同じフィールドを定義しようとする場合、最初のブロックの値が採用されます。"
 
 #: ../../users-guide.rst:3259
 msgid ""
@@ -5011,6 +5324,8 @@ msgid ""
 "is used. All of the metadata will appear in a single block at the beginning "
 "of the document."
 msgstr ""
+"Pandocを ``-t markdown`` オプションとともに用いてMarkdown文書を作成するとき、 ``-s/--standalone`` "
+"オプションも指定されている場合にのみ、YAMLメタデータブロックが生成されます。すべてのメタデータはまとめられ、単一のメタデータブロックとして文書の先頭に置かれます。"
 
 #: ../../users-guide.rst:3264
 msgid ""
@@ -5020,6 +5335,9 @@ msgid ""
 " need for escaping. This form is necessary when the field contains blank "
 "lines or block-level formatting:"
 msgstr ""
+"YAMLメタデータブロックは、YAMLのエスケープルールに従う必要があることに注意してください。例えば、タイトルにコロンを含める場合は、引用符 "
+"(')でタイトルを囲む必要があります。パイプ文字 (``|``) "
+"は、インデントブロックを始めるときに使うことができます。このインデントブロック中では、エスケープをしなかったとしても、すべての文字列がそのまま文字通りに表示されます。この形式は、空行をフィールドに含める場合やブロックレベルの修飾をする場合に必要です:"
 
 #: ../../users-guide.rst:3284
 msgid ""
@@ -5027,6 +5345,8 @@ msgid ""
 "example, in writing HTML, the variable ``abstract`` will be set to the HTML "
 "equivalent of the Markdown in the ``abstract`` field:"
 msgstr ""
+"テンプレート変数は、メタデータから自動的に設定されます。そのため、たとえばHTMLを出力する場合、HTMLの ``abstract`` "
+"変数に、Markdown中の ``abstract`` フィールドの内容が設定されます。"
 
 #: ../../users-guide.rst:3293
 msgid ""
@@ -5036,12 +5356,15 @@ msgid ""
 "structures. The following combination, for example, would add an affiliation"
 " to the author if one is given:"
 msgstr ""
+"変数には任意のYAML構造を含めることができますが、テンプレート変数の構造は、与えたYAML構造と一致している必要があります。 ``author`` "
+"テンプレート変数には、デフォルトでは単純な配列もしくは文字列が入ることが想定されていますが、より複雑な構造にすることも可能です。たとえば、\"affiliation\""
+" メタデータが与えられた場合は、\"author\" メタデータに \"affiliation\"メタデータを加えます:"
 
 #: ../../users-guide.rst:3310
 msgid ""
 "To use the structured authors in the example above, you would need a custom "
 "template:"
-msgstr ""
+msgstr "上記の例のように、構造化された著者メタデータを利用する場合、カスタムテンプレートが必要になります:"
 
 #: ../../users-guide.rst:3323
 msgid ""
@@ -5050,10 +5373,13 @@ msgid ""
 " code for a particular output format, using the ```raw_attribute`` "
 "extension`_), or it will be interpreted as markdown. For example:"
 msgstr ""
+"文書のヘッダに生 (raw) のコンテンツを含める場合は、 ``header-includes`` を使用してください。ただし、 "
+"```raw_attribute`` "
+"拡張`_を使用した上で、特定の出力形式でのコードブロックとしてマークアップすることが重要です。これを行わない場合、生のコンテンツがMarkdownとして解釈されます:"
 
 #: ../../users-guide.rst:3338
 msgid "Backslash escapes"
-msgstr ""
+msgstr "バックスラッシュを用いたエスケープ"
 
 #: ../../users-guide.rst:3343
 msgid ""
@@ -5061,32 +5387,37 @@ msgid ""
 "character preceded by a backslash will be treated literally, even if it "
 "would normally indicate formatting. Thus, for example, if one writes"
 msgstr ""
+"コードブロックとインラインコードの内部を除き、バックスラッシュの次に続くあらゆる文字および空白文字は、そのまま文字通り扱われます。これは、通常は修飾に使われる記号に対しても同様です。例えば、"
 
 #: ../../users-guide.rst:3351
 msgid "one will get"
-msgstr ""
+msgstr "は以下のHTMLに変換され、以下のHTML"
 
 #: ../../users-guide.rst:3357
 msgid "instead of"
-msgstr ""
+msgstr "には変換されません。"
 
 #: ../../users-guide.rst:3363
 msgid ""
 "This rule is easier to remember than standard Markdown’s rule, which allows "
 "only the following characters to be backslash-escaped:"
 msgstr ""
+"このルールは、Markdownの標準ルールと比較すると簡単に覚えられます。標準Markdownでは、以下の記号のみがバックスラッシュによるエスケープが可能です:"
 
 #: ../../users-guide.rst:3370
 msgid ""
 "(However, if the ``markdown_strict`` format is used, the standard Markdown "
 "rule will be used.)"
-msgstr ""
+msgstr "(ただし、 ``markdown_strict`` 形式が指定されているとき、標準Markdownのルールが適用されます。)"
 
 #: ../../users-guide.rst:3373
 msgid ""
 "A backslash-escaped space is parsed as a nonbreaking space. It will appear "
 "in TeX output as ``~`` and in HTML and XML as ``\\&#160;`` or ``\\&nbsp;``."
 msgstr ""
+"バックスラッシュによってエスケープされた空白文字は、ノーブレークスペースとして変換されます。これは、TeXでは ``~`` 、HTMLおよびXMLでは ``\\&#160;`` もしくは ``\\&nbsp;`` として出力されます。\n"
+"\n"
+"(訳注: ノーブレークスペースとは、行の折り返しを許さない空白文字のことである。たとえば、\"No. 42\"という文において、\"No.\"と\"42\"の間の空白文字で文が折り返されるのは好ましくない。こういった場合に、 ``No.\\ 42`` としてノーブレークスペースを用いる。)"
 
 #: ../../users-guide.rst:3377
 msgid ""
@@ -5096,37 +5427,43 @@ msgid ""
 " “invisible” way of indicating hard line breaks using two trailing spaces on"
 " a line."
 msgstr ""
+"バックスラッシュによってエスケープされた改行文字 (すなわち、行末のバックスラッシュ) は、ソフトリターン (hard line break) として変換されます。これは、Texでは ``\\\\`` 、HTMLでは ``<br />`` として出力されます。この方法は、Markdownにおいてソフトリターンするために、2つの空白文字を行末に入力する方法と比べて、より明示的です。\n"
+"\n"
+"(訳注: ソフトリターンとは、段落を変えない強制改行のこと。英語では\"hard line break\"と呼ぶのだが、なぜか日本語ではソフトリターンと訳されている。対義語はハードリターンであり、一般的に\"Enter\"キーを押して入力するのがハードリターンである。)"
 
 #: ../../users-guide.rst:3383
 msgid "Backslash escapes do not work in verbatim contexts."
 msgstr ""
+"バックスラッシュによるエスケープは、コードブロックやインラインコードなど、そのまま文字通りに解釈されるようなコンテキストでは用いることができません。"
 
 #: ../../users-guide.rst:3386
 msgid "Inline formatting"
-msgstr ""
+msgstr "インライン修飾"
 
 #: ../../users-guide.rst:3389
 msgid "Emphasis"
-msgstr ""
+msgstr "強調"
 
 #: ../../users-guide.rst:3391
 msgid ""
 "To *emphasize* some text, surround it with ``*``\\ s or ``_``, like this:"
-msgstr ""
+msgstr "テキストを *斜体* にするためには、そのテキストを ``*`` もしくは ``_`` で囲みます: "
 
 #: ../../users-guide.rst:3398
 msgid "Double ``*`` or ``_`` produces **strong emphasis**:"
-msgstr ""
+msgstr "2つの ``*`` もしくは ``_`` で囲むと、 **太字** で強調されます: "
 
 #: ../../users-guide.rst:3404
 msgid ""
 "A ``*`` or ``_`` character surrounded by spaces, or backslash-escaped, will "
 "not trigger emphasis:"
 msgstr ""
+"空白文字で囲まれた ``*`` や ``_`` 、および、バックスラッシュによってエスケープされた ``*`` や ``_`` "
+"は、テキストを修飾しません。"
 
 #: ../../users-guide.rst:3412
 msgid "Extension: ``intraword_underscores``"
-msgstr ""
+msgstr "拡張: ``intraword_underscores``"
 
 #: ../../users-guide.rst:3414
 msgid ""
@@ -5134,35 +5471,37 @@ msgid ""
 "not interpret a ``_`` surrounded by alphanumeric characters as an emphasis "
 "marker. If you want to emphasize just part of a word, use ``*``:"
 msgstr ""
+"``_`` 記号は、単語や識別子に含まれることがあるため、Pandocは、 ``_`` "
+"によって囲まれた英数字を修飾しません。テキストを修飾したい場合は、 ``*`` を使用してください:"
 
 #: ../../users-guide.rst:3424
 msgid "Strikeout"
-msgstr ""
+msgstr "取り消し線"
 
 #: ../../users-guide.rst:3427
 msgid "Extension: ``strikeout``"
-msgstr ""
+msgstr "拡張: ``strikeout``"
 
 #: ../../users-guide.rst:3429
 msgid ""
 "To strikeout a section of text with a horizontal line, begin and end it with"
 " ``~~``. Thus, for example,"
-msgstr ""
+msgstr "テキストを ``~~`` で囲むことで、そのテキストに取り消し線をかけることができます。たとえば、"
 
 #: ../../users-guide.rst:3437
 msgid "Superscripts and subscripts"
-msgstr ""
+msgstr "上付き文字と下付き文字"
 
 #: ../../users-guide.rst:3440
 msgid "Extension: ``superscript``, ``subscript``"
-msgstr ""
+msgstr "拡張: ``superscript`` , ``subscript``"
 
 #: ../../users-guide.rst:3442
 msgid ""
 "Superscripts may be written by surrounding the superscripted text by ``^`` "
 "characters; subscripts may be written by surrounding the subscripted text by"
 " ``~`` characters. Thus, for example,"
-msgstr ""
+msgstr "``^`` で囲まれた文字列は、上付き文字に変換されます。また、 ``~`` で囲まれた文字列は、下付き文字に変換されます。たとえば、"
 
 #: ../../users-guide.rst:3450
 msgid ""
@@ -5172,24 +5511,29 @@ msgid ""
 "want the letter P with ‘a cat’ in subscripts, use ``P~a\\ cat~``, not ``P~a "
 "cat~``."
 msgstr ""
+"もしも空白文字を含めた文字列を上付き文字もしくは下付き文字にしたい場合は、その空白文字は、バックスラッシュによってエスケープされる必要があります "
+"(この機能は、 ``~`` や ``^`` を文章中で使用しているときに、意図せず上付き文字・下付き文字に変換されるのを防ぎます) "
+"。たとえば、もしも'a cat'を下付き文字にもつPという文字を出力したいならば、``P~a cat~`` ではなく、 ``P~a\\ cat~`` "
+"と書く必要があります。"
 
 #: ../../users-guide.rst:3457
 msgid "Verbatim"
-msgstr ""
+msgstr "そのまま文字通りの出力 (Verbatim)"
 
 #: ../../users-guide.rst:3459
 msgid "To make a short span of text verbatim, put it inside backticks:"
-msgstr ""
+msgstr "短いテキストを、そのまま文字通り出力したい場合は、バッククォートで囲みます: "
 
 #: ../../users-guide.rst:3465
 msgid "If the verbatim text includes a backtick, use double backticks:"
-msgstr ""
+msgstr "もしも、バッククォートも含めた文字列をそのまま文字通り出力したい場合は、2重のバッククォートで囲みます: "
 
 #: ../../users-guide.rst:3471
 msgid ""
 "(The spaces after the opening backticks and before the closing backticks "
 "will be ignored.)"
 msgstr ""
+"(開きのバッククォート(左側のバッククォート)の直後の空白文字、および閉じのバッククォート(右側のバッククォート)の直前の空白文字は無視されます。)"
 
 #: ../../users-guide.rst:3474
 msgid ""
@@ -5197,42 +5541,44 @@ msgid ""
 " backticks (optionally followed by a space) and ends with a string of the "
 "same number of backticks (optionally preceded by a space)."
 msgstr ""
+"一般則として、連続したバッククォートの組で囲まれた文字列は、そのまま文字通り出力されます(開きと閉じのバッククォートの直前・直後にあるスペースは無視されます)。このとき、開きのバッククォートと閉じのバッククォートの数は同じである必要があります。"
 
 #: ../../users-guide.rst:3478
 msgid ""
 "Note that backslash-escapes (and other Markdown constructs) do not work in "
 "verbatim contexts:"
 msgstr ""
+"バックスラッシュによるエスケープ (および、その他のMarkdown修飾記法) は、そのまま文字通りの出力を行っているときには有効になりません: "
 
 #: ../../users-guide.rst:3486
 msgid "Extension: ``inline_code_attributes``"
-msgstr ""
+msgstr "拡張: ``inline_code_attributes``"
 
 #: ../../users-guide.rst:3488
 msgid ""
 "Attributes can be attached to verbatim text, just as with `fenced code "
 "blocks`_:"
-msgstr ""
+msgstr "そのまま文字通りの出力するテキストに対して、 `fenced code blocks`_ と同様に、属性を与えることができます: "
 
 #: ../../users-guide.rst:3496
 msgid "Small caps"
-msgstr ""
+msgstr "スモールキャピタル"
 
 #: ../../users-guide.rst:3498
 msgid "To write small caps, use the ``smallcaps`` class:"
-msgstr ""
+msgstr "スモールキャピタルを適用したい場合は、 ``smallcaps`` クラスを使用してください: "
 
 #: ../../users-guide.rst:3504
 msgid "Or, without the ``bracketed_spans`` extension:"
-msgstr ""
+msgstr "もしくは、 ``bracketed_spans`` 拡張機能をオフにして以下のように記述することも可能です: "
 
 #: ../../users-guide.rst:3510
 msgid "For compatibility with other Markdown flavors, CSS is also supported:"
-msgstr ""
+msgstr "その他のMarkdown方言との互換性のため、CSSの使用も可能です: "
 
 #: ../../users-guide.rst:3516
 msgid "This will work in all output formats that support small caps."
-msgstr ""
+msgstr "この方法は、スモールキャピタルを利用可能なすべての出力形式で使用可能です。"
 
 #: ../../users-guide.rst:3519
 msgid "Math"
@@ -5248,6 +5594,13 @@ msgid ""
 "in literal ``$`` characters, backslash-escape them and they won’t be treated"
 " as math delimiters."
 msgstr ""
+"2つの ``$`` 記号で囲まれた文字列は、TeX数式として扱われます。TeX数式として扱いたいとき、開きの ``$`` (つまり左側の ``$`` )"
+" 記号の直後には、非空白文字が続く必要があります。逆に言えば、 ``$`` "
+"記号のすぐ後に空白文字が来た場合は、TeX数式として扱われません。同様に、閉じの ``$`` (つまり右側の ``$`` ) "
+"記号は、直前に非空白文字が続いている必要があります。また、 ``$`` 記号の直後に数字が続く場合は、閉じの ``$`` "
+"として扱われません。これにより、 ``$20,000`` や ``$30,000`` は数式として扱われません。もし何らかの理由で文章の末尾に "
+"``$`` 記号を入れなければならないときは、バックスラッシュによってエスケープしてください。これにより、その ``$`` "
+"記号は、TeX数式の区切り文字として扱われなくなります。"
 
 #: ../../users-guide.rst:3532
 msgid ""
@@ -5257,23 +5610,27 @@ msgstr "TeX 数式はすべての出力形式で出力されます。どのよ�
 
 #: ../../users-guide.rst:3536
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../../users-guide.rst:3536
 msgid ""
 "It will appear verbatim surrounded by ``\\(...\\)`` (for inline math) or "
 "``\\[...\\]`` (for display math)."
 msgstr ""
+"``\\( ... \\)`` 中のテキスト(インライン数式の場合)、もしくは  ``\\[ ... \\]`` "
+"中のテキスト(ディスプレイ数式の場合)は、そのまま文字通り出力されます。"
 
 #: ../../users-guide.rst:3539
 msgid "Markdown, Emacs Org mode, ConTeXt, ZimWiki"
-msgstr ""
+msgstr "Markdown, Emacs Org mode, ConTeXt, ZimWiki"
 
 #: ../../users-guide.rst:3539
 msgid ""
 "It will appear verbatim surrounded by ``$...$`` (for inline math) or "
 "``$$...$$`` (for display math)."
 msgstr ""
+"``$`` 記号で囲まれたもの(インライン数式の場合)、もしくは ``$$`` "
+"記号で囲まれたもの(ディスプレイ数式の場合)が、そのまま文字通り出力されます。"
 
 #: ../../users-guide.rst:3541
 msgid "XWiki"
@@ -5281,7 +5638,7 @@ msgstr "XWiki"
 
 #: ../../users-guide.rst:3542
 msgid "It will appear verbatim surrounded by ``{{formula}}..{{/formula}}``."
-msgstr ""
+msgstr "``{{formula}} .. {{/formula}}`` 中のテキストは、そのまま文字通り出力されます。"
 
 #: ../../users-guide.rst:3543
 msgid "reStructuredText"
@@ -5293,7 +5650,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3549
 msgid "AsciiDoc"
-msgstr ""
+msgstr "AsciiDoc"
 
 #: ../../users-guide.rst:3546
 msgid ""
@@ -5303,18 +5660,22 @@ msgid ""
 "format (``-t asciidoctor``) the LaTex delimiters (``$..$`` and ``\\[..\\]``)"
 " are omitted."
 msgstr ""
+"AsciiDoc出力形式の場合 (``-t asciidoc``)、 ``latexmath:[$ ... $]`` "
+"中のテキスト(インライン数式の場合)、もしくは ``[latexmath]++++\\[ ... \\]+++`` "
+"中のテキスト(ディスプレイ数式の場合)が、そのまま文字通り出力されます。AsciiDoctor出力形式の場合 (``-t "
+"asciidoctor``)、LaTeXの区切り文字 (``$ .. $`` および ``\\[ .. \\]``)は省略されます。"
 
 #: ../../users-guide.rst:3551
 msgid "Texinfo"
-msgstr ""
+msgstr "Texinfo"
 
 #: ../../users-guide.rst:3552
 msgid "It will be rendered inside a ``@math`` command."
-msgstr ""
+msgstr "``@math`` コマンドに埋め込む形で生成されます。"
 
 #: ../../users-guide.rst:3553
 msgid "roff man"
-msgstr ""
+msgstr "roff, man"
 
 #: ../../users-guide.rst:3554
 msgid "It will be rendered verbatim without ``$``\\ ’s."
@@ -5322,37 +5683,37 @@ msgstr ""
 
 #: ../../users-guide.rst:3555
 msgid "MediaWiki, DokuWiki"
-msgstr ""
+msgstr "MediaWiki, DokuWiki"
 
 #: ../../users-guide.rst:3556
 msgid "It will be rendered inside ``<math>`` tags."
-msgstr ""
+msgstr "``<math>`` タグで囲まれて生成されます。"
 
 #: ../../users-guide.rst:3557
 msgid "Textile"
-msgstr ""
+msgstr "Textile"
 
 #: ../../users-guide.rst:3558
 msgid "It will be rendered inside ``<span class=\"math\">`` tags."
-msgstr ""
+msgstr "``<span class=\"math\">`` で囲まれて生成されます。"
 
 #: ../../users-guide.rst:3560
 msgid "RTF, OpenDocument"
-msgstr ""
+msgstr "RTF, OpenDocument"
 
 #: ../../users-guide.rst:3560
 msgid ""
 "It will be rendered, if possible, using Unicode characters, and will "
 "otherwise appear verbatim."
-msgstr ""
+msgstr "可能であれば、Unicode文字で生成されます。そうでなければ、そのまま文字通りに出力されます。"
 
 #: ../../users-guide.rst:3563
 msgid "It will be rendered, if possible, using MathML."
-msgstr ""
+msgstr "可能であれば、MathMLで出力されます。"
 
 #: ../../users-guide.rst:3566
 msgid "DocBook"
-msgstr ""
+msgstr "DocBook"
 
 #: ../../users-guide.rst:3565
 msgid ""
@@ -5360,14 +5721,16 @@ msgid ""
 "``inlineequation`` or ``informalequation`` tag. Otherwise it will be "
 "rendered, if possible, using Unicode characters."
 msgstr ""
+"``--mathml`` オプションが指定された場合は、MathMLを用いて ``inlineequation`` もしくは "
+"``informalequation`` タグに囲まれて生成されます。そうでなければ、可能な限りUnicode文字で生成されます。"
 
 #: ../../users-guide.rst:3569
 msgid "It will be rendered using OMML math markup."
-msgstr ""
+msgstr "OMML 数式マークアップ形式で出力されます。"
 
 #: ../../users-guide.rst:3572
 msgid "FictionBook2"
-msgstr ""
+msgstr "FictionBook2"
 
 #: ../../users-guide.rst:3571
 msgid ""
@@ -5375,20 +5738,25 @@ msgid ""
 "CodeCogs or other compatible web service, downloaded and embedded in the "
 "e-book. Otherwise, they will appear verbatim."
 msgstr ""
+"``--webtex`` "
+"オプションが指定された場合は、数式はCodeCogsやその他の互換性のあるWebサービスを用いて、画像として生成されます。生成された画像は"
+"、ダウンロードされてe-bookに埋め込まれます。そうでなければ、そのまま文字通りに出力されます。"
 
 #: ../../users-guide.rst:3576
 msgid "HTML, Slidy, DZSlides, S5, EPUB"
-msgstr ""
+msgstr "HTML, Slidy, DZSlides, S5, EPUB"
 
 #: ../../users-guide.rst:3575
 msgid ""
 "The way math is rendered in HTML will depend on the command-line options "
 "selected. Therefore see `Math rendering in HTML`_ above."
 msgstr ""
+"HTMLにおける数式の生成方法は、選ばれたコマンドラインオプションに依存します。上述の `Math rendering in HTML`_ "
+"を参照してください。"
 
 #: ../../users-guide.rst:3579
 msgid "Raw HTML"
-msgstr ""
+msgstr "生のHTML"
 
 #: ../../users-guide.rst:3584
 msgid ""
@@ -5398,6 +5766,9 @@ msgid ""
 "allows it, but it has been made an extension so that it can be disabled if "
 "desired.)"
 msgstr ""
+"Markdownでは、文書中のどこにでも生のHTML (もしくはDocBook) 記法を挿入できます (ただし、コードブロックやインラインコードなど、 "
+"``<``, ``>`` および ``&`` がそのまま(文字通り)変換されるようなコンテキストは除きます) "
+"。(これは、実際は拡張機能ではなく、標準のMarkdownにおいても可能な機能です。しかし、ユーザが望んだ時にオフにできるように、この機能は拡張機能として実装されています。)"
 
 #: ../../users-guide.rst:3590
 msgid ""
@@ -5405,12 +5776,17 @@ msgid ""
 "DZSlides, EPUB, Markdown, CommonMark, Emacs Org mode, and Textile output, "
 "and suppressed in other formats."
 msgstr ""
+"生のHTMLは、HTML, S5, Slidy, Slideous, DZslides, EPUB, Markdown, CommonMark, "
+"Emacs Org mode, およびTextile "
+"フォーマットで出力する場合は、そのまま何もされずに出力されます。これ以外のフォーマットでは、出力されません。"
 
 #: ../../users-guide.rst:3594
 msgid ""
 "For a more explicit way of including raw HTML in a Markdown document, see "
 "the ```raw_attribute`` extension`_."
 msgstr ""
+"生のHTML記法をMarkdown文書に挿入するにあたって、より明示的な方法を知りたい場合は、 ```raw_attribute`` "
+"extension`_ を参照してください。"
 
 #: ../../users-guide.rst:3597
 msgid ""
@@ -5420,6 +5796,9 @@ msgid ""
 " is disabled, tables will be rendered with HTML syntax if they cannot use "
 "pipe syntax."
 msgstr ""
+"CommonMark形式では、 ``raw_html`` 拡張が追加されている場合、上付き文字、下付き文字、取り消し線、およびスモールキャピタルがHTMLに変換されます。それ以外の場合、プレーンテキストに変換されます。 ``raw_html`` 拡張が無効になっていたとしても、表はHTML構文にレンダリングされることに注意してください。\n"
+"\n"
+"(訳注: スモールキャピタルとは、小文字の英字を、通常の大文字よりも小さく組んだタイポグラフィのこと。詳細は `Wikipedia <https://ja.wikipedia.org/wiki/スモールキャピタル>`_ を参照のこと。)"
 
 #: ../../users-guide.rst:3606
 msgid ""
@@ -5429,6 +5808,8 @@ msgid ""
 "everything is interpreted as HTML, not Markdown; so (for example), ``*`` "
 "does not signify emphasis."
 msgstr ""
+"標準Markdownでは、HTML\"ブロック\"を文書中に置くことができます。HTMLブロックとは、空白行で周囲のテキストから分割されている必要があります。また、開始タグと終了タグで正しく囲まれ、すべて左寄せで書かれている必要があります。HTMLブロック内では、すべての要素がMarkdownではなくHTMLとして解釈されます。そのため(たとえば)、"
+" HTMLブロック内の ``*`` は、強調記号として機能しません。"
 
 #: ../../users-guide.rst:3612
 msgid ""
@@ -5436,20 +5817,24 @@ msgid ""
 "default, pandoc interprets material between HTML block tags as Markdown. "
 "Thus, for example, pandoc will turn"
 msgstr ""
+"``markdown_strict`` "
+"形式を用いた場合、Pandocはこのように動作します。しかし、デフォルトでは、PandocはHTMLブロックタグ内の内容を、Markdownとして解釈します。すなわち、Pandocは、以下に示したような内容"
 
 #: ../../users-guide.rst:3625
 msgid "into"
-msgstr ""
+msgstr "を"
 
 #: ../../users-guide.rst:3636
 msgid "whereas ``Markdown.pl`` will preserve it as is."
-msgstr ""
+msgstr "へと変換します。一方で、 ``Markdown.pl`` は、上の例のようにMarkdownとして解釈した変換を行わないでしょう。"
 
 #: ../../users-guide.rst:3638
 msgid ""
 "There is one exception to this rule: text between ``<script>`` and "
 "``<style>`` tags is not interpreted as Markdown."
 msgstr ""
+"ただし、このルールにはひとつだけ例外があります。 ``<script>`` および ``<style>`` "
+"タグ内のテキストは、Markdownとして解釈されません。"
 
 #: ../../users-guide.rst:3641
 msgid ""
@@ -5458,6 +5843,8 @@ msgid ""
 "text with ``<div>`` tags without preventing it from being interpreted as "
 "Markdown."
 msgstr ""
+"標準Markdownを発展させたこの方法によって、HTMLブロック要素とMarkdownとを混在させることが容易になります。たとえば、Markdownとして解釈されたくないテキストを、``div``"
+" タグ内に置くことが可能になります。"
 
 #: ../../users-guide.rst:3649
 msgid ""
@@ -5510,7 +5897,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3698
 msgid "Extension: ``raw_attribute``"
-msgstr ""
+msgstr "拡張: ``raw_attribute``"
 
 #: ../../users-guide.rst:3700
 msgid ""
@@ -5552,7 +5939,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3744
 msgid "LaTeX macros"
-msgstr ""
+msgstr "LaTeX マクロ"
 
 #: ../../users-guide.rst:3749
 msgid ""
@@ -5560,6 +5947,8 @@ msgid ""
 "and apply the resulting macros to all LaTeX math and raw LaTeX. So, for "
 "example, the following will work in all output formats, not just LaTeX:"
 msgstr ""
+"この拡張機能が有効なとき、Pandocは、LaTeXマクロ定義を解析し、すべてのLaTeX数式および生のLaTeXに対してマクロを実行します。そのため、以下の例では、LaTeX\n"
+"だけで無くすべての出力形式でマクロが機能します:"
 
 #: ../../users-guide.rst:3760
 msgid ""
@@ -5582,21 +5971,21 @@ msgstr ""
 
 #: ../../users-guide.rst:3775
 msgid "Markdown allows links to be specified in several ways."
-msgstr ""
+msgstr "Markdownでは、リンクを指定するためにいくつかの手法が存在します。"
 
 #: ../../users-guide.rst:3778
 msgid "Automatic links"
-msgstr ""
+msgstr "自動リンク"
 
 #: ../../users-guide.rst:3780
 msgid ""
 "If you enclose a URL or email address in pointy brackets, it will become a "
 "link:"
-msgstr ""
+msgstr "山括弧 `< ... >` で囲まれたURLもしくはEメールアドレスは、自動的にリンクへと変換されます:"
 
 #: ../../users-guide.rst:3789
 msgid "Inline links"
-msgstr ""
+msgstr "インラインリンク"
 
 #: ../../users-guide.rst:3791
 msgid ""
@@ -5604,6 +5993,9 @@ msgid ""
 " URL in parentheses. (Optionally, the URL can be followed by a link title, "
 "in quotes.)"
 msgstr ""
+"インラインリンクは、角括弧 ``[ ... ]`` で囲まれたリンクテキストと、その直後に置かれる丸括弧 ``( ... )`` "
+"で囲まれたURLから構成されます(オプションとして、URLの後にクォーテーションマーク ``\" ... \"`` "
+"で囲んだリンクタイトルを置くこともできます)。"
 
 #: ../../users-guide.rst:3800
 msgid ""
@@ -5611,16 +6003,18 @@ msgid ""
 " The link text can contain formatting (such as emphasis), but the title "
 "cannot."
 msgstr ""
+"角括弧と丸括弧の間にスペースを置いてはいけません。角括弧内のリンクテキストは(斜体や太字などの)書式設定が可能ですが、リンクタイトルには書式設定ができません。"
 
 #: ../../users-guide.rst:3804
 msgid ""
 "Email addresses in inline links are not autodetected, so they have to be "
 "prefixed with ``mailto``:"
 msgstr ""
+"Emailアドレスは自動検出されません。Emaiアドレスをインラインリンクとして設定するためには、 ``mailto:`` を前置してください:"
 
 #: ../../users-guide.rst:3812
 msgid "Reference links"
-msgstr ""
+msgstr "参照リンク"
 
 #: ../../users-guide.rst:3814
 msgid ""
@@ -5628,6 +6022,8 @@ msgid ""
 "definition, which may occur elsewhere in the document (either before or "
 "after the link)."
 msgstr ""
+"*明示的* "
+"な参照リンクは、リンクそのものとリンク定義という2つの部分からなります。この2つの部分は連続している必要はなく、分割してドキュメント内のどこにでも配置することができます(リンクよりも前にリンク定義を置くことも、リンクの後にリンク定義を置くこともできます)。"
 
 #: ../../users-guide.rst:3818
 msgid ""
@@ -5640,26 +6036,30 @@ msgid ""
 "``citations`` extension is enabled): citations take precedence over link "
 "labels."
 msgstr ""
+"明示的な参照リンクそのものは、角括弧 ``[ ... ]`` で囲まれたリンクテキストと、その直後に置かれる各括弧で囲まれたリンクラベルから構成されます"
+" (``spaced_reference_links`` "
+"拡張を有効にしない限り、リンクテキストとリンクラベルの間にスペースを入れることはできません)。リンク定義は、角括弧で囲まれたラベルテキストと、その直後に置かれるコロンとスペース、およびURから構成されます。リンク定義には、オプションでリンクタイトルを与えることができ、これは、URLの後に1つのスペースを置いてから、クォーテーションマークもしくは丸括弧で囲んだリンクタイトルのテキストを置くことで設定されます。リンクラベルとして、(``citations``"
+" 拡張が有効になっている場合、) 引用文献として解釈されるようなテキストを置いてはなりません。引用文献は、リンクラベルより優先的に処理されます。"
 
 #: ../../users-guide.rst:3827
 msgid "Here are some examples:"
-msgstr ""
+msgstr "いくつか例を示します:"
 
 #: ../../users-guide.rst:3836
 msgid "The URL may optionally be surrounded by angle brackets:"
-msgstr ""
+msgstr "URLを山括弧で囲むことも可能です:"
 
 #: ../../users-guide.rst:3842
 msgid "The title may go on the next line:"
-msgstr ""
+msgstr "リンクタイトルが次の行に続いても構いません:"
 
 #: ../../users-guide.rst:3849
 msgid "Note that link labels are not case sensitive. So, this will work:"
-msgstr ""
+msgstr "リンクラベルでは、大文字小文字の区別がされないことに注意してください。たとえば、この例では参照リンクが正常に機能します:"
 
 #: ../../users-guide.rst:3857
 msgid "In an *implicit* reference link, the second pair of brackets is empty:"
-msgstr ""
+msgstr "リンクラベルを設定する2つめの角括弧内を空にすると、 *暗黙的な* 参照リンクになります:"
 
 #: ../../users-guide.rst:3865
 msgid ""
@@ -5668,16 +6068,18 @@ msgid ""
 "block quotes. Pandoc lifts this arbitrary seeming restriction. So the "
 "following is fine in pandoc, though not in most other implementations:"
 msgstr ""
+"注意: ``Markdown.pl`` "
+"やその他ほとんどのMarkdown実装では、リンク定義をリストや引用ブロックなどの中にネストして置くことができません。しかし、Pandocではこの制限がありません。そのため、以下の例は、Pandoc以外の多くの実装では機能しませんが、Pandocでは参照リンクとして処理されます。"
 
 #: ../../users-guide.rst:3878
 msgid "Extension: ``shortcut_reference_links``"
-msgstr ""
+msgstr "拡張: ``shortcut_reference_links``"
 
 #: ../../users-guide.rst:3880
 msgid ""
 "In a *shortcut* reference link, the second pair of brackets may be omitted "
 "entirely:"
-msgstr ""
+msgstr "*省略* (*shortcut*) 参照リンクでは、リンクラベルを設定する2つめの各括弧を完全に省略できます:"
 
 #: ../../users-guide.rst:3890
 msgid "Internal links"
@@ -5783,7 +6185,7 @@ msgstr ""
 
 #: ../../users-guide.rst:3987
 msgid "HTML: ``<img href=\"file.jpg\" style=\"width: 50%;\" />``"
-msgstr ""
+msgstr "HTML: ``<img href=\"file.jpg\" style=\"width: 50%;\" />``"
 
 #: ../../users-guide.rst:3988
 msgid ""
@@ -5792,10 +6194,13 @@ msgid ""
 "(If you’re using a custom template, you need to configure ``graphicx`` as in"
 " the default template.)"
 msgstr ""
+"LaTeX: "
+"``\\includegraphics[width=0.5\\textwidth,height=\\textheight]{file.jpg}`` "
+"(カスタムテンプレートを利用している場合、デフォルトのテンプレートと同じように ``graphicx`` を設定する必要があります)"
 
 #: ../../users-guide.rst:3992
 msgid "ConTeXt: ``\\externalfigure[file.jpg][width=0.5\\textwidth]``"
-msgstr ""
+msgstr "ConTeXt: ``\\externalfigure[file.jpg][width=0.5\\textwidth]``"
 
 #: ../../users-guide.rst:3994
 msgid ""
@@ -5867,7 +6272,7 @@ msgstr "脚注"
 
 #: ../../users-guide.rst:4069
 msgid "Pandoc’s Markdown allows footnotes, using the following syntax:"
-msgstr "Pandoc’s Markdown では次の構文を使って脚注を使えます"
+msgstr "Pandoc’s Markdown では、次の構文によって脚注を使うことができます:"
 
 #: ../../users-guide.rst:4091
 msgid ""
@@ -5876,6 +6281,7 @@ msgid ""
 "reference with the note itself; in the output, footnotes will be numbered "
 "sequentially."
 msgstr ""
+"脚注の識別子には、スペース、タブ文字、および改行文字を使用することができません。識別子は、脚注がつけられた位置と脚注の内容とを関連づけるためにだけ用いられます。出力では、脚注に順番に番号が振られます。"
 
 #: ../../users-guide.rst:4096
 msgid ""
@@ -5884,26 +6290,29 @@ msgid ""
 "quotes, tables, etc.). Each footnote should be separated from surrounding "
 "content (including other footnotes) by blank lines."
 msgstr ""
+"脚注の内容は、必ずしも文書の末尾に置かれている必要はありません。脚注は、ブロック(リスト、引用ブロック、テーブルなど)の中以外ならば、どこに置いても構いません。それぞれの脚注は、直前と直後に空白行を置くことによって、(他の脚注も含めた)周囲のコンテンツから区切られている必要があります。"
 
 #: ../../users-guide.rst:4104
 msgid ""
 "Inline footnotes are also allowed (though, unlike regular notes, they cannot"
 " contain multiple paragraphs). The syntax is as follows:"
-msgstr ""
+msgstr "インライン脚注も使用可能です (ただし、これは通常の脚注とは異なり、脚注の内容を複数行に渡らせることはできません)。構文を以下に示します:"
 
 #: ../../users-guide.rst:4113
 msgid "Inline and regular footnotes may be mixed freely."
-msgstr ""
+msgstr "インライン脚注と通常の脚注は混在しても構いません。"
 
 #: ../../users-guide.rst:4116
 msgid "Citations"
-msgstr ""
+msgstr "引用"
 
 #: ../../users-guide.rst:4121
 msgid ""
 "Using an external filter, ``pandoc-citeproc``, pandoc can automatically "
 "generate citations and a bibliography in a number of styles. Basic usage is"
 msgstr ""
+"Pandocでは、外部フィルター  ``pandoc-citeproc`` "
+"を用いることで、引用および参考文献を様々なスタイルで自動的に生成できます。基本的な使い方は、"
 
 #: ../../users-guide.rst:4129
 msgid ""
@@ -5914,42 +6323,46 @@ msgid ""
 "array, if you want to use multiple bibliography files. The bibliography may "
 "have any of these formats:"
 msgstr ""
+"この機能を使用するためには、YAMLメタデータの ``bibliography`` メタデータフィールド、もしくは ``--bibliography``"
+" コマンドライン引数によって、参考文献ファイルを指定する必要があります。複数の参考文献ファイルを使用したい場合は、複数の "
+"``--bibliography`` 引数を指定するか、 ``bibliography`` "
+"メタデータフィールドをYAML配列で指定してください。参考文献ファイルとして、以下のフォーマットが使用可能です:"
 
 #: ../../users-guide.rst:4137
 msgid "Format"
-msgstr ""
+msgstr "フォーマット"
 
 #: ../../users-guide.rst:4137
 msgid "File extension"
-msgstr ""
+msgstr "拡張子"
 
 #: ../../users-guide.rst:4139
 msgid "BibLaTeX"
-msgstr ""
+msgstr "BibLaTeX"
 
 #: ../../users-guide.rst:4139
 msgid ".bib"
-msgstr ""
+msgstr ".bib"
 
 #: ../../users-guide.rst:4140
 msgid "BibTeX"
-msgstr ""
+msgstr "BibTeX"
 
 #: ../../users-guide.rst:4140
 msgid ".bibtex"
-msgstr ""
+msgstr ".bibtex"
 
 #: ../../users-guide.rst:4141
 msgid "Copac"
-msgstr ""
+msgstr "Copac"
 
 #: ../../users-guide.rst:4141
 msgid ".copac"
-msgstr ""
+msgstr ".copac"
 
 #: ../../users-guide.rst:4142
 msgid "CSL JSON"
-msgstr ""
+msgstr "CSL JSON"
 
 #: ../../users-guide.rst:4142
 msgid ".json"
@@ -5957,71 +6370,75 @@ msgstr ".json"
 
 #: ../../users-guide.rst:4143
 msgid "CSL YAML"
-msgstr ""
+msgstr "CSL YAML"
 
 #: ../../users-guide.rst:4143
 msgid ".yaml"
-msgstr ""
+msgstr ".yaml"
 
 #: ../../users-guide.rst:4144
 msgid "EndNote"
-msgstr ""
+msgstr "EndNote"
 
 #: ../../users-guide.rst:4144
 msgid ".enl"
-msgstr ""
+msgstr ".enl"
 
 #: ../../users-guide.rst:4145
 msgid "EndNote XML"
-msgstr ""
+msgstr "EndNote XML"
 
 #: ../../users-guide.rst:4145
 msgid ".xml"
-msgstr ""
+msgstr ".xml"
 
 #: ../../users-guide.rst:4146
 msgid "ISI"
-msgstr ""
+msgstr "ISI"
 
 #: ../../users-guide.rst:4146
 msgid ".wos"
-msgstr ""
+msgstr ".wos"
 
 #: ../../users-guide.rst:4147
 msgid "MEDLINE"
-msgstr ""
+msgstr "MEDLINE"
 
 #: ../../users-guide.rst:4147
 msgid ".medline"
-msgstr ""
+msgstr ".medline"
 
 #: ../../users-guide.rst:4148
 msgid "MODS"
-msgstr ""
+msgstr "MODS"
 
 #: ../../users-guide.rst:4148
 msgid ".mods"
-msgstr ""
+msgstr ".mods"
 
 #: ../../users-guide.rst:4149
 msgid "RIS"
-msgstr ""
+msgstr "RIS"
 
 #: ../../users-guide.rst:4149
 msgid ".ris"
-msgstr ""
+msgstr ".ris"
 
 #: ../../users-guide.rst:4152
 msgid ""
 "Note that ``.bib`` can be used with both BibTeX and BibLaTeX files; use "
 "``.bibtex`` to force BibTeX."
 msgstr ""
+"``.bib`` 拡張子は、BibTeXファイルとBibLaTeXファイルの両方に使用されていますが、BibTeXを強制的に用いる場合は、 "
+"``.bibtex`` 拡張子を使用してください。"
 
 #: ../../users-guide.rst:4155
 msgid ""
 "Note that ``pandoc-citeproc --bib2json`` and ``pandoc-citeproc --bib2yaml`` "
 "can produce ``.json`` and ``.yaml`` files from any of the supported formats."
 msgstr ""
+"``pandoc-citeproc --bib2json`` および ``pandoc-citeproc --bib2yaml`` "
+"は、上述した形式の参考文献ファイルを、それぞれ ``.json`` および ``.yaml`` に変換したファイルを生成します。"
 
 #: ../../users-guide.rst:4159
 msgid ""
@@ -6029,61 +6446,71 @@ msgid ""
 "subset of LaTeX markup; in CSL YAML databases, pandoc Markdown; and in CSL "
 "JSON databases, an `HTML-like markup`_:"
 msgstr ""
+"インフィールド・マークアップ (In-field markup): 以下の形式の参考文献ファイル中では、マークアップ修飾が可能です。 "
+"BibTeX形式およびBibLaTeX形式のファイルではLaTeXマークアップの一部が、CSL YAML形式のファイルではpandoc "
+"Markdownが、そしてCLS JSON形式のファイルでは、以下に示した `HTML-like markup`_ が使用可能です:"
 
 #: ../../users-guide.rst:4163
 msgid "``<i>...</i>``"
-msgstr ""
+msgstr "``<i>...</i>``"
 
 #: ../../users-guide.rst:4164
 msgid "italics"
-msgstr ""
+msgstr "斜体"
 
 #: ../../users-guide.rst:4165
 msgid "``<b>...</b>``"
-msgstr ""
+msgstr "``<b>...</b>``"
 
 #: ../../users-guide.rst:4166
 msgid "bold"
-msgstr ""
+msgstr "太字"
 
 #: ../../users-guide.rst:4167
 msgid ""
 "``<span style=\"font-variant:small-caps;\">...</span>`` or ``<sc>...</sc>``"
 msgstr ""
+"``<span style=\"font-variant:small-caps;\">...</span>`` もしくは "
+"``<sc>...</sc>``"
 
 #: ../../users-guide.rst:4168
 msgid "small capitals"
-msgstr ""
+msgstr "スモールキャピタル"
 
 #: ../../users-guide.rst:4169
 msgid "``<sub>...</sub>``"
-msgstr ""
+msgstr "``<sub>...</sub>``"
 
 #: ../../users-guide.rst:4170
 msgid "subscript"
-msgstr ""
+msgstr "下付き文字"
 
 #: ../../users-guide.rst:4171
 msgid "``<sup>...</sup>``"
-msgstr ""
+msgstr "``<sup>...</sup>``"
 
 #: ../../users-guide.rst:4172
 msgid "superscript"
-msgstr ""
+msgstr "上付き文字"
 
 #: ../../users-guide.rst:4174
 msgid "``<span class=\"nocase\">...</span>``"
-msgstr ""
+msgstr "``<span class=\"nocase\">...</span>``"
 
 #: ../../users-guide.rst:4174
 msgid "prevent a phrase from being capitalized as title case"
 msgstr ""
+"タイトルケース表記において、タグで囲まれたテキストの語頭を大文字にすることを防ぐ\n"
+"\n"
+"(訳注: 通常の英文では、文頭の単語と固有名詞の語頭文字のみ大文字にする。これは、センテンスケースと呼ばれる。一方，一部の単語(\"of\"や\"on\"などの3文字以下の前置詞や冠詞など)以外の語頭文字をすべて大文字にする表記をタイトルケースと呼ぶ。CSLファイルの設定によっては、論文タイトルや雑誌名をタイトルケース表記に変換する場合があるが、研究領域によっては、タイトルケース表記であっても語頭文字を小文字にするべき場合がある(たとえば生物学領域では種名や遺伝子名など; *Homo sapiens* が正しい表記であり、 *Homo Sapiens* としてはいけない)。このような場合，上述したタグを用いて ``<i>Homo <span class=\"nocase\">sapiens</span></i>``とマークアップするのがよい。)"
 
 #: ../../users-guide.rst:4176
 msgid ""
 "``pandoc-citeproc -j`` and ``-y`` interconvert the CSL JSON and CSL YAML "
 "formats as far as possible."
 msgstr ""
+"``pandoc-citeproc -j`` および ``pandoc-citeproc -y`` は、それぞれCSL JSONとCSL "
+"YAML形式のファイルを可能な限り相互に変換します。"
 
 #: ../../users-guide.rst:4179
 msgid ""
@@ -6092,12 +6519,18 @@ msgid ""
 "data directly in the ``references`` field of the document’s YAML metadata. "
 "The field should contain an array of YAML-encoded references, for example:"
 msgstr ""
+"``--bibliography`` もしくはYAMLメタデータフィールド ``bibliography`` "
+"を用いて参考文献ファイルを指定するかわりに、文書内のYAMLメタデータフィールド ``references`` "
+"中に直接引用文献データを書くことが可能です。このメタデータフィールドには、YAML形式で書かれた参考文献のリストが配列として記述されている必要があります。たとえば:"
+" "
 
 #: ../../users-guide.rst:4213
 msgid ""
 "(``pandoc-citeproc --bib2yaml`` can produce these from a bibliography file "
 "in one of the supported formats.)"
 msgstr ""
+"( ``pandoc-citeproc --bib2yaml`` "
+"によって、上述した形式の参考文献ファイルから、このようなYAML形式の出力を得ることができます。)"
 
 #: ../../users-guide.rst:4216
 msgid ""
@@ -6108,12 +6541,18 @@ msgid ""
 "Style`_ author-date format. The CSL project provides further information on "
 "`finding and editing styles`_."
 msgstr ""
+"引用と参照は、 `Zotero Style Repository`_ に掲載された `Citation Style Language`_ "
+"でサポートされている任意のスタイルを使用してフォーマットできます。これらのファイルは、 ``--csl`` オプションもしくは ``csl`` "
+"メタデータフィールドを用いて指定してください。既定では、 ``pandoc-citeproc`` は `Chicago Manual of "
+"Style`_ の著者-日付フォーマットを使用します。より詳細な情報は、CSL projectによる `finding and editing "
+"styles`_ を参照してください。"
 
 #: ../../users-guide.rst:4223
 msgid ""
 "To make your citations hyperlinks to the corresponding bibliography entries,"
 " add ``link-citations: true`` to your YAML metadata."
 msgstr ""
+"引用を対応する書誌エントリにハイパーリンクするときは、YAMLメタデータに ``link-citations: true`` を追加してください。"
 
 #: ../../users-guide.rst:4226
 msgid ""
@@ -6124,6 +6563,10 @@ msgid ""
 "alphanumerics, ``_``, and internal punctuation characters "
 "(``:.#$%&-+?<>~/``). Here are some examples:"
 msgstr ""
+"引用は角括弧で囲まれ、それぞれの引用はセミコロンで区切られます。各引用は、データベースによって与えられる引用識別子の直前に '@' "
+"記号を付け加えた引用キーを持ちます。引用キーは、データベースのオプションによっては、接頭語、ロケータ、および接尾語を含んでいるかもしれません。引用キーは、(はじめの"
+" '@' 記号を除くと、)アルファベット、数字、もしくは ``_`` で始まる必要があり、それ以降に、英数字、 ``_`` 、およびいくつかの記号文字 "
+"( ``:.#$%&-+?<>~/`` ) 。以下に引用キーの例を示します:"
 
 #: ../../users-guide.rst:4241
 msgid ""
@@ -6140,6 +6583,17 @@ msgid ""
 "``vol.``/``vols.``; ``¶``/``¶¶``; ``§``/``§§``. If no locator term is used, "
 "“page” is assumed."
 msgstr ""
+"``pandoc-citeproc`` は、 `CSL locale files`_ "
+"で決められたロケータ語を検出します。ロケータとして、省略形もしくは非省略形のどちらかが利用可能です。たとえば ``en-US`` "
+"ロケールでは、ロケータ語は単数形もしくは複数形で書くことができます: ``book``, ``bk.``/``bks.``; ``chapter``, "
+"``chap.``/``chaps.``; ``column``, ``col.``/``cols.``; ``figure``, "
+"``fig.``/``figs.``; ``folio``, ``fol.``/``fols.``; ``number``, "
+"``no.``/``nos.``; ``line``, ``l.``/``ll.``; ``note``, ``n.``/``nn.``; "
+"``opus``, ``op.``/``opp.``; ``page``, ``p.``/``pp.``; ``paragraph``, "
+"``para.``/``paras.``; ``part``, ``pt.``/``pts.``; ``section``, "
+"``sec.``/``secs.``; ``sub verbo``, ``s.v.``/``s.vv.``; ``verse``, "
+"``v.``/``vv.``; ``volume``, ``vol.``/``vols.``; ``¶``/``¶¶``; ``§``/``§§`` "
+"といったように。ロケータ語が事前に設定されていない場合は、与えられたロケータは“ページ”として解釈されます。"
 
 #: ../../users-guide.rst:4254
 msgid ""
@@ -6147,6 +6601,9 @@ msgid ""
 "suffix. In complex cases, the locator can be enclosed in curly braces (using"
 " ``pandoc-citeproc`` 0.15 and higher only):"
 msgstr ""
+"``pandoc-citeproc`` "
+"は、ヒューリスティックな方法でロケータと接尾語を識別します。ロケータと接尾語の区別がつきにくいような複雑な場合は、波括弧で囲むことでロケータを明示することができます"
+" (この機能は  ``pandoc-citeproc`` バージョン0.15 以上で使用可能です):"
 
 #: ../../users-guide.rst:4263
 msgid ""
@@ -6154,16 +6611,18 @@ msgid ""
 " the citation. This can be useful when the author is already mentioned in "
 "the text:"
 msgstr ""
+"マイナス記号 (``-``) を ``@`` "
+"記号の前に置くことで、著者名が表示されなくなります。この記法は、文中ですでに著者名について言及しているときに便利です:"
 
 #: ../../users-guide.rst:4271
 msgid "You can also write an in-text citation, as follows:"
-msgstr ""
+msgstr "引用文献を、括弧書きでなく文中の主語として用いたい場合は、以下のような書き方ができます:"
 
 #: ../../users-guide.rst:4279
 msgid ""
 "If the style calls for a list of works cited, it will be placed in a div "
 "with id ``refs``, if one exists:"
-msgstr ""
+msgstr "CSLによって文献目録の生成が設定されている場合、 ``refs`` idをもつ div があれば、その中に文献目録が生成されます:"
 
 #: ../../users-guide.rst:4287
 msgid ""
@@ -6171,6 +6630,8 @@ msgid ""
 "bibliography can be suppressed by setting ``suppress-bibliography: true`` in"
 " the YAML metadata."
 msgstr ""
+"それ以外の場合は、文献目録は文書の末尾に置かれます。YAMLメタデータで ``suppress-bibliography: true`` "
+"と設定することで、文献目録の生成を無効にできます。"
 
 #: ../../users-guide.rst:4291
 msgid ""
@@ -6179,6 +6640,9 @@ msgid ""
 "beginning of the div with id ``refs`` (if you are using it) or at the end of"
 " your document:"
 msgstr ""
+"文献目録をセクションとして分けて見出しを付けたい場合、メタデータ中の ``reference-section-title`` を設定するか、``refs`` idをもつdivの直前に見出しを置く、もしくは文書の末尾に見出しを置いてください。\n"
+"\n"
+"(訳注: 文書の末尾に\"Reference\"といったような見出しを置くと、その直後に文献目録が生成され、結果的に\"Reference\"というセクションが、文書の末尾に配置されたようになる。)"
 
 #: ../../users-guide.rst:4302
 msgid ""
@@ -6192,7 +6656,7 @@ msgid ""
 "If you want to include items in the bibliography without actually citing "
 "them in the body text, you can define a dummy ``nocite`` metadata field and "
 "put the citations there:"
-msgstr ""
+msgstr "書誌情報を本文中で引用せずに文献目録に加えたい場合、 ``nocite`` メタデータフィールドにダミーの引用を置いてください:"
 
 #: ../../users-guide.rst:4319
 msgid ""
@@ -6200,12 +6664,15 @@ msgid ""
 "but the bibliography will contain entries for ``item1``, ``item2``, and "
 "``item3``."
 msgstr ""
+"この例では、本文には ``item3`` の引用しか生成されませんが、文書末尾に生成される文献目録には、 ``item1``, ``item2`` "
+"および ``item3`` の3つの書誌情報が含まれます。"
 
 #: ../../users-guide.rst:4323
 msgid ""
 "It is possible to create a bibliography with all the citations, whether or "
 "not they appear in the document, by using a wildcard:"
 msgstr ""
+"本文中で引用するかどうかに関わらず、bibliography ファイルに含まれる全ての文献を文献目録として生成したい場合は、ワイルドカードを用います:"
 
 #: ../../users-guide.rst:4333
 msgid ""
@@ -6215,14 +6682,18 @@ msgid ""
 "``pandoc`` invocation. Bear in mind that bibliography files have to be in "
 "respective format (either BibTeX or BibLaTeX)."
 msgstr ""
+"LaTeX出力の場合、 ```natbib```_ もしくは ```biblatex```_ "
+"を用いて引用文献を生成することができます。この場合、上記で概説したように参考文献ファイルを指定し、 ``--natbib`` もしくは "
+"``--biblatex`` "
+"引数を追加してPandocを実行してください。参考文献ファイルは、それぞれの形式(BibTeXまたはBibLaTeXのいずれか)に従っていなければならないことに注意してください。"
 
 #: ../../users-guide.rst:4339
 msgid "For more information, see the `pandoc-citeproc man page`_."
-msgstr ""
+msgstr "詳しくは、 `pandoc-citeproc man page`_ を参照してください。"
 
 #: ../../users-guide.rst:4342
 msgid "Non-pandoc extensions"
-msgstr ""
+msgstr "非Pandoc拡張"
 
 #: ../../users-guide.rst:4344
 msgid ""
@@ -6231,6 +6702,9 @@ msgid ""
 "where ``EXTENSION`` is the name of the extension. Thus, for example, "
 "``markdown+hard_line_breaks`` is Markdown with hard line breaks."
 msgstr ""
+"以下に示したMarkdown構文の拡張機能は、デフォルトのPandocでは有効になっていませんが、フォーマット名に ``+EXTENSION`` "
+"を追加することで、それぞれの拡張機能を有効にできます。ここで、 ``EXTENSION`` は拡張機能の名前を指します。たとえば、 "
+"``markdown+hard_line_breaks`` は、 ``hard_line_breaks`` 拡張を含むMarkdownです。"
 
 #: ../../users-guide.rst:4352
 msgid ""
@@ -6251,25 +6725,27 @@ msgstr ""
 msgid ""
 "Allow a list to occur right after a paragraph, with no intervening blank "
 "space."
-msgstr ""
+msgstr "リストを、段落の直後に空白行なしで置くことを許可します。"
 
 #: ../../users-guide.rst:4373
 msgid ""
 "Selects the pandoc <= 2.0 behavior for parsing lists, so that four spaces "
 "indent are needed for list item continuation paragraphs."
 msgstr ""
+"リスト生成に関するPandoc "
+"バージョン2.0以下の挙動を選択します。この場合、リスト項目が複数行に渡る場合、2行目以降のリスト項目の文頭に4つの空白文字を置く必要があります。"
 
 #: ../../users-guide.rst:4379
 msgid ""
 "Allow whitespace between the two components of a reference link, for "
 "example,"
-msgstr ""
+msgstr "2つの参照リンクの間に、空白文字を置くことを許可します。たとえば、"
 
 #: ../../users-guide.rst:4389
 msgid ""
 "Causes all newlines within a paragraph to be interpreted as hard line breaks"
 " instead of spaces."
-msgstr ""
+msgstr "段落内の全ての改行文字を、空白ではなく強制改行として処理します。"
 
 #: ../../users-guide.rst:4395
 msgid ""
@@ -6278,6 +6754,7 @@ msgid ""
 "Asian languages where spaces are not used between words, but text is divided"
 " into lines for readability."
 msgstr ""
+"段落内の改行を、スペースもしくは強制改行として扱わず、完全に無視します。このオプションは、読みやすくするためにテキストを行に分割して記述するが、単語間にはスペースを置かないような東アジア言語で使用します。"
 
 #: ../../users-guide.rst:4403
 msgid ""
@@ -6286,10 +6763,13 @@ msgid ""
 "wide characters. This is a better choice than ``ignore_line_breaks`` for "
 "texts that include a mix of East Asian wide characters and other characters."
 msgstr ""
+"改行文字が、全角文字が末尾に置かれた行と全角文字で始まる行の間にある場合、その改行をスペースもしくは強制改行として扱わず、完全に無視します。この拡張機能は、全角文字とそれ以外の文字が混在するテキストにおいて、 ``ignore_line_breaks`` よりも適切な選択です。\n"
+"\n"
+"(訳注: 日本語で文書を作成する場合、よほどの理由がない限り、 ``ignore_line_breaks`` よりもこの拡張を有効にするほうが良いだろう。 ``ignore_line_breaks`` は、問答無用で改行文字を無視して文をつなげるが、英文が混じっている文書の場合、\"よしなに\"文をつなげてくれない。)"
 
 #: ../../users-guide.rst:4412
 msgid "Parses textual emojis like ``:smile:`` as Unicode emoticons."
-msgstr ""
+msgstr "``:smile:`` のような絵文字のテキスト表記を、Unicode絵文字アイコンに変換します。"
 
 #: ../../users-guide.rst:4417
 msgid ""
@@ -6298,6 +6778,9 @@ msgid ""
 "TeX math. Note: a drawback of this extension is that it precludes escaping "
 "``(`` and ``[``."
 msgstr ""
+"``\\(`` と ``\\)`` の間のテキストを、TeX インライン数式として扱います。また、 ``\\[`` と ``\\]`` "
+"の間のテキストを、TeX ディスプレイ数式として扱います。注意: この拡張機能を使うと、 ``(`` と ``[`` "
+"のエスケープができなくなるという欠点があります。"
 
 #: ../../users-guide.rst:4425
 msgid ""
@@ -6305,6 +6788,8 @@ msgid ""
 "TeX math, and anything between ``\\\\[`` and ``\\\\]`` to be interpreted as "
 "display TeX math."
 msgstr ""
+"``\\\\(`` と ``\\\\)`` の間のテキストを、TeX インライン数式として扱います。また、 ``\\\\[`` と ``\\\\]`` "
+"の間のテキストを、TeX ディスプレイ数式として扱います。"
 
 #: ../../users-guide.rst:4432
 msgid ""
@@ -6317,7 +6802,7 @@ msgstr ""
 msgid ""
 "Enables a `MultiMarkdown`_ style title block at the top of the document, for"
 " example:"
-msgstr ""
+msgstr "文書のはじめに、 `MultiMarkdown`_ 形式のタイトルブロックを置くことが可能になります。たとえば:"
 
 #: ../../users-guide.rst:4451
 msgid ""
@@ -6325,10 +6810,12 @@ msgid ""
 "or ``yaml_metadata_block`` is enabled, it will take precedence over "
 "``mmd_title_block``."
 msgstr ""
+"詳しくは、 MultiMarkdown のドキュメンテーションを参照してください。 ``pandoc_title_block`` もしくは "
+"``yaml_metadata_block`` 拡張が有効になっている場合、これらの拡張が ``mmd_title_block`` よりも優先されます。"
 
 #: ../../users-guide.rst:4458
 msgid "Parses PHP Markdown Extra abbreviation keys, like"
-msgstr ""
+msgstr "以下に示したような、PHP Markdown Extra の省略表記の記法を処理します"
 
 #: ../../users-guide.rst:4464
 msgid ""
@@ -6341,7 +6828,7 @@ msgstr ""
 msgid ""
 "Makes all absolute URIs into links, even when not surrounded by pointy "
 "braces ``<...>``."
-msgstr ""
+msgstr "山括弧 ``< ... >`` で囲まれていない場合でも、完全なURIをリンクとして処理します。"
 
 #: ../../users-guide.rst:4477
 msgid ""
@@ -6349,6 +6836,8 @@ msgid ""
 "references. This extension should not be confused with the "
 "```link_attributes```_ extension."
 msgstr ""
+"MultiMarkdown形式のリンクおよび画像の参照記法を処理します。この拡張を ```link_attributes```_ "
+"拡張と混同しないように注意してください。"
 
 #: ../../users-guide.rst:4491
 msgid ""
@@ -6382,17 +6871,17 @@ msgstr ""
 
 #: ../../users-guide.rst:4510
 msgid "Markdown variants"
-msgstr ""
+msgstr "Markdown方言"
 
 #: ../../users-guide.rst:4512
 msgid ""
 "In addition to pandoc’s extended Markdown, the following Markdown variants "
 "are supported:"
-msgstr ""
+msgstr "Pandocの拡張マークダウンに加えて、以下のMarkdown方言をサポートしています:"
 
 #: ../../users-guide.rst:4519
 msgid "``markdown_phpextra`` (PHP Markdown Extra)"
-msgstr ""
+msgstr "``markdown_phpextra`` (PHP Markdown Extra)"
 
 #: ../../users-guide.rst:4516
 msgid ""
@@ -6401,10 +6890,14 @@ msgid ""
 "``header_attributes``, ``link_attributes``, ``abbreviations``, "
 "``shortcut_reference_links``, ``spaced_reference_links``."
 msgstr ""
+"``footnotes``, ``pipe_tables``, ``raw_html``, ``markdown_attribute``, "
+"``fenced_code_blocks``, ``definition_lists``, ``intraword_underscores``, "
+"``header_attributes``, ``link_attributes``, ``abbreviations``, "
+"``shortcut_reference_links``, ``spaced_reference_links``."
 
 #: ../../users-guide.rst:4526
 msgid "``markdown_github`` (deprecated GitHub-Flavored Markdown)"
-msgstr ""
+msgstr "``markdown_github`` (廃止されたGitHub-Flavored Markdown)"
 
 #: ../../users-guide.rst:4522 ../../users-guide.rst:4552
 msgid ""
@@ -6414,10 +6907,15 @@ msgid ""
 "``task_lists``, ``emoji``, ``shortcut_reference_links``, "
 "``angle_brackets_escapable``, ``lists_without_preceding_blankline``."
 msgstr ""
+"``pipe_tables``, ``raw_html``, ``fenced_code_blocks``, ``auto_identifiers``,"
+" ``gfm_auto_identifiers``, ``backtick_code_blocks``, ``autolink_bare_uris``,"
+" ``space_in_atx_header``, ``intraword_underscores``, ``strikeout``, "
+"``task_lists``, ``emoji``, ``shortcut_reference_links``, "
+"``angle_brackets_escapable``, ``lists_without_preceding_blankline``."
 
 #: ../../users-guide.rst:4536
 msgid "``markdown_mmd`` (MultiMarkdown)"
-msgstr ""
+msgstr "``markdown_mmd`` (MultiMarkdown)"
 
 #: ../../users-guide.rst:4529
 msgid ""
@@ -6430,21 +6928,32 @@ msgid ""
 "``implicit_figures``, ``superscript``, ``subscript``, "
 "``backtick_code_blocks``, ``spaced_reference_links``, ``raw_attribute``."
 msgstr ""
+"``pipe_tables``, ``raw_html``, ``markdown_attribute``, "
+"``mmd_link_attributes``, ``tex_math_double_backslash``, "
+"``intraword_underscores``, ``mmd_title_block``, ``footnotes``, "
+"``definition_lists``, ``all_symbols_escapable``, "
+"``implicit_header_references``, ``auto_identifiers``, "
+"``mmd_header_identifiers``, ``shortcut_reference_links``, "
+"``implicit_figures``, ``superscript``, ``subscript``, "
+"``backtick_code_blocks``, ``spaced_reference_links``, ``raw_attribute``."
 
 #: ../../users-guide.rst:4540
 msgid "``markdown_strict`` (Markdown.pl)"
-msgstr ""
+msgstr "``markdown_strict`` (Markdown.pl)"
 
 #: ../../users-guide.rst:4539
 msgid ""
 "``raw_html``, ``shortcut_reference_links``, ``spaced_reference_links``."
 msgstr ""
+"``raw_html``, ``shortcut_reference_links``, ``spaced_reference_links``."
 
 #: ../../users-guide.rst:4542
 msgid ""
 "We also support ``commonmark`` and ``gfm`` (GitHub-Flavored Markdown, which "
 "is implemented as a set of extensions on ``commonmark``)."
 msgstr ""
+"``commonmark`` と ``gfm`` (GitHub-Flavored Markdown, ``commonmark`` "
+"の拡張として実装されています)もサポートしています。"
 
 #: ../../users-guide.rst:4545
 msgid ""
@@ -6454,10 +6963,13 @@ msgid ""
 "individually disabled. Also, ``raw_tex`` only affects ``gfm`` output, not "
 "input."
 msgstr ""
+"``commonmark`` と ``gfm`` では、拡張機能のサポートに制限があることに注意してください。以下の項目に示した拡張機能 (加えて "
+"``smart``, ``raw_tex``, ``hard_line_breaks``) のみが機能します。 "
+"これらの拡張機能は、すべて個別に無効にできます。 また ``raw_tex`` は、 ``gfm`` 出力にのみ影響し、入力には影響しません。"
 
 #: ../../users-guide.rst:4557
 msgid "``gfm`` (GitHub-Flavored Markdown)"
-msgstr ""
+msgstr "``gfm`` (GitHub-Flavored Markdown)"
 
 #: ../../users-guide.rst:4560
 msgid "Producing slide shows with pandoc"
@@ -6471,6 +6983,10 @@ msgid ""
 "produce a PDF slide show using LaTeX ```beamer```_, or slides shows in "
 "Microsoft `PowerPoint`_ format."
 msgstr ""
+"Pandocを使うと、Webブラウザで閲覧可能なHTML + JavaScript のスライドプレゼンテーションを生成できます。スライドには、 "
+"`S5`_, `DZSlides`_, `Slidy`_, `Slideous`_, `reveal.js `_ "
+"の5つの形式があります。あるいは、LaTeX ```beamer```_ によるPDFスライドや、Microsoft `PowerPoint`_ "
+"形式のスライドを生成することもできます。"
 
 #: ../../users-guide.rst:4568
 msgid "Here’s the Markdown source for a simple slide show, ``habits.txt``:"
@@ -6499,6 +7015,13 @@ msgid ""
 "variables; see `Variables for HTML slides`_, above.) For DZSlides, the "
 "(relatively short) JavaScript and CSS are included in the file by default."
 msgstr ""
+"Slidy, Slideous, reveal.js, およびS5の場合、 ``-s/--standalone`` "
+"オプション付きで出力されたファイルには、JavaScriptおよびCSSファイルへのリンクが埋め込まれます。既定では、それらのファイルはそれぞれ次の相対パスにおいて有効とみなされます:"
+" ``s5/default`` (S5の場合) 、 ``slideous`` (Slideousの場合) 、 ``reveal.js`` "
+"(reveal.jsの場合) 、 ``w3.org`` 上のSlidyのWebサイト (for Slidy) (これらのパスは、それぞれ変数 "
+"``slidy-url``, ``slideous-url``, ``revealjs-url``, ``s5-url`` "
+"を用いて変更できます。詳しくは、上述の `Variables for HTML slides`_ "
+"を参照してください)。DZSlidesについては、既定では（比較的短い）JavaScriptとCSSが出力ファイルに含まれます。"
 
 #: ../../users-guide.rst:4623
 msgid ""
@@ -6536,6 +7059,11 @@ msgid ""
 "by level-2 headings, which are followed by content, so the slide level is 2."
 " This default can be overridden using the ``--slide-level`` option."
 msgstr ""
+"既定では、 *スライドレベル (slide level)* "
+"には、見出し以外の何らかのスライドコンテンツが直後に現れる見出しの中で、最も高い見出しレベルが設定されます。上記の例 (訳注: "
+"``habits.txt`` ) では常に、レベル 1 の見出しの直後にレベル 2の見出しが置かれています。このレベル 2 "
+"のヘッダの直後には、スライドコンテンツが置かれています。つまりこの例では、スライドレベルは2です。この既定動作は ``--slide-level``  "
+"オプションで変更できます。"
 
 #: ../../users-guide.rst:4653
 msgid ""
@@ -6548,13 +7076,13 @@ msgstr "水平線は、常に新しいスライドを開始する。"
 
 #: ../../users-guide.rst:4657
 msgid "A heading at the slide level always starts a new slide."
-msgstr ""
+msgstr "スライドレベルと同じレベルを持つ見出しは、常に新しいスライドを開始する。"
 
 #: ../../users-guide.rst:4659
 msgid ""
 "Headings *below* the slide level in the hierarchy create headings *within* a"
 " slide."
-msgstr ""
+msgstr "スライドレベルよりも *下位の* (訳注: レベルを表す数字が大きい) 見出しは、スライドの *内部に* 見出しを作る。"
 
 #: ../../users-guide.rst:4662
 msgid ""
@@ -6564,6 +7092,10 @@ msgid ""
 "title slide (for HTML slide shows) or in a subsequent slide with the same "
 "title (for beamer)."
 msgstr ""
+"スライドレベルよりも *上位の* (訳注: レベルを表す数字が小さい) "
+"見出しは、セクションタイトルのみを表示する「タイトルスライド」を作る。これにより、一つのスライドショーを複数のセクションに分けて発表することが容易になる。この場合、見出しの直下に置かれた非スライド要素は、(HTML"
+" "
+"スライドショーの場合)タイトルスライドに含まれるか、(beamerの場合)タイトルスライドと同じタイトルを持つスライドが作られ、そのスライドに含まれるかされます。"
 
 #: ../../users-guide.rst:4668
 msgid ""
@@ -6582,6 +7114,9 @@ msgid ""
 " will be the slide level.) But you can also structure the slide show into "
 "sections, as in the example above."
 msgstr ""
+"これらのルールは、さまざまなスライドショーのスタイルに対応するために設計されています。スライドをセクションやサブセクションに分ける必要がなければ、単にレベル"
+" 1 の見出しをすべてのスライドで使用してもかまいません (この場合、レベル 1 "
+"がスライドレベルとなります)。一方、スライドショーをいくつかのセクションに分けたい場合には、上記の例のように構成してもよいでしょう。"
 
 #: ../../users-guide.rst:4678
 msgid ""
@@ -6590,6 +7125,9 @@ msgid ""
 "level-2 headings building vertically. It is not recommended that you use "
 "deeper nesting of section levels with reveal.js."
 msgstr ""
+"補足: reveal.js スライドショーでは、スライドレベルが 2 の場合は、2次元レイアウトとして出力されます。レベル 1 "
+"の見出しは水平方向に、レベル 2 の見出しは垂直方向にスライドショーを構成します。reveal.jsでは、これ以上セクションレベルを深く入れ子 "
+"(nesting) にすることは推奨されません。"
 
 #: ../../users-guide.rst:4684
 msgid "Incremental lists"
@@ -6670,6 +7208,8 @@ msgid ""
 "All `reveal.js configuration options`_ can be set through variables. For "
 "example, themes can be used by setting the ``theme`` variable:"
 msgstr ""
+"すべての `reveal.js configuration options`_ は、変数を介して設定されます。たとえば、テーマの設定は "
+"``theme`` 変数を用います:"
 
 #: ../../users-guide.rst:4764
 msgid "Or you can specify a custom stylesheet using the ``--css`` option."
@@ -6815,7 +7355,7 @@ msgstr ""
 
 #: ../../users-guide.rst:4874
 msgid "See the `reveal.js documentation`_ for more details."
-msgstr ""
+msgstr "詳細は、 `reveal.js documentation`_ を参照してください。"
 
 #: ../../users-guide.rst:4876
 msgid "For example in reveal.js:"
@@ -6835,6 +7375,9 @@ msgid ""
 "the source document is Markdown, it is better to use a `YAML metadata "
 "block`_. Here is an example:"
 msgstr ""
+"EPUB メタデータは、 ``--epub-metadata`` "
+"オプションを使うことで指定できます。ただし、もとの文書がMarkdown形式である場合は、 `YAML metadata block`_ "
+"を使うのがよいでしょう。例を示します:"
 
 #: ../../users-guide.rst:4925
 msgid "The following fields are recognized:"
@@ -6908,7 +7451,7 @@ msgstr "``lang`` (古い形式: ``language``)"
 msgid ""
 "A string value in `BCP 47`_ format. Pandoc will default to the local "
 "language if nothing is specified."
-msgstr ""
+msgstr "`BCP 47`_ 形式の文字列。これが指定されていない場合、Pandocはローカルの言語をデフォルトとします。"
 
 #: ../../users-guide.rst:4953
 msgid "A string value or a list of such values."
@@ -7131,7 +7674,7 @@ msgstr ""
 
 #: ../../users-guide.rst:5050
 msgid "Creating Jupyter notebooks with pandoc"
-msgstr ""
+msgstr "Jupyter notebookをPandocでつくる"
 
 #: ../../users-guide.rst:5052
 msgid ""
@@ -7141,6 +7684,9 @@ msgid ""
 "automatically be created for images in Markdown cells. Metadata will be "
 "taken from the ``jupyter`` metadata field. For example:"
 msgstr ""
+"`Jupyter notebook`_ を作成するとき、Pandocはノートブック構造を推測します。 ``code`` "
+"クラスを持つコードブロックはコードセルと見なされ、介在するコンテンツはMarkdownセルと見なされます。Markdownセル中の添付ファイルは、自動的に画像になります。メタデータは、"
+" ``jupyter`` メタデータフィールドから取得されます。例えば:"
 
 #: ../../users-guide.rst:5107
 msgid ""
@@ -7183,6 +7729,11 @@ msgid ""
 "Docx, Ms, and LaTeX/PDF output. To see a list of language names that pandoc "
 "will recognize, type ``pandoc --list-highlight-languages``."
 msgstr ""
+"Pandocは、言語名を指定された `fenced code blocks`_ "
+"に対して、言語に応じたシンタックスハイライトを自動的に適用します。シンタックスハイライトには、Haskell ライブラリ `skylighting`_ "
+"が使用されます。現在のところ、シンタックスハイライトは、 HTML, EPUB , docx, ms, および LaTeX/PDF "
+"出力に適用されます。Pandocが認識する言語名の一覧を見たい場合は、 ``pandoc --list-highlight-languages`` "
+"を実行してください。"
 
 #: ../../users-guide.rst:5181
 msgid ""
@@ -7220,6 +7771,10 @@ msgid ""
 "Before writing your own, have a look at KDE’s `repository of syntax "
 "definitions`_."
 msgstr ""
+"それでも内蔵のハイライトに満足できない場合や、サポートされていない言語に対するハイライトが必要な場合には、 ``--syntax-"
+"definition`` オプションを使って `KDE-style XML syntax definition file`_ "
+"を読み込むことが可能です。自分で独自のファイルを書く前に、KDEの `repository of syntax definitions`_ "
+"をご覧ください。"
 
 #: ../../users-guide.rst:5208
 msgid "To disable highlighting, use the ``--no-highlight`` option."
@@ -7227,11 +7782,11 @@ msgstr "シンタックスハイライトを無効にするには、 ``--no-high
 
 #: ../../users-guide.rst:5211
 msgid "Custom Styles"
-msgstr ""
+msgstr "カスタムスタイル"
 
 #: ../../users-guide.rst:5213
 msgid "Custom styles can be used in the docx and ICML formats."
-msgstr ""
+msgstr "カスタムスタイルは、docx形式およびICML形式で使用することができます。"
 
 #: ../../users-guide.rst:5216
 msgid "Output"
@@ -7247,6 +7802,11 @@ msgid ""
 "pandoc allows you to define custom styles for blocks and text using "
 "``div``\\ s and ``span``\\ s, respectively."
 msgstr ""
+"通常、Pandocの docx "
+"出力およびICML出力において、段落や引用などのテキストブロックに対しては事前に定義されたスタイルの集まりを、インラインテキストに対しては(ほとんどの場合、)既定のインライン修飾(斜体や太字)をそれぞれ使用します。この動作は、特に"
+" ``reference.docx`` "
+"ファイルを用いる場合には、大半の用途でうまくいきます。しかし、テキストブロックに対して独自のスタイルを適用したい場合や、テキストブロックを既存のスタイルセットと一致させたい場合には、Pandocにおいてカスタムスタイルを定義することも可能です。テキストブロックに対しては"
+" ``div`` を、インラインテキストに対しては ``span`` をそれぞれ定義できます。"
 
 #: ../../users-guide.rst:5226
 msgid ""
@@ -7277,6 +7837,7 @@ msgid ""
 "from normal text, if the styles are not yet in your reference.docx. If they "
 "are already defined, pandoc will not alter the definition."
 msgstr ""
+"docx出力を行う場合、reference.docxで設定されていないスタイルは、通常のテキストを継承するスタイルとして定義されて出力されます。reference.docxで定義済みの場合、Pandocはそのスタイルの定義を変更しません。"
 
 #: ../../users-guide.rst:5252
 msgid ""
@@ -7287,12 +7848,16 @@ msgid ""
 "their color), you can write a filter which will transform all italicized "
 "inlines to inlines within an ``Emphasis`` custom-style ``span``."
 msgstr ""
+"この機能と `pandoc filters`_ "
+"を併用することで、すばらしいカスタマイズを実現できます。引用の後に続くすべての段落をインデントしたい場合には、必要なスタイルを適用するフィルタを書けばよいのです。また、すべての斜体を"
+" ``Emphasis`` 文字スタイルに変換したい場合には (もしかしたら文字色が変わるかもしれません)、斜体となっているすべてのインラインテキストを"
+" ``Emphasis`` カスタムスタイルの ``span`` に変換するフィルタを書けばよいでしょう。"
 
 #: ../../users-guide.rst:5260
 msgid ""
 "For docx output, you don’t need to enable any extensions for custom styles "
 "to work."
-msgstr ""
+msgstr "カスタムスタイルを使ってdocxを出力したい時に、特に何らかの拡張機能を有効にする必要はありません。"
 
 #: ../../users-guide.rst:5264
 msgid "Input"
@@ -7314,6 +7879,9 @@ msgid ""
 "input document, using the ``custom-style`` class. Paragraph styles are "
 "interpreted as divs, while character styles are interpreted as spans."
 msgstr ""
+"docx Reader (``-f docx+styles``) において ```styles`` extension`_ "
+"を有効にすることで、入力文書のスタイルを ``custom-style`` class として保持した出力を得られます。段落スタイルは div "
+"として解釈され、文字スタイルは span として解釈されます。"
 
 #: ../../users-guide.rst:5276
 msgid ""
@@ -7348,6 +7916,8 @@ msgid ""
 "Pandoc can be extended with custom writers written in `lua`_. (Pandoc "
 "includes a lua interpreter, so lua need not be installed separately.)"
 msgstr ""
+"Pandocは、`lua`_ で書かれたカスタムWriterを使うことで、その機能を拡張することができます "
+"(Pandocには、Luaインタプリタが組み込まれているため、別にLuaをインストールする必要はありません)。"
 
 #: ../../users-guide.rst:5321
 msgid ""
@@ -7426,36 +7996,39 @@ msgid ""
 " (See COPYRIGHT for full copyright and warranty notices.) For a full list of"
 " contributors, see the file AUTHORS.md in the pandoc source code."
 msgstr ""
+"Copyright 2006–2019 John MacFarlane (jgm@berkeley.edu). Released under the `GPL`_, version 2 or greater.\n"
+"\n"
+"このソフトウェアには、いかなる種類の保証もありません (完全な著作権表示と保証に関する注意点については、COPYRIGHTを参照してください)。コントリビュータの完全なリストについては、 Pandoc ソースコード中の AUTHORS.md を参照してください。"
 
 #: ../../users-guide.rst:5377
 msgid ""
 "The point of this rule is to ensure that normal paragraphs starting with "
 "people’s initials, like"
-msgstr ""
+msgstr "このルールのポイントは、以下の例のような、イニシャル表記の人名から始まる通常の段落を"
 
 #: ../../users-guide.rst:5384
 msgid "do not get treated as list items."
-msgstr ""
+msgstr "リスト項目として扱わないということです。"
 
 #: ../../users-guide.rst:5386
 msgid "This rule will not prevent"
-msgstr ""
+msgstr "ただし、このルールでは、以下のような段落はリスト項目として扱われてしまいます:"
 
 #: ../../users-guide.rst:5392
 msgid ""
 "from being interpreted as a list item. In this case, a backslash escape can "
 "be used:"
-msgstr ""
+msgstr "このケースでは、バックスラッシュによるエスケープを使ってください:"
 
 #: ../../users-guide.rst:5400
 msgid "I have been influenced by the suggestions of `David Wheeler`_."
-msgstr ""
+msgstr "`David Wheeler`_ の提案の影響を受けています。"
 
 #: ../../users-guide.rst:5403
 msgid ""
 "This scheme is due to Michel Fortin, who proposed it on the `Markdown "
 "discussion list`_."
-msgstr ""
+msgstr "この構想は、 `Markdown discussion list`_ でこれを提案したMichel Fortinによるものです。"
 
 #: ../../users-guide.rst:5407
 msgid ""

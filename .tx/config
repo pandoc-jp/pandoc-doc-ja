@@ -7,3 +7,4 @@ minimum_perc = 0
 source_file = _build/gettext/users-guide.pot
 source_lang = en
 type = PO
+

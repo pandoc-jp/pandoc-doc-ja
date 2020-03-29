@@ -57,8 +57,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'alabaster'
 
 html_theme_options = {
-    'logo': 'icon_pandoc.jpg',
-    'logo_name': project,
+    'logo': 'icon_pandoc_square_small.jpg',
+    'description': project,
     'github_user': 'pandoc-jp',
     'github_repo': 'pandoc-doc-ja',
     'sidebar_collapse': False,
