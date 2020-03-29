@@ -1,7 +1,3 @@
-===========================================================
-（新・工事中）Pandocユーザーズガイド 日本語版
-===========================================================
-
 Synopsis
 ========
 
@@ -264,7 +260,7 @@ General options
          less accurate ``markdown_github``; use ```markdown_github```_
          only if you need extensions not supported in ```gfm```_.
       -  ``haddock`` (`Haddock markup`_)
-      -  ``html`` or ``html5`` (`HTML`_, i.e. \ `HTML5`_/XHTML `polyglot
+      -  ``html`` or ``html5`` (`HTML`_, i.e. `HTML5`_/XHTML `polyglot
          markup`_)
       -  ``html4`` (`XHTML`_ 1.0 Transitional)
       -  ``icml`` (`InDesign ICML`_)
@@ -1372,7 +1368,7 @@ Layout
       ...
 
 ``classoption``
-   option for document class, e.g. \ ``oneside``; repeat for multiple
+   option for document class, e.g. ``oneside``; repeat for multiple
    options:
 
    ::
@@ -1389,7 +1385,7 @@ Layout
    ``scrartcl``, ``scrbook``, and ``scrreprt``, which default to smaller
    margins; or ```memoir```_
 ``geometry``
-   option for ```geometry```_ package, e.g. \ ``margin=1in``; repeat for
+   option for ```geometry```_ package, e.g. ``margin=1in``; repeat for
    multiple options:
 
    ::
@@ -1407,7 +1403,7 @@ Layout
    paragraphs)
 ``linestretch``
    adjusts line spacing using the ```setspace```_ package,
-   e.g. \ ``1.25``, ``1.5``
+   e.g. ``1.25``, ``1.5``
 ``margin-left``, ``margin-right``, ``margin-top``, ``margin-bottom``
    sets margins if ``geometry`` is not used (otherwise ``geometry``
    overrides these)
@@ -1416,7 +1412,7 @@ Layout
    ``plain`` (default), ``empty`` (no running heads or page numbers),
    and ``headings`` (section titles in running heads)
 ``papersize``
-   paper size, e.g. \ ``letter``, ``a4``
+   paper size, e.g. ``letter``, ``a4``
 ``secnumdepth``
    numbering depth for sections (with ``--number-sections`` option or
    ``numbersections`` variable)
@@ -1528,19 +1524,19 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    text to be placed in running header or footer (see `ConTeXt Headers
    and Footers`_); repeat up to four times for different placement
 ``indenting``
-   controls indentation of paragraphs, e.g. \ ``yes,small,next`` (see
+   controls indentation of paragraphs, e.g. ``yes,small,next`` (see
    `ConTeXt Indentation`_); repeat for multiple options
 ``interlinespace``
-   adjusts line spacing, e.g. \ ``4ex`` (using
+   adjusts line spacing, e.g. ``4ex`` (using
    ```setupinterlinespace```_); repeat for multiple options
 ``layout``
    options for page margins and text arrangement (see `ConTeXt
    Layout`_); repeat for multiple options
 ``linkcolor``, ``contrastcolor``
-   color for links outside and inside a page, e.g. \ ``red``, ``blue``
+   color for links outside and inside a page, e.g. ``red``, ``blue``
    (see `ConTeXt Color`_)
 ``linkstyle``
-   typeface style for links, e.g. \ ``normal``, ``bold``, ``slanted``,
+   typeface style for links, e.g. ``normal``, ``bold``, ``slanted``,
    ``boldslanted``, ``type``, ``cap``, ``small``
 ``lof``, ``lot``
    include list of figures, list of tables
@@ -1554,7 +1550,7 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    page number style and location (using ```setuppagenumbering```_);
    repeat for multiple options
 ``papersize``
-   paper size, e.g. \ ``letter``, ``A4``, ``landscape`` (see `ConTeXt
+   paper size, e.g. ``letter``, ``A4``, ``landscape`` (see `ConTeXt
    Paper Setup`_); repeat for multiple options
 ``pdfa``
    adds to the preamble the setup necessary to generate PDF/A-1b:2005.
@@ -1567,7 +1563,7 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    include table of contents (can also be set using
    ``--toc/--table-of-contents``)
 ``whitespace``
-   spacing between paragraphs, e.g. \ ``none``, ``small`` (using
+   spacing between paragraphs, e.g. ``none``, ``small`` (using
    ```setupwhitespace```_)
 
 Variables for ``wkhtmltopdf``

@@ -33,7 +33,7 @@
    :maxdepth: 2
 
    index
-   users-guide
+   users-guide-ja
    trans-intro
 
 このサイトのソースコード

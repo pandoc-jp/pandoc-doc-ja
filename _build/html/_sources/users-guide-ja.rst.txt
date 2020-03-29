@@ -1,0 +1,20 @@
+===========================================================
+Pandocユーザーズガイド 日本語版 [2.7.2]
+===========================================================
+
+原著: John MacFarlane
+
+原著バージョン: 2.7.2
+
+更新日: 2020/03/29
+
+翻訳者（アルファベット順）:
+
+* becolomochi
+* ishibaki
+* makotosan
+* niszet
+* Takada Atsushi
+* Yuki Fujiwara
+
+.. include:: users-guide.rst

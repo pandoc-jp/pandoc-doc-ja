@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>（新・工事中）Pandocユーザーズガイド 日本語版 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
+    <title>概要 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,21 +34,19 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pandoc">
-<h1>（新・工事中）Pandocユーザーズガイド 日本語版<a class="headerlink" href="#pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="synopsis">
-<h2>概要<a class="headerlink" href="#synopsis" title="このヘッドラインへのパーマリンク">¶</a></h2>
+  <div class="section" id="synopsis">
+<h1>概要<a class="headerlink" href="#synopsis" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> [<em>options</em>] [<em>input-file</em>]…</p>
 </div>
 <div class="section" id="description">
-<h2>説明<a class="headerlink" href="#description" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>説明<a class="headerlink" href="#description" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Pandocは、あるマークアップ形式から他の形式へ変換する <a class="reference external" href="https://www.haskell.org">Haskell</a> ライブラリと、そのライブラリを用いたコマンドラインツールです。</p>
 <p>Pandoc は、 <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> 、 <a class="reference external" href="http://www.w3.org/html/">HTML</a> 、<a class="reference external" href="http://latex-project.org">LaTeX</a> 、 <a class="reference external" href="https://en.wikipedia.org/wiki/Office_Open_XML">Word docx</a> など、これに限定されない多数のマークアップとワープロ形式の間で変換することができます。入力および出力形式の完全なリストについては、下記の  <code class="docutils literal notranslate"><span class="pre">--from</span></code> と <code class="docutils literal notranslate"><span class="pre">--to</span></code> <a class="reference external" href="#general-options">options below</a> を参照してください。 Pandoc は  <a class="reference external" href="https://www.adobe.com/pdf/">PDF</a> 出力を生成することもできます。下記の <a href="#id1"><span class="problematic" id="id2">`</span></a>creating a PDF`_を参照してください。</p>
 <p>&quot;Markdown の Pandoc 拡張バージョンには、 <a class="reference external" href="#tables">tables</a> 、 <a class="reference external" href="#definition-lists">definition lists</a> 、 <a class="reference external" href="#metadata-blocks">metadata blocks</a>、 <a class="reference external" href="#footnotes">footnotes</a> 、<a class="reference external" href="#citations">citations</a> 、 <a class="reference external" href="#math">math</a> をはじめ多数の構文を含みます。下記の  <a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a> を参照してください。</p>
 <p>Pandoc はモジュール設計されています。 Pandoc は、与えられた形式のテキストをパースして文書のネイティブ表現（<a href="#id1"><span class="problematic" id="id2">*</span></a>抽象構文木*またはAST）に変換する Reader 群、およびネイティブ表現をターゲットの出力形式に変換する Writer 群で構成されています。つまり、入力または出力形式を追加するには、 Reader または Writer を追加するだけで済みます。ユーザは、カスタムの <a class="reference external" href="http://pandoc.org/filters.html">pandoc filters</a> を実行することで、中間の AST を書き換えることもできます。</p>
 <p>Pandoc での文書の中間表現は、変換するほとんどの形式より表現力が劣ることから、すべての形式と他の形式との間で、完全に変換できるわけではありません。 Pandoc は、文書の構造要素を保とうとしますが、マージンサイズのような緻密なフォーマッティングは行いません。また、複雑なテーブルなどの一部の文書要素は、 Pandoc の単純な文書モデルにフィットしない場合があります。 Pandoc 拡張 Markdown からは、他のすべての形式へ完全に変換されることを目指していますが、 Pandoc 拡張 Markdown よりも表現力が豊富な形式から変換する場合は、表現が劣化することは否めません。</p>
 <div class="section" id="using-pandoc">
-<h3><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> の使い方<a class="headerlink" href="#using-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> の使い方<a class="headerlink" href="#using-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>入力ファイルとして <em>input-files</em> が指定されていない場合は、入力は標準入力 <em>stdin</em> から読まれます。 出力はデフォルトでは標準出力 <em>stdout</em> に出力されます。ファイルへ出力したい場合は <code class="docutils literal notranslate"><span class="pre">-o</span></code> オプションを使用してください：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">html</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -61,7 +59,7 @@
 <p>複数のファイルが入力された場合、 Pandoc はそれらを解析する前に（それらの間に空白行を入れて）連結します。（ファイルを個別に解析するには <code class="docutils literal notranslate"><span class="pre">--file-scope</span></code> を使います。）</p>
 </div>
 <div class="section" id="specifying-formats">
-<h3>形式の指定<a class="headerlink" href="#specifying-formats" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>形式の指定<a class="headerlink" href="#specifying-formats" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>入出力の形式はオプションを使うことで明確に指定できます。入力形式の指定は <code class="docutils literal notranslate"><span class="pre">-f/--from</span></code> オプションを、出力形式の指定は <code class="docutils literal notranslate"><span class="pre">-t/--to</span></code> オプションを使います。したがって、 <code class="docutils literal notranslate"><span class="pre">hello.txt</span></code> を Markdown から LaTeX に変換する場合は以下のようにします。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">markdown</span> <span class="o">-</span><span class="n">t</span> <span class="n">latex</span> <span class="n">hello</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -78,7 +76,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">hello.txt</span></code> は Markdown から LaTeX へ変換されるでしょう。もし（標準出力するために）出力ファイルが指定されていない場合、または出力ファイルの拡張子が不明の場合は、出力形式のデフォルトは HTML になります。そして、もし（標準入力するために）入力ファイルが指定されていない場合、または入力ファイルの拡張子が不明の場合は、入力形式は Markdown になります。</p>
 </div>
 <div class="section" id="character-encoding">
-<h3>文字コード<a class="headerlink" href="#character-encoding" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>文字コード<a class="headerlink" href="#character-encoding" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc は入力と出力の両方に UTF-8 文字コードを使用します。あなたのローカルの文字コードが UTF-8 ではない場合、 <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id121"><span class="problematic" id="id122">`iconv```_</span></a> を通して入力と出力をパイプすべきです:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iconv</span> <span class="o">-</span><span class="n">t</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span> <span class="o">|</span> <span class="n">pandoc</span> <span class="o">|</span> <span class="n">iconv</span> <span class="o">-</span><span class="n">f</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
 </pre></div>
@@ -86,7 +84,7 @@
 <p>いくつかの出力フォーマット(HTML 、 LaTeX 、 ConTeXt 、 RTF 、 OPML 、 DocBook 、 Texinfo など)の中には、文字コードに関する情報が文書のヘッダに含まれているものがあり、その場合は <code class="docutils literal notranslate"><span class="pre">-s/</span> <span class="pre">--standalone</span></code> オプションを使用するだけでヘッダを挿入することができます。</p>
 </div>
 <div class="section" id="creating-a-pdf">
-<h3>PDFの生成<a class="headerlink" href="#creating-a-pdf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>PDFの生成<a class="headerlink" href="#creating-a-pdf" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>PDFを生成するには、出力ファイルに拡張子  <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> を指定してください。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">o</span> <span class="n">test</span><span class="o">.</span><span class="n">pdf</span>
 </pre></div>
@@ -98,7 +96,7 @@
 <p>LaTeX を使用する場合には、以下のパッケージを事前にインストールしておく必要があります (これらは <a class="reference external" href="http://www.tug.org/texlive/">TeX Live</a> の最近のすべてのバージョンに含まれています):</p>
 </div>
 <div class="section" id="reading-from-the-web">
-<h3>Webからの読み込み<a class="headerlink" href="#reading-from-the-web" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Webからの読み込み<a class="headerlink" href="#reading-from-the-web" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>入力ファイルの代わりに絶対URIを指定しても良い。この場合、PandocはHTTPを使用して内容を取得する。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">html</span> <span class="o">-</span><span class="n">t</span> <span class="n">markdown</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">fsf</span><span class="o">.</span><span class="n">org</span>
 </pre></div>
@@ -111,9 +109,9 @@
 </div>
 </div>
 <div class="section" id="options">
-<h2>オプション<a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>オプション<a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="general-options">
-<h3>一般的なオプション<a class="headerlink" href="#general-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>一般的なオプション<a class="headerlink" href="#general-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">-f</span></code> <em>FORMAT</em>、 <code class="docutils literal notranslate"><span class="pre">-r</span></code> <em>FORMAT</em>、 <code class="docutils literal notranslate"><span class="pre">--from=</span></code><em>FORMAT</em>、 <code class="docutils literal notranslate"><span class="pre">--read=</span></code><em>FORMAT</em></dt><dd><p>入力形式を指定します。<em>FORMAT</em> は次のいずれかになります：</p>
 <div class="docutils container" id="input-formats">
@@ -169,7 +167,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">fb2</span></code> (<a class="reference external" href="http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1">FictionBook2</a> 電子書籍)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gfm</span></code> (<a class="reference external" href="https://help.github.com/articles/github-flavored-markdown/">GitHub-Flavored Markdown</a>) および <code class="docutils literal notranslate"><span class="pre">markdown_github</span></code> (ただし後者は仕様が正確ではなく、非推奨です。 <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id127"><span class="problematic" id="id128">`gfm```_</span></a> がサポートしていない拡張を必要とするときのみ <a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id129"><span class="problematic" id="id130">`markdown_github```_</span></a> を使用してください)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">haddock</span></code> (<a class="reference external" href="https://www.haskell.org/haddock/doc/html/ch03s08.html">Haddock markup</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">html5</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a> 、すなわち <a class="reference external" href="http://www.w3.org/TR/html5/">HTML5</a> / XHTML <a class="reference external" href="https://www.w3.org/TR/html-polyglot/">polyglot markup</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code> or <code class="docutils literal notranslate"><span class="pre">html5</span></code> (<a class="reference external" href="http://www.w3.org/html/">HTML</a>, i.e. <a class="reference external" href="http://www.w3.org/TR/html5/">HTML5</a>/XHTML <a class="reference external" href="https://www.w3.org/TR/html-polyglot/">polyglot
+markup</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">html4</span></code> (<a class="reference external" href="http://www.w3.org/TR/xhtml1/">XHTML</a> 1.0 Transitional)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">icml</span></code> (<a class="reference external" href="http://wwwimages.adobe.com/www.adobe.com/content/dam/acom/en/devnet/indesign/sdk/cs6/idml/idml-cookbook.pdf">InDesign ICML</a>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ipynb</span></code> (<a class="reference external" href="https://nbformat.readthedocs.io/en/latest/">Jupyter notebook</a>)</p></li>
@@ -243,7 +242,7 @@
 </dl>
 </div>
 <div class="section" id="reader-options">
-<h3>Readerのオプション<a class="headerlink" href="#reader-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Readerのオプション<a class="headerlink" href="#reader-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--base-header-level=</span></code><em>NUMBER</em></dt><dd><p>ヘッダのベースレベルを指定します（デフォルトは1）。</p>
 </dd>
@@ -310,7 +309,7 @@
 </dl>
 </div>
 <div class="section" id="general-writer-options">
-<h3>一般的な Writer のオプション<a class="headerlink" href="#general-writer-options" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>一般的な Writer のオプション<a class="headerlink" href="#general-writer-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">--standalone</span></code></dt><dd><p>適切なヘッダーとフッター (例えば、フラグメントではなく、スタンドアロンの HTML 、 LaTeX 、 TEI 、または RTF ファイル) を使用して出力を生成します。このオプションは <code class="docutils literal notranslate"><span class="pre">pdf</span></code> 、 <code class="docutils literal notranslate"><span class="pre">epub</span></code> 、 <code class="docutils literal notranslate"><span class="pre">epub3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fb2</span></code> 、 <code class="docutils literal notranslate"><span class="pre">docx</span></code> 、および <code class="docutils literal notranslate"><span class="pre">odt</span></code> 出力に対して自動的に設定されます。<code class="docutils literal notranslate"><span class="pre">native</span></code> 出力の場合、このオプションはメタデータを含めます。それ以外の場合、メタデータは抑制されます。</p>
 </dd>
@@ -362,7 +361,7 @@ and (if valid) used as the highlighting style.</p>
 </dl>
 </div>
 <div class="section" id="options-affecting-specific-writers">
-<h3>特定のWriterに関するオプション<a class="headerlink" href="#options-affecting-specific-writers" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>特定のWriterに関するオプション<a class="headerlink" href="#options-affecting-specific-writers" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--self-contained</span></code></dt><dd><p>外部ファイルに依存しないようなスタンドアロンのHTMLファイルを出力します。 リンクされたスクリプト、スタイルシート、画像、動画といったコンテンツを結合するために <code class="docutils literal notranslate"><span class="pre">data:</span></code> URIを利用します。暗黙に <code class="docutils literal notranslate"><span class="pre">--standalone</span></code> を指定します。ブラウザに正しく表示するために、他に外部のファイルやネットへのアクセスを必要としないという意味で、最終的なファイルは「自己完結している」(self-contained)というべきでしょう。</p>
 </dd>
@@ -516,7 +515,7 @@ and (if valid) used as the highlighting style.</p>
 </dl>
 </div>
 <div class="section" id="citation-rendering">
-<h3>引用文献の生成<a class="headerlink" href="#citation-rendering" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>引用文献の生成<a class="headerlink" href="#citation-rendering" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">--bibliography=</span></code><em>FILE</em></dt><dd><p>文書中のメタデータ <code class="docutils literal notranslate"><span class="pre">bibliography</span></code> を <em>FILE</em> で上書きし、 <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> を用いて引用文献を処理します (これは <code class="docutils literal notranslate"><span class="pre">--metadata</span> <span class="pre">bibliography=FILE</span> <span class="pre">--filter</span> <span class="pre">pandoc-citeproc</span></code> と等価です)。 `` --natbib`` もしくは `` --biblatex`` が指定されている場合、 <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> が使用されず、 `` --metadata bibliography = FILE`` という設定と等価になります。この引数が複数回指定された場合、それぞれの <em>FILE</em> が引用文献に追加されます。</p>
 </dd>
@@ -531,7 +530,7 @@ and (if valid) used as the highlighting style.</p>
 </dl>
 </div>
 <div class="section" id="math-rendering-in-html">
-<h3>HTMLにおける数式の生成<a class="headerlink" href="#math-rendering-in-html" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>HTMLにおける数式の生成<a class="headerlink" href="#math-rendering-in-html" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>デフォルトでは、可能な限りUnicode文字を用いてTeX数式を生成します。数式は、 <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">=</span> <span class="pre">&quot;math&quot;</span></code> としてクラス指定された <code class="docutils literal notranslate"><span class="pre">span</span></code> タグ内に置かれます。このため、必要に応じて、数式をそれ以外のテキストとは異なるスタイルにすることができます。ただし、この方法によって妥当な数式が生成されるのは、基本的な数式においてのみであり、通常は <code class="docutils literal notranslate"><span class="pre">--mathjax</span></code> もしくは次のオプションのいずれかを使用するのが好ましいです。</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--mathjax</span></code>[<code class="docutils literal notranslate"><span class="pre">=</span></code><em>URL</em>]</dt><dd><p>HTML出力に埋め込まれたTeX数式を、 <a class="reference external" href="https://www.mathjax.org">MathJax</a> を用いて表示します。 TeX数式は、インライン数式モードの場合は <code class="docutils literal notranslate"><span class="pre">\(</span></code> と <code class="docutils literal notranslate"><span class="pre">\)</span></code> の間に、ディスプレイ数式モードの場合は <code class="docutils literal notranslate"><span class="pre">\[</span></code> と <code class="docutils literal notranslate"><span class="pre">\]</span></code> の間に置かれ、さらにそれらが <code class="docutils literal notranslate"><span class="pre">math</span></code> クラスが指定された <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> タグ内に置かれます。これはその後、MathJax JavaScriptによって数式表示されます。 <em>URL</em> には、 <code class="docutils literal notranslate"><span class="pre">MathJax.js</span></code> のスクリプトを呼び出すサーバを指定する必要があります。 <a href="#id1"><span class="problematic" id="id2">*</span></a>URL*が指定されていない場合、Cloudflare CDNへのリンクが挿入されます。</p>
@@ -564,7 +563,7 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="options-for-wrapper-scripts">
-<h3>ラッパースクリプト向けのオプション<a class="headerlink" href="#options-for-wrapper-scripts" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>ラッパースクリプト向けのオプション<a class="headerlink" href="#options-for-wrapper-scripts" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--dump-args</span></code></dt><dd><p><em>標準出力</em>  にコマンドライン引数に関する情報を出力して終了します。このオプションは主にラッパースクリプト向けです。出力の1行目は <code class="docutils literal notranslate"><span class="pre">-o</span></code>  オプションで指定される出力ファイル名、もしくは出力ファイルが指定されていない場合の <code class="docutils literal notranslate"><span class="pre">-</span></code> (<em>標準出力</em>) です。残りの行はコマンドライン引数 (訳注: 入力ファイル) が1行ごとに引数が出現した順に並びます。通常のPandocオプションとそのパラメータは含まれません。コマンド行の末尾に <code class="docutils literal notranslate"><span class="pre">--</span></code> セパレータを付けたときは、その後続のオプションは必ず含まれます。</p>
 </dd>
@@ -581,7 +580,7 @@ procedure is:</p>
 </div>
 </div>
 <div class="section" id="templates">
-<h2>テンプレート<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>テンプレート<a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">-s/--standalone</span></code> オプションが使用された場合、独立した文書 (self-standing document) に必要なヘッダとフッタを追加するために、Pandocはテンプレートを用います。既定のテンプレートを参照するには、次を実行します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">D</span> <span class="o">*</span><span class="n">FORMAT</span><span class="o">*</span>
 </pre></div>
@@ -594,7 +593,7 @@ procedure is:</p>
 </ul>
 <p>テンプレートの中には <em>変数 (variables)</em> があります。これにより、任意の情報をファイル中のどの箇所にも含められます。変数はコマンドライン上で <code class="docutils literal notranslate"><span class="pre">-V/--variable</span></code> オプションを使うことで指定できます。変数が指定されていない場合、Pandocは文書のメタデータからキーを探します (訳注: Pandocはメタデータとして定義されたキーも、テンプレートの変数として扱います)。メタデータは <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata blocks</a> または <code class="docutils literal notranslate"><span class="pre">-M/--metadata</span></code> オプションによって指定できます。</p>
 <div class="section" id="metadata-variables">
-<h3>メタデータに関する変数<a class="headerlink" href="#metadata-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>メタデータに関する変数<a class="headerlink" href="#metadata-variables" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">author</span></code>, <code class="docutils literal notranslate"><span class="pre">date</span></code> (訳注: タイトル、著者名、日付)</dt><dd><p>これらは文書を識別するための基本的な側面 (basic aspects) を提供します。LaTeX または ConTeXt をPDFエンジンに用いた場合は、その出力PDFのメタデータに含まれます。これらの変数は <a class="reference external" href="#extension-pandoc_title_block">pandoc title block</a> (複数の著者名を設定可) またはYAMLメタデータブロックを通じて設定できます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
@@ -636,7 +635,7 @@ procedure is:</p>
 <p>このとき <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">author</span></code> および <code class="docutils literal notranslate"><span class="pre">description</span></code> は、標準的な文書のプロパティとして扱われます。一方 <code class="docutils literal notranslate"><span class="pre">subtitle</span></code> は、docx, ODT もしくは pptx に変換する際にはカスタムプロパティとして扱われます。</p>
 </div>
 <div class="section" id="language-variables">
-<h3>言語に関する変数<a class="headerlink" href="#language-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>言語に関する変数<a class="headerlink" href="#language-variables" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">lang</span></code></dt><dd><p>文書で使われる主な言語を指定します。 <code class="docutils literal notranslate"><span class="pre">en</span></code> または <code class="docutils literal notranslate"><span class="pre">en-GB</span></code> のようなIETF言語タグを使用してください (<a class="reference external" href="https://tools.ietf.org/html/bcp47">BCP 47</a> 標準にしたがいます)。 <a class="reference external" href="https://r12a.github.io/app-subtags/">Language subtag lookup</a> を使うとタグを検索および検証できます。この指定は大半の形式に影響します。特に LaTeX (具体的には <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id135"><span class="problematic" id="id136">`babel```_</span></a> および <a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id137"><span class="problematic" id="id138">`polyglossia```_</span></a>) または ConTeXt を用いるPDF出力では、PDFのハイフネーションが制御されます。</p>
 <p>言語を切り替えるには、ネイティブPandoc <a class="reference external" href="#divs-and-spans">Divs and Spans</a> を用いて <code class="docutils literal notranslate"><span class="pre">lang</span></code> 属性をその都度指定してください。</p>
@@ -661,7 +660,7 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="variables-for-html-slides">
-<h3>HTMLスライド用の変数<a class="headerlink" href="#variables-for-html-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>HTMLスライド用の変数<a class="headerlink" href="#variables-for-html-slides" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次に示す変数は <a class="reference external" href="#producing-slide-shows-with-pandoc">producing slide shows with pandoc</a> で説明されるようなHTML出力に影響します。すべての <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js configuration options</a> が利用できます。</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">revealjs-url</span></code></dt><dd><p>reveal.js文書のベースURL (既定: <code class="docutils literal notranslate"><span class="pre">reveal.js</span></code>)</p>
@@ -675,7 +674,7 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="variables-for-beamer-slides">
-<h3>Beamerスライド用の変数<a class="headerlink" href="#variables-for-beamer-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Beamerスライド用の変数<a class="headerlink" href="#variables-for-beamer-slides" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次に示す変数は、LaTeX <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id139"><span class="problematic" id="id140">`beamer```_</span></a> を用いたPDFスライドの見た目を変更します。</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">aspectratio</span></code></dt><dd><p>スライドのアスペクト比 (<code class="docutils literal notranslate"><span class="pre">43</span></code> → 4:3 [既定], <code class="docutils literal notranslate"><span class="pre">169</span></code> → 16:9, <code class="docutils literal notranslate"><span class="pre">1610</span></code> → 16:10, <code class="docutils literal notranslate"><span class="pre">149</span></code> → 14:9, <code class="docutils literal notranslate"><span class="pre">141</span></code> → 1.41:1, <code class="docutils literal notranslate"><span class="pre">54</span></code> → 5:4, <code class="docutils literal notranslate"><span class="pre">32</span></code> → 3:2)</p>
@@ -701,10 +700,10 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="variables-for-latex">
-<h3>LaTeX用の変数<a class="headerlink" href="#variables-for-latex" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>LaTeX用の変数<a class="headerlink" href="#variables-for-latex" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocは <a class="reference external" href="#creating-a-pdf">creating a PDF</a> でLaTeXエンジンを用いる場合、下記の変数を用います。</p>
 <div class="section" id="layout">
-<h4>レイアウト<a class="headerlink" href="#layout" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>レイアウト<a class="headerlink" href="#layout" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">block-headings</span></code> <em>[boolean]</em></dt><dd><p><code class="docutils literal notranslate"><span class="pre">\paragraph</span></code> および <code class="docutils literal notranslate"><span class="pre">\subparagraph</span></code> を生成します。それぞれヘッダレベルは 4 および 5 (book系クラスの場合は 5 および 6) です。本文に追い込む (run-in) のではなく独立した (free-standing) パラグラフをつくります。 <code class="docutils literal notranslate"><span class="pre">\subsubsection</span></code>  (ヘッダレベル 3 または 4) と区別するために、さらなる書式づけを必要とします。このオプションの代わりに、 <a class="reference external" href="https://ctan.org/pkg/koma-script">KOMA-Script</a> ではさらに広範囲にわたってヘッダを調整できます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
@@ -723,7 +722,8 @@ procedure is:</p>
 </pre></div>
 </div>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">classoption</span></code></dt><dd><p>文書クラスのオプション (例: <code class="docutils literal notranslate"><span class="pre">oneside</span></code>); オプションは複数指定可能です:</p>
+<dt><code class="docutils literal notranslate"><span class="pre">classoption</span></code></dt><dd><p>option for document class, e.g. <code class="docutils literal notranslate"><span class="pre">oneside</span></code>; repeat for multiple
+options:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">classoption</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">twocolumn</span>
@@ -734,7 +734,8 @@ procedure is:</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">documentclass</span></code></dt><dd><p>文書クラス。通常は <code class="docutils literal notranslate"><span class="pre">`article```_,</span> <span class="pre">```book```_,</span> <span class="pre">```report```_</span> <span class="pre">のうちいずれか文書クラスを指定します。</span> <span class="pre">`KOMA-Script`_</span> <span class="pre">では</span> <span class="pre">``scrartcl</span></code>, <code class="docutils literal notranslate"><span class="pre">scrbook</span></code>,  <code class="docutils literal notranslate"><span class="pre">scrreprt</span></code> に対応し、既定では最も小さいマージンを用います。 <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id141"><span class="problematic" id="id142">`memoir```_</span></a> も利用できます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">geometry</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">`geometry```_</span> <span class="pre">パッケージのオプション</span> <span class="pre">(例:</span> <span class="pre">``margin=1in</span></code>); 複数のオプションを指定できます:</p>
+<dt><code class="docutils literal notranslate"><span class="pre">geometry</span></code></dt><dd><p>option for <code class="docutils literal notranslate"><span class="pre">`geometry```_</span> <span class="pre">package,</span> <span class="pre">e.g. ``margin=1in</span></code>; repeat for
+multiple options:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
 <span class="n">geometry</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">top</span><span class="o">=</span><span class="mi">30</span><span class="n">mm</span>
@@ -746,20 +747,21 @@ procedure is:</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">indent</span></code> <em>[boolean]</em></dt><dd><p>インデントに関する文書クラスの設定 (設定がない場合、Pandoc既定のLaTeXテンプレートはパラグラフ間のインデントと空白を削除します)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">`setspace```_</span>&#160; <span class="pre">パッケージを用いて行送り幅</span> <span class="pre">(line</span> <span class="pre">spacing)</span> <span class="pre">を調整します</span> <span class="pre">(例:</span> <span class="pre">``1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code>)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p>adjusts line spacing using the <code class="docutils literal notranslate"><span class="pre">`setspace```_</span> <span class="pre">package,</span>
+<span class="pre">e.g. ``1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">margin-left</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-right</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-top</span></code>, <code class="docutils literal notranslate"><span class="pre">margin-bottom</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">geometry</span></code> を使用しない場合のマージン (設定がない場合、 <code class="docutils literal notranslate"><span class="pre">geometry</span></code> がこれらを上書きします)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">pagestyle</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">\pagestyle{}</span></code> を制御します (訳注: 文書全体のページ形式の指定: ノンブル (ページ番号) や柱を設定できる)。既定のarticleクラスでは <code class="docutils literal notranslate"><span class="pre">plain</span></code> (既定の値), <code class="docutils literal notranslate"><span class="pre">empty</span></code> (柱やノンブルなどを付けない) および <code class="docutils literal notranslate"><span class="pre">headings</span></code> (柱にセクション名) が利用できます。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>用紙サイズ (例: <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">a4</span></code>)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>paper size, e.g. <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">a4</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">secnumdepth</span></code></dt><dd><p>セクションなどに対する番号づけの深さ (depth) (<code class="docutils literal notranslate"><span class="pre">--number-sections</span></code> または <code class="docutils literal notranslate"><span class="pre">numbersections</span></code> 変数の有効時のみ)</p>
 </dd>
 </dl>
 </div>
 <div class="section" id="fonts">
-<h4>フォント<a class="headerlink" href="#fonts" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>フォント<a class="headerlink" href="#fonts" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">fontenc</span></code></dt><dd><p>フォントのエンコーディングを <code class="docutils literal notranslate"><span class="pre">fontenc</span></code> パッケージによって指定 (<code class="docutils literal notranslate"><span class="pre">pdflatex</span></code> のみ); 既定では <code class="docutils literal notranslate"><span class="pre">T1</span></code> エンコーディングを用います。(詳しくは <a class="reference external" href="https://ctan.org/pkg/encguide">LaTeX font encodings guide</a> を参照)</p>
 </dd>
@@ -794,7 +796,7 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="links">
-<h4>リンク<a class="headerlink" href="#links" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>リンク<a class="headerlink" href="#links" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">colorlinks</span></code> <em>[boolean]</em></dt><dd><p>リンクテキストに色を追加します。(<code class="docutils literal notranslate"><span class="pre">linkcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">filecolor</span></code>, <code class="docutils literal notranslate"><span class="pre">citecolor</span></code>, <code class="docutils literal notranslate"><span class="pre">urlcolor</span></code>, or <code class="docutils literal notranslate"><span class="pre">toccolor</span></code> のいずれかが設定された場合は、このオプションも暗黙に設定されます)</p>
 </dd>
@@ -805,7 +807,7 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="front-matter">
-<h4>前付 (front matter)<a class="headerlink" href="#front-matter" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>前付 (front matter)<a class="headerlink" href="#front-matter" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">lof</span></code>, <code class="docutils literal notranslate"><span class="pre">lot</span></code> <em>[boolean]</em></dt><dd><p>図目次および表目次を挿入します。</p>
 </dd>
@@ -818,7 +820,7 @@ procedure is:</p>
 </dl>
 </div>
 <div class="section" id="biblatex-bibliographies">
-<h4>BibLaTeXによる参考文献リスト<a class="headerlink" href="#biblatex-bibliographies" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>BibLaTeXによる参考文献リスト<a class="headerlink" href="#biblatex-bibliographies" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下の変数はBibLaTeXで <a class="reference external" href="#citation-rendering">citation rendering</a> を行うために用います。</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">biblatexoptions</span></code></dt><dd><p>BibLaTeX用のオプションリスト</p>
@@ -835,7 +837,7 @@ procedure is:</p>
 </div>
 </div>
 <div class="section" id="variables-for-context">
-<h3>ConTeXt用の変数<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>ConTeXt用の変数<a class="headerlink" href="#variables-for-context" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocでは <a class="reference external" href="#creating-a-pdf">creating a PDF</a> でConTeXtを使う際に、下記の変数を利用します。</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">fontsize</span></code></dt><dd><p>本文テキストのフォントサイズ (例: <code class="docutils literal notranslate"><span class="pre">10pt</span></code>, <code class="docutils literal notranslate"><span class="pre">12pt</span></code>)</p>
@@ -843,15 +845,19 @@ procedure is:</p>
 <dt><code class="docutils literal notranslate"><span class="pre">headertext</span></code>, <code class="docutils literal notranslate"><span class="pre">footertext</span></code></dt><dd><p>(それぞれページの天と地の) 柱に配置されるテキスト (<a class="reference external" href="https://wiki.contextgarden.net/Headers_and_Footers">ConTeXt Headers and Footers</a> を参照)。異なる場所に対して4つまで繰り返し指定可能
 text to be placed in running header or footer (see <a class="reference external" href="https://wiki.contextgarden.net/Headers_and_Footers">ConTeXt Headers and Footers</a>); repeat up to four times for different placement</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">indenting</span></code></dt><dd><p>パラグラフのインデントを制御します。例: <code class="docutils literal notranslate"><span class="pre">yes,small,next</span></code> (<a class="reference external" href="https://wiki.contextgarden.net/Indentation">ConTeXt Indentation</a> を参照) 複数回指定可能</p>
+<dt><code class="docutils literal notranslate"><span class="pre">indenting</span></code></dt><dd><p>controls indentation of paragraphs, e.g. <code class="docutils literal notranslate"><span class="pre">yes,small,next</span></code> (see
+<a class="reference external" href="https://wiki.contextgarden.net/Indentation">ConTeXt Indentation</a>); repeat for multiple options</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">interlinespace</span></code></dt><dd><p>行間を制御します。例: <code class="docutils literal notranslate"><span class="pre">4ex</span></code> (<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id151"><span class="problematic" id="id152">`setupinterlinespace```_</span></a> を利用) 複数回指定可能</p>
+<dt><code class="docutils literal notranslate"><span class="pre">interlinespace</span></code></dt><dd><p>adjusts line spacing, e.g. <code class="docutils literal notranslate"><span class="pre">4ex</span></code> (using
+<a href="#id57"><span class="problematic" id="id58">``</span></a><a href="#id151"><span class="problematic" id="id152">`setupinterlinespace```_</span></a>); repeat for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">layout</span></code></dt><dd><p>ページのマージンとテキスト配置のためのオプション (<a class="reference external" href="https://wiki.contextgarden.net/Layout">ConTeXt Layout</a> を参照) 複数回指定可能</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linkcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">contrastcolor</span></code></dt><dd><p>ページの外部および内部に向けたリンクの色。例: <code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code> (<a class="reference external" href="https://wiki.contextgarden.net/Color">ConTeXt Color</a> を参照)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">linkcolor</span></code>, <code class="docutils literal notranslate"><span class="pre">contrastcolor</span></code></dt><dd><p>color for links outside and inside a page, e.g. <code class="docutils literal notranslate"><span class="pre">red</span></code>, <code class="docutils literal notranslate"><span class="pre">blue</span></code>
+(see <a class="reference external" href="https://wiki.contextgarden.net/Color">ConTeXt Color</a>)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">linkstyle</span></code></dt><dd><p>リンクの書体。例: <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">bold</span></code>, <code class="docutils literal notranslate"><span class="pre">slanted</span></code>, <code class="docutils literal notranslate"><span class="pre">boldslanted</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">cap</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code></p>
+<dt><code class="docutils literal notranslate"><span class="pre">linkstyle</span></code></dt><dd><p>typeface style for links, e.g. <code class="docutils literal notranslate"><span class="pre">normal</span></code>, <code class="docutils literal notranslate"><span class="pre">bold</span></code>, <code class="docutils literal notranslate"><span class="pre">slanted</span></code>,
+<code class="docutils literal notranslate"><span class="pre">boldslanted</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">cap</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">lof</span></code>, <code class="docutils literal notranslate"><span class="pre">lot</span></code> <em>[boolean]</em></dt><dd><p>図目次および表目次を挿入します。</p>
 </dd>
@@ -861,18 +867,20 @@ text to be placed in running header or footer (see <a class="reference external"
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">pagenumbering</span></code></dt><dd><p>ページ番号のスタイルと場所 (<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id153"><span class="problematic" id="id154">`setuppagenumbering```_</span></a> を利用) 複数回指定可能</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>ページサイズ。例: <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">A4</span></code>, <code class="docutils literal notranslate"><span class="pre">landscape</span></code> (<a class="reference external" href="https://wiki.contextgarden.net/PaperSetup">ConTeXt Paper Setup</a> を参照) 複数回指定可能</p>
+<dt><code class="docutils literal notranslate"><span class="pre">papersize</span></code></dt><dd><p>paper size, e.g. <code class="docutils literal notranslate"><span class="pre">letter</span></code>, <code class="docutils literal notranslate"><span class="pre">A4</span></code>, <code class="docutils literal notranslate"><span class="pre">landscape</span></code> (see <a class="reference external" href="https://wiki.contextgarden.net/PaperSetup">ConTeXt
+Paper Setup</a>); repeat for multiple options</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">pdfa</span></code></dt><dd><p>プリアンブルに対して、PDF/A-1b:2005 の生成に必要なセットアップを追加。PDF/Aを正しく生成するためには、ICCカラープロファイルが必須であり、コンテンツおよびすべての付属ファイル (画像など) も規格に準拠する必要があります。ICCプロファイルは  <a class="reference external" href="https://wiki.contextgarden.net/PDFX#ICC_profiles">ConTeXt ICC Profiles</a> から得られます。詳細は  <a class="reference external" href="https://wiki.contextgarden.net/PDF/A">ConTeXt PDFA</a> を参照。</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">toc</span></code> <em>[boolean]</em></dt><dd><p>目次を挿入します。(<code class="docutils literal notranslate"><span class="pre">--toc/--table-of-contents</span></code> でも設定可能)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">whitespace</span></code></dt><dd><p>パラグラフ間の空白。例: <code class="docutils literal notranslate"><span class="pre">none</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code> (<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id155"><span class="problematic" id="id156">`setupwhitespace```_</span></a> を利用)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">whitespace</span></code></dt><dd><p>spacing between paragraphs, e.g. <code class="docutils literal notranslate"><span class="pre">none</span></code>, <code class="docutils literal notranslate"><span class="pre">small</span></code> (using
+<a href="#id61"><span class="problematic" id="id62">``</span></a><a href="#id155"><span class="problematic" id="id156">`setupwhitespace```_</span></a>)</p>
 </dd>
 </dl>
 </div>
 <div class="section" id="variables-for-wkhtmltopdf">
-<h3><code class="docutils literal notranslate"><span class="pre">wkhtmltopdf</span></code> 用の変数<a class="headerlink" href="#variables-for-wkhtmltopdf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2><code class="docutils literal notranslate"><span class="pre">wkhtmltopdf</span></code> 用の変数<a class="headerlink" href="#variables-for-wkhtmltopdf" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocは <code class="docutils literal notranslate"><span class="pre">`wkhtmltopdf```_</span> <span class="pre">を用いた</span> <span class="pre">`creating</span> <span class="pre">a</span> <span class="pre">PDF`_</span> <span class="pre">の際に、下記の変数を利用します。</span> <span class="pre">``--css</span></code> オプションも同様に出力へ影響します。</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">footer-html</span></code> と <code class="docutils literal notranslate"><span class="pre">header-html</span></code></dt><dd><p>ヘッダとフッタに情報を付け加える</p>
@@ -884,7 +892,7 @@ text to be placed in running header or footer (see <a class="reference external"
 </dl>
 </div>
 <div class="section" id="variables-for-man-pages">
-<h3>manページ用の変数<a class="headerlink" href="#variables-for-man-pages" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>manページ用の変数<a class="headerlink" href="#variables-for-man-pages" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">adjusting</span></code></dt><dd><p>テキストを左揃え(<code class="docutils literal notranslate"><span class="pre">l</span></code>)、右揃え(<code class="docutils literal notranslate"><span class="pre">r</span></code>)、中央揃え(<code class="docutils literal notranslate"><span class="pre">c</span></code>)、もしくは両端揃え(<code class="docutils literal notranslate"><span class="pre">b</span></code>)にする</p>
 </dd>
@@ -899,7 +907,7 @@ text to be placed in running header or footer (see <a class="reference external"
 </dl>
 </div>
 <div class="section" id="variables-for-ms">
-<h3>roff ms用の変数<a class="headerlink" href="#variables-for-ms" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>roff ms用の変数<a class="headerlink" href="#variables-for-ms" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">fontfamily</span></code></dt><dd><p>フォントファミリー (例: <code class="docutils literal notranslate"><span class="pre">T</span></code> や <code class="docutils literal notranslate"><span class="pre">P</span></code> など)</p>
 </dd>
@@ -912,7 +920,7 @@ text to be placed in running header or footer (see <a class="reference external"
 </dl>
 </div>
 <div class="section" id="structural-variables">
-<h3>Structural variables<a class="headerlink" href="#structural-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Structural variables<a class="headerlink" href="#structural-variables" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocは、<a class="reference external" href="#options">options</a> もしくは文書の内容に応じて、以下の変数を自動的に設定します。ユーザはそれらの変数を変更することもできます。自動的に設定される変数には以下の変数が含まれ、出力形式によって使われる変数は異なります:</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">body</span></code></dt><dd><p>文書の本文(body)</p>
@@ -951,7 +959,7 @@ $endif$
 </dl>
 </div>
 <div class="section" id="using-variables-in-templates">
-<h3>テンプレートで変数を使う<a class="headerlink" href="#using-variables-in-templates" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>テンプレートで変数を使う<a class="headerlink" href="#using-variables-in-templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>変数名に使用できる文字は、英数字、 <code class="docutils literal notranslate"><span class="pre">-</span></code> (ハイフン)、および <code class="docutils literal notranslate"><span class="pre">_</span></code> (アンダースコア)であり、変数名は、一文字目が英字で始まる文字列である必要があります。 <code class="docutils literal notranslate"><span class="pre">$</span></code> 記号によって囲まれた変数名は、その値で置換されます。例えば、 <code class="docutils literal notranslate"><span class="pre">$title$</span></code> は、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;title&gt;$title$&lt;/title&gt;
 </pre></div>
@@ -1010,13 +1018,13 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="extensions">
-<h2>拡張<a class="headerlink" href="#extensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>拡張<a class="headerlink" href="#extensions" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>ReaderとWriterの動作の一部は、さまざまな拡張を有効もしくは無効にすることで調整できます。</p>
 <p>拡張機能を有効にするには、ファイル形式に <code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> を追加し、無効にするときは 、 <code class="docutils literal notranslate"><span class="pre">-EXTENSION</span></code> を追加します。たとえば、 <code class="docutils literal notranslate"><span class="pre">--from</span> <span class="pre">markdown_strict+footnotes</span></code> は、オリジナルのMarkdown (<code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code>) 形式にfootnotes拡張を有効にしたものを意味し、 <code class="docutils literal notranslate"><span class="pre">--from</span> <span class="pre">markdown-footnotes-pipe_tables</span></code> は、Pandoc Markdown形式から、footnotes拡張とpipe_tables拡張を無効にしたものを意味しています。</p>
 <p>Markdown ReaderおよびWriterは、拡張を最も使用しています。そのような拡張は、下記の <a class="reference external" href="#pandocs-markdown">Pandoc’s Markdown</a> セクションで網羅されます (<code class="docutils literal notranslate"><span class="pre">commonmark</span></code> と <code class="docutils literal notranslate"><span class="pre">gfm</span></code> については <a class="reference external" href="#markdown-variants">Markdown variants</a> も参照) 。次に説明する拡張は、他の形式でも利用できるものを含みます。</p>
 <p>注意： <code class="docutils literal notranslate"><span class="pre">ipynb</span></code> 形式に対するMarkdown拡張は、Jupyter notebooksのMarkdownセルに対して影響を与えます (<code class="docutils literal notranslate"><span class="pre">--atx-headers</span></code> のようなコマンドラインオプションも同様)。</p>
 <div class="section" id="typography">
-<h3>タイポグラフィ<a class="headerlink" href="#typography" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>タイポグラフィ<a class="headerlink" href="#typography" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>直線形の引用符( <code class="docutils literal notranslate"><span class="pre">'...'</span></code> や <code class="docutils literal notranslate"><span class="pre">&quot;...&quot;</span></code> )を曲線形の引用符 (<code class="docutils literal notranslate"><span class="pre">‘...’</span></code> や <code class="docutils literal notranslate"><span class="pre">“...”</span></code>)に、 <code class="docutils literal notranslate"><span class="pre">---</span></code> を emダッシュ (<code class="docutils literal notranslate"><span class="pre">—</span></code>)に、<code class="docutils literal notranslate"><span class="pre">--</span></code> を enダッシュ (<code class="docutils literal notranslate"><span class="pre">–</span></code>)に、そして <code class="docutils literal notranslate"><span class="pre">...</span></code> を三点リーダー (<code class="docutils literal notranslate"><span class="pre">…</span></code>)に変換します。また、“Mr.” などの省略語の直後にノーブレークスペースを挿入します。</p>
 <p>この拡張は、下記の形式について有効/無効を切り替えることができます。</p>
 <dl class="simple">
@@ -1032,7 +1040,7 @@ each pandoc release.</p>
 <p>LaTeXにおいて <code class="docutils literal notranslate"><span class="pre">smart</span></code> はTeXにおける標準的な合字の使用を意味します。つまりクォーテーションマーク (ダブルクォートの <code class="docutils literal notranslate"><span class="pre">``</span></code> と <code class="docutils literal notranslate"><span class="pre">''</span></code> 、シングルクォートの <code class="docutils literal notranslate"><span class="pre">`</span></code> と <code class="docutils literal notranslate"><span class="pre">'</span></code>) およびダッシュ (enダッシュ <code class="docutils literal notranslate"><span class="pre">--</span></code> と emダッシュ <code class="docutils literal notranslate"><span class="pre">---</span></code>) を利用します。 <code class="docutils literal notranslate"><span class="pre">smart</span></code> が無効の場合は、PandocはLaTeX入力において文字通りに解釈します。LaTeX出力において <code class="docutils literal notranslate"><span class="pre">smart</span></code> を有効にした場合は、Pandocは可能な限りTeXの合字を利用します。 <code class="docutils literal notranslate"><span class="pre">smart</span></code> が無効の場合はUnicodeのクォーテーション文字およびダッシュ文字を利用します。</p>
 </div>
 <div class="section" id="headings-and-sections">
-<h3>見出しと章<a class="headerlink" href="#headings-and-sections" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>見出しと章<a class="headerlink" href="#headings-and-sections" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>識別子が明示的に指定されていない見出しには、自動的に見出しのテキストに基づいたユニークな識別子が割り当てられます。</p>
 <p>この拡張は、下記の形式について有効/無効を切り替えることができます。</p>
 <dl class="simple">
@@ -1098,12 +1106,12 @@ each pandoc release.</p>
 <p><code class="docutils literal notranslate"><span class="pre">auto_identifiers</span></code> によって識別子を生成するアルゴリズムを、Githubで用いられているアルゴリズムに変更します。すなわち、空白文字をハイフン (<code class="docutils literal notranslate"><span class="pre">-</span></code>) に変換し、大文字を小文字に変換し、<code class="docutils literal notranslate"><span class="pre">-</span></code> と <code class="docutils literal notranslate"><span class="pre">_</span></code> 以外の記号文字を取り除きます。</p>
 </div>
 <div class="section" id="math-input">
-<h3>数式の入力<a class="headerlink" href="#math-input" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>数式の入力<a class="headerlink" href="#math-input" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id157"><span class="problematic" id="id158">`tex_math_dollars```_</span></a> 、 <a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id159"><span class="problematic" id="id160">`tex_math_single_backslash```_</span></a> 、 そして <a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id161"><span class="problematic" id="id162">`tex_math_double_backslash```_</span></a> 拡張はPandoc’s Markdownのセクションに書かれています。</p>
 <p>しかし、これらはHTML入力とともに使用することができます。これは例えばMathJaxを使って整えられたウェブページを読むのに便利です。</p>
 </div>
 <div class="section" id="raw-html-tex">
-<h3>生の HTML/TeX<a class="headerlink" href="#raw-html-tex" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>生の HTML/TeX<a class="headerlink" href="#raw-html-tex" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下の拡張について (特にMarkdownの入出力にどのように影響するのかについて) は、 <a class="reference external" href="#pandocs-markdown">Pandoc's Markdown</a> の対応するセクションでも詳しく説明されています。</p>
 <p>HTMLから変換する場合、PandocのASTで表現できない要素を、生のHTMLとして構文解析します。HTML形式のファイルを入力する際、デフォルトではこれは無効になっています。</p>
 <p>生の LaTeX、 TeX、ConTeXt を文書に含めることを許します。</p>
@@ -1123,7 +1131,7 @@ each pandoc release.</p>
 <p>上記の <code class="docutils literal notranslate"><span class="pre">native_divs</span></code> と類似の拡張です。</p>
 </div>
 <div class="section" id="literate-haskell-support">
-<h3>Literate Haskellのサポート<a class="headerlink" href="#literate-haskell-support" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Literate Haskellのサポート<a class="headerlink" href="#literate-haskell-support" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>文書をLiterate Haskellソースコードとして扱います。</p>
 <p>この拡張は、下記の形式について有効/無効を切り替えることができます。</p>
 <dl class="simple">
@@ -1154,7 +1162,7 @@ each pandoc release.</p>
 <p>注意：GHCは <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> 記号が1文字目にあることを期待します。したがってインデントされたLiterateコードブロック (例：箇条書きの環境内)はHaskellコンパイラに認識されません。</p>
 </div>
 <div class="section" id="other-extensions">
-<h3>その他の拡張<a class="headerlink" href="#other-extensions" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>その他の拡張<a class="headerlink" href="#other-extensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>空の段落を許します。デフォルトでは、空の段落は省略されます。</p>
 <p>この拡張は、下記の形式について有効/無効を切り替えることができます。</p>
 <dl class="simple">
@@ -1174,10 +1182,10 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="pandocs-markdown">
-<h2>Pandoc’s Markdown<a class="headerlink" href="#pandocs-markdown" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>Pandoc’s Markdown<a class="headerlink" href="#pandocs-markdown" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Pandocは、拡張と少しの改訂が加えられたJohn Gruberの <a class="reference external" href="http://daringfireball.net/projects/markdown/">Markdown</a> 文法を解釈します。ここでは、John GruberのMarkdown文法と、標準Markdown文法との違いについて説明します。特に注意が無い限り、 <code class="docutils literal notranslate"><span class="pre">markdown</span></code> フォーマットの代わりに <code class="docutils literal notranslate"><span class="pre">markdown_strict</span></code> フォーマットを用いることで、標準Markdown文法に従った解釈に変更できます。拡張機能を有効もしくは無効にすることで、Pandocの動作をより詳細に設定できます。以下では、Markdown形式における拡張機能について説明します。他の形式でも機能する拡張機能に関しては、上述の <a class="reference external" href="#extensions">Extensions</a> を参照してください。</p>
 <div class="section" id="philosophy">
-<h3>哲学<a class="headerlink" href="#philosophy" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>哲学<a class="headerlink" href="#philosophy" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Markdownは、書きやすく設計されているだけでなく、より重要なこととして、Markdownで書かれた文書をそのまま容易に読めるようにも設計されています:</p>
 <blockquote>
 <div><p>Markdown形式の文書は、タグなどでマークアップされているように見えることなく、プレーンテキストとしてそのまま見せても通用するように書かれるべきである。 – <a class="reference external" href="http://daringfireball.net/projects/markdown/syntax#philosophy">John Gruber</a></p>
@@ -1186,15 +1194,15 @@ each pandoc release.</p>
 <p>しかしながら、ある1点において、Pandocの目指すものとオリジナルのMarkdownが目指すものは異なります。Markdownは、もともとHTMLを生成するために設計されたのに対し、Pandocは、様々なフォーマットへと出力することを目的として設計されています。この目的から、Pandocでは、文書中に埋め込まれた生のHTMLを解釈することはできますが、それを推奨せず、その代わりにHTMLらしくない方法で、定義リスト、表、数式、脚注などの文章に重要な構成要素を表現します。</p>
 </div>
 <div class="section" id="paragraphs">
-<h3>段落<a class="headerlink" href="#paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>段落<a class="headerlink" href="#paragraphs" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>段落は、1行以上のテキストと、それに続く1行以上の空行からなります。単なる改行は、スペースとして扱われます。これにより、ユーザの好きなように改行を行って段落を構成することが可能です。もしも強制改行(ソフトリターン)が必要な場合は、行末に2つ以上のスペースを置いてください。</p>
 <p>改行の後にバックスラッシュを置いた場合も、強制改行として処理されます。注意: マルチラインテーブルおよびグリッドテーブルのセルでは、行末のスペースが無視されるため、これが唯一の強制改行を行う方法です。</p>
 </div>
 <div class="section" id="headings">
-<h3>見出し<a class="headerlink" href="#headings" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>見出し<a class="headerlink" href="#headings" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocでは、Setext形式とATX形式の2つの見出し記法を用いることができます。</p>
 <div class="section" id="setext-style-headings">
-<h4>Setext形式の見出し<a class="headerlink" href="#setext-style-headings" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>Setext形式の見出し<a class="headerlink" href="#setext-style-headings" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Setex形式では、&quot;下線が引かれた&quot;行が見出しとなります。 <code class="docutils literal notranslate"><span class="pre">=</span></code> 記号で下線を引くとレベル1の見出しに、 <code class="docutils literal notranslate"><span class="pre">-</span></code> 記号で下線を引くとレベル2の見出しになります:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="n">level</span><span class="o">-</span><span class="n">one</span> <span class="n">heading</span>
 <span class="o">===================</span>
@@ -1206,7 +1214,7 @@ each pandoc release.</p>
 <p>見出しとなるテキストは、強調や斜体などのインライン修飾が可能です (詳細は下記の <a class="reference external" href="#inline-formatting">Inline formatting</a> を参照)。</p>
 </div>
 <div class="section" id="atx-style-headings">
-<h4>ATX形式の見出し<a class="headerlink" href="#atx-style-headings" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>ATX形式の見出し<a class="headerlink" href="#atx-style-headings" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ATX形式の見出しは、1から6個の連続した <code class="docutils literal notranslate"><span class="pre">#</span></code> 記号と、それに続く1行のテキストから成ります。ATX形式の見出しでは、行末に任意の数の <code class="docutils literal notranslate"><span class="pre">#</span></code> 記号があっても構いません。行頭に置かれた <code class="docutils literal notranslate"><span class="pre">#</span></code> 記号の数が、見出しのレベルを決めます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## A level-two heading</span>
 
@@ -1218,7 +1226,7 @@ each pandoc release.</p>
 </pre></div>
 </div>
 <div class="section" id="extension-blank-before-header">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">blank_before_header</span></code><a class="headerlink" href="#extension-blank-before-header" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">blank_before_header</span></code><a class="headerlink" href="#extension-blank-before-header" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>標準Markdown文法では設けられていない制約ですが、Pandocでは、見出し行の前に空行が挿入される必要があります (ただし、文書のはじめの1行だけは例外です)。なぜならば、行頭に誤って <code class="docutils literal notranslate"><span class="pre">#</span></code> 記号を置くことがよくあるためです (行の折返し設定をしているエディタでも同様のことが起こるかもしれません)。以下の例について考えてみましょう:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">like</span> <span class="n">several</span> <span class="n">of</span> <span class="n">their</span> <span class="n">flavors</span> <span class="n">of</span> <span class="n">ice</span> <span class="n">cream</span><span class="p">:</span>
 <span class="c1">#22, for example, and #5.</span>
@@ -1226,15 +1234,15 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="extension-space-in-atx-header">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">space_in_atx_header</span></code><a class="headerlink" href="#extension-space-in-atx-header" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">space_in_atx_header</span></code><a class="headerlink" href="#extension-space-in-atx-header" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>多くのMarkdown方言では、ATX形式の見出しにおいて、 <code class="docutils literal notranslate"><span class="pre">#</span></code> 記号と見出しとなるテキストの間にスペースがなくても、見出しとして処理されます。しかしこれでは、 <code class="docutils literal notranslate"><span class="pre">#5</span> <span class="pre">bolt</span></code> や <code class="docutils literal notranslate"><span class="pre">#hashtag</span></code> といった行も見出しとして処理されてしまいます。この拡張によって、Pandocは、 <code class="docutils literal notranslate"><span class="pre">#</span></code> 記号と見出しとなるテキストの間にスペースがある行を見出しとして処理します。</p>
 </div>
 </div>
 <div class="section" id="heading-identifiers">
-<h4>見出しの識別子<a class="headerlink" href="#heading-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>見出しの識別子<a class="headerlink" href="#heading-identifiers" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>上述した <code class="docutils literal notranslate"><span class="pre">`auto_identifiers</span></code> extension`_ も参照してください。</p>
 <div class="section" id="extension-header-attributes">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">header_attributes</span></code><a class="headerlink" href="#extension-header-attributes" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">header_attributes</span></code><a class="headerlink" href="#extension-header-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>見出しのテキストを含む行の行末にこの文法を用いることで、見出しに属性をつけることができます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="c1">#identifier .class .class key=value key=value}</span>
 </pre></div>
@@ -1260,7 +1268,7 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="extension-implicit-header-references">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">implicit_header_references</span></code><a class="headerlink" href="#extension-implicit-header-references" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">implicit_header_references</span></code><a class="headerlink" href="#extension-implicit-header-references" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandocは、それぞれの見出しに対して参照リンクが定義されているかのように振る舞います。そのため、以下のような識別子による明示的な見出しへのリンク</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Heading identifiers in HTML</span>
 </pre></div>
@@ -1296,7 +1304,7 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="block-quotations">
-<h3>引用<a class="headerlink" href="#block-quotations" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>引用<a class="headerlink" href="#block-quotations" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Markdownは、Eメールで慣習的に用いられてきた引用の記法を採用しています。引用は、ひとつ以上の段落もしくはブロック要素(リストや見出しなど)からなり、それらの各行は、 <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> で始まる必要があります。 <code class="docutils literal notranslate"><span class="pre">&gt;``記号の直後には、1つの空白文字を入れてもかまいません。(</span> <span class="pre">``&gt;</span></code> 記号は、行頭から始まる必要はありませんが、4つ以上の空白文字によってインデントされてはなりません。)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">block</span> <span class="n">quote</span><span class="o">.</span> <span class="n">This</span>
 <span class="o">&gt;</span> <span class="n">paragraph</span> <span class="n">has</span> <span class="n">two</span> <span class="n">lines</span><span class="o">.</span>
@@ -1330,9 +1338,9 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="verbatim-code-blocks">
-<h3>文字通りのブロック (コードブロック)<a class="headerlink" href="#verbatim-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>文字通りのブロック (コードブロック)<a class="headerlink" href="#verbatim-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="indented-code-blocks">
-<h4>インデントされたコードブロック<a class="headerlink" href="#indented-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>インデントされたコードブロック<a class="headerlink" href="#indented-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>4つの空白文字(もしくは1つのタブ文字)によってインデントされた文字列は、そのまま文字通りに処理されます。すなわち、 <code class="docutils literal notranslate"><span class="pre">*</span></code> や <code class="docutils literal notranslate"><span class="pre">_</span></code> などの特別な文字が、斜体や太字などの文字列の修飾には用いられずに、そのまま文字通りに出力されます。また、全ての空白文字や改行も、そのまま保持されます。たとえば、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">moveShip</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">gravity</span><span class="p">,</span> <span class="n">DOWN</span><span class="p">);</span>
@@ -1343,9 +1351,9 @@ each pandoc release.</p>
 <p>注意: コードブロックにおいて空行を表現するとき、その行は4つのスペースもしくはタブ文字でインデントされている必要はありません。</p>
 </div>
 <div class="section" id="fenced-code-blocks">
-<h4>囲いコードブロック (Fenced code blocks)<a class="headerlink" href="#fenced-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>囲いコードブロック (Fenced code blocks)<a class="headerlink" href="#fenced-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-fenced-code-blocks">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">fenced_code_blocks</span></code><a class="headerlink" href="#extension-fenced-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">fenced_code_blocks</span></code><a class="headerlink" href="#extension-fenced-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>通常のインデントによるコードブロックに加えて、Pandocでは <em>囲い</em> (<em>fenced</em>) コードブロックもサポートします。これは始まりの行に3つ以上のチルダ (<code class="docutils literal notranslate"><span class="pre">~</span></code>) を並べ、同様に終わりの行に、始まりと同じ数のチルダを並べるものです。この2行の間にあるすべてのテキストが、コード行として扱われます。インデントは不要です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~~~~~~~</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
@@ -1365,11 +1373,11 @@ each pandoc release.</p>
 </div>
 </div>
 <div class="section" id="extension-backtick-code-blocks">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">backtick_code_blocks</span></code><a class="headerlink" href="#extension-backtick-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">backtick_code_blocks</span></code><a class="headerlink" href="#extension-backtick-code-blocks" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">fenced_code_blocks</span></code> と同様ですが、バッククォート (<code class="docutils literal notranslate"><span class="pre">`</span></code>) をチルダ (<code class="docutils literal notranslate"><span class="pre">~</span></code>) の代わりに使います。</p>
 </div>
 <div class="section" id="extension-fenced-code-attributes">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">fenced_code_attributes</span></code><a class="headerlink" href="#extension-fenced-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">fenced_code_attributes</span></code><a class="headerlink" href="#extension-fenced-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>必要に応じて、以下の構文を用いることで囲いコードブロックやバッククォートによるコードブロックに属性を与えることができます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~~~~</span> <span class="p">{</span><span class="c1">#mycode .haskell .numberLines startFrom=&quot;100&quot;}</span>
 <span class="n">qsort</span> <span class="p">[]</span>     <span class="o">=</span> <span class="p">[]</span>
@@ -1407,7 +1415,7 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="line-blocks">
-<h3>ラインブロック<a class="headerlink" href="#line-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>ラインブロック<a class="headerlink" href="#line-blocks" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ラインブロックは、縦線 (<code class="docutils literal notranslate"><span class="pre">|</span></code>) と1つのスペースで始まる一連の行からなります。行の分割や行頭のスペースは保持され、そのまま出力されます。これらの点以外は、Markdown記法に従って修飾されます。ラインブロックは、詩や住所などを書く際に便利な記法です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">The</span> <span class="n">limerick</span> <span class="n">packs</span> <span class="n">laughs</span> <span class="n">anatomical</span>
 <span class="o">|</span> <span class="n">In</span> <span class="n">space</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">quite</span> <span class="n">economical</span><span class="o">.</span>
@@ -1429,9 +1437,9 @@ attribute will be printed after the opening fence as a bare word.</p>
 <p>この文法は、 <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a> から借用されています。</p>
 </div>
 <div class="section" id="lists">
-<h3>リスト<a class="headerlink" href="#lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>リスト<a class="headerlink" href="#lists" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="bullet-lists">
-<h4>箇条書きリスト<a class="headerlink" href="#bullet-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>箇条書きリスト<a class="headerlink" href="#bullet-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>箇条書きリストは、各項目の行頭に点記号が付されたリストのことを指します。箇条書きリストの各項目は、箇条記号( <code class="docutils literal notranslate"><span class="pre">*</span></code> 、 <code class="docutils literal notranslate"><span class="pre">+</span></code> 、もしくは <code class="docutils literal notranslate"><span class="pre">-</span></code> のどれか)が行頭に置かれる必要があります。例を以下に示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">one</span>
 <span class="o">*</span> <span class="n">two</span>
@@ -1461,7 +1469,7 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="block-content-in-list-items">
-<h4>リスト項目として可能なブロック要素<a class="headerlink" href="#block-content-in-list-items" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>リスト項目として可能なブロック要素<a class="headerlink" href="#block-content-in-list-items" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>リスト項目には、複数の段落や異なるブロック要素(引用やコードブロックなど)を含めることが可能です。ただし、後続の段落は、空行で区切り、先頭のリスト項目のテキスト開始点に合わせてインデントする必要があります。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">First</span> <span class="n">paragraph</span><span class="o">.</span>
 
@@ -1504,7 +1512,7 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="ordered-lists">
-<h4>順序付きリスト<a class="headerlink" href="#ordered-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>順序付きリスト<a class="headerlink" href="#ordered-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>順序付きリストは、箇条書きリストと似ていますが、項目の先頭は記号でなく数値が割り振られます。</p>
 <p>標準Markdownでは、順序付きリストの行頭に10進の数値と，それに続く1つのピリオドおよび1つの空白を置きます。数値そのものの値は無視されるため、以下の順序付きリストは</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span>  <span class="n">one</span>
@@ -1519,7 +1527,7 @@ attribute will be printed after the opening fence as a bare word.</p>
 </pre></div>
 </div>
 <div class="section" id="extension-fancy-lists">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">fancy_lists</span></code><a class="headerlink" href="#extension-fancy-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">fancy_lists</span></code><a class="headerlink" href="#extension-fancy-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>標準Markdownとは異なり、Pandocは、大文字もしくは小文字のアルファベット、およびローマ数字といった順序記号を用いて順序付きリストを作成することも可能です。この場合、これらの順序記号を括弧で囲むか、順序記号の直後に閉じ括弧もしくはピリオドを置いてください。これらの順序記号とリスト項目となるテキストは、少なくとも1つのスペースで区切られる必要があります。ただし、順序記号として大文字の英字を用いる場合は、2つ以上のスペースで区切ってください。 <a class="footnote-reference brackets" href="#id83" id="id69">1</a></p>
 <p><code class="docutils literal notranslate"><span class="pre">fancy_lists</span></code> 拡張では、数値の代わりに ‘ <code class="docutils literal notranslate"><span class="pre">#</span></code> ’ 記号を順序記号として用いることも可能です:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#. one</span>
@@ -1528,7 +1536,7 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="extension-startnum">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">startnum</span></code><a class="headerlink" href="#extension-startnum" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">startnum</span></code><a class="headerlink" href="#extension-startnum" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandocは、リスト記号の型および順序の出だしを認識し、可能な限りそれらを保持して出力します。すなわち、下記の例では、閉じ括弧つきの9から始まる順序付きリスト、および小文字のローマ数字を用いた順序付きサブリストが得られます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">9</span><span class="p">)</span>  <span class="n">Ninth</span>
 <span class="mi">10</span><span class="p">)</span>  <span class="n">Tenth</span>
@@ -1553,7 +1561,7 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="extension-task-lists">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">task_lists</span></code><a class="headerlink" href="#extension-task-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">task_lists</span></code><a class="headerlink" href="#extension-task-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandocは、GitHub-Flavored Markdown文法を用いて、タスクリストをサポートしています。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">[</span> <span class="p">]</span> <span class="n">an</span> <span class="n">unchecked</span> <span class="n">task</span> <span class="nb">list</span> <span class="n">item</span>
 <span class="o">-</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="n">checked</span> <span class="n">item</span>
@@ -1562,9 +1570,9 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="definition-lists">
-<h4>定義リスト<a class="headerlink" href="#definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>定義リスト<a class="headerlink" href="#definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-definition-lists">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">definition_lists</span></code><a class="headerlink" href="#extension-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">definition_lists</span></code><a class="headerlink" href="#extension-definition-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Pandocは、 <a class="reference external" href="https://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a> 文法といくつかの拡張機能を用いて、定義リストをサポートしています。 <a class="footnote-reference brackets" href="#id84" id="id70">2</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Term</span> <span class="mi">1</span>
 
@@ -1602,9 +1610,9 @@ attribute will be printed after the opening fence as a bare word.</p>
 </div>
 </div>
 <div class="section" id="numbered-example-lists">
-<h4>順序付き用例リスト<a class="headerlink" href="#numbered-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>順序付き用例リスト<a class="headerlink" href="#numbered-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-example-lists">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">example_lists</span></code><a class="headerlink" href="#extension-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">example_lists</span></code><a class="headerlink" href="#extension-example-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>特別なリスト記号である <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> は、連番の順序付き用例リストに用いられます。文書中にはじめて出てくる <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 記号には ‘1’ が割り振られ、その次の記号には ‘2’ が割り振られ...というように、文書中を通して連番が付されたリストが生成されます。連番が付された用例は、単一のリストにまとめる必要はありません。すなわち、新しい順序付き用例リストのはじめに出てくる``&#64;`` 記号には、一つ前の順序付き用例リストで最後に割り振られた連番の次の番号が割り振られます。例えば:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">@</span><span class="p">)</span>  <span class="n">My</span> <span class="n">first</span> <span class="n">example</span> <span class="n">will</span> <span class="n">be</span> <span class="n">numbered</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span>
 <span class="p">(</span><span class="o">@</span><span class="p">)</span>  <span class="n">My</span> <span class="n">second</span> <span class="n">example</span> <span class="n">will</span> <span class="n">be</span> <span class="n">numbered</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span>
@@ -1630,7 +1638,7 @@ awkward.</p>
 </div>
 </div>
 <div class="section" id="compact-and-loose-lists">
-<h4>コンパクトリスト(compact list)とルーズリスト(loose list)<a class="headerlink" href="#compact-and-loose-lists" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>コンパクトリスト(compact list)とルーズリスト(loose list)<a class="headerlink" href="#compact-and-loose-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Pandocは、リストに関係する一部のエッジケースで、 <code class="docutils literal notranslate"><span class="pre">Markdown.pl</span></code> とは異なる動作をします。 以下のソースについて考えてみます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+</span>   <span class="n">First</span>
 <span class="o">+</span>   <span class="n">Second</span><span class="p">:</span>
@@ -1654,7 +1662,7 @@ with the official Markdown syntax description, even though it is
 different from that of <code class="docutils literal notranslate"><span class="pre">Markdown.pl</span></code>.)</p>
 </div>
 <div class="section" id="ending-a-list">
-<h4>リストの終わらせ方<a class="headerlink" href="#ending-a-list" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>リストの終わらせ方<a class="headerlink" href="#ending-a-list" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>リストの後にインデントされたコードブロックを置いた場合、何が起こるでしょうか。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span>   <span class="n">item</span> <span class="n">one</span>
 <span class="o">-</span>   <span class="n">item</span> <span class="n">two</span>
@@ -1687,7 +1695,7 @@ different from that of <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="section" id="horizontal-rules">
-<h3>水平線<a class="headerlink" href="#horizontal-rules" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>水平線<a class="headerlink" href="#horizontal-rules" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>3つ以上の <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code> もしくは <code class="docutils literal notranslate"><span class="pre">_</span></code> 記号を含む行(これらの記号は空白で分けられていても構いません)は、水平線を生成します。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span>  <span class="o">*</span>  <span class="o">*</span>  <span class="o">*</span>
 
@@ -1696,7 +1704,7 @@ different from that of <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="section" id="tables">
-<h3>表<a class="headerlink" href="#tables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>表<a class="headerlink" href="#tables" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>4種類の表が使用可能です。最初の3種類の表は、Courierなどの等幅フォントの使用を前提としています。 4番目の表は、列を並べる必要がないため、プロポーショナルフォントでも使用できます。</p>
 <p>4種類の表すべてに、オプションとして(以下の例で示すように)キャプションを与えることができます。 <code class="docutils literal notranslate"><span class="pre">Table:</span></code> (もしくは単に <code class="docutils literal notranslate"><span class="pre">:</span></code> )で始まる段落がキャプションとして扱われ、行頭の <code class="docutils literal notranslate"><span class="pre">Table:</span></code> や <code class="docutils literal notranslate"><span class="pre">:</span></code> は、キャプションを生成する際に削除されます。キャプションは、表の直前もしくは直後に表示されます。</p>
 <p>シンプルテーブルは、このように書きます:</p>
@@ -1824,7 +1832,7 @@ different from that of <code class="docutils literal notranslate"><span class="p
 <p>違いは、 <code class="docutils literal notranslate"><span class="pre">|</span></code> の代わりに <code class="docutils literal notranslate"><span class="pre">+</span></code> が使用される点です。この他のorgtbl機能はサポートされていません。特別な点として、デフォルトでない文字列の左右寄せ・中央揃えを設定するためには、上記のようにコロンを区切り線に追加する必要があります。</p>
 </div>
 <div class="section" id="metadata-blocks">
-<h3>メタデータブロック<a class="headerlink" href="#metadata-blocks" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>メタデータブロック<a class="headerlink" href="#metadata-blocks" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ファイルがタイトルブロックから開始している場合、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">title</span>
 <span class="o">%</span> <span class="n">author</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">(</span><span class="n">separated</span> <span class="n">by</span> <span class="n">semicolons</span><span class="p">)</span>
@@ -1930,7 +1938,7 @@ $endfor$
 </div>
 </div>
 <div class="section" id="backslash-escapes">
-<h3>バックスラッシュを用いたエスケープ<a class="headerlink" href="#backslash-escapes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>バックスラッシュを用いたエスケープ<a class="headerlink" href="#backslash-escapes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>コードブロックとインラインコードの内部を除き、バックスラッシュの次に続くあらゆる文字および空白文字は、そのまま文字通り扱われます。これは、通常は修飾に使われる記号に対しても同様です。例えば、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span>\<span class="o">*</span><span class="n">hello</span>\<span class="o">**</span>
 </pre></div>
@@ -1953,9 +1961,9 @@ $endfor$
 <p>バックスラッシュによるエスケープは、コードブロックやインラインコードなど、そのまま文字通りに解釈されるようなコンテキストでは用いることができません。</p>
 </div>
 <div class="section" id="inline-formatting">
-<h3>インライン修飾<a class="headerlink" href="#inline-formatting" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>インライン修飾<a class="headerlink" href="#inline-formatting" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="emphasis">
-<h4>強調<a class="headerlink" href="#emphasis" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>強調<a class="headerlink" href="#emphasis" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>テキストを <em>斜体</em> にするためには、そのテキストを <code class="docutils literal notranslate"><span class="pre">*</span></code> もしくは <code class="docutils literal notranslate"><span class="pre">_</span></code> で囲みます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">text</span> <span class="ow">is</span> <span class="n">_emphasized</span> <span class="k">with</span> <span class="n">underscores_</span><span class="p">,</span> <span class="ow">and</span> <span class="n">this</span>
 <span class="ow">is</span> <span class="o">*</span><span class="n">emphasized</span> <span class="k">with</span> <span class="n">asterisks</span><span class="o">*.</span>
@@ -1970,7 +1978,7 @@ $endfor$
 </pre></div>
 </div>
 <div class="section" id="extension-intraword-underscores">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">intraword_underscores</span></code><a class="headerlink" href="#extension-intraword-underscores" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">intraword_underscores</span></code><a class="headerlink" href="#extension-intraword-underscores" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">_</span></code> 記号は、単語や識別子に含まれることがあるため、Pandocは、 <code class="docutils literal notranslate"><span class="pre">_</span></code> によって囲まれた英数字を修飾しません。テキストを修飾したい場合は、 <code class="docutils literal notranslate"><span class="pre">*</span></code> を使用してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feas</span><span class="o">*</span><span class="n">ible</span><span class="o">*</span><span class="p">,</span> <span class="ow">not</span> <span class="n">feas</span><span class="o">*</span><span class="n">able</span><span class="o">*.</span>
 </pre></div>
@@ -1978,9 +1986,9 @@ $endfor$
 </div>
 </div>
 <div class="section" id="strikeout">
-<h4>取り消し線<a class="headerlink" href="#strikeout" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>取り消し線<a class="headerlink" href="#strikeout" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-strikeout">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">strikeout</span></code><a class="headerlink" href="#extension-strikeout" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">strikeout</span></code><a class="headerlink" href="#extension-strikeout" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>テキストを <code class="docutils literal notranslate"><span class="pre">~~</span></code> で囲むことで、そのテキストに取り消し線をかけることができます。たとえば、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="o">~~</span><span class="ow">is</span> <span class="n">deleted</span> <span class="n">text</span><span class="o">.~~</span>
 </pre></div>
@@ -1988,9 +1996,9 @@ $endfor$
 </div>
 </div>
 <div class="section" id="superscripts-and-subscripts">
-<h4>上付き文字と下付き文字<a class="headerlink" href="#superscripts-and-subscripts" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>上付き文字と下付き文字<a class="headerlink" href="#superscripts-and-subscripts" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-superscript-subscript">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">superscript</span></code> , <code class="docutils literal notranslate"><span class="pre">subscript</span></code><a class="headerlink" href="#extension-superscript-subscript" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">superscript</span></code> , <code class="docutils literal notranslate"><span class="pre">subscript</span></code><a class="headerlink" href="#extension-superscript-subscript" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">^</span></code> で囲まれた文字列は、上付き文字に変換されます。また、 <code class="docutils literal notranslate"><span class="pre">~</span></code> で囲まれた文字列は、下付き文字に変換されます。たとえば、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">H</span><span class="o">~</span><span class="mi">2</span><span class="o">~</span><span class="n">O</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">liquid</span><span class="o">.</span>  <span class="mi">2</span><span class="o">^</span><span class="mi">10</span><span class="o">^</span> <span class="ow">is</span> <span class="mf">1024.</span>
 </pre></div>
@@ -1999,7 +2007,7 @@ $endfor$
 </div>
 </div>
 <div class="section" id="verbatim">
-<h4>そのまま文字通りの出力 (Verbatim)<a class="headerlink" href="#verbatim" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>そのまま文字通りの出力 (Verbatim)<a class="headerlink" href="#verbatim" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>短いテキストを、そのまま文字通り出力したい場合は、バッククォートで囲みます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>What is the difference between `&gt;&gt;=` and `&gt;&gt;`?
 </pre></div>
@@ -2015,7 +2023,7 @@ $endfor$
 </pre></div>
 </div>
 <div class="section" id="extension-inline-code-attributes">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">inline_code_attributes</span></code><a class="headerlink" href="#extension-inline-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">inline_code_attributes</span></code><a class="headerlink" href="#extension-inline-code-attributes" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>そのまま文字通りの出力するテキストに対して、 <a class="reference external" href="#fenced-code-blocks">fenced code blocks</a> と同様に、属性を与えることができます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`&lt;$&gt;`{.haskell}
 </pre></div>
@@ -2023,7 +2031,7 @@ $endfor$
 </div>
 </div>
 <div class="section" id="small-caps">
-<h4>スモールキャピタル<a class="headerlink" href="#small-caps" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>スモールキャピタル<a class="headerlink" href="#small-caps" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>スモールキャピタルを適用したい場合は、 <code class="docutils literal notranslate"><span class="pre">smallcaps</span></code> クラスを使用してください:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Small</span> <span class="n">caps</span><span class="p">]{</span><span class="o">.</span><span class="n">smallcaps</span><span class="p">}</span>
 </pre></div>
@@ -2040,7 +2048,7 @@ $endfor$
 </div>
 </div>
 <div class="section" id="math">
-<h3>数式<a class="headerlink" href="#math" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>数式<a class="headerlink" href="#math" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>2つの <code class="docutils literal notranslate"><span class="pre">$</span></code> 記号で囲まれた文字列は、TeX数式として扱われます。TeX数式として扱いたいとき、開きの <code class="docutils literal notranslate"><span class="pre">$</span></code> (つまり左側の <code class="docutils literal notranslate"><span class="pre">$</span></code> ) 記号の直後には、非空白文字が続く必要があります。逆に言えば、 <code class="docutils literal notranslate"><span class="pre">$</span></code> 記号のすぐ後に空白文字が来た場合は、TeX数式として扱われません。同様に、閉じの <code class="docutils literal notranslate"><span class="pre">$</span></code> (つまり右側の <code class="docutils literal notranslate"><span class="pre">$</span></code> ) 記号は、直前に非空白文字が続いている必要があります。また、 <code class="docutils literal notranslate"><span class="pre">$</span></code> 記号の直後に数字が続く場合は、閉じの <code class="docutils literal notranslate"><span class="pre">$</span></code> として扱われません。これにより、 <code class="docutils literal notranslate"><span class="pre">$20,000</span></code> や <code class="docutils literal notranslate"><span class="pre">$30,000</span></code> は数式として扱われません。もし何らかの理由で文章の末尾に <code class="docutils literal notranslate"><span class="pre">$</span></code> 記号を入れなければならないときは、バックスラッシュによってエスケープしてください。これにより、その <code class="docutils literal notranslate"><span class="pre">$</span></code> 記号は、TeX数式の区切り文字として扱われなくなります。</p>
 <p>TeX 数式はすべての出力形式で出力されます。どのようにレンダリングされるかは出力形式に依存します：</p>
 <dl class="simple">
@@ -2077,7 +2085,7 @@ $endfor$
 </dl>
 </div>
 <div class="section" id="id76">
-<h3>生のHTML<a class="headerlink" href="#id76" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>生のHTML<a class="headerlink" href="#id76" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Markdownでは、文書中のどこにでも生のHTML (もしくはDocBook) 記法を挿入できます (ただし、コードブロックやインラインコードなど、 <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> および <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> がそのまま(文字通り)変換されるようなコンテキストは除きます) 。(これは、実際は拡張機能ではなく、標準のMarkdownにおいても可能な機能です。しかし、ユーザが望んだ時にオフにできるように、この機能は拡張機能として実装されています。)</p>
 <p>生のHTMLは、HTML, S5, Slidy, Slideous, DZslides, EPUB, Markdown, CommonMark, Emacs Org mode, およびTextile フォーマットで出力する場合は、そのまま何もされずに出力されます。これ以外のフォーマットでは、出力されません。</p>
 <p>生のHTML記法をMarkdown文書に挿入するにあたって、より明示的な方法を知りたい場合は、 <code class="docutils literal notranslate"><span class="pre">`raw_attribute</span></code> extension`_ を参照してください。</p>
@@ -2135,9 +2143,9 @@ document, see the <code class="docutils literal notranslate"><span class="pre">`
 <p>Inline LaTeX is ignored in output formats other than Markdown, LaTeX,
 Emacs Org mode, and ConTeXt.</p>
 <div class="section" id="generic-raw-attribute">
-<h4>Generic raw attribute<a class="headerlink" href="#generic-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>Generic raw attribute<a class="headerlink" href="#generic-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="extension-raw-attribute">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">raw_attribute</span></code><a class="headerlink" href="#extension-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">raw_attribute</span></code><a class="headerlink" href="#extension-raw-attribute" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Inline spans and fenced code blocks with a special kind of attribute
 will be parsed as raw content with the designated format. For example,
 the following produces a raw roff <code class="docutils literal notranslate"><span class="pre">ms</span></code> block:</p>
@@ -2175,7 +2183,7 @@ with a backtick code block, <code class="docutils literal notranslate"><span cla
 </div>
 </div>
 <div class="section" id="latex-macros">
-<h3>LaTeX マクロ<a class="headerlink" href="#latex-macros" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>LaTeX マクロ<a class="headerlink" href="#latex-macros" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>この拡張機能が有効なとき、Pandocは、LaTeXマクロ定義を解析し、すべてのLaTeX数式および生のLaTeXに対してマクロを実行します。そのため、以下の例では、LaTeX
 だけで無くすべての出力形式でマクロが機能します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\newcommand{\tuple}[1]{\langle #1 \rangle}
@@ -2192,10 +2200,10 @@ LaTeX or PDF.</p>
 still be passed through as raw LaTeX.</p>
 </div>
 <div class="section" id="links-1">
-<span id="id77"></span><h3>リンク<a class="headerlink" href="#links-1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id77"></span><h2>リンク<a class="headerlink" href="#links-1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Markdownでは、リンクを指定するためにいくつかの手法が存在します。</p>
 <div class="section" id="automatic-links">
-<h4>自動リンク<a class="headerlink" href="#automatic-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>自動リンク<a class="headerlink" href="#automatic-links" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>山括弧 <cite>&lt; ... &gt;</cite> で囲まれたURLもしくはEメールアドレスは、自動的にリンクへと変換されます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="n">sam</span><span class="nd">@green</span><span class="o">.</span><span class="n">eggs</span><span class="o">.</span><span class="n">ham</span><span class="o">&gt;</span>
@@ -2203,7 +2211,7 @@ still be passed through as raw LaTeX.</p>
 </div>
 </div>
 <div class="section" id="inline-links">
-<h4>インラインリンク<a class="headerlink" href="#inline-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>インラインリンク<a class="headerlink" href="#inline-links" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>インラインリンクは、角括弧 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">...</span> <span class="pre">]</span></code> で囲まれたリンクテキストと、その直後に置かれる丸括弧 <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">...</span> <span class="pre">)</span></code> で囲まれたURLから構成されます(オプションとして、URLの後にクォーテーションマーク <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">...</span> <span class="pre">&quot;</span></code> で囲んだリンクタイトルを置くこともできます)。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">an</span> <span class="p">[</span><span class="n">inline</span> <span class="n">link</span><span class="p">](</span><span class="o">/</span><span class="n">url</span><span class="p">),</span> <span class="ow">and</span> <span class="n">here</span><span class="s1">&#39;s [one with</span>
 <span class="n">a</span> <span class="n">title</span><span class="p">](</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">fsf</span><span class="o">.</span><span class="n">org</span> <span class="s2">&quot;click here for a good time!&quot;</span><span class="p">)</span><span class="o">.</span>
@@ -2216,7 +2224,7 @@ still be passed through as raw LaTeX.</p>
 </div>
 </div>
 <div class="section" id="reference-links">
-<h4>参照リンク<a class="headerlink" href="#reference-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>参照リンク<a class="headerlink" href="#reference-links" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><em>明示的</em> な参照リンクは、リンクそのものとリンク定義という2つの部分からなります。この2つの部分は連続している必要はなく、分割してドキュメント内のどこにでも配置することができます(リンクよりも前にリンク定義を置くことも、リンクの後にリンク定義を置くこともできます)。</p>
 <p>明示的な参照リンクそのものは、角括弧 <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">...</span> <span class="pre">]</span></code> で囲まれたリンクテキストと、その直後に置かれる各括弧で囲まれたリンクラベルから構成されます (<code class="docutils literal notranslate"><span class="pre">spaced_reference_links</span></code> 拡張を有効にしない限り、リンクテキストとリンクラベルの間にスペースを入れることはできません)。リンク定義は、角括弧で囲まれたラベルテキストと、その直後に置かれるコロンとスペース、およびURから構成されます。リンク定義には、オプションでリンクタイトルを与えることができ、これは、URLの後に1つのスペースを置いてから、クォーテーションマークもしくは丸括弧で囲んだリンクタイトルのテキストを置くことで設定されます。リンクラベルとして、(<code class="docutils literal notranslate"><span class="pre">citations</span></code> 拡張が有効になっている場合、) 引用文献として解釈されるようなテキストを置いてはなりません。引用文献は、リンクラベルより優先的に処理されます。</p>
 <p>いくつか例を示します:</p>
@@ -2254,7 +2262,7 @@ still be passed through as raw LaTeX.</p>
 </pre></div>
 </div>
 <div class="section" id="extension-shortcut-reference-links">
-<h5>拡張: <code class="docutils literal notranslate"><span class="pre">shortcut_reference_links</span></code><a class="headerlink" href="#extension-shortcut-reference-links" title="このヘッドラインへのパーマリンク">¶</a></h5>
+<h4>拡張: <code class="docutils literal notranslate"><span class="pre">shortcut_reference_links</span></code><a class="headerlink" href="#extension-shortcut-reference-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><em>省略</em> (<em>shortcut</em>) 参照リンクでは、リンクラベルを設定する2つめの各括弧を完全に省略できます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">See</span> <span class="p">[</span><span class="n">my</span> <span class="n">website</span><span class="p">]</span><span class="o">.</span>
 
@@ -2264,7 +2272,7 @@ still be passed through as raw LaTeX.</p>
 </div>
 </div>
 <div class="section" id="internal-links">
-<h4>内部リンク<a class="headerlink" href="#internal-links" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h3>内部リンク<a class="headerlink" href="#internal-links" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>同じ文書の異なるセクションへリンクするために、
 自動生成された識別子を使用してください（ <a class="reference external" href="#heading-identifiers">Heading identifiers</a> を参照）。例えば：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">See</span> <span class="n">the</span> <span class="p">[</span><span class="n">Introduction</span><span class="p">](</span><span class="c1">#introduction).</span>
@@ -2280,7 +2288,7 @@ still be passed through as raw LaTeX.</p>
 </div>
 </div>
 <div class="section" id="images">
-<h3>画像<a class="headerlink" href="#images" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>画像<a class="headerlink" href="#images" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">!</span></code> が直前についたリンクは画像として扱われます。リンクテキストは画像の代替テキストとして使われます。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>![la lune](lalune.jpg &quot;Voyage to the moon&quot;)
 
@@ -2343,7 +2351,7 @@ embedded in the image file.</p></li>
 </ul>
 </div>
 <div class="section" id="divs-and-spans">
-<h3>Div と Span<a class="headerlink" href="#divs-and-spans" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Div と Span<a class="headerlink" href="#divs-and-spans" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">native_divs</span></code> and <code class="docutils literal notranslate"><span class="pre">native_spans</span></code> extensions (see
 <a class="reference external" href="#extension-native_divs">above</a>), HTML syntax can be used as part of markdown to create native
 <code class="docutils literal notranslate"><span class="pre">Div</span></code> and <code class="docutils literal notranslate"><span class="pre">Span</span></code> elements in the pandoc AST (as opposed to raw
@@ -2390,7 +2398,7 @@ by attributes:</p>
 </div>
 </div>
 <div class="section" id="footnotes">
-<h3>脚注<a class="headerlink" href="#footnotes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>脚注<a class="headerlink" href="#footnotes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc’s Markdown では、次の構文によって脚注を使うことができます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Here</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">footnote</span> <span class="n">reference</span><span class="p">,[</span><span class="o">^</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">another</span><span class="o">.</span><span class="p">[</span><span class="o">^</span><span class="n">longnote</span><span class="p">]</span>
 
@@ -2422,7 +2430,7 @@ by attributes:</p>
 <p>インライン脚注と通常の脚注は混在しても構いません。</p>
 </div>
 <div class="section" id="citations">
-<h3>引用<a class="headerlink" href="#citations" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>引用<a class="headerlink" href="#citations" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocでは、外部フィルター  <code class="docutils literal notranslate"><span class="pre">pandoc-citeproc</span></code> を用いることで、引用および参考文献を様々なスタイルで自動的に生成できます。基本的な使い方は、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="nb">filter</span> <span class="n">pandoc</span><span class="o">-</span><span class="n">citeproc</span> <span class="n">myinput</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -2583,7 +2591,7 @@ will not be numbered.</p>
 <p>詳しくは、 <a class="reference external" href="https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md">pandoc-citeproc man page</a> を参照してください。</p>
 </div>
 <div class="section" id="non-pandoc-extensions">
-<h3>非Pandoc拡張<a class="headerlink" href="#non-pandoc-extensions" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>非Pandoc拡張<a class="headerlink" href="#non-pandoc-extensions" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下に示したMarkdown構文の拡張機能は、デフォルトのPandocでは有効になっていませんが、フォーマット名に <code class="docutils literal notranslate"><span class="pre">+EXTENSION</span></code> を追加することで、それぞれの拡張機能を有効にできます。ここで、 <code class="docutils literal notranslate"><span class="pre">EXTENSION</span></code> は拡張機能の名前を指します。たとえば、 <code class="docutils literal notranslate"><span class="pre">markdown+hard_line_breaks</span></code> は、 <code class="docutils literal notranslate"><span class="pre">hard_line_breaks</span></code> 拡張を含むMarkdownです。</p>
 <p>Selects the pandoc &lt;= 1.8.2.1 behavior for parsing smart dashes: <code class="docutils literal notranslate"><span class="pre">-</span></code>
 before a numeral is an en-dash, and <code class="docutils literal notranslate"><span class="pre">--</span></code> is an em-dash. This option
@@ -2648,7 +2656,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 </ul>
 </div>
 <div class="section" id="markdown-variants">
-<h3>Markdown方言<a class="headerlink" href="#markdown-variants" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>Markdown方言<a class="headerlink" href="#markdown-variants" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocの拡張マークダウンに加えて、以下のMarkdown方言をサポートしています:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">markdown_phpextra</span></code> (PHP Markdown Extra)</dt><dd><p><code class="docutils literal notranslate"><span class="pre">footnotes</span></code>, <code class="docutils literal notranslate"><span class="pre">pipe_tables</span></code>, <code class="docutils literal notranslate"><span class="pre">raw_html</span></code>, <code class="docutils literal notranslate"><span class="pre">markdown_attribute</span></code>,
@@ -2692,7 +2700,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 </div>
 </div>
 <div class="section" id="producing-slide-shows-with-pandoc">
-<h2>スライドショーをPandocで生成する<a class="headerlink" href="#producing-slide-shows-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>スライドショーをPandocで生成する<a class="headerlink" href="#producing-slide-shows-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Pandocを使うと、Webブラウザで閲覧可能なHTML + JavaScript のスライドプレゼンテーションを生成できます。スライドには、 <a class="reference external" href="http://meyerweb.com/eric/tools/s5/">S5</a>, <a class="reference external" href="http://paulrouget.com/dzslides/">DZSlides</a>, <a class="reference external" href="http://www.w3.org/Talks/Tools/Slidy/">Slidy</a>, <a class="reference external" href="http://goessner.net/articles/slideous/">Slideous</a>, <a href="#id165"><span class="problematic" id="id166">`reveal.js `_ の5つの形式があります。あるいは、LaTeX ```beamer```_</span></a> によるPDFスライドや、Microsoft <a class="reference external" href="https://en.wikipedia.org/wiki/Microsoft_PowerPoint">PowerPoint</a> 形式のスライドを生成することもできます。</p>
 <p>シンプルなスライドショーを作成するMarkdownソース  <code class="docutils literal notranslate"><span class="pre">habits.txt</span></code> の例を示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% Habits
@@ -2745,7 +2753,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 </pre></div>
 </div>
 <div class="section" id="structuring-the-slide-show">
-<h3>スライドショーの構造をつくる<a class="headerlink" href="#structuring-the-slide-show" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>スライドショーの構造をつくる<a class="headerlink" href="#structuring-the-slide-show" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>既定では、 <em>スライドレベル (slide level)</em> には、見出し以外の何らかのスライドコンテンツが直後に現れる見出しの中で、最も高い見出しレベルが設定されます。上記の例 (訳注: <code class="docutils literal notranslate"><span class="pre">habits.txt</span></code> ) では常に、レベル 1 の見出しの直後にレベル 2の見出しが置かれています。このレベル 2 のヘッダの直後には、スライドコンテンツが置かれています。つまりこの例では、スライドレベルは2です。この既定動作は <code class="docutils literal notranslate"><span class="pre">--slide-level</span></code>  オプションで変更できます。</p>
 <p>1つの文書は、次のルールによっていくつかのスライドに分割されます:</p>
 <ul class="simple">
@@ -2759,7 +2767,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 <p>補足: reveal.js スライドショーでは、スライドレベルが 2 の場合は、2次元レイアウトとして出力されます。レベル 1 の見出しは水平方向に、レベル 2 の見出しは垂直方向にスライドショーを構成します。reveal.jsでは、これ以上セクションレベルを深く入れ子 (nesting) にすることは推奨されません。</p>
 </div>
 <div class="section" id="incremental-lists">
-<h3>インクリメンタルリスト<a class="headerlink" href="#incremental-lists" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>インクリメンタルリスト<a class="headerlink" href="#incremental-lists" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>既定では、スライドショーはリストを「すべて一気に (all at once)」見せるように出力されます。もしリストを徐々に増やすように (incrementally)、 一度に1アイテム (one item at a time) として見せたい場合には、 <code class="docutils literal notranslate"><span class="pre">-i</span></code> オプションを使用します (訳注: このような動作を「インクリメンタル」と呼びます)。既定動作から離れて特定のリストだけを見せたい場合には、 <code class="docutils literal notranslate"><span class="pre">div</span></code> ブロックを作り、classとして <code class="docutils literal notranslate"><span class="pre">incremental</span></code> または <code class="docutils literal notranslate"><span class="pre">nonincremental</span></code> を指定してください。たとえば <code class="docutils literal notranslate"><span class="pre">fenced</span> <span class="pre">div</span></code> 拡張記法を使えば、文書の既定動作にかかわらず、下記はインクリメンタルに動作します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:::</span> <span class="n">incremental</span>
 
@@ -2786,7 +2794,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 <p>いずれの方法でも、1つの文書の中にインクリメンタルリストとそうでないリストを混在できます。</p>
 </div>
 <div class="section" id="inserting-pauses">
-<h3>ポーズの挿入<a class="headerlink" href="#inserting-pauses" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>ポーズの挿入<a class="headerlink" href="#inserting-pauses" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>半角スペースで区切られた3つのピリオドを段落に含めることで、スライドに「ポーズ」を追加できます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slide with a pause</span>
 
@@ -2799,7 +2807,7 @@ must be indented four spaces. <a class="footnote-reference brackets" href="#id86
 </div>
 </div>
 <div class="section" id="styling-the-slides">
-<h3>スライドのスタイルを変える<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>スライドのスタイルを変える<a class="headerlink" href="#styling-the-slides" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>特定の場所にカスタム済のCSSファイルを配置することで、HTMLスライドの変更できます。その場所は <code class="docutils literal notranslate"><span class="pre">$DATADIR/s5/default</span></code> (S5の場合)、 <code class="docutils literal notranslate"><span class="pre">$DATADIR/slidy</span></code> (Slidyの場合)、および <code class="docutils literal notranslate"><span class="pre">$DATADIR/slideous</span></code> (Slideousの場合) です。ただし <code class="docutils literal notranslate"><span class="pre">$DATADIR</span></code> はユーザデータディレクトリです。 (上記の <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> を参照)。元のCSSファイルはPandocのシステムデータディレクトリ (通常は  <code class="docutils literal notranslate"><span class="pre">$CABALDIR/pandoc-VERSION/s5/default</span></code>) にあります。Pandocはまずユーザデータディレクトリでファイルを検索し、何も見つからない場合にシステムデータディレクトリを検索します。</p>
 <p>dzslidesについては、HTMLファイル自身の中に必要なCSSが含まれます。CSSが変更される場合も同様です。</p>
 <p>すべての <a class="reference external" href="https://github.com/hakimel/reveal.js#configuration">reveal.js configuration options</a> は、変数を介して設定されます。たとえば、テーマの設定は <code class="docutils literal notranslate"><span class="pre">theme</span></code> 変数を用います:</p>
@@ -2823,7 +2831,7 @@ bibliographies:</p>
 </div>
 </div>
 <div class="section" id="speaker-notes">
-<h3>発表者ノート<a class="headerlink" href="#speaker-notes" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>発表者ノート<a class="headerlink" href="#speaker-notes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>発表者ノート (speaker notes) は、reveal.jsとPowerPoint (pptx) 出力で利用できます。次のようにMarkdown文書の中でノートを追加できます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:::</span> <span class="n">notes</span>
 
@@ -2839,7 +2847,7 @@ bibliographies:</p>
 <p>他のスライド形式において、ノートはまだサポートされていませんが、それでもノートがスライド中に現れることはありません。</p>
 </div>
 <div class="section" id="columns">
-<h3>段組み<a class="headerlink" href="#columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>段組み<a class="headerlink" href="#columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>資料を横に並べて段組みとしたい場合に、 ネイティブ Div コンテナ (<code class="docutils literal notranslate"><span class="pre">columns</span></code> クラス付き) を利用できます。その内側には、2つ以上の Div コンテナ (<code class="docutils literal notranslate"><span class="pre">column</span></code> および <code class="docutils literal notranslate"><span class="pre">width</span></code> 属性付き) を入れます:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">::::::::::::::</span> <span class="p">{</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span>
 <span class="p">:::</span> <span class="p">{</span><span class="o">.</span><span class="n">column</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">}</span>
@@ -2853,7 +2861,7 @@ bibliographies:</p>
 </div>
 </div>
 <div class="section" id="frame-attributes-in-beamer">
-<h3>フレームの属性 (Beamer)<a class="headerlink" href="#frame-attributes-in-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>フレームの属性 (Beamer)<a class="headerlink" href="#frame-attributes-in-beamer" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Sometimes it is necessary to add the LaTeX <code class="docutils literal notranslate"><span class="pre">[fragile]</span></code> option to a
 frame in beamer (for example, when using the <code class="docutils literal notranslate"><span class="pre">minted</span></code> environment).
 This can be forced by adding the <code class="docutils literal notranslate"><span class="pre">fragile</span></code> class to the heading
@@ -2867,7 +2875,7 @@ introducing the slide:</p>
 <code class="docutils literal notranslate"><span class="pre">plain</span></code>, <code class="docutils literal notranslate"><span class="pre">shrink</span></code>, <code class="docutils literal notranslate"><span class="pre">standout</span></code>, <code class="docutils literal notranslate"><span class="pre">noframenumbering</span></code>.</p>
 </div>
 <div class="section" id="background-in-reveal-js-and-beamer">
-<h3>スライドの背景 (reveal.js / Beamer)<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>スライドの背景 (reveal.js / Beamer)<a class="headerlink" href="#background-in-reveal-js-and-beamer" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>背景画像は、自己完結したreveal.jsスライドショーと、Beamerスライドショーに追加できます。</p>
 <p>同じ背景画像をすべてのスライドに適用するには、設定オプション <code class="docutils literal notranslate"><span class="pre">background-image</span></code> をYAMLメタデータブロックまたはコマンドラインのテンプレート変数に指定します。(Beamerで利用できるのはこのオプションのみです。この節における残りの説明は、reveal.jsスライドショーに関するものです)</p>
 <p>reveal.jsに関しては、代わりにreveal.js本来のオプションである <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundImage</span></code> を利用できます。同様に <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundHorizontal</span></code> と <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundVertical</span></code> も設定できます。これらを有効にするには、必ず <code class="docutils literal notranslate"><span class="pre">parallaxBackgroundSize</span></code> を設定する必要があります。(訳注: reveal.jsのParallax Background (パララックス背景) という機能。視差効果が生まれるように、スライドが進むごとに少しずつ背景画像が動いていく。詳細:  <a class="reference external" href="https://github.com/hakimel/reveal.js/#parallax-background">GitHub hakimel/reveal.js</a> )</p>
@@ -2895,9 +2903,9 @@ heading on the slide (which may even be empty).</p>
 </div>
 </div>
 <div class="section" id="creating-epubs-with-pandoc">
-<h2>EPUB を Pandoc でつくる<a class="headerlink" href="#creating-epubs-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>EPUB を Pandoc でつくる<a class="headerlink" href="#creating-epubs-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="epub-metadata">
-<h3>EPUB メタデータ<a class="headerlink" href="#epub-metadata" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>EPUB メタデータ<a class="headerlink" href="#epub-metadata" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>EPUB メタデータは、 <code class="docutils literal notranslate"><span class="pre">--epub-metadata</span></code> オプションを使うことで指定できます。ただし、もとの文書がMarkdown形式である場合は、 <a class="reference external" href="#extension-yaml_metadata_block">YAML metadata block</a> を使うのがよいでしょう。例を示します:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>---
 title:
@@ -2976,7 +2984,7 @@ element`_.</p>
 </dl>
 </div>
 <div class="section" id="the-epub-type-attribute">
-<h3><code class="docutils literal notranslate"><span class="pre">epub:type</span></code> 属性<a class="headerlink" href="#the-epub-type-attribute" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2><code class="docutils literal notranslate"><span class="pre">epub:type</span></code> 属性<a class="headerlink" href="#the-epub-type-attribute" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>For <code class="docutils literal notranslate"><span class="pre">epub3</span></code> output, you can mark up the heading that corresponds to an
 EPUB chapter using the <code class="docutils literal notranslate"><span class="pre">`epub:type</span></code> attribute`_. For example, to set
 the attribute to the value <code class="docutils literal notranslate"><span class="pre">prologue</span></code>, use this markdown:</p>
@@ -3053,7 +3061,7 @@ the attribute to the value <code class="docutils literal notranslate"><span clas
 </table>
 </div>
 <div class="section" id="linked-media">
-<h3>リンクされたメディア<a class="headerlink" href="#linked-media" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>リンクされたメディア<a class="headerlink" href="#linked-media" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>通常、Pandoc は生成された EPUB に現れる  <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code> 、 <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code> 、 <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code> または <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> のいずれかから参照されたメディアをダウンロードし、EPUB コンテナに格納しようとします。これにより完全に独立した (self-contained) EPUBを得られます。もしユーザが替わりに外部のメディアリソースへのリンクを望む場合には、生の (raw) HTMLとして source を記述し、<code class="docutils literal notranslate"><span class="pre">src</span></code> 属性のあるタグに <code class="docutils literal notranslate"><span class="pre">data-external=&quot;1&quot;</span></code> をつけ加えてください。たとえば：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">audio</span> <span class="n">controls</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">source</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;http://example.com/music/toccata.mp3&quot;</span>
@@ -3065,7 +3073,7 @@ the attribute to the value <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="section" id="creating-jupyter-notebooks-with-pandoc">
-<h2>Jupyter notebookをPandocでつくる<a class="headerlink" href="#creating-jupyter-notebooks-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>Jupyter notebookをPandocでつくる<a class="headerlink" href="#creating-jupyter-notebooks-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p><a class="reference external" href="https://nbformat.readthedocs.io/en/latest/">Jupyter notebook</a> を作成するとき、Pandocはノートブック構造を推測します。 <code class="docutils literal notranslate"><span class="pre">code</span></code> クラスを持つコードブロックはコードセルと見なされ、介在するコンテンツはMarkdownセルと見なされます。Markdownセル中の添付ファイルは、自動的に画像になります。メタデータは、 <code class="docutils literal notranslate"><span class="pre">jupyter</span></code> メタデータフィールドから取得されます。例えば:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>---
 title: My notebook
@@ -3177,7 +3185,7 @@ cells; <code class="docutils literal notranslate"><span class="pre">--atx-header
 <code class="docutils literal notranslate"><span class="pre">--preserve-tabs</span></code> will prevent tabs from being turned to spaces.</p>
 </div>
 <div class="section" id="syntax-highlighting">
-<h2>シンタックスハイライト<a class="headerlink" href="#syntax-highlighting" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>シンタックスハイライト<a class="headerlink" href="#syntax-highlighting" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Pandocは、言語名を指定された <a class="reference external" href="#fenced-code-blocks">fenced code blocks</a> に対して、言語に応じたシンタックスハイライトを自動的に適用します。シンタックスハイライトには、Haskell ライブラリ <a class="reference external" href="https://github.com/jgm/skylighting">skylighting</a> が使用されます。現在のところ、シンタックスハイライトは、 HTML, EPUB , docx, ms, および LaTeX/PDF 出力に適用されます。Pandocが認識する言語名の一覧を見たい場合は、 <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-highlight-languages</span></code> を実行してください。</p>
 <p>カラースキームは <code class="docutils literal notranslate"><span class="pre">--highlight-style</span></code> オプションによって選択できます。既定のカラースキームは <code class="docutils literal notranslate"><span class="pre">pygments</span></code> で、これはPythonライブラリの pygments を真似たものです (ただしPandocの中では、実際の pygments はシンタックスハイライトに利用されません)。ハイライトスタイルの一覧を見るには、 <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">--list-highlight-styles</span></code> を実行してください。</p>
 <p>既定のハイライトスタイルに満足できない場合には、 <code class="docutils literal notranslate"><span class="pre">--print-highlight-style</span></code> によってJSON形式の <code class="docutils literal notranslate"><span class="pre">.theme</span></code> ファイルを出力することで、ハイライトスタイルを変更して <code class="docutils literal notranslate"><span class="pre">--highlight-style</span></code> の引数として与えることで、カスタマイズが可能です。たとえば、 <code class="docutils literal notranslate"><span class="pre">pygments</span></code> スタイルのJSONファイルを得るには、次を実行します:</p>
@@ -3192,10 +3200,10 @@ cells; <code class="docutils literal notranslate"><span class="pre">--atx-header
 <p>シンタックスハイライトを無効にするには、 <code class="docutils literal notranslate"><span class="pre">--no-highlight</span></code> オプションを使います。</p>
 </div>
 <div class="section" id="custom-styles">
-<h2>カスタムスタイル<a class="headerlink" href="#custom-styles" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>カスタムスタイル<a class="headerlink" href="#custom-styles" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>カスタムスタイルは、docx形式およびICML形式で使用することができます。</p>
 <div class="section" id="output">
-<h3>出力<a class="headerlink" href="#output" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>出力<a class="headerlink" href="#output" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>通常、Pandocの docx 出力およびICML出力において、段落や引用などのテキストブロックに対しては事前に定義されたスタイルの集まりを、インラインテキストに対しては(ほとんどの場合、)既定のインライン修飾(斜体や太字)をそれぞれ使用します。この動作は、特に <code class="docutils literal notranslate"><span class="pre">reference.docx</span></code> ファイルを用いる場合には、大半の用途でうまくいきます。しかし、テキストブロックに対して独自のスタイルを適用したい場合や、テキストブロックを既存のスタイルセットと一致させたい場合には、Pandocにおいてカスタムスタイルを定義することも可能です。テキストブロックに対しては <code class="docutils literal notranslate"><span class="pre">div</span></code> を、インラインテキストに対しては <code class="docutils literal notranslate"><span class="pre">span</span></code> をそれぞれ定義できます。</p>
 <p><code class="docutils literal notranslate"><span class="pre">div</span></code> または <code class="docutils literal notranslate"><span class="pre">span</span></code> を <code class="docutils literal notranslate"><span class="pre">custom-style</span></code> 属性とともに定義したい場合は、Pandocはユーザが指定したスタイルを、対応する要素に適用します。たとえば <code class="docutils literal notranslate"><span class="pre">bracketed_spans</span></code> 拡張記法を使う場合には、</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Get</span> <span class="n">out</span><span class="p">]{</span><span class="n">custom</span><span class="o">-</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;Emphatically&quot;</span><span class="p">},</span> <span class="n">he</span> <span class="n">said</span><span class="o">.</span>
@@ -3216,7 +3224,7 @@ cells; <code class="docutils literal notranslate"><span class="pre">--atx-header
 <p>カスタムスタイルを使ってdocxを出力したい時に、特に何らかの拡張機能を有効にする必要はありません。</p>
 </div>
 <div class="section" id="input">
-<h3>入力<a class="headerlink" href="#input" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>入力<a class="headerlink" href="#input" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>通常、docx Readerはスタイルの読み込みにおいて、Pandocの要素に直接変換できるもの、または入力文書のスタイルの派生として解釈できるもののみを読み込みます。</p>
 <p>docx Reader (<code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">docx+styles</span></code>) において <code class="docutils literal notranslate"><span class="pre">`styles</span></code> extension`_ を有効にすることで、入力文書のスタイルを <code class="docutils literal notranslate"><span class="pre">custom-style</span></code> class として保持した出力を得られます。段落スタイルは div として解釈され、文字スタイルは span として解釈されます。</p>
 <p>例えば、テストディレクトリ中の <code class="docutils literal notranslate"><span class="pre">custom-style-reference.docx</span></code> を使うことで、次のような異なる出力を得ることが出来ます。</p>
@@ -3252,7 +3260,7 @@ text style.
 </div>
 </div>
 <div class="section" id="custom-writers">
-<h2>カスタム Writer<a class="headerlink" href="#custom-writers" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>カスタム Writer<a class="headerlink" href="#custom-writers" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Pandocは、<a class="reference external" href="http://www.lua.org">lua</a> で書かれたカスタムWriterを使うことで、その機能を拡張することができます (Pandocには、Luaインタプリタが組み込まれているため、別にLuaをインストールする必要はありません)。</p>
 <p>カスタム Writer を使用するには、単に Lua スクリプトへのパスを出力形式として指定するだけです。例えば:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">t</span> <span class="n">data</span><span class="o">/</span><span class="n">sample</span><span class="o">.</span><span class="n">lua</span>
@@ -3264,7 +3272,7 @@ text style.
 </div>
 </div>
 <div class="section" id="a-note-on-security">
-<h2>セキュリティに関する注記<a class="headerlink" href="#a-note-on-security" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>セキュリティに関する注記<a class="headerlink" href="#a-note-on-security" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Pandoc を使用して Web アプリケーションのユーザー提供コンテンツを変換する場合には、次の点に注意してください:</p>
 <ol class="arabic simple">
 <li><p>明示的に作成することを要求するもの以外に、Pandoc 自体はファイルを作成または改変することはありませんが(PDF の作成に使用される一時ファイルを除きます)、フィルタまたはカスタムWriterは、原則としてファイルシステム上でファイルの作成や改変などを行うことができます。フィルタとカスタム Writer を使用する前に、それらを十分注意深く検証してください。</p></li>
@@ -3283,7 +3291,7 @@ sanitizer.</p></li>
 </ol>
 </div>
 <div class="section" id="authors">
-<h2>原文の著者について<a class="headerlink" href="#authors" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h1>原文の著者について<a class="headerlink" href="#authors" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Copyright 2006–2019 John MacFarlane (<a class="reference external" href="mailto:jgm&#37;&#52;&#48;berkeley&#46;edu">jgm<span>&#64;</span>berkeley<span>&#46;</span>edu</a>). Released under the <a class="reference external" href="http://www.gnu.org/copyleft/gpl.html">GPL</a>, version 2 or greater.</p>
 <dl class="footnote brackets">
 <dt class="label" id="id83"><span class="brackets"><a class="fn-backref" href="#id69">1</a></span></dt>
@@ -3323,7 +3331,6 @@ line between list items.</p>
 </dd>
 </dl>
 </div>
-</div>
 
 
           </div>
@@ -3362,23 +3369,100 @@ line between list items.</p>
 <li class="toctree-l2"><a class="reference internal" href="index.html#id3">このサイトのソースコード</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">（新・工事中）Pandocユーザーズガイド 日本語版</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#synopsis">概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#description">説明</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#options">オプション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#templates">テンプレート</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#extensions">拡張</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pandocs-markdown">Pandoc’s Markdown</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#producing-slide-shows-with-pandoc">スライドショーをPandocで生成する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-epubs-with-pandoc">EPUB を Pandoc でつくる</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-jupyter-notebooks-with-pandoc">Jupyter notebookをPandocでつくる</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#syntax-highlighting">シンタックスハイライト</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#custom-styles">カスタムスタイル</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#custom-writers">カスタム Writer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#a-note-on-security">セキュリティに関する注記</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#authors">原文の著者について</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#description">説明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-pandoc"><code class="docutils literal notranslate"><span class="pre">pandoc</span></code> の使い方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specifying-formats">形式の指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#character-encoding">文字コード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-pdf">PDFの生成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-from-the-web">Webからの読み込み</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#options">オプション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-options">一般的なオプション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reader-options">Readerのオプション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#general-writer-options">一般的な Writer のオプション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#options-affecting-specific-writers">特定のWriterに関するオプション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citation-rendering">引用文献の生成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#math-rendering-in-html">HTMLにおける数式の生成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#options-for-wrapper-scripts">ラッパースクリプト向けのオプション</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#templates">テンプレート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#metadata-variables">メタデータに関する変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#language-variables">言語に関する変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-html-slides">HTMLスライド用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-beamer-slides">Beamerスライド用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-latex">LaTeX用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-context">ConTeXt用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-wkhtmltopdf"><code class="docutils literal notranslate"><span class="pre">wkhtmltopdf</span></code> 用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-man-pages">manページ用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-for-ms">roff ms用の変数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structural-variables">Structural variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-variables-in-templates">テンプレートで変数を使う</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#extensions">拡張</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#typography">タイポグラフィ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#headings-and-sections">見出しと章</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#math-input">数式の入力</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raw-html-tex">生の HTML/TeX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#literate-haskell-support">Literate Haskellのサポート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-extensions">その他の拡張</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#pandocs-markdown">Pandoc’s Markdown</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#philosophy">哲学</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#paragraphs">段落</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#headings">見出し</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#block-quotations">引用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verbatim-code-blocks">文字通りのブロック (コードブロック)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line-blocks">ラインブロック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lists">リスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#horizontal-rules">水平線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tables">表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metadata-blocks">メタデータブロック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backslash-escapes">バックスラッシュを用いたエスケープ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inline-formatting">インライン修飾</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#math">数式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id76">生のHTML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#latex-macros">LaTeX マクロ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#links-1">リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#images">画像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#divs-and-spans">Div と Span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#footnotes">脚注</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citations">引用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-pandoc-extensions">非Pandoc拡張</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#markdown-variants">Markdown方言</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#producing-slide-shows-with-pandoc">スライドショーをPandocで生成する</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#structuring-the-slide-show">スライドショーの構造をつくる</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#incremental-lists">インクリメンタルリスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inserting-pauses">ポーズの挿入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#styling-the-slides">スライドのスタイルを変える</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#speaker-notes">発表者ノート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#columns">段組み</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#frame-attributes-in-beamer">フレームの属性 (Beamer)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#background-in-reveal-js-and-beamer">スライドの背景 (reveal.js / Beamer)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#creating-epubs-with-pandoc">EPUB を Pandoc でつくる</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#epub-metadata">EPUB メタデータ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-epub-type-attribute"><code class="docutils literal notranslate"><span class="pre">epub:type</span></code> 属性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linked-media">リンクされたメディア</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#creating-jupyter-notebooks-with-pandoc">Jupyter notebookをPandocでつくる</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#syntax-highlighting">シンタックスハイライト</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#custom-styles">カスタムスタイル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#output">出力</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input">入力</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#custom-writers">カスタム Writer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#a-note-on-security">セキュリティに関する注記</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#authors">原文の著者について</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trans-intro.html">翻訳の手引 for Pandocユーザーズガイド</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="trans-intro.html#id1">サイトまとめ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="trans-intro.html#id2">前提</a></li>
