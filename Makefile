@@ -95,7 +95,7 @@ tx-push-pot:
 # make ja-update-src
 # アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
 .PHONY: ja-update-src
-ja-update-src: pandoc intl-update tx-push-pot
+ja-update-src: ja-pandoc intl-update tx-push-pot
 
 ## ビルド：ユーザーズガイド用rst
 
