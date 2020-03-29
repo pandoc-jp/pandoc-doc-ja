@@ -22,6 +22,12 @@ HEADER_BODY := users-guide
 ## Sphinx側のユーザーズガイドrst
 HEADER_OUTPUT := users-guide-ja
 
+# ユーザーズガイド原文
+## jgm/pandocのMANUAL.txt
+MANUAL_TXT := ./pandoc/MANUAL.txt
+## pandoc -f markdown -t rst したもの
+USERS_GUIDE_RST := users-guide.rst
+
 ################################################
 # ターゲット
 ################################################
@@ -70,14 +76,14 @@ jgm-pandoc-checkout:
 # make pandoc
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 .PHONY: pandoc
-pandoc: users-guide.rst
-users-guide.rst: ./pandoc/MANUAL.txt
+pandoc: $(USERS_GUIDE_RST)
+$(USERS_GUIDE_RST): $(MANUAL_TXT)
 	pandoc -f markdown -t rst --reference-links $< -o $@
 
 # make intl-update
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 .PHONY: intl-update
-intl-update: users-guide.rst
+intl-update: $(USERS_GUIDE_RST)
 	pipenv run make gettext
 	pipenv run sphinx-intl update -p _build/gettext -l ja
 
