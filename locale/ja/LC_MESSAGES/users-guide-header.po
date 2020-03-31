@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 00:39+0900\n"
+"POT-Creation-Date: 2020-03-31 10:25+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgid "原著バージョン: 2.7.2"
 msgstr ""
 
 #: ../../users-guide-header.rst:17
-msgid "更新日: 2020/03/30"
+msgid "更新日: 2020/03/31"
 msgstr ""
 
 #: ../../users-guide-header.rst:19
@@ -61,7 +61,7 @@ msgid "becolomochi"
 msgstr ""
 
 #: ../../users-guide-header.rst:22
-msgid "ishibaki"
+msgid "`Tomoki Ishibashi <https://ishibaki.github.io>`_"
 msgstr ""
 
 #: ../../users-guide-header.rst:23
@@ -90,5 +90,11 @@ msgstr ""
 #~ msgid ""
 #~ "この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com"
 #~ "/pandoc-jp/pandoc-doc-ja/issues>_ に投稿してください"
+#~ msgstr ""
+
+#~ msgid "更新日: 2020/03/30"
+#~ msgstr ""
+
+#~ msgid "ishibaki"
 #~ msgstr ""
 

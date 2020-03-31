@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 00:39+0900\n"
+"POT-Creation-Date: 2020-03-31 10:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgid "原著バージョン: 2.7.2"
 msgstr ""
 
 #: ../../users-guide.rst:18
-msgid "更新日: 2020/03/30"
+msgid "更新日: 2020/03/31"
 msgstr ""
 
 #: ../../users-guide.rst:20
@@ -57,19 +57,19 @@ msgid "becolomochi"
 msgstr ""
 
 #: ../../users-guide.rst:23
-msgid "ishibaki"
-msgstr ""
-
-#: ../../users-guide.rst:24
 msgid "makotosan"
 msgstr ""
 
-#: ../../users-guide.rst:25
+#: ../../users-guide.rst:24
 msgid "niszet"
 msgstr ""
 
-#: ../../users-guide.rst:26
+#: ../../users-guide.rst:25
 msgid "Takada Atsushi"
+msgstr ""
+
+#: ../../users-guide.rst:26
+msgid "`Tomoki Ishibashi <https://ishibaki.github.io>`_"
 msgstr ""
 
 #: ../../users-guide.rst:27

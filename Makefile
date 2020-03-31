@@ -132,6 +132,11 @@ ja-html:
 .PHONY: ja-build
 ja-build: tx-pull ja-html
 
+# make ja-build-local
+# ローカル環境で必要なアップデート・ビルド作業をまとめてする 
+.PHONY: ja-build-local
+ja-build-local: ja-pandoc intl-update ja-html
+
 ## その他
 
 # make pipenv-update

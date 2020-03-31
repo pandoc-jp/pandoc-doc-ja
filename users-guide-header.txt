@@ -19,10 +19,10 @@ Pandocユーザーズガイド 日本語版 [$trans-pandoc-version$]
 翻訳者（アルファベット順）:
 
 * becolomochi
-* ishibaki
 * makotosan
 * niszet
 * Takada Atsushi
+* `Tomoki Ishibashi <https://ishibaki.github.io>`_
 * Yuki Fujiwara
 
 .. contents:: 目次

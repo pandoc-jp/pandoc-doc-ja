@@ -15,15 +15,15 @@ Pandocユーザーズガイド 日本語版 [2.7.2]
 
 原著バージョン: 2.7.2
 
-更新日: 2020/03/30
+更新日: 2020/03/31
 
 翻訳者（アルファベット順）:
 
 * becolomochi
-* ishibaki
 * makotosan
 * niszet
 * Takada Atsushi
+* `Tomoki Ishibashi <https://ishibaki.github.io>`_
 * Yuki Fujiwara
 
 .. contents:: 目次
