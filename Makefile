@@ -90,12 +90,15 @@ intl-update:
 
 # make tx-push-pot
 # Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
+# 要環境変数
 .PHONY: tx-push-pot
 tx-push-pot:
 	tx push -s
 
 # make ja-update-src
-# アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
+# アップデート作業をまとめてする
+# (pandoc -> intl-update -> tx-push-pot)
+# 要環境変数
 .PHONY: ja-update-src
 ja-update-src: ja-pandoc intl-update tx-push-pot
 
@@ -116,6 +119,7 @@ ja-users-guide-rst:
 
 # make tx-pull
 # Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
+# 要環境変数
 .PHONY: tx-pull
 tx-pull: 
 	tx pull -l ja
@@ -127,12 +131,14 @@ ja-html:
 	make -e SPHINXOPTS="-D language='ja'" html
 
 # make ja-build
-# Transifexから翻訳ファイル(po)をpullし、そのままビルドする
+# Transifex: 翻訳ファイル(po)をpullし、そのままビルドする
+# 要環境変数
 .PHONY: ja-build
 ja-build: tx-pull ja-html
 
 # make ja-build-local
-# ローカル環境で必要なアップデート・ビルド作業をまとめてする 
+# ローカル環境のみ：アップデート・ビルド作業をまとめてする
+# (ja-pandoc -> intl-update -> ja-html)
 .PHONY: ja-build-local
 ja-build-local: ja-pandoc intl-update ja-html
 
