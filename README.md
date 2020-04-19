@@ -42,7 +42,53 @@
     - GitHub上のSphinxサイトをビルドして公開
     - 必要なライブラリに関しては requirements.txt が参照される（Pipenvから要エクスポート）
 
-## 初期設定
+## 初期設定：Dockerを使う場合
+
+このプロジェクトのDockerfileは[sphinxdoc/sphinx](https://hub.docker.com/r/sphinxdoc/sphinx)をベース(`FROM`)にしています。
+
+- 参考: [Sphinxのインストール — Sphinx 4\.0\.0\+/c443e742f ドキュメント](https://www.sphinx-doc.org/ja/master/usage/installation.html#docker)
+
+## docker pull
+
+TODO
+
+## ローカルで docker build
+
+```
+docker build . -t skyy0079:pandoc-doc-ja
+```
+
+## docker run
+
+Bashにログインする場合(インタラクティブ実行)
+
+```
+docker run -v 【カレントディレクトリ】:/docs -it skyy0079:pandoc-doc-ja /bin/bash
+```
+
+`make ja-html`コマンドを実行する場合（`ja-html`の部分を任意のmakeサブコマンドにできる）
+
+```
+docker run -v 【カレントディレクトリ】:/docs -it skyy0079:pandoc-doc-ja make ja-html
+```
+
+翻訳後のHTMLをビルドする場合（本家`sphinxdoc/sphinx`と違い、`make ja-html`をデフォルトで実行します）
+
+```
+docker run -v 【カレントディレクトリ】:/docs -it skyy0079:pandoc-doc-ja
+```
+
+### 応用（Docker for Windowsにおける【カレントディレクトリ】）
+
+WSL(1 or 2)上のカレントディレクトリからアクセスしたい場合(ホストBashからゲストBashにログイン)
+
+- `wslpath -aw`: WSL上のパスをフルパス(`/mnt/c/...`)にした上で、Windows上のパスに変換する
+
+```
+docker run -v $(wslpath -aw $(pwd)):/docs -it skyy0079:pandoc-doc-ja /bin/bash
+```
+
+## 初期設定：手動でインストールする場合
 
 ### ツール用Pandocのインストール
 
