@@ -59,12 +59,17 @@
 
 - Transifexの[APIトークン](https://www.transifex.com/user/settings/api/)ページで「トークンを生成」
     - トークン文字列を記録しておく
+- ホスト側のカレントディレクトリに環境変数ファイル `.env` を新規作成する
+    - このファイルは`git add`しないこと！（`.gitignore`には入っている）
+    - 内容は次のように書く
 
-- ホスト側のシェルで、トークン文字列を環境変数 `TX_TOKEN` に設定
-    - Bash: `export TX_TOKEN=【トークン文字列】`
-    - 必要に応じて .bashrc 等に同じコマンドを書く
+```.env
+TX_TOKEN=【APIトークン】
+```
 
-※ `~/.transifexrc` というファイルを新規作成する方法もありますが、間違ってこのGitリポジトリにpushしないように環境変数で読み込ませます
+- `docker run` にて `--env-file .env` オプションでコンテナ側に環境変数を読み込ませる
+
+※ `~/.transifexrc` というファイルを新規作成する方法もありますが、Dockerを使う場合は環境変数で読み込ませるのがよいでしょう。
 
 詳細: [Init: Initialization \| Transifex Documentation](https://docs.transifex.com/client/init)
 
@@ -82,37 +87,72 @@ docker build -t skyy0079/pandoc-doc-ja .
 
 ※ `-v ホスト側ディレクトリ:コンテナ側ディレクトリ` で、カレントディレクトリを読み込ませる。
 
-Bashにログインする場合(インタラクティブ実行)
+### Bashにログインする（インタラクティブ実行）
 
 ```
-docker run -v 【カレントディレクトリ】:/docs -it skyy0079:pandoc-doc-ja /bin/bash
+docker run -v 【カレントディレクトリ】:/docs -it skyy0079/pandoc-doc-ja /bin/bash
 ```
 
-`make ja-html`コマンドを実行する場合（`ja-html`の部分を任意のmakeサブコマンドにできる）
+例（macOSや純粋なLinux環境のBash）：
 
 ```
-docker run -v 【カレントディレクトリ】:/docs -it skyy0079:pandoc-doc-ja make ja-html
+docker run -v $(pwd):/docs -it skyy0079/pandoc-doc-ja bash
 ```
 
-翻訳後のHTMLをビルドする場合（本家`sphinxdoc/sphinx`と違い、`make ja-html`をデフォルトで実行します）
+### 任意のコマンドを実行する（環境変数を使わない場合、`make`コマンド含む）
+
+- 例：`make ja-html`コマンドを実行する場合
+    - `make ja-html`の部分を任意のコマンドにできる
+- `-it` はインタラクティブ実行が必要なときのみ付ける（シェルなど）
 
 ```
-docker run -v 【カレントディレクトリ】:/docs -it skyy0079:pandoc-doc-ja
+docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja make ja-html
 ```
 
-### 応用（Docker for Windowsにおける【カレントディレクトリ】）
+※ コマンドを指定しなかった場合のデフォルトは`make ja-html`
+
+```
+docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja
+```
+
+### 環境変数を使うコマンドを実行する（txコマンド、`make tx-pull`など）
+
+- `docker run` にて `--env-file .env` オプションでコンテナ側に環境変数を読み込ませる
+
+```
+docker run -v $(pwd):/docs --env-file .env skyy0079/pandoc-doc-ja make tx-pull
+```
+
+### Docker for Windowsにおける【カレントディレクトリ】
 
 WSL(1 or 2)上のカレントディレクトリからアクセスしたい場合(ホストBashからゲストBashにログイン)
 
 - `wslpath -aw`: WSL上のパスをフルパス(`/mnt/c/...`)にした上で、Windows上のパスに変換する
 
 ```
-docker run -v $(wslpath -aw $(pwd)):/docs -it skyy0079:pandoc-doc-ja /bin/bash
+docker run -v $(wslpath -aw $(pwd)):/docs -it skyy0079/pandoc-doc-ja bash
 ```
 
-## ビルド
+## `make`コマンド一覧
 
-`make`コマンドでビルドを行います。ここに書いてないコマンドはMakefileを参照。
+このプロジェクトにおけるあらゆる操作は、`make`コマンドで行えます。
+Makefileに書いてある記述を元に、直接元のコマンドを打っても動くはずです。
+
+下記では`docker run ...`を省略した形で記述します。
+
+- 例: `make ja-html` を実行
+    - 直接実行
+        - `docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja make ja-html`
+    - Bashから実行
+        - `docker run -v $(pwd):/docs -it skyy0079/pandoc-doc-ja bash`
+        - `make ja-html`
+- 例: `make tx-pull` の実行（環境変数が必要なコマンド）
+    - 直接実行
+        - `docker run -v $(pwd):/docs --env-file .env skyy0079/pandoc-doc-ja make tx-pull`
+    - Bashから実行
+        - `docker run -v $(pwd):/docs --env-file .env -it skyy0079/pandoc-doc-ja bash`
+        - `echo $TX_TOKEN` (環境変数が渡されていることを確認)
+        - `make tx-pull`
 
 ### 初期設定
 
@@ -149,9 +189,11 @@ make ja-pandoc
 make intl-update
 
 # Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
+# 要環境変数: --env-file .env
 make tx-push-pot
 
 # アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
+# 要環境変数: --env-file .env
 make ja-update-src
 ```
 
@@ -167,15 +209,18 @@ make ja-users-guide-rst
 
 ```
 # Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
+# 要環境変数: --env-file .env
 make tx-pull
 
 # Sphinx: htmlをビルドする
 make ja-html
 
-# Transifexから翻訳ファイル(po)をpullし、そのままビルドする
+# Transifex: 翻訳ファイル(po)をpullし、そのままビルドする
+# 要環境変数: --env-file .env
 make ja-build
 
-# ローカル環境で必要なアップデート・ビルド作業をまとめてする
+# ローカル環境のみ：原文rst変換・pot/poアップデート・ビルドをまとめてする
+# (ja-pandoc -> intl-update -> ja-html)
 make ja-build-local
 ```
 
@@ -183,8 +228,61 @@ make ja-build-local
 
 ```
 # Transifex: 【翻訳後po】手元の翻訳ファイル(po)をpushする
+# 要環境変数: --env-file .env
 make tx-push-local-po
 ```
+
+## 典型的なワークフロー
+
+下記の実行のために、あらかじめコンテナのBashにログインしておきます（環境変数も読み込ませる）。
+
+```
+docker run -v $(pwd):/docs --env-file .env -it skyy0079/pandoc-doc-ja bash
+```
+
+### Pandoc翻訳対象バージョンのアップグレード
+
+例: Pandoc 2.9.2.1 にバージョンアップ
+
+```
+make jgm-pandoc-checkout PANDOC=2.9.2.1
+make ja-update-src
+git add *
+git commit -m '[pandoc upgrade] 翻訳対象バージョンを2.9.2.1にアップグレード'
+git push origin master
+```
+
+### HTMLビルド（Transifex上で翻訳済のpoファイルをpullしてから）
+
+現段階の翻訳を取り込む際はこちら。
+
+```
+make ja-build
+```
+
+随時 `./_build/html/index.html` をブラウザで開いて確認する。
+
+### HTMLビルド（ローカルファイルの変更をチェックしたいとき）
+
+特にPandocテンプレートや翻訳前のrstをいじる際はこちら。
+
+```
+make ja-build-local
+```
+
+随時 `./_build/html/index.html` をブラウザで開いて確認する。
+
+### ビルドしたものをGitHubにpush
+
+```
+git add *
+git commit -m '[update] 現時点での翻訳を取り込んでビルド'
+git push origin master
+```
+
+GitHubにpushできたら、Read the Docs側で自動的にビルド・更新されデプロイされる。
+
+確認する: <https://pandoc-doc-ja.readthedocs.io/ja/latest/>
 
 ## 付録
 
