@@ -35,10 +35,9 @@ USERS_GUIDE_RST := users-guide.rst
 ## 初期設定
 
 # make ja-init
-# ビルドのための初期設定をする (pipenv, git submodule: jgm/pandoc)
+# ビルドのための初期設定をする (git submodule: jgm/pandoc)
 .PHONY: ja-init
 ja-init:
-	pipenv install
 	git submodule update -i
 
 ## Pandocバージョン関連
@@ -86,14 +85,14 @@ ja-pandoc:
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 .PHONY: intl-update
 intl-update:
-	pipenv run make gettext
-	pipenv run sphinx-intl update -p _build/gettext -l ja
+	make gettext
+	sphinx-intl update -p _build/gettext -l ja
 
 # make tx-push-pot
 # Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
 .PHONY: tx-push-pot
 tx-push-pot:
-	pipenv run tx push -s
+	tx push -s
 
 # make ja-update-src
 # アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
@@ -119,13 +118,13 @@ ja-users-guide-rst:
 # Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
 .PHONY: tx-pull
 tx-pull: 
-	pipenv run tx pull -l ja
+	tx pull -l ja
 
 # make ja-html
 # Sphinx: htmlをビルドする
 .PHONY: ja-html
 ja-html:
-	pipenv run make -e SPHINXOPTS="-D language='ja'" html
+	make -e SPHINXOPTS="-D language='ja'" html
 
 # make ja-build
 # Transifexから翻訳ファイル(po)をpullし、そのままビルドする
@@ -139,19 +138,12 @@ ja-build-local: ja-pandoc intl-update ja-html
 
 ## その他
 
-# make pipenv-update
-# Pipenv: pipenv updateして、requirements.txt に書き出す
-.PHONY: pipenv-update
-pipenv-update:
-	pipenv update
-	pipenv lock -r > ./requirements.txt
-
 # make tx-push-local-po
 # Transifex: 【翻訳後po】手元の翻訳ファイル(po)をpushする
 # 
 .PHONY: tx-push-local-po
 tx-push-local-po:
-	pipenv run tx push -t -l ja
+	tx push -t -l ja
 
 # ----------------------------------------------------------------
 # Rules for Sphinx
