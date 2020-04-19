@@ -2,8 +2,8 @@
 
 [Pandoc User's Guide](http://pandoc.org/MANUAL.html) を日本語訳するプロジェクトです。
 
-[従来の日本語訳](http://sky-y.github.io/site-pandoc-jp/users-guide/)はバージョン `1.12.4.2` 準拠（翻訳時点で2014年6月27日）ですが、
-かなり古くなってしまったので新たに翻訳しようとしています。
+- [日本Pandocユーザ会](https://pandoc-doc-ja.readthedocs.io/ja/latest/)
+    - [Pandocユーザーズガイド 日本語版](https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html)
 
 ### Pandocのバージョンについて
 
@@ -51,11 +51,16 @@
 
 ## 初期設定：Dockerを使う場合
 
-このプロジェクトのDockerfileは[sphinxdoc/sphinx](https://hub.docker.com/r/sphinxdoc/sphinx)をベース(`FROM`)にしています。
+Docker Hubの[pandocjp/pandoc-doc-ja](https://hub.docker.com/r/pandocjp/pandoc-doc-ja)でイメージを公開しています。
 
-- 参考: [Sphinxのインストール — Sphinx 4\.0\.0\+/c443e742f ドキュメント](https://www.sphinx-doc.org/ja/master/usage/installation.html#docker)
+- 参考: ベースイメージは [sphinxdoc/sphinx](https://hub.docker.com/r/sphinxdoc/sphinx) です
+    - [Sphinxのインストール — Sphinx 4\.0\.0\+/c443e742f ドキュメント](https://www.sphinx-doc.org/ja/master/usage/installation.html#docker)
 
 ### txコマンド (Transifex Client) のセットアップ
+
+※ APIトークンを持っている人のみ。権限ほしい人は[日本Pandocユーザ会Slack](https://join.slack.com/t/jpang/shared_invite/enQtNjE1MTgzOTkxMjgyLWEzNGVhMmZhODE4ZTVjNDhiYmU1OGNkYzJlZjMwM2NlNmNlNzJmOGY4YzFmYjQ1MTVlNjJiNzk1MzI3ODdmNmY)で相談してください。
+
+（[翻訳の手引 for Pandocユーザーズガイド](https://pandoc-doc-ja.readthedocs.io/ja/latest/trans-intro.html)も参照）
 
 - Transifexの[APIトークン](https://www.transifex.com/user/settings/api/)ページで「トークンを生成」
     - トークン文字列を記録しておく
@@ -75,12 +80,14 @@ TX_TOKEN=【APIトークン】
 
 ## docker pull
 
-TODO
+```
+docker pull pandocjp/pandoc-doc-ja
+```
 
 ## ローカルで docker build
 
 ```
-docker build -t skyy0079/pandoc-doc-ja .
+docker build -t pandocjp/pandoc-doc-ja .
 ```
 
 ## docker run
@@ -90,13 +97,13 @@ docker build -t skyy0079/pandoc-doc-ja .
 ### Bashにログインする（インタラクティブ実行）
 
 ```
-docker run -v 【カレントディレクトリ】:/docs -it skyy0079/pandoc-doc-ja /bin/bash
+docker run -v 【カレントディレクトリ】:/docs -it pandocjp/pandoc-doc-ja /bin/bash
 ```
 
 例（macOSや純粋なLinux環境のBash）：
 
 ```
-docker run -v $(pwd):/docs -it skyy0079/pandoc-doc-ja bash
+docker run -v $(pwd):/docs -it pandocjp/pandoc-doc-ja bash
 ```
 
 ### 任意のコマンドを実行する（環境変数を使わない場合、`make`コマンド含む）
@@ -106,13 +113,13 @@ docker run -v $(pwd):/docs -it skyy0079/pandoc-doc-ja bash
 - `-it` はインタラクティブ実行が必要なときのみ付ける（シェルなど）
 
 ```
-docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja make ja-html
+docker run -v $(pwd):/docs pandocjp/pandoc-doc-ja make ja-html
 ```
 
 ※ コマンドを指定しなかった場合のデフォルトは`make ja-html`
 
 ```
-docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja
+docker run -v $(pwd):/docs pandocjp/pandoc-doc-ja
 ```
 
 ### 環境変数を使うコマンドを実行する（txコマンド、`make tx-pull`など）
@@ -120,7 +127,7 @@ docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja
 - `docker run` にて `--env-file .env` オプションでコンテナ側に環境変数を読み込ませる
 
 ```
-docker run -v $(pwd):/docs --env-file .env skyy0079/pandoc-doc-ja make tx-pull
+docker run -v $(pwd):/docs --env-file .env pandocjp/pandoc-doc-ja make tx-pull
 ```
 
 ### Docker for Windowsにおける【カレントディレクトリ】
@@ -130,7 +137,7 @@ WSL(1 or 2)上のカレントディレクトリからアクセスしたい場合
 - `wslpath -aw`: WSL上のパスをフルパス(`/mnt/c/...`)にした上で、Windows上のパスに変換する
 
 ```
-docker run -v $(wslpath -aw $(pwd)):/docs -it skyy0079/pandoc-doc-ja bash
+docker run -v $(wslpath -aw $(pwd)):/docs -it pandocjp/pandoc-doc-ja bash
 ```
 
 ## `make`コマンド一覧
@@ -142,15 +149,15 @@ Makefileに書いてある記述を元に、直接元のコマンドを打って
 
 - 例: `make ja-html` を実行
     - 直接実行
-        - `docker run -v $(pwd):/docs skyy0079/pandoc-doc-ja make ja-html`
+        - `docker run -v $(pwd):/docs pandocjp/pandoc-doc-ja make ja-html`
     - Bashから実行
-        - `docker run -v $(pwd):/docs -it skyy0079/pandoc-doc-ja bash`
+        - `docker run -v $(pwd):/docs -it pandocjp/pandoc-doc-ja bash`
         - `make ja-html`
 - 例: `make tx-pull` の実行（環境変数が必要なコマンド）
     - 直接実行
-        - `docker run -v $(pwd):/docs --env-file .env skyy0079/pandoc-doc-ja make tx-pull`
+        - `docker run -v $(pwd):/docs --env-file .env pandocjp/pandoc-doc-ja make tx-pull`
     - Bashから実行
-        - `docker run -v $(pwd):/docs --env-file .env -it skyy0079/pandoc-doc-ja bash`
+        - `docker run -v $(pwd):/docs --env-file .env -it pandocjp/pandoc-doc-ja bash`
         - `echo $TX_TOKEN` (環境変数が渡されていることを確認)
         - `make tx-pull`
 
@@ -237,7 +244,7 @@ make tx-push-local-po
 下記の実行のために、あらかじめコンテナのBashにログインしておきます（環境変数も読み込ませる）。
 
 ```
-docker run -v $(pwd):/docs --env-file .env -it skyy0079/pandoc-doc-ja bash
+docker run -v $(pwd):/docs --env-file .env -it pandocjp/pandoc-doc-ja bash
 ```
 
 ### Pandoc翻訳対象バージョンのアップグレード
