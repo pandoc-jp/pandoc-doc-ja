@@ -7,6 +7,11 @@ WORKDIR /root
 # Pandocのバージョン
 ENV PANDOC_VERSION=2.9.2.1
 
+# txコマンド (Transifex Client) のAPIトークン
+# 【注意】ホスト側シェルの環境変数から渡すこと 
+# 例: docker run -e TX_TOKEN ...
+ENV TX_TOKEN ""
+
 # Pandoc (コマンド実行用、latest)
 # TODO: バイナリをダウンロードする (citeprocとかは不要)
 # TODO: Debianのやつ
