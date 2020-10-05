@@ -15,7 +15,8 @@ ENV TX_TOKEN ""
 # Pandoc (コマンド実行用、latest)
 # TODO: バイナリをダウンロードする (citeprocとかは不要)
 # TODO: Debianのやつ
-RUN apt-get install -y curl git && \
+RUN apt-get update && \
+    apt-get install -y curl git && \
     curl -L -o pandoc.deb https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb && \
     dpkg -i pandoc.deb && \
     rm -f pandoc.deb
