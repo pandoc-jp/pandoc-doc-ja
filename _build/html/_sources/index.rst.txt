@@ -21,7 +21,10 @@
 誰でもご自由にご参加ください！
 
 日本Pandocユーザ会 Slack（参加自由・お気軽にご参加ください）
-   `Slack参加用リンク <https://join.slack.com/t/jpang/shared_invite/enQtNDUxMTY0NzU1ODc1LTMyYmFjNmY2NmI2ZDI0MDUwZTU2MzgyNzUzMGE4Y2E5M2QxN2RiYWE5NjNmNjhkNjE1MmI1NWY3ODc5MjQxZmQ>`_
+   `Slack参加用リンク <https://docs.google.com/forms/d/e/1FAIpQLSeQJbr1up0nQUErE7hURqE5KJMfiImvAkMZg8ZyWEaxpT-zkA/viewform>`_
+
+※ 注意：以前はSlack公式の招待リンクを発行していましたが、諸事情によりGoogleフォームでの手動対応に変更しています。
+追加が遅くなる可能性があるため、なかなか追加されない場合は再投稿でリマインドいただければ幸いです。
 
 管理者（日本Pandocユーザ会 代表）
    藤原 惟 / Yuki Fujiwara (`@skyy_writing <https://twitter.com/skyy_writing>`_)
