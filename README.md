@@ -161,82 +161,76 @@ Makefileに書いてある記述を元に、直接元のコマンドを打って
         - `echo $TX_TOKEN` (環境変数が渡されていることを確認)
         - `make tx-pull`
 
-### 初期設定
+
+
+### ターゲット：まとめて実行
 
 ```
-# ビルドのための初期設定をする (git submodule: jgm/pandoc)
-make ja-init
+$ make ja-update-src
+アップデート作業をまとめてする
+(pandoc -> intl-update -> tx-push-pot)
+要環境変数
+
+$ make ja-build
+Transifex: 翻訳ファイル(po)をpullし、そのままビルドする
+要環境変数
+
+$ make ja-build-local
+ローカル環境のみ：アップデート・ビルド作業をまとめてする
+(ja-pandoc -> intl-update -> ja-html)
 ```
 
-### Pandocバージョン関連
+### ターゲット：Pandocバージョン関連
 
 ```
-# 元リポジトリPandocバージョンを表示する (pandoc/pandoc.cabalのversionを参照)
-make jgm-pandoc-version
+$ make jgm-pandoc-version
+元リポジトリPandocバージョンを表示する (pandoc/pandoc.cabalのversionを参照)
 
-# 翻訳対象Pandocバージョンを表示する (./ja-pandoc-version-lock ファイルを参照)
-make ja-pandoc-version
+$ make ja-pandoc-version
+翻訳対象Pandocバージョンを表示する (./ja-pandoc-version-lock ファイルを参照)
 
-# 翻訳対象Pandocバージョンをjgm/pandocのものに固定する (ファイルに書き出すだけ)
-make ja-pandoc-version-lock
+$ make ja-pandoc-version-lock
+翻訳対象Pandocバージョンをjgm/pandocのものに固定する (ファイルに書き出すだけ)
 ```
 
-### 原文アップデート系
+### ターゲット：リポジトリ・原文アップデート系
 
-(jgm/pandoc:MANUAL.txt のアップデートと翻訳ファイルの更新)
-
-```
-# jgm/pandocを特定バージョンでチェックアウト
-make jgm-pandoc-checkout PANDOC=バージョン番号
-
-# Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
-make ja-pandoc
-
-# users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
-make intl-update
-
-# Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
-# 要環境変数: --env-file .env
-make tx-push-pot
-
-# アップデート作業をまとめてする (pandoc -> intl-update -> tx-push-pot)
-# 要環境変数: --env-file .env
-make ja-update-src
-```
-
-### ビルド：ユーザーズガイド用rst
+(jgm/pandoc: MANUAL.txt のアップデートと翻訳ファイルの更新)
 
 ```
-# ユーザーズガイドのrstをビルド
-# (Pandocテンプレートのみを入力としたいため、形式的に入力ファイルを無し(/dev/null)とする)
-make ja-users-guide-rst
+$ make ja-init
+git submodule を初期化する
+
+$ make jgm-pandoc-checkout PANDOC=バージョン番号
+jgm/pandocを特定バージョンでチェックアウト
+
+$ make users-guide-rst
+Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 ```
 
-### ビルド：全体
+### ターゲット：Sphinx系（単品）
 
 ```
-# Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
-# 要環境変数: --env-file .env
-make tx-pull
+$ make intl-update
+users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 
-# Sphinx: htmlをビルドする
-make ja-html
-
-# Transifex: 翻訳ファイル(po)をpullし、そのままビルドする
-# 要環境変数: --env-file .env
-make ja-build
-
-# ローカル環境のみ：原文rst変換・pot/poアップデート・ビルドをまとめてする
-# (ja-pandoc -> intl-update -> ja-html)
-make ja-build-local
+$ make ja-html
+Sphinx: htmlをビルドする
 ```
 
-### その他
+### ターゲット：Transifex系
 
 ```
-# Transifex: 【翻訳後po】手元の翻訳ファイル(po)をpushする
-# 要環境変数: --env-file .env
-make tx-push-local-po
+# make tx-push-pot
+Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
+要環境変数
+
+# make tx-pull
+Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
+要環境変数
+
+# make tx-push-local-po
+Transifex: 【翻訳後po】手元の翻訳ファイル(po)をpushする
 ```
 
 ## 典型的なワークフロー
