@@ -96,11 +96,10 @@ jgm-pandoc-checkout:
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 .PHONY: users-guide-rst
 users-guide-rst:
-	pandoc -f markdown -t rst --reference-links $(MANUAL_TXT) -o $(USERS_GUIDE_RST).tmp
+	pandoc -f markdown -t rst --reference-links $(MANUAL_TXT) -o tmp_rst
 	bash ./scripts/generate-header.sh $(DOC_USERS_GUIDE) $(PANDOC_VER_LOCK_FILE) > $(HEADER_USERS_GUIDE)
-	awk 'FNR==1{print ""}{print}' $(HEADER_USERS_GUIDE) $(USERS_GUIDE_RST).tmp > $(USERS_GUIDE_RST)
-	rm -f $(USERS_GUIDE_RST).tmp
-
+	awk 'FNR==1{print ""}{print}' $(HEADER_USERS_GUIDE) tmp_rst > $(USERS_GUIDE_RST)
+	rm -f tmp_rst
 
 
 ################################################
