@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 00:24+0900\n"
+"POT-Creation-Date: 2020-10-17 12:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,33 +47,39 @@ msgstr ""
 
 #: ../../index.rst:24
 msgid ""
-"`Slack参加用リンク "
-"<https://join.slack.com/t/jpang/shared_invite/enQtNDUxMTY0NzU1ODc1LTMyYmFjNmY2NmI2ZDI0MDUwZTU2MzgyNzUzMGE4Y2E5M2QxN2RiYWE5NjNmNjhkNjE1MmI1NWY3ODc5MjQxZmQ>`_"
+"`Slack参加用リンク <https://docs.google.com/forms/d/e"
+"/1FAIpQLSeQJbr1up0nQUErE7hURqE5KJMfiImvAkMZg8ZyWEaxpT-zkA/viewform>`_"
 msgstr ""
 
-#: ../../index.rst:27
-msgid "管理者（日本Pandocユーザ会 代表）"
-msgstr ""
-
-#: ../../index.rst:27
-msgid "藤原 惟 / Yuki Fujiwara (`@skyy_writing <https://twitter.com/skyy_writing>`_)"
+#: ../../index.rst:26
+msgid ""
+"※ 注意：以前はSlack公式の招待リンクを発行していましたが、諸事情によりGoogleフォームでの手動対応に変更しています。 "
+"追加が遅くなる可能性があるため、なかなか追加されない場合は再投稿でリマインドいただければ幸いです。"
 msgstr ""
 
 #: ../../index.rst:30
+msgid "管理者（日本Pandocユーザ会 代表）"
+msgstr ""
+
+#: ../../index.rst:30
+msgid "藤原 惟 / Yuki Fujiwara (`@skyy_writing <https://twitter.com/skyy_writing>`_)"
+msgstr ""
+
+#: ../../index.rst:33
 msgid "目次"
 msgstr ""
 
-#: ../../index.rst:40
+#: ../../index.rst:43
 msgid "このサイトのソースコード"
 msgstr ""
 
-#: ../../index.rst:42
+#: ../../index.rst:45
 msgid ""
 "GitHub: `pandoc-jp/pandoc-doc-ja <https://github.com/pandoc-jp/pandoc-"
 "doc-ja>`_"
 msgstr ""
 
-#: ../../index.rst:44
+#: ../../index.rst:47
 msgid ""
 "Pandoc is free software, released under the `GPL "
 "<https://www.gnu.org/licenses/gpl-3.0.html>`_. Copyright 2006–2019 `John "
@@ -132,5 +138,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ":ref:`search`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Slack参加用リンク "
+#~ "<https://join.slack.com/t/jpang/shared_invite/enQtNDUxMTY0NzU1ODc1LTMyYmFjNmY2NmI2ZDI0MDUwZTU2MzgyNzUzMGE4Y2E5M2QxN2RiYWE5NjNmNjhkNjE1MmI1NWY3ODc5MjQxZmQ>`_"
 #~ msgstr ""
 

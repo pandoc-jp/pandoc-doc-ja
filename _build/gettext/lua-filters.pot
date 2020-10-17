@@ -1,0 +1,4564 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019, 日本Pandocユーザ会
+# This file is distributed under the same license as the 日本Pandocユーザ会 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 日本Pandocユーザ会 \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-17 13:50+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../lua-filters.rst:4
+msgid "Pandoc Lua Filters 日本語版"
+msgstr ""
+
+#: ../../lua-filters.rst:8
+msgid "現在の翻訳は *プレリリース版* です。不完全な翻訳を含んでいます。 （ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）"
+msgstr ""
+
+#: ../../lua-filters.rst:11
+msgid "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgstr ""
+
+#: ../../lua-filters.rst:12
+msgid "この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-doc-ja/issues>`_ に投稿してください"
+msgstr ""
+
+#: ../../lua-filters.rst:13
+msgid "翻訳のレビュー作業や翻訳作業へのご協力を希望の方は :doc:`trans-intro` をご覧ください"
+msgstr ""
+
+#: ../../lua-filters.rst:15
+msgid "原著者:"
+msgstr ""
+
+#: ../../lua-filters.rst:17
+msgid "Albert Krewinkel"
+msgstr ""
+
+#: ../../lua-filters.rst:18
+msgid "John MacFarlane"
+msgstr ""
+
+#: ../../lua-filters.rst:20
+msgid "原著バージョン: 2.11.0.2"
+msgstr ""
+
+#: ../../lua-filters.rst:22
+msgid "更新日: 2020/10/17"
+msgstr ""
+
+#: ../../lua-filters.rst:24
+msgid "翻訳者（アルファベット順）:"
+msgstr ""
+
+#: ../../lua-filters.rst:26
+msgid "becolomochi"
+msgstr ""
+
+#: ../../lua-filters.rst:27
+msgid "makotosan"
+msgstr ""
+
+#: ../../lua-filters.rst:28
+msgid "niszet"
+msgstr ""
+
+#: ../../lua-filters.rst:29
+msgid "Takada Atsushi"
+msgstr ""
+
+#: ../../lua-filters.rst:30
+msgid "`Tomoki Ishibashi <https://ishibaki.github.io>`_"
+msgstr ""
+
+#: ../../lua-filters.rst:31
+msgid "Yuki Fujiwara"
+msgstr ""
+
+#: ../../lua-filters.rst:34
+msgid "目次"
+msgstr ""
+
+#: ../../lua-filters.rst:37
+msgid "Introduction"
+msgstr ""
+
+#: ../../lua-filters.rst:39
+msgid "Pandoc has long supported filters, which allow the pandoc abstract syntax tree (AST) to be manipulated between the parsing and the writing phase. `Traditional pandoc filters`_ accept a JSON representation of the pandoc AST and produce an altered JSON representation of the AST. They may be written in any programming language, and invoked from pandoc using the ``--filter`` option."
+msgstr ""
+
+#: ../../lua-filters.rst:46
+msgid "Although traditional filters are very flexible, they have a couple of disadvantages. First, there is some overhead in writing JSON to stdout and reading it from stdin (twice, once on each side of the filter). Second, whether a filter will work will depend on details of the user’s environment. A filter may require an interpreter for a certain programming language to be available, as well as a library for manipulating the pandoc AST in JSON form. One cannot simply provide a filter that can be used by anyone who has a certain version of the pandoc executable."
+msgstr ""
+
+#: ../../lua-filters.rst:56
+msgid "Starting with version 2.0, pandoc makes it possible to write filters in Lua without any external dependencies at all. A Lua interpreter (version 5.3) and a Lua library for creating pandoc filters is built into the pandoc executable. Pandoc data types are marshaled to Lua directly, avoiding the overhead of writing JSON to stdout and reading it from stdin."
+msgstr ""
+
+#: ../../lua-filters.rst:63
+msgid "Here is an example of a Lua filter that converts strong emphasis to small caps:"
+msgstr ""
+
+#: ../../lua-filters.rst:76
+msgid "or equivalently,"
+msgstr ""
+
+#: ../../lua-filters.rst:84
+msgid "This says: walk the AST, and when you find a Strong element, replace it with a SmallCaps element with the same content."
+msgstr ""
+
+#: ../../lua-filters.rst:87
+msgid "To run it, save it in a file, say ``smallcaps.lua``, and invoke pandoc with ``--lua-filter=smallcaps.lua``."
+msgstr ""
+
+#: ../../lua-filters.rst:90
+msgid "Here’s a quick performance comparison, converting the pandoc manual (MANUAL.txt) to HTML, with versions of the same JSON filter written in compiled Haskell (``smallcaps``) and interpreted Python (``smallcaps.py``):"
+msgstr ""
+
+#: ../../lua-filters.rst:96
+msgid "Command"
+msgstr ""
+
+#: ../../lua-filters.rst:96
+msgid "Time"
+msgstr ""
+
+#: ../../lua-filters.rst:98
+msgid "``pandoc``"
+msgstr ""
+
+#: ../../lua-filters.rst:98
+msgid "1.01s"
+msgstr ""
+
+#: ../../lua-filters.rst:99
+msgid "``pandoc --filter ./smallcaps``"
+msgstr ""
+
+#: ../../lua-filters.rst:99
+msgid "1.36s"
+msgstr ""
+
+#: ../../lua-filters.rst:100
+msgid "``pandoc --filter ./smallcaps.py``"
+msgstr ""
+
+#: ../../lua-filters.rst:100
+msgid "1.40s"
+msgstr ""
+
+#: ../../lua-filters.rst:101
+msgid "``pandoc --lua-filter ./smallcaps.lua``"
+msgstr ""
+
+#: ../../lua-filters.rst:101
+msgid "1.03s"
+msgstr ""
+
+#: ../../lua-filters.rst:104
+msgid "As you can see, the Lua filter avoids the substantial overhead associated with marshaling to and from JSON over a pipe."
+msgstr ""
+
+#: ../../lua-filters.rst:108
+msgid "Lua filter structure"
+msgstr ""
+
+#: ../../lua-filters.rst:110
+msgid "Lua filters are tables with element names as keys and values consisting of functions acting on those elements."
+msgstr ""
+
+#: ../../lua-filters.rst:113
+msgid "Filters are expected to be put into separate files and are passed via the ``--lua-filter`` command-line argument. For example, if a filter is defined in a file ``current-date.lua``, then it would be applied like this:"
+msgstr ""
+
+#: ../../lua-filters.rst:122
+msgid "The ``--lua-filter`` option may be supplied multiple times. Pandoc applies all filters (including JSON filters specified via ``--filter`` and Lua filters specified via ``--lua-filter``) in the order they appear on the command line."
+msgstr ""
+
+#: ../../lua-filters.rst:127
+msgid "Pandoc expects each Lua file to return a list of filters. The filters in that list are called sequentially, each on the result of the previous filter. If there is no value returned by the filter script, then pandoc will try to generate a single filter by collecting all top-level functions whose names correspond to those of pandoc elements (e.g., ``Str``, ``Para``, ``Meta``, or ``Pandoc``). (That is why the two examples above are equivalent.)"
+msgstr ""
+
+#: ../../lua-filters.rst:135
+msgid "For each filter, the document is traversed and each element subjected to the filter. Elements for which the filter contains an entry (i.e. a function of the same name) are passed to Lua element filtering function. In other words, filter entries will be called for each corresponding element in the document, getting the respective element as input."
+msgstr ""
+
+#: ../../lua-filters.rst:141
+msgid "The return of a filter function must one of the following:"
+msgstr ""
+
+#: ../../lua-filters.rst:143
+msgid "nil: this means that the object should remain unchanged."
+msgstr ""
+
+#: ../../lua-filters.rst:144
+msgid "a pandoc object: this must be of the same type as the input and will replace the original object."
+msgstr ""
+
+#: ../../lua-filters.rst:146
+msgid "a list of pandoc objects: these will replace the original object; the list is merged with the neighbors of the original objects (spliced into the list the original object belongs to); returning an empty list deletes the object."
+msgstr ""
+
+#: ../../lua-filters.rst:151
+msgid "The function’s output must result in an element of the same type as the input. This means a filter function acting on an inline element must return either nil, an inline, or a list of inlines, and a function filtering a block element must return one of nil, a block, or a list of block elements. Pandoc will throw an error if this condition is violated."
+msgstr ""
+
+#: ../../lua-filters.rst:158
+msgid "If there is no function matching the element’s node type, then the filtering system will look for a more general fallback function. Two fallback functions are supported, ``Inline`` and ``Block``. Each matches elements of the respective type."
+msgstr ""
+
+#: ../../lua-filters.rst:163
+msgid "Elements without matching functions are left untouched."
+msgstr ""
+
+#: ../../lua-filters.rst:165
+msgid "See `module documentation`_ for a list of pandoc elements."
+msgstr ""
+
+#: ../../lua-filters.rst:168
+msgid "Filters on element sequences"
+msgstr ""
+
+#: ../../lua-filters.rst:170
+msgid "For some filtering tasks, it is necessary to know the order in which elements occur in the document. It is not enough then to inspect a single element at a time."
+msgstr ""
+
+#: ../../lua-filters.rst:174
+msgid "There are two special function names, which can be used to define filters on lists of blocks or lists of inlines."
+msgstr ""
+
+#: ../../lua-filters.rst:180
+msgid "``Inlines (inlines)``"
+msgstr ""
+
+#: ../../lua-filters.rst:178
+msgid "If present in a filter, this function will be called on all lists of inline elements, like the content of a `Para`_ (paragraph) block, or the description of an `Image`_. The ``inlines`` argument passed to the function will be a `List`_ of `Inlines`_ for each call."
+msgstr ""
+
+#: ../../lua-filters.rst:187
+msgid "``Blocks (blocks)``"
+msgstr ""
+
+#: ../../lua-filters.rst:183
+msgid "If present in a filter, this function will be called on all lists of block elements, like the content of a `MetaBlocks`_ meta element block, on each item of a list, and the main content of the `Pandoc`_ document. The ``blocks`` argument passed to the function will be a `List`_ of `Blocks`_ for each call."
+msgstr ""
+
+#: ../../lua-filters.rst:189
+msgid "These filter functions are special in that the result must either be nil, in which case the list is left unchanged, or must be a list of the correct type, i.e., the same type as the input argument. Single elements are **not** allowed as return values, as a single element in this context usually hints at a bug."
+msgstr ""
+
+#: ../../lua-filters.rst:195
+msgid "See `“Remove spaces before normal citations”`_ for an example."
+msgstr ""
+
+#: ../../lua-filters.rst:197
+msgid "This functionality has been added in pandoc 2.9.2."
+msgstr ""
+
+#: ../../lua-filters.rst:200
+msgid "Execution Order"
+msgstr ""
+
+#: ../../lua-filters.rst:202
+msgid "Element filter functions within a filter set are called in a fixed order, skipping any which are not present:"
+msgstr ""
+
+#: ../../lua-filters.rst:205
+msgid "functions for `Inline elements`_,"
+msgstr ""
+
+#: ../../lua-filters.rst:206
+msgid "the ```Inlines```_ filter function,"
+msgstr ""
+
+#: ../../lua-filters.rst:207
+msgid "functions for `Block elements`_ ,"
+msgstr ""
+
+#: ../../lua-filters.rst:208
+msgid "the ```Blocks```_ filter function,"
+msgstr ""
+
+#: ../../lua-filters.rst:209
+msgid "the ```Meta```_ filter function, and last"
+msgstr ""
+
+#: ../../lua-filters.rst:210
+msgid "the ```Pandoc```_ filter function."
+msgstr ""
+
+#: ../../lua-filters.rst:212
+msgid "It is still possible to force a different order by explicitly returning multiple filter sets. For example, if the filter for *Meta* is to be run before that for *Str*, one can write"
+msgstr ""
+
+#: ../../lua-filters.rst:225
+msgid "Filter sets are applied in the order in which they are returned. All functions in set (1) are thus run before those in (2), causing the filter function for *Meta* to be run before the filtering of *Str* elements is started."
+msgstr ""
+
+#: ../../lua-filters.rst:231
+msgid "Global variables"
+msgstr ""
+
+#: ../../lua-filters.rst:233
+msgid "Pandoc passes additional data to Lua filters by setting global variables."
+msgstr ""
+
+#: ../../lua-filters.rst:238
+msgid "``FORMAT``"
+msgstr ""
+
+#: ../../lua-filters.rst:237
+msgid "The global ``FORMAT`` is set to the format of the pandoc writer being used (``html5``, ``latex``, etc.), so the behavior of a filter can be made conditional on the eventual output format."
+msgstr ""
+
+#: ../../lua-filters.rst:240
+msgid "``PANDOC_READER_OPTIONS``"
+msgstr ""
+
+#: ../../lua-filters.rst:241
+msgid "Table of the options which were provided to the parser."
+msgstr ""
+
+#: ../../lua-filters.rst:246
+msgid "``PANDOC_VERSION``"
+msgstr ""
+
+#: ../../lua-filters.rst:243
+msgid "Contains the pandoc version as a `Version`_ object which behaves like a numerically indexed table, most significant number first. E.g., for pandoc 2.7.3, the value of the variable is equivalent to a table ``{2, 7, 3}``. Use ``tostring(PANDOC_VERSION)`` to produce a version string. This variable is also set in custom writers."
+msgstr ""
+
+#: ../../lua-filters.rst:254
+msgid "``PANDOC_API_VERSION``"
+msgstr ""
+
+#: ../../lua-filters.rst:249
+msgid "Contains the version of the pandoc-types API against which pandoc was compiled. It is given as a numerically indexed table, most significant number first. E.g., if pandoc was compiled against pandoc-types 1.17.3, then the value of the variable will behave like the table ``{1, 17, 3}``. Use ``tostring(PANDOC_API_VERSION)`` to produce a version string. This variable is also set in custom writers."
+msgstr ""
+
+#: ../../lua-filters.rst:258
+msgid "``PANDOC_SCRIPT_FILE``"
+msgstr ""
+
+#: ../../lua-filters.rst:257
+msgid "The name used to involve the filter. This value can be used to find files relative to the script file. This variable is also set in custom writers."
+msgstr ""
+
+#: ../../lua-filters.rst:263
+msgid "``PANDOC_STATE``"
+msgstr ""
+
+#: ../../lua-filters.rst:261
+msgid "The state shared by all readers and writers. It is used by pandoc to collect and pass information. The value of this variable is of type `CommonState`_ and is read-only."
+msgstr ""
+
+#: ../../lua-filters.rst:266
+msgid "Pandoc Module"
+msgstr ""
+
+#: ../../lua-filters.rst:268
+msgid "The ``pandoc`` Lua module is loaded into the filter’s Lua environment and provides a set of functions and constants to make creation and manipulation of elements easier. The global variable ``pandoc`` is bound to the module and should generally not be overwritten for this reason."
+msgstr ""
+
+#: ../../lua-filters.rst:273
+msgid "Two major functionalities are provided by the module: element creator functions and access to some of pandoc’s main functionalities."
+msgstr ""
+
+#: ../../lua-filters.rst:277
+msgid "Element creation"
+msgstr ""
+
+#: ../../lua-filters.rst:279
+msgid "Element creator functions like ``Str``, ``Para``, and ``Pandoc`` are designed to allow easy creation of new elements that are simple to use and can be read back from the Lua environment. Internally, pandoc uses these functions to create the Lua objects which are passed to element filter functions. This means that elements created via this module will behave exactly as those elements accessible through the filter function parameter."
+msgstr ""
+
+#: ../../lua-filters.rst:288
+msgid "Exposed pandoc functionality"
+msgstr ""
+
+#: ../../lua-filters.rst:290
+msgid "Some pandoc functions have been made available in Lua:"
+msgstr ""
+
+#: ../../lua-filters.rst:292
+msgid "```walk_block```_ and ```walk_inline```_ allow filters to be applied inside specific block or inline elements;"
+msgstr ""
+
+#: ../../lua-filters.rst:294
+msgid "```read```_ allows filters to parse strings into pandoc documents;"
+msgstr ""
+
+#: ../../lua-filters.rst:295
+msgid "```pipe```_ runs an external command with input from and output to strings;"
+msgstr ""
+
+#: ../../lua-filters.rst:297
+msgid "the ```pandoc.mediabag```_ module allows access to the “mediabag,” which stores binary content such as images that may be included in the final document;"
+msgstr ""
+
+#: ../../lua-filters.rst:300
+msgid "the ```pandoc.utils```_ module contains various utility functions."
+msgstr ""
+
+#: ../../lua-filters.rst:303
+msgid "Lua interpreter initialization"
+msgstr ""
+
+#: ../../lua-filters.rst:305
+msgid "Initialization of pandoc’s Lua interpreter can be controlled by placing a file ``init.lua`` in pandoc’s data directory. A common use-case would be to load additional modules, or even to alter default modules."
+msgstr ""
+
+#: ../../lua-filters.rst:309
+msgid "The following snippet is an example of code that might be useful when added to ``init.lua``. The snippet adds all Unicode-aware functions defined in the ```text`` module`_ to the default ``string`` module, prefixed with the string ``uc_``."
+msgstr ""
+
+#: ../../lua-filters.rst:320
+msgid "This makes it possible to apply these functions on strings using colon syntax (``mystring:uc_upper()``)."
+msgstr ""
+
+#: ../../lua-filters.rst:324
+msgid "Debugging Lua filters"
+msgstr ""
+
+#: ../../lua-filters.rst:326
+msgid "It is possible to use a debugging interface to halt execution and step through a Lua filter line by line as it is run inside Pandoc. This is accomplished using the remote-debugging interface of the package ```mobdebug```_. Although mobdebug can be run from the terminal, it is more useful run within the donation-ware Lua editor and IDE, `ZeroBrane`_. ZeroBrane offers a REPL console and UI to step-through and view all variables and state."
+msgstr ""
+
+#: ../../lua-filters.rst:334
+msgid "If you already have Lua 5.3 installed, you can add ```mobdebug`` <https://luarocks.org/modules/paulclinger/mobdebug>`__ and its dependency ```luasocket```_ using ```luarocks```_, which should then be available on the path. ZeroBrane also includes both of these in its package, so if you don’t want to install Lua separately, you should add/modify your ``LUA_PATH`` and ``LUA_CPATH`` to include the correct locations; `see detailed instructions here`_."
+msgstr ""
+
+#: ../../lua-filters.rst:343
+msgid "Examples"
+msgstr ""
+
+#: ../../lua-filters.rst:345
+msgid "The following filters are presented as examples. A repository of useful Lua filters (which may also serve as good examples) is available at https://github.com/pandoc/lua-filters."
+msgstr ""
+
+#: ../../lua-filters.rst:350
+msgid "Macro substitution"
+msgstr ""
+
+#: ../../lua-filters.rst:352
+msgid "The following filter converts the string ``{{helloworld}}`` into emphasized text “Hello, World”."
+msgstr ""
+
+#: ../../lua-filters.rst:370
+msgid "Center images in LaTeX and HTML output"
+msgstr ""
+
+#: ../../lua-filters.rst:372
+msgid "For LaTeX, wrap an image in LaTeX snippets which cause the image to be centered horizontally. In HTML, the image element’s style attribute is used to achieve centering."
+msgstr ""
+
+#: ../../lua-filters.rst:400
+msgid "Setting the date in the metadata"
+msgstr ""
+
+#: ../../lua-filters.rst:402
+msgid "This filter sets the date in the document’s metadata to the current date, if a date isn’t already set:"
+msgstr ""
+
+#: ../../lua-filters.rst:415
+msgid "Remove spaces before citations"
+msgstr ""
+
+#: ../../lua-filters.rst:417
+msgid "This filter removes all spaces preceding an “author-in-text” citation. In Markdown, author-in-text citations (e.g., ``@citekey``), must be preceded by a space. If these spaces are undesired, they must be removed with a filter."
+msgstr ""
+
+#: ../../lua-filters.rst:444
+msgid "Replacing placeholders with their metadata value"
+msgstr ""
+
+#: ../../lua-filters.rst:446
+msgid "Lua filter functions are run in the order"
+msgstr ""
+
+#: ../../lua-filters.rst:448
+msgid "*Inlines → Blocks → Meta → Pandoc*."
+msgstr ""
+
+#: ../../lua-filters.rst:450
+msgid "Passing information from a higher level (e.g., metadata) to a lower level (e.g., inlines) is still possible by using two filters living in the same file:"
+msgstr ""
+
+#: ../../lua-filters.rst:476
+msgid "If the contents of file ``occupations.md`` is"
+msgstr ""
+
+#: ../../lua-filters.rst:493
+msgid "then running ``pandoc --lua-filter=meta-vars.lua occupations.md`` will output:"
+msgstr ""
+
+#: ../../lua-filters.rst:508
+msgid "Modifying pandoc’s ``MANUAL.txt`` for man pages"
+msgstr ""
+
+#: ../../lua-filters.rst:510
+msgid "This is the filter we use when converting ``MANUAL.txt`` to man pages. It converts level-1 headers to uppercase (using ``walk_block`` to transform inline elements inside headers), removes footnotes, and replaces links with regular text."
+msgstr ""
+
+#: ../../lua-filters.rst:538
+msgid "Creating a handout from a paper"
+msgstr ""
+
+#: ../../lua-filters.rst:540
+msgid "This filter extracts all the numbered examples, section headers, block quotes, and figures from a document, in addition to any divs with class ``handout``. (Note that only blocks at the “outer level” are included; this ignores blocks inside nested constructs, like list items.)"
+msgstr ""
+
+#: ../../lua-filters.rst:566
+msgid "Counting words in a document"
+msgstr ""
+
+#: ../../lua-filters.rst:568
+msgid "This filter counts the words in the body of a document (omitting metadata like titles and abstracts), including words in code. It should be more accurate than ``wc -w`` run directly on a Markdown document, since the latter will count markup characters, like the ``#`` in front of an ATX header, or tags in HTML documents, as words. To run it, ``pandoc --lua-filter wordcount.lua myfile.md``."
+msgstr ""
+
+#: ../../lua-filters.rst:608
+msgid "Converting ABC code to music notation"
+msgstr ""
+
+#: ../../lua-filters.rst:610
+msgid "This filter replaces code blocks with class ``abc`` with images created by running their contents through ``abcm2ps`` and ImageMagick’s ``convert``. (For more on ABC notation, see https://abcnotation.com.)"
+msgstr ""
+
+#: ../../lua-filters.rst:614
+msgid "Images are added to the mediabag. For output to binary formats, pandoc will use images in the mediabag. For textual formats, use ``--extract-media`` to specify a directory where the files in the mediabag will be written, or (for HTML only) use ``--self-contained``."
+msgstr ""
+
+#: ../../lua-filters.rst:650
+msgid "Building images with Ti\\ *k*\\ Z"
+msgstr ""
+
+#: ../../lua-filters.rst:652
+msgid "This filter converts raw LaTeX Ti\\ *k*\\ Z environments into images. It works with both PDF and HTML output. The Ti\\ *k*\\ Z code is compiled to an image using ``pdflatex``, and the image is converted from pdf to svg format using ```pdf2svg```_, so both of these must be in the system path. Converted images are cached in the working directory and given filenames based on a hash of the source, so that they need not be regenerated each time the document is built. (A more sophisticated version of this might put these in a special cache directory.)"
+msgstr ""
+
+#: ../../lua-filters.rst:727
+msgid "Example of use:"
+msgstr ""
+
+#: ../../lua-filters.rst:750
+msgid "Lua type reference"
+msgstr ""
+
+#: ../../lua-filters.rst:752
+msgid "This section describes the types of objects available to Lua filters. See the `pandoc module`_ for functions to create these objects."
+msgstr ""
+
+#: ../../lua-filters.rst:756
+msgid "Shared Properties"
+msgstr ""
+
+#: ../../lua-filters.rst:759
+msgid "``clone``"
+msgstr ""
+
+#: ../../lua-filters.rst:761
+msgid "``clone ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:763
+msgid "All instances of the types listed here, with the exception of read-only objects, can be cloned via the ``clone()`` method."
+msgstr ""
+
+#: ../../lua-filters.rst:766
+#: ../../lua-filters.rst:1934
+#: ../../lua-filters.rst:2589
+#: ../../lua-filters.rst:2737
+#: ../../lua-filters.rst:2799
+#: ../../lua-filters.rst:2847
+#: ../../lua-filters.rst:2898
+#: ../../lua-filters.rst:2927
+#: ../../lua-filters.rst:2959
+#: ../../lua-filters.rst:3000
+#: ../../lua-filters.rst:3020
+#: ../../lua-filters.rst:3041
+#: ../../lua-filters.rst:3062
+#: ../../lua-filters.rst:3129
+#: ../../lua-filters.rst:3162
+#: ../../lua-filters.rst:3184
+#: ../../lua-filters.rst:3216
+#: ../../lua-filters.rst:3238
+msgid "Usage:"
+msgstr ""
+
+#: ../../lua-filters.rst:776
+#: ../../lua-filters.rst:2014
+msgid "Pandoc"
+msgstr ""
+
+#: ../../lua-filters.rst:778
+msgid "Pandoc document"
+msgstr ""
+
+#: ../../lua-filters.rst:780
+msgid "Values of this type can be created with the ```pandoc.Pandoc```_ constructor. Object equality is determined via ```pandoc.utils.equals```_."
+msgstr ""
+
+#: ../../lua-filters.rst:784
+msgid "``blocks``"
+msgstr ""
+
+#: ../../lua-filters.rst:785
+msgid "document content (`List`_ of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:787
+msgid "``meta``"
+msgstr ""
+
+#: ../../lua-filters.rst:787
+msgid "document meta information (`Meta`_ object)"
+msgstr ""
+
+#: ../../lua-filters.rst:792
+#: ../../lua-filters.rst:2029
+msgid "Meta"
+msgstr ""
+
+#: ../../lua-filters.rst:794
+msgid "Meta information on a document; string-indexed collection of `MetaValues`_."
+msgstr ""
+
+#: ../../lua-filters.rst:797
+msgid "Values of this type can be created with the ```pandoc.Meta```_ constructor. Object equality is determined via ```pandoc.utils.equals```_."
+msgstr ""
+
+#: ../../lua-filters.rst:804
+#: ../../lua-filters.rst:2042
+msgid "MetaValue"
+msgstr ""
+
+#: ../../lua-filters.rst:806
+msgid "Document meta information items."
+msgstr ""
+
+#: ../../lua-filters.rst:808
+#: ../../lua-filters.rst:891
+#: ../../lua-filters.rst:1193
+#: ../../lua-filters.rst:1604
+#: ../../lua-filters.rst:1669
+#: ../../lua-filters.rst:1709
+msgid "Object equality is determined via ```pandoc.utils.equals```_."
+msgstr ""
+
+#: ../../lua-filters.rst:813
+msgid "MetaBlocks"
+msgstr ""
+
+#: ../../lua-filters.rst:815
+msgid "A list of blocks usable as meta value (`List`_ of `Blocks`_)."
+msgstr ""
+
+#: ../../lua-filters.rst:817
+#: ../../lua-filters.rst:839
+#: ../../lua-filters.rst:854
+#: ../../lua-filters.rst:871
+#: ../../lua-filters.rst:903
+#: ../../lua-filters.rst:920
+#: ../../lua-filters.rst:937
+#: ../../lua-filters.rst:962
+#: ../../lua-filters.rst:979
+#: ../../lua-filters.rst:1004
+#: ../../lua-filters.rst:1031
+#: ../../lua-filters.rst:1047
+#: ../../lua-filters.rst:1078
+#: ../../lua-filters.rst:1103
+#: ../../lua-filters.rst:1120
+#: ../../lua-filters.rst:1137
+#: ../../lua-filters.rst:1156
+#: ../../lua-filters.rst:1205
+#: ../../lua-filters.rst:1224
+#: ../../lua-filters.rst:1249
+#: ../../lua-filters.rst:1266
+#: ../../lua-filters.rst:1295
+#: ../../lua-filters.rst:1310
+#: ../../lua-filters.rst:1339
+#: ../../lua-filters.rst:1359
+#: ../../lua-filters.rst:1376
+#: ../../lua-filters.rst:1396
+#: ../../lua-filters.rst:1415
+#: ../../lua-filters.rst:1432
+#: ../../lua-filters.rst:1447
+#: ../../lua-filters.rst:1462
+#: ../../lua-filters.rst:1487
+#: ../../lua-filters.rst:1504
+#: ../../lua-filters.rst:1521
+#: ../../lua-filters.rst:1538
+#: ../../lua-filters.rst:1555
+#: ../../lua-filters.rst:1572
+#: ../../lua-filters.rst:1606
+#: ../../lua-filters.rst:1630
+#: ../../lua-filters.rst:1644
+#: ../../lua-filters.rst:1671
+#: ../../lua-filters.rst:1711
+#: ../../lua-filters.rst:1743
+#: ../../lua-filters.rst:1786
+#: ../../lua-filters.rst:1816
+#: ../../lua-filters.rst:1875
+msgid "Fields:"
+msgstr ""
+
+#: ../../lua-filters.rst:820
+#: ../../lua-filters.rst:842
+#: ../../lua-filters.rst:857
+#: ../../lua-filters.rst:874
+#: ../../lua-filters.rst:908
+#: ../../lua-filters.rst:925
+#: ../../lua-filters.rst:950
+#: ../../lua-filters.rst:967
+#: ../../lua-filters.rst:992
+#: ../../lua-filters.rst:1019
+#: ../../lua-filters.rst:1034
+#: ../../lua-filters.rst:1052
+#: ../../lua-filters.rst:1066
+#: ../../lua-filters.rst:1091
+#: ../../lua-filters.rst:1108
+#: ../../lua-filters.rst:1125
+#: ../../lua-filters.rst:1144
+#: ../../lua-filters.rst:1178
+#: ../../lua-filters.rst:1212
+#: ../../lua-filters.rst:1237
+#: ../../lua-filters.rst:1254
+#: ../../lua-filters.rst:1283
+#: ../../lua-filters.rst:1298
+#: ../../lua-filters.rst:1327
+#: ../../lua-filters.rst:1347
+#: ../../lua-filters.rst:1364
+#: ../../lua-filters.rst:1384
+#: ../../lua-filters.rst:1403
+#: ../../lua-filters.rst:1420
+#: ../../lua-filters.rst:1435
+#: ../../lua-filters.rst:1450
+#: ../../lua-filters.rst:1475
+#: ../../lua-filters.rst:1492
+#: ../../lua-filters.rst:1509
+#: ../../lua-filters.rst:1526
+#: ../../lua-filters.rst:1543
+#: ../../lua-filters.rst:1560
+#: ../../lua-filters.rst:1577
+msgid "``tag``, ``t``"
+msgstr ""
+
+#: ../../lua-filters.rst:820
+msgid "the literal ``MetaBlocks`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:825
+msgid "MetaBool"
+msgstr ""
+
+#: ../../lua-filters.rst:827
+msgid "Alias for Lua boolean, i.e. the values ``true`` and ``false``."
+msgstr ""
+
+#: ../../lua-filters.rst:832
+msgid "MetaInlines"
+msgstr ""
+
+#: ../../lua-filters.rst:834
+msgid "List of inlines used in metadata (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:836
+msgid "Values of this type can be created with the ```pandoc.MetaInlines```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:842
+msgid "the literal ``MetaInlines`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:847
+msgid "MetaList"
+msgstr ""
+
+#: ../../lua-filters.rst:849
+msgid "A list of other metadata values (`List`_ of `MetaValues`_)."
+msgstr ""
+
+#: ../../lua-filters.rst:851
+msgid "Values of this type can be created with the ```pandoc.MetaList```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:857
+msgid "the literal ``MetaList`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:859
+msgid "All methods available for `List`_\\ s can be used on this type as well."
+msgstr ""
+
+#: ../../lua-filters.rst:864
+msgid "MetaMap"
+msgstr ""
+
+#: ../../lua-filters.rst:866
+msgid "A string-indexed map of meta-values. (table)."
+msgstr ""
+
+#: ../../lua-filters.rst:868
+msgid "Values of this type can be created with the ```pandoc.MetaMap```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:874
+msgid "the literal ``MetaMap`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:876
+msgid "*Note*: The fields will be shadowed if the map contains a field with the same name as those listed."
+msgstr ""
+
+#: ../../lua-filters.rst:882
+msgid "MetaString"
+msgstr ""
+
+#: ../../lua-filters.rst:884
+msgid "Plain Lua string value (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:889
+msgid "Block"
+msgstr ""
+
+#: ../../lua-filters.rst:896
+msgid "BlockQuote"
+msgstr ""
+
+#: ../../lua-filters.rst:898
+msgid "A block quote element."
+msgstr ""
+
+#: ../../lua-filters.rst:900
+msgid "Values of this type can be created with the ```pandoc.BlockQuote```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:905
+#: ../../lua-filters.rst:2113
+#: ../../lua-filters.rst:2145
+#: ../../lua-filters.rst:2154
+#: ../../lua-filters.rst:2168
+#: ../../lua-filters.rst:2186
+#: ../../lua-filters.rst:2213
+#: ../../lua-filters.rst:2223
+#: ../../lua-filters.rst:2267
+#: ../../lua-filters.rst:2292
+#: ../../lua-filters.rst:2322
+#: ../../lua-filters.rst:2371
+#: ../../lua-filters.rst:2384
+#: ../../lua-filters.rst:2394
+#: ../../lua-filters.rst:2404
+#: ../../lua-filters.rst:2426
+#: ../../lua-filters.rst:2445
+#: ../../lua-filters.rst:2468
+#: ../../lua-filters.rst:2479
+#: ../../lua-filters.rst:2489
+#: ../../lua-filters.rst:2499
+#: ../../lua-filters.rst:2509
+msgid "``content``:"
+msgstr ""
+
+#: ../../lua-filters.rst:906
+#: ../../lua-filters.rst:982
+msgid "block content (`List`_ of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:908
+msgid "the literal ``BlockQuote`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:913
+msgid "BulletList"
+msgstr ""
+
+#: ../../lua-filters.rst:915
+msgid "A bullet list."
+msgstr ""
+
+#: ../../lua-filters.rst:917
+msgid "Values of this type can be created with the ```pandoc.BulletList```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:922
+#: ../../lua-filters.rst:964
+#: ../../lua-filters.rst:981
+#: ../../lua-filters.rst:1008
+#: ../../lua-filters.rst:1049
+#: ../../lua-filters.rst:1080
+#: ../../lua-filters.rst:1105
+#: ../../lua-filters.rst:1122
+#: ../../lua-filters.rst:1207
+#: ../../lua-filters.rst:1251
+#: ../../lua-filters.rst:1314
+#: ../../lua-filters.rst:1361
+#: ../../lua-filters.rst:1381
+#: ../../lua-filters.rst:1417
+#: ../../lua-filters.rst:1466
+#: ../../lua-filters.rst:1506
+#: ../../lua-filters.rst:1523
+#: ../../lua-filters.rst:1540
+#: ../../lua-filters.rst:1557
+#: ../../lua-filters.rst:1574
+msgid "``content``"
+msgstr ""
+
+#: ../../lua-filters.rst:923
+#: ../../lua-filters.rst:1081
+msgid "list items (`List`_ of `List`_ of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:925
+msgid "the literal ``BulletList`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:930
+msgid "CodeBlock"
+msgstr ""
+
+#: ../../lua-filters.rst:932
+msgid "Block of code."
+msgstr ""
+
+#: ../../lua-filters.rst:934
+msgid "Values of this type can be created with the ```pandoc.CodeBlock```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:939
+#: ../../lua-filters.rst:1141
+#: ../../lua-filters.rst:1226
+#: ../../lua-filters.rst:1344
+#: ../../lua-filters.rst:1400
+#: ../../lua-filters.rst:1489
+msgid "``text``"
+msgstr ""
+
+#: ../../lua-filters.rst:940
+#: ../../lua-filters.rst:1227
+msgid "code string (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:941
+#: ../../lua-filters.rst:983
+#: ../../lua-filters.rst:1010
+#: ../../lua-filters.rst:1158
+#: ../../lua-filters.rst:1228
+#: ../../lua-filters.rst:1268
+#: ../../lua-filters.rst:1312
+#: ../../lua-filters.rst:1464
+#: ../../lua-filters.rst:1646
+#: ../../lua-filters.rst:1745
+msgid "``attr``"
+msgstr ""
+
+#: ../../lua-filters.rst:942
+#: ../../lua-filters.rst:984
+#: ../../lua-filters.rst:1011
+msgid "element attributes (`Attr`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:943
+#: ../../lua-filters.rst:985
+#: ../../lua-filters.rst:1012
+#: ../../lua-filters.rst:1171
+#: ../../lua-filters.rst:1230
+#: ../../lua-filters.rst:1276
+#: ../../lua-filters.rst:1320
+#: ../../lua-filters.rst:1468
+#: ../../lua-filters.rst:1608
+msgid "``identifier``"
+msgstr ""
+
+#: ../../lua-filters.rst:944
+#: ../../lua-filters.rst:986
+#: ../../lua-filters.rst:1013
+#: ../../lua-filters.rst:1172
+#: ../../lua-filters.rst:1231
+#: ../../lua-filters.rst:1277
+#: ../../lua-filters.rst:1321
+#: ../../lua-filters.rst:1469
+msgid "alias for ``attr.identifier`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:945
+#: ../../lua-filters.rst:987
+#: ../../lua-filters.rst:1014
+#: ../../lua-filters.rst:1173
+#: ../../lua-filters.rst:1232
+#: ../../lua-filters.rst:1278
+#: ../../lua-filters.rst:1322
+#: ../../lua-filters.rst:1470
+#: ../../lua-filters.rst:1610
+msgid "``classes``"
+msgstr ""
+
+#: ../../lua-filters.rst:946
+#: ../../lua-filters.rst:988
+#: ../../lua-filters.rst:1015
+#: ../../lua-filters.rst:1174
+#: ../../lua-filters.rst:1233
+#: ../../lua-filters.rst:1279
+#: ../../lua-filters.rst:1323
+#: ../../lua-filters.rst:1471
+msgid "alias for ``attr.classes`` (`List`_ of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:947
+#: ../../lua-filters.rst:989
+#: ../../lua-filters.rst:1016
+#: ../../lua-filters.rst:1175
+#: ../../lua-filters.rst:1234
+#: ../../lua-filters.rst:1280
+#: ../../lua-filters.rst:1324
+#: ../../lua-filters.rst:1472
+#: ../../lua-filters.rst:1613
+msgid "``attributes``"
+msgstr ""
+
+#: ../../lua-filters.rst:948
+#: ../../lua-filters.rst:990
+#: ../../lua-filters.rst:1017
+#: ../../lua-filters.rst:1176
+#: ../../lua-filters.rst:1235
+#: ../../lua-filters.rst:1281
+#: ../../lua-filters.rst:1325
+#: ../../lua-filters.rst:1473
+msgid "alias for ``attr.attributes`` (`Attributes`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:950
+msgid "the literal ``CodeBlock`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:955
+msgid "DefinitionList"
+msgstr ""
+
+#: ../../lua-filters.rst:957
+msgid "Definition list, containing terms and their explanation."
+msgstr ""
+
+#: ../../lua-filters.rst:959
+msgid "Values of this type can be created with the ```pandoc.DefinitionList```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:965
+#: ../../lua-filters.rst:2145
+msgid "list of items"
+msgstr ""
+
+#: ../../lua-filters.rst:967
+msgid "the literal ``DefinitionList`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:972
+msgid "Div"
+msgstr ""
+
+#: ../../lua-filters.rst:974
+msgid "Generic block container with attributes."
+msgstr ""
+
+#: ../../lua-filters.rst:976
+msgid "Values of this type can be created with the ```pandoc.Div```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:992
+msgid "the literal ``Div`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:997
+msgid "Header"
+msgstr ""
+
+#: ../../lua-filters.rst:999
+#: ../../lua-filters.rst:2162
+msgid "Creates a header element."
+msgstr ""
+
+#: ../../lua-filters.rst:1001
+msgid "Values of this type can be created with the ```pandoc.Header```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1006
+msgid "``level``"
+msgstr ""
+
+#: ../../lua-filters.rst:1007
+msgid "header level (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1009
+#: ../../lua-filters.rst:1106
+#: ../../lua-filters.rst:1123
+#: ../../lua-filters.rst:1252
+#: ../../lua-filters.rst:1507
+#: ../../lua-filters.rst:1524
+#: ../../lua-filters.rst:1541
+#: ../../lua-filters.rst:1558
+#: ../../lua-filters.rst:1575
+msgid "inline content (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1019
+msgid "the literal ``Header`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1024
+msgid "HorizontalRule"
+msgstr ""
+
+#: ../../lua-filters.rst:1026
+msgid "A horizontal rule."
+msgstr ""
+
+#: ../../lua-filters.rst:1028
+msgid "Values of this type can be created with the ```pandoc.HorizontalRule```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1034
+msgid "the literal ``HorizontalRule`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1039
+msgid "LineBlock"
+msgstr ""
+
+#: ../../lua-filters.rst:1041
+msgid "A line block, i.e. a list of lines, each separated from the next by a newline."
+msgstr ""
+
+#: ../../lua-filters.rst:1044
+msgid "Values of this type can be created with the ```pandoc.LineBlock```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1050
+#: ../../lua-filters.rst:2169
+#: ../../lua-filters.rst:2186
+#: ../../lua-filters.rst:2213
+#: ../../lua-filters.rst:2223
+#: ../../lua-filters.rst:2292
+#: ../../lua-filters.rst:2384
+#: ../../lua-filters.rst:2394
+#: ../../lua-filters.rst:2404
+#: ../../lua-filters.rst:2426
+#: ../../lua-filters.rst:2446
+#: ../../lua-filters.rst:2468
+#: ../../lua-filters.rst:2479
+#: ../../lua-filters.rst:2489
+#: ../../lua-filters.rst:2499
+#: ../../lua-filters.rst:2509
+msgid "inline content"
+msgstr ""
+
+#: ../../lua-filters.rst:1052
+msgid "the literal ``LineBlock`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1057
+msgid "Null"
+msgstr ""
+
+#: ../../lua-filters.rst:1059
+msgid "A null element; this element never produces any output in the target format."
+msgstr ""
+
+#: ../../lua-filters.rst:1062
+msgid "Values of this type can be created with the ```pandoc.Null```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1066
+msgid "the literal ``Null`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1071
+msgid "OrderedList"
+msgstr ""
+
+#: ../../lua-filters.rst:1073
+msgid "An ordered list."
+msgstr ""
+
+#: ../../lua-filters.rst:1075
+msgid "Values of this type can be created with the ```pandoc.OrderedList```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1082
+msgid "``listAttributes``"
+msgstr ""
+
+#: ../../lua-filters.rst:1083
+msgid "list parameters (`ListAttributes`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1084
+#: ../../lua-filters.rst:1713
+msgid "``start``"
+msgstr ""
+
+#: ../../lua-filters.rst:1085
+msgid "alias for ``listAttributes.start`` (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1086
+#: ../../lua-filters.rst:1717
+msgid "``style``"
+msgstr ""
+
+#: ../../lua-filters.rst:1087
+msgid "alias for ``listAttributes.style`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1088
+#: ../../lua-filters.rst:1721
+msgid "``delimiter``"
+msgstr ""
+
+#: ../../lua-filters.rst:1089
+msgid "alias for ``listAttributes.delimiter`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1091
+msgid "the literal ``OrderedList`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1096
+msgid "Para"
+msgstr ""
+
+#: ../../lua-filters.rst:1098
+msgid "A paragraph."
+msgstr ""
+
+#: ../../lua-filters.rst:1100
+msgid "Values of this type can be created with the ```pandoc.Para```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1108
+msgid "the literal ``Para`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1113
+msgid "Plain"
+msgstr ""
+
+#: ../../lua-filters.rst:1115
+msgid "Plain text, not a paragraph."
+msgstr ""
+
+#: ../../lua-filters.rst:1117
+msgid "Values of this type can be created with the ```pandoc.Plain```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1125
+msgid "the literal ``Plain`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1130
+msgid "RawBlock"
+msgstr ""
+
+#: ../../lua-filters.rst:1132
+msgid "Raw content of a specified format."
+msgstr ""
+
+#: ../../lua-filters.rst:1134
+msgid "Values of this type can be created with the ```pandoc.RawBlock```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1139
+#: ../../lua-filters.rst:1398
+msgid "``format``"
+msgstr ""
+
+#: ../../lua-filters.rst:1140
+msgid "format of content (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1142
+#: ../../lua-filters.rst:1401
+msgid "raw content (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1144
+msgid "the literal ``RawBlock`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1149
+msgid "Table"
+msgstr ""
+
+#: ../../lua-filters.rst:1151
+msgid "A table."
+msgstr ""
+
+#: ../../lua-filters.rst:1153
+msgid "Values of this type can be created with the ```pandoc.Table```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1159
+msgid "table attributes (`Attr`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1160
+#: ../../lua-filters.rst:1270
+msgid "``caption``"
+msgstr ""
+
+#: ../../lua-filters.rst:1161
+msgid "table caption (`Caption`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1163
+msgid "``colspecs``"
+msgstr ""
+
+#: ../../lua-filters.rst:1163
+msgid "column specifications, i.e., alignments and widths (`List`_ of `ColSpec`_\\ s)"
+msgstr ""
+
+#: ../../lua-filters.rst:1165
+#: ../../lua-filters.rst:1749
+msgid "``head``"
+msgstr ""
+
+#: ../../lua-filters.rst:1166
+msgid "table head (`TableHead`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1167
+msgid "``bodies``"
+msgstr ""
+
+#: ../../lua-filters.rst:1168
+msgid "table bodies (`List`_ of `TableBody`_\\ s)"
+msgstr ""
+
+#: ../../lua-filters.rst:1169
+msgid "``foot``"
+msgstr ""
+
+#: ../../lua-filters.rst:1170
+msgid "table foot (`TableFoot`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1178
+msgid "the literal ``Table`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1180
+msgid "A table cell is a list of blocks."
+msgstr ""
+
+#: ../../lua-filters.rst:1182
+msgid "*Alignment* is a string value indicating the horizontal alignment of a table column. ``AlignLeft``, ``AlignRight``, and ``AlignCenter`` leads cell content to be left-aligned, right-aligned, and centered, respectively. The default alignment is ``AlignDefault`` (often equivalent to centered)."
+msgstr ""
+
+#: ../../lua-filters.rst:1191
+#: ../../lua-filters.rst:2260
+msgid "Inline"
+msgstr ""
+
+#: ../../lua-filters.rst:1198
+msgid "Cite"
+msgstr ""
+
+#: ../../lua-filters.rst:1200
+msgid "Citation."
+msgstr ""
+
+#: ../../lua-filters.rst:1202
+msgid "Values of this type can be created with the ```pandoc.Cite```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1208
+#: ../../lua-filters.rst:1418
+msgid "(`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1209
+msgid "``citations``"
+msgstr ""
+
+#: ../../lua-filters.rst:1210
+msgid "citation entries (`List`_ of `Citations`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1212
+msgid "the literal ``Cite`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1217
+msgid "Code"
+msgstr ""
+
+#: ../../lua-filters.rst:1219
+msgid "Inline code"
+msgstr ""
+
+#: ../../lua-filters.rst:1221
+msgid "Values of this type can be created with the ```pandoc.Code```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1229
+#: ../../lua-filters.rst:1269
+#: ../../lua-filters.rst:1313
+#: ../../lua-filters.rst:1465
+msgid "attributes (`Attr`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1237
+msgid "the literal ``Code`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1242
+msgid "Emph"
+msgstr ""
+
+#: ../../lua-filters.rst:1244
+msgid "Emphasized text"
+msgstr ""
+
+#: ../../lua-filters.rst:1246
+msgid "Values of this type can be created with the ```pandoc.Emph```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1254
+msgid "the literal ``Emph`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1259
+msgid "Image"
+msgstr ""
+
+#: ../../lua-filters.rst:1261
+msgid "Image: alt text (list of inlines), target"
+msgstr ""
+
+#: ../../lua-filters.rst:1263
+msgid "Values of this type can be created with the ```pandoc.Image```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1271
+msgid "text used to describe the image (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1272
+msgid "``src``"
+msgstr ""
+
+#: ../../lua-filters.rst:1273
+msgid "path to the image file (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1274
+#: ../../lua-filters.rst:1318
+msgid "``title``"
+msgstr ""
+
+#: ../../lua-filters.rst:1275
+#: ../../lua-filters.rst:2306
+msgid "brief image description"
+msgstr ""
+
+#: ../../lua-filters.rst:1283
+msgid "the literal ``Image`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1288
+msgid "LineBreak"
+msgstr ""
+
+#: ../../lua-filters.rst:1290
+msgid "Hard line break"
+msgstr ""
+
+#: ../../lua-filters.rst:1292
+msgid "Values of this type can be created with the ```pandoc.LineBreak```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1298
+msgid "the literal ``LineBreak`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1303
+msgid "Link"
+msgstr ""
+
+#: ../../lua-filters.rst:1305
+msgid "Hyperlink: alt text (list of inlines), target"
+msgstr ""
+
+#: ../../lua-filters.rst:1307
+msgid "Values of this type can be created with the ```pandoc.Link```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1315
+msgid "text for this link (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1316
+msgid "``target``"
+msgstr ""
+
+#: ../../lua-filters.rst:1317
+msgid "the link target (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1319
+#: ../../lua-filters.rst:2327
+msgid "brief link description"
+msgstr ""
+
+#: ../../lua-filters.rst:1327
+msgid "the literal ``Link`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1332
+msgid "Math"
+msgstr ""
+
+#: ../../lua-filters.rst:1334
+msgid "TeX math (literal)"
+msgstr ""
+
+#: ../../lua-filters.rst:1336
+msgid "Values of this type can be created with the ```pandoc.Math```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1342
+msgid "``mathtype``"
+msgstr ""
+
+#: ../../lua-filters.rst:1342
+msgid "specifier determining whether the math content should be shown inline (``InlineMath``) or on a separate line (``DisplayMath``) (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1345
+msgid "math content (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1347
+msgid "the literal ``Math`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1352
+msgid "Note"
+msgstr ""
+
+#: ../../lua-filters.rst:1354
+msgid "Footnote or endnote"
+msgstr ""
+
+#: ../../lua-filters.rst:1356
+msgid "Values of this type can be created with the ```pandoc.Note```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1362
+msgid "(`List`_ of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1364
+msgid "the literal ``Note`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1369
+msgid "Quoted"
+msgstr ""
+
+#: ../../lua-filters.rst:1371
+msgid "Quoted text"
+msgstr ""
+
+#: ../../lua-filters.rst:1373
+msgid "Values of this type can be created with the ```pandoc.Quoted```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1379
+msgid "``quotetype``"
+msgstr ""
+
+#: ../../lua-filters.rst:1379
+msgid "type of quotes to be used; one of ``SingleQuote`` or ``DoubleQuote`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1382
+msgid "quoted text (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1384
+msgid "the literal ``Quoted`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1389
+msgid "RawInline"
+msgstr ""
+
+#: ../../lua-filters.rst:1391
+msgid "Raw inline"
+msgstr ""
+
+#: ../../lua-filters.rst:1393
+msgid "Values of this type can be created with the ```pandoc.RawInline```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1399
+msgid "the format of the content (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1403
+msgid "the literal ``RawInline`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1408
+msgid "SmallCaps"
+msgstr ""
+
+#: ../../lua-filters.rst:1410
+msgid "Small caps text"
+msgstr ""
+
+#: ../../lua-filters.rst:1412
+msgid "Values of this type can be created with the ```pandoc.SmallCaps```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1420
+msgid "the literal ``SmallCaps`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1425
+msgid "SoftBreak"
+msgstr ""
+
+#: ../../lua-filters.rst:1427
+msgid "Soft line break"
+msgstr ""
+
+#: ../../lua-filters.rst:1429
+msgid "Values of this type can be created with the ```pandoc.SoftBreak```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1435
+msgid "the literal ``SoftBreak`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1440
+msgid "Space"
+msgstr ""
+
+#: ../../lua-filters.rst:1442
+msgid "Inter-word space"
+msgstr ""
+
+#: ../../lua-filters.rst:1444
+msgid "Values of this type can be created with the ```pandoc.Space```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1450
+msgid "the literal ``Space`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1455
+msgid "Span"
+msgstr ""
+
+#: ../../lua-filters.rst:1457
+msgid "Generic inline container with attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1459
+msgid "Values of this type can be created with the ```pandoc.Span```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1467
+msgid "wrapped content (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1475
+msgid "the literal ``Span`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1480
+msgid "Str"
+msgstr ""
+
+#: ../../lua-filters.rst:1482
+msgid "Text"
+msgstr ""
+
+#: ../../lua-filters.rst:1484
+msgid "Values of this type can be created with the ```pandoc.Str```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1490
+msgid "content (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1492
+msgid "the literal ``Str`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1497
+msgid "Strikeout"
+msgstr ""
+
+#: ../../lua-filters.rst:1499
+msgid "Strikeout text"
+msgstr ""
+
+#: ../../lua-filters.rst:1501
+msgid "Values of this type can be created with the ```pandoc.Strikeout```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1509
+msgid "the literal ``Strikeout`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1514
+msgid "Strong"
+msgstr ""
+
+#: ../../lua-filters.rst:1516
+msgid "Strongly emphasized text"
+msgstr ""
+
+#: ../../lua-filters.rst:1518
+msgid "Values of this type can be created with the ```pandoc.Strong```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1526
+msgid "the literal ``Strong`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1531
+msgid "Subscript"
+msgstr ""
+
+#: ../../lua-filters.rst:1533
+msgid "Subscripted text"
+msgstr ""
+
+#: ../../lua-filters.rst:1535
+msgid "Values of this type can be created with the ```pandoc.Subscript```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1543
+msgid "the literal ``Subscript`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1548
+msgid "Superscript"
+msgstr ""
+
+#: ../../lua-filters.rst:1550
+msgid "Superscripted text"
+msgstr ""
+
+#: ../../lua-filters.rst:1552
+msgid "Values of this type can be created with the ```pandoc.Superscript```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1560
+msgid "the literal ``Superscript`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1565
+msgid "Underline"
+msgstr ""
+
+#: ../../lua-filters.rst:1567
+msgid "Underlined text"
+msgstr ""
+
+#: ../../lua-filters.rst:1569
+msgid "Values of this type can be created with the ```pandoc.Underline```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1577
+msgid "the literal ``Underline`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1580
+#: ../../lua-filters.rst:2516
+msgid "Element components"
+msgstr ""
+
+#: ../../lua-filters.rst:1585
+msgid "Attr"
+msgstr ""
+
+#: ../../lua-filters.rst:1587
+msgid "A set of element attributes. Values of this type can be created with the ```pandoc.Attr```_ constructor. For convenience, it is usually not necessary to construct the value directly if it is part of an element, and it is sufficient to pass an HTML-like table. E.g., to create a span with identifier “text” and classes “a” and “b”, on can write:"
+msgstr ""
+
+#: ../../lua-filters.rst:1597
+msgid "This also works when using the ``attr`` setter:"
+msgstr ""
+
+#: ../../lua-filters.rst:1609
+msgid "element identifier (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1611
+msgid "element classes (`List`_ of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:1613
+msgid "collection of key/value pairs (`Attributes`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1618
+msgid "Attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1620
+msgid "List of key/value pairs. Values can be accessed by using keys as indices to the list table."
+msgstr ""
+
+#: ../../lua-filters.rst:1626
+msgid "Caption"
+msgstr ""
+
+#: ../../lua-filters.rst:1628
+msgid "The caption of a table, with an optional short caption."
+msgstr ""
+
+#: ../../lua-filters.rst:1632
+msgid "``long``"
+msgstr ""
+
+#: ../../lua-filters.rst:1633
+msgid "long caption (list of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1635
+msgid "``short``"
+msgstr ""
+
+#: ../../lua-filters.rst:1635
+msgid "short caption (list of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1640
+msgid "Cell"
+msgstr ""
+
+#: ../../lua-filters.rst:1642
+msgid "A table cell."
+msgstr ""
+
+#: ../../lua-filters.rst:1647
+msgid "cell attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1648
+msgid "``alignment``"
+msgstr ""
+
+#: ../../lua-filters.rst:1649
+msgid "individual cell alignment (`Alignment`_)."
+msgstr ""
+
+#: ../../lua-filters.rst:1650
+msgid "``contents``"
+msgstr ""
+
+#: ../../lua-filters.rst:1651
+msgid "cell contents (list of `Blocks`_)."
+msgstr ""
+
+#: ../../lua-filters.rst:1653
+msgid "``col_span``"
+msgstr ""
+
+#: ../../lua-filters.rst:1653
+msgid "number of columns occupied by the cell; the height of the cell (integer)."
+msgstr ""
+
+#: ../../lua-filters.rst:1657
+msgid "``row_span``"
+msgstr ""
+
+#: ../../lua-filters.rst:1656
+msgid "number of rows occupied by the cell; the height of the cell (integer)."
+msgstr ""
+
+#: ../../lua-filters.rst:1662
+msgid "Citation"
+msgstr ""
+
+#: ../../lua-filters.rst:1664
+msgid "Single citation entry"
+msgstr ""
+
+#: ../../lua-filters.rst:1666
+msgid "Values of this type can be created with the ```pandoc.Citation```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1673
+msgid "``id``"
+msgstr ""
+
+#: ../../lua-filters.rst:1674
+msgid "citation identifier, e.g., a bibtex key (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1676
+msgid "``mode``"
+msgstr ""
+
+#: ../../lua-filters.rst:1676
+msgid "citation mode, one of ``AuthorInText``, ``SuppressAuthor``, or ``NormalCitation`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1678
+msgid "``prefix``"
+msgstr ""
+
+#: ../../lua-filters.rst:1679
+msgid "citation prefix (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1680
+msgid "``suffix``"
+msgstr ""
+
+#: ../../lua-filters.rst:1681
+msgid "citation suffix (`List`_ of `Inlines`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1682
+msgid "``note_num``"
+msgstr ""
+
+#: ../../lua-filters.rst:1683
+msgid "note number (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1685
+msgid "``hash``"
+msgstr ""
+
+#: ../../lua-filters.rst:1685
+msgid "hash (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1690
+msgid "ColSpec"
+msgstr ""
+
+#: ../../lua-filters.rst:1692
+msgid "Column alignment and width specification for a single table column."
+msgstr ""
+
+#: ../../lua-filters.rst:1694
+#: ../../lua-filters.rst:1762
+#: ../../lua-filters.rst:1774
+msgid "This is a pair with the following components:"
+msgstr ""
+
+#: ../../lua-filters.rst:1696
+msgid "cell alignment (`Alignment`_)."
+msgstr ""
+
+#: ../../lua-filters.rst:1697
+msgid "table column width, as a fraction of the total table width (number)."
+msgstr ""
+
+#: ../../lua-filters.rst:1702
+msgid "ListAttributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1704
+msgid "List attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1706
+msgid "Values of this type can be created with the ```pandoc.ListAttributes```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1714
+msgid "number of the first list item (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1716
+msgid "style used for list numbers; possible values are ``DefaultStyle``, ``Example``, ``Decimal``, ``LowerRoman``, ``UpperRoman``, ``LowerAlpha``, and ``UpperAlpha`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1720
+msgid "delimiter of list numbers; one of ``DefaultDelim``, ``Period``, ``OneParen``, and ``TwoParens`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1726
+msgid "Row"
+msgstr ""
+
+#: ../../lua-filters.rst:1728
+msgid "A table row."
+msgstr ""
+
+#: ../../lua-filters.rst:1730
+msgid "Tuple fields:"
+msgstr ""
+
+#: ../../lua-filters.rst:1732
+msgid "row attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1733
+msgid "row cells (list of `Cells`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1738
+msgid "TableBody"
+msgstr ""
+
+#: ../../lua-filters.rst:1740
+msgid "A body of a table, with an intermediate head and the specified number of row header columns."
+msgstr ""
+
+#: ../../lua-filters.rst:1746
+msgid "table body attributes (`Attr`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1747
+msgid "``body``"
+msgstr ""
+
+#: ../../lua-filters.rst:1748
+msgid "table body rows (list of `Rows`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1750
+msgid "intermediate head (list of `Rows`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1753
+msgid "``row_head_columns``"
+msgstr ""
+
+#: ../../lua-filters.rst:1752
+msgid "number of columns taken up by the row head of each row of a `TableBody`_. The row body takes up the remaining columns."
+msgstr ""
+
+#: ../../lua-filters.rst:1758
+msgid "TableFoot"
+msgstr ""
+
+#: ../../lua-filters.rst:1760
+msgid "The foot of a table."
+msgstr ""
+
+#: ../../lua-filters.rst:1764
+#: ../../lua-filters.rst:1776
+msgid "attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:1765
+msgid "foot rows (`Rows`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1770
+msgid "TableHead"
+msgstr ""
+
+#: ../../lua-filters.rst:1772
+msgid "The head of a table."
+msgstr ""
+
+#: ../../lua-filters.rst:1777
+msgid "head rows (`Rows`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1782
+msgid "ReaderOptions"
+msgstr ""
+
+#: ../../lua-filters.rst:1784
+msgid "Pandoc reader options"
+msgstr ""
+
+#: ../../lua-filters.rst:1788
+msgid "``abbreviations``"
+msgstr ""
+
+#: ../../lua-filters.rst:1789
+msgid "set of known abbreviations (set of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:1790
+msgid "``columns``"
+msgstr ""
+
+#: ../../lua-filters.rst:1791
+msgid "number of columns in terminal (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1792
+msgid "``default_image_extension``"
+msgstr ""
+
+#: ../../lua-filters.rst:1793
+msgid "default extension for images (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1794
+msgid "``extensions``"
+msgstr ""
+
+#: ../../lua-filters.rst:1795
+msgid "string representation of the syntax extensions bit field (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1796
+msgid "``indented_code_classes``"
+msgstr ""
+
+#: ../../lua-filters.rst:1797
+msgid "default classes for indented code blocks (list of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:1798
+msgid "``standalone``"
+msgstr ""
+
+#: ../../lua-filters.rst:1799
+msgid "whether the input was a standalone document with header (boolean)"
+msgstr ""
+
+#: ../../lua-filters.rst:1800
+msgid "``strip_comments``"
+msgstr ""
+
+#: ../../lua-filters.rst:1801
+msgid "HTML comments are stripped instead of parsed as raw HTML (boolean)"
+msgstr ""
+
+#: ../../lua-filters.rst:1802
+msgid "``tab_stop``"
+msgstr ""
+
+#: ../../lua-filters.rst:1803
+msgid "width (i.e. equivalent number of spaces) of tab stops (integer)"
+msgstr ""
+
+#: ../../lua-filters.rst:1806
+msgid "``track_changes``"
+msgstr ""
+
+#: ../../lua-filters.rst:1805
+msgid "track changes setting for docx; one of ``AcceptChanges``, ``RejectChanges``, and ``AllChanges`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1811
+msgid "CommonState"
+msgstr ""
+
+#: ../../lua-filters.rst:1813
+msgid "The state used by pandoc to collect information and make it available to readers and writers."
+msgstr ""
+
+#: ../../lua-filters.rst:1818
+msgid "``input_files``"
+msgstr ""
+
+#: ../../lua-filters.rst:1819
+msgid "List of input files from command line (`List`_ of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:1820
+msgid "``output_file``"
+msgstr ""
+
+#: ../../lua-filters.rst:1821
+msgid "Output file from command line (string or nil)"
+msgstr ""
+
+#: ../../lua-filters.rst:1822
+msgid "``log``"
+msgstr ""
+
+#: ../../lua-filters.rst:1823
+msgid "A list of log messages in reverse order (`List`_ of `LogMessage`_\\ s)"
+msgstr ""
+
+#: ../../lua-filters.rst:1825
+msgid "``request_headers``"
+msgstr ""
+
+#: ../../lua-filters.rst:1825
+msgid "Headers to add for HTTP requests; table with header names as keys and header contents as value (table)"
+msgstr ""
+
+#: ../../lua-filters.rst:1828
+msgid "``resource_path``"
+msgstr ""
+
+#: ../../lua-filters.rst:1828
+msgid "Path to search for resources like included images (`List`_ of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:1830
+msgid "``source_url``"
+msgstr ""
+
+#: ../../lua-filters.rst:1831
+msgid "Absolute URL or directory of first source file (string or nil)"
+msgstr ""
+
+#: ../../lua-filters.rst:1832
+msgid "``user_data_dir``"
+msgstr ""
+
+#: ../../lua-filters.rst:1833
+msgid "Directory to search for data files (string or nil)"
+msgstr ""
+
+#: ../../lua-filters.rst:1834
+msgid "``trace``"
+msgstr ""
+
+#: ../../lua-filters.rst:1835
+msgid "Whether tracing messages are issued (boolean)"
+msgstr ""
+
+#: ../../lua-filters.rst:1837
+msgid "``verbosity``"
+msgstr ""
+
+#: ../../lua-filters.rst:1837
+msgid "Verbosity level; one of ``INFO``, ``WARNING``, ``ERROR`` (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:1842
+msgid "List"
+msgstr ""
+
+#: ../../lua-filters.rst:1844
+msgid "A list is any Lua table with integer indices. Indices start at one, so if ``alist = {'value'}`` then ``alist[1] == 'value'``."
+msgstr ""
+
+#: ../../lua-filters.rst:1847
+msgid "Lists, when part of an element, or when generated during marshaling, are made instances of the ``pandoc.List`` type for convenience. The ``pandoc.List`` type is defined in the `pandoc.List`_ module. See there for available methods."
+msgstr ""
+
+#: ../../lua-filters.rst:1852
+msgid "Values of this type can be created with the ```pandoc.List```_ constructor, turning a normal Lua table into a List."
+msgstr ""
+
+#: ../../lua-filters.rst:1858
+msgid "LogMessage"
+msgstr ""
+
+#: ../../lua-filters.rst:1860
+msgid "A pandoc log message. Objects have no fields, but can be converted to a string via ``tostring``."
+msgstr ""
+
+#: ../../lua-filters.rst:1866
+msgid "SimpleTable"
+msgstr ""
+
+#: ../../lua-filters.rst:1868
+msgid "A simple table is a table structure which resembles the old (pre pandoc 2.10) Table type. Bi-directional conversion from and to `Tables`_ is possible with the ```pandoc.utils.to_simple_table```_ and ```pandoc.utils.from_simple_table```_ function, respectively. Instances of this type can also be created directly with the ```pandoc.SimpleTable```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1877
+#: ../../lua-filters.rst:2244
+#: ../../lua-filters.rst:2301
+#: ../../lua-filters.rst:2575
+msgid "``caption``:"
+msgstr ""
+
+#: ../../lua-filters.rst:1878
+#: ../../lua-filters.rst:2576
+#: ../../lua-filters.rst:2845
+msgid "`List`_ of `Inlines`_"
+msgstr ""
+
+#: ../../lua-filters.rst:1879
+#: ../../lua-filters.rst:2577
+msgid "``aligns``:"
+msgstr ""
+
+#: ../../lua-filters.rst:1880
+#: ../../lua-filters.rst:2578
+msgid "column alignments (`List`_ of `Alignments`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1881
+#: ../../lua-filters.rst:2579
+msgid "``widths``:"
+msgstr ""
+
+#: ../../lua-filters.rst:1882
+#: ../../lua-filters.rst:2580
+msgid "column widths; a (`List`_ of numbers)"
+msgstr ""
+
+#: ../../lua-filters.rst:1883
+#: ../../lua-filters.rst:2581
+msgid "``headers``:"
+msgstr ""
+
+#: ../../lua-filters.rst:1884
+#: ../../lua-filters.rst:2582
+msgid "table header row (`List`_ of lists of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1887
+#: ../../lua-filters.rst:2585
+msgid "``rows``:"
+msgstr ""
+
+#: ../../lua-filters.rst:1886
+#: ../../lua-filters.rst:2584
+msgid "table rows (`List`_ of rows, where a row is a list of lists of `Blocks`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1892
+msgid "Version"
+msgstr ""
+
+#: ../../lua-filters.rst:1894
+msgid "A version object. This represents a software version like “2.7.3”. The object behaves like a numerically indexed table, i.e., if ``version`` represents the version ``2.7.3``, then"
+msgstr ""
+
+#: ../../lua-filters.rst:1905
+msgid "Comparisons are performed element-wise, i.e."
+msgstr ""
+
+#: ../../lua-filters.rst:1911
+msgid "Values of this type can be created with the ```pandoc.types.Version```_ constructor."
+msgstr ""
+
+#: ../../lua-filters.rst:1915
+msgid "``must_be_at_least``"
+msgstr ""
+
+#: ../../lua-filters.rst:1917
+msgid "``must_be_at_least(actual, expected [, error_message])``"
+msgstr ""
+
+#: ../../lua-filters.rst:1919
+msgid "Raise an error message if the actual version is older than the expected version; does nothing if actual is equal to or newer than the expected version."
+msgstr ""
+
+#: ../../lua-filters.rst:1923
+#: ../../lua-filters.rst:2019
+#: ../../lua-filters.rst:2034
+#: ../../lua-filters.rst:2047
+#: ../../lua-filters.rst:2057
+#: ../../lua-filters.rst:2067
+#: ../../lua-filters.rst:2077
+#: ../../lua-filters.rst:2087
+#: ../../lua-filters.rst:2097
+#: ../../lua-filters.rst:2110
+#: ../../lua-filters.rst:2120
+#: ../../lua-filters.rst:2130
+#: ../../lua-filters.rst:2142
+#: ../../lua-filters.rst:2152
+#: ../../lua-filters.rst:2164
+#: ../../lua-filters.rst:2183
+#: ../../lua-filters.rst:2198
+#: ../../lua-filters.rst:2210
+#: ../../lua-filters.rst:2220
+#: ../../lua-filters.rst:2230
+#: ../../lua-filters.rst:2242
+#: ../../lua-filters.rst:2265
+#: ../../lua-filters.rst:2277
+#: ../../lua-filters.rst:2289
+#: ../../lua-filters.rst:2299
+#: ../../lua-filters.rst:2320
+#: ../../lua-filters.rst:2336
+#: ../../lua-filters.rst:2348
+#: ../../lua-filters.rst:2358
+#: ../../lua-filters.rst:2368
+#: ../../lua-filters.rst:2379
+#: ../../lua-filters.rst:2391
+#: ../../lua-filters.rst:2401
+#: ../../lua-filters.rst:2411
+#: ../../lua-filters.rst:2423
+#: ../../lua-filters.rst:2443
+#: ../../lua-filters.rst:2455
+#: ../../lua-filters.rst:2465
+#: ../../lua-filters.rst:2476
+#: ../../lua-filters.rst:2486
+#: ../../lua-filters.rst:2496
+#: ../../lua-filters.rst:2506
+#: ../../lua-filters.rst:2521
+#: ../../lua-filters.rst:2535
+#: ../../lua-filters.rst:2555
+#: ../../lua-filters.rst:2573
+#: ../../lua-filters.rst:2718
+#: ../../lua-filters.rst:2752
+#: ../../lua-filters.rst:2771
+#: ../../lua-filters.rst:2790
+#: ../../lua-filters.rst:2834
+#: ../../lua-filters.rst:2872
+#: ../../lua-filters.rst:2946
+#: ../../lua-filters.rst:3096
+#: ../../lua-filters.rst:3120
+#: ../../lua-filters.rst:3206
+#: ../../lua-filters.rst:3265
+#: ../../lua-filters.rst:3281
+#: ../../lua-filters.rst:3290
+#: ../../lua-filters.rst:3304
+#: ../../lua-filters.rst:3317
+#: ../../lua-filters.rst:3327
+#: ../../lua-filters.rst:3342
+#: ../../lua-filters.rst:3353
+#: ../../lua-filters.rst:3362
+#: ../../lua-filters.rst:3376
+#: ../../lua-filters.rst:3401
+#: ../../lua-filters.rst:3470
+#: ../../lua-filters.rst:3492
+#: ../../lua-filters.rst:3520
+#: ../../lua-filters.rst:3545
+msgid "Parameters:"
+msgstr ""
+
+#: ../../lua-filters.rst:1925
+msgid "``actual``"
+msgstr ""
+
+#: ../../lua-filters.rst:1926
+msgid "actual version specifier (`Version`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1927
+msgid "``expected``"
+msgstr ""
+
+#: ../../lua-filters.rst:1928
+msgid "minimum expected version (`Version`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:1932
+msgid "``error_message``"
+msgstr ""
+
+#: ../../lua-filters.rst:1930
+msgid "optional error message template. The string is used as format string, with the expected and actual versions as arguments. Defaults to ``\"expected version %s or newer, got %s\"``."
+msgstr ""
+
+#: ../../lua-filters.rst:1945
+msgid "Module text"
+msgstr ""
+
+#: ../../lua-filters.rst:1947
+msgid "UTF-8 aware text manipulation functions, implemented in Haskell. The module is made available as part of the ``pandoc`` module via ``pandoc.text``. The text module can also be loaded explicitly:"
+msgstr ""
+
+#: ../../lua-filters.rst:1965
+msgid "``lower (s)``"
+msgstr ""
+
+#: ../../lua-filters.rst:1967
+msgid "Returns a copy of a UTF-8 string, converted to lowercase."
+msgstr ""
+
+#: ../../lua-filters.rst:1974
+msgid "``upper (s)``"
+msgstr ""
+
+#: ../../lua-filters.rst:1976
+msgid "Returns a copy of a UTF-8 string, converted to uppercase."
+msgstr ""
+
+#: ../../lua-filters.rst:1983
+msgid "``reverse (s)``"
+msgstr ""
+
+#: ../../lua-filters.rst:1985
+msgid "Returns a copy of a UTF-8 string, with characters reversed."
+msgstr ""
+
+#: ../../lua-filters.rst:1992
+msgid "``len (s)``"
+msgstr ""
+
+#: ../../lua-filters.rst:1994
+msgid "Returns the length of a UTF-8 string."
+msgstr ""
+
+#: ../../lua-filters.rst:2001
+msgid "``sub (s)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2003
+msgid "Returns a substring of a UTF-8 string, using Lua’s string indexing rules."
+msgstr ""
+
+#: ../../lua-filters.rst:2007
+msgid "Module pandoc"
+msgstr ""
+
+#: ../../lua-filters.rst:2009
+msgid "Lua functions for pandoc scripts; includes constructors for document tree elements, functions to parse text in a given format, and functions to filter and modify a subtree."
+msgstr ""
+
+#: ../../lua-filters.rst:2026
+msgid "``Pandoc (blocks[, meta])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2017
+msgid "A complete pandoc document"
+msgstr ""
+
+#: ../../lua-filters.rst:2021
+#: ../../lua-filters.rst:2050
+#: ../../lua-filters.rst:2836
+msgid "``blocks``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2022
+msgid "document content"
+msgstr ""
+
+#: ../../lua-filters.rst:2024
+msgid "``meta``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2024
+msgid "document meta data"
+msgstr ""
+
+#: ../../lua-filters.rst:2026
+msgid "Returns: `Pandoc`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2039
+msgid "``Meta (table)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2032
+msgid "Create a new Meta object."
+msgstr ""
+
+#: ../../lua-filters.rst:2037
+#: ../../lua-filters.rst:3366
+msgid "``table``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2037
+msgid "table containing document meta information"
+msgstr ""
+
+#: ../../lua-filters.rst:2039
+msgid "Returns: `Meta`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2052
+msgid "``MetaBlocks (blocks)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2045
+msgid "Meta blocks"
+msgstr ""
+
+#: ../../lua-filters.rst:2050
+msgid "blocks"
+msgstr ""
+
+#: ../../lua-filters.rst:2052
+msgid "Returns: `MetaBlocks`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2062
+msgid "``MetaInlines (inlines)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2055
+msgid "Meta inlines"
+msgstr ""
+
+#: ../../lua-filters.rst:2060
+msgid "``inlines``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2060
+msgid "inlines"
+msgstr ""
+
+#: ../../lua-filters.rst:2062
+msgid "Returns: `MetaInlines`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2072
+msgid "``MetaList (meta_values)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2065
+msgid "Meta list"
+msgstr ""
+
+#: ../../lua-filters.rst:2070
+msgid "``meta_values``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2070
+msgid "list of meta values"
+msgstr ""
+
+#: ../../lua-filters.rst:2072
+msgid "Returns: `MetaList`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2082
+msgid "``MetaMap (key_value_map)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2075
+msgid "Meta map"
+msgstr ""
+
+#: ../../lua-filters.rst:2080
+msgid "``key_value_map``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2080
+msgid "a string-indexed map of meta values"
+msgstr ""
+
+#: ../../lua-filters.rst:2082
+msgid "Returns: `MetaMap`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2092
+msgid "``MetaString (str)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2085
+msgid "Creates string to be used in meta data."
+msgstr ""
+
+#: ../../lua-filters.rst:2090
+msgid "``str``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2090
+msgid "string value"
+msgstr ""
+
+#: ../../lua-filters.rst:2092
+msgid "Returns: `MetaString`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2102
+msgid "``MetaBool (bool)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2095
+msgid "Creates boolean to be used in meta data."
+msgstr ""
+
+#: ../../lua-filters.rst:2100
+msgid "``bool``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2100
+msgid "boolean value"
+msgstr ""
+
+#: ../../lua-filters.rst:2102
+msgid "Returns: `MetaBool`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2105
+msgid "Blocks"
+msgstr ""
+
+#: ../../lua-filters.rst:2115
+msgid "``BlockQuote (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2108
+msgid "Creates a block quote element"
+msgstr ""
+
+#: ../../lua-filters.rst:2113
+#: ../../lua-filters.rst:2155
+msgid "block content"
+msgstr ""
+
+#: ../../lua-filters.rst:2115
+msgid "Returns: `BlockQuote`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2125
+msgid "``BulletList (items)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2118
+msgid "Creates a bullet list."
+msgstr ""
+
+#: ../../lua-filters.rst:2123
+#: ../../lua-filters.rst:2200
+msgid "``items``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2123
+#: ../../lua-filters.rst:2201
+msgid "list items"
+msgstr ""
+
+#: ../../lua-filters.rst:2125
+msgid "Returns: `BulletList`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2137
+msgid "``CodeBlock (text[, attr])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2128
+msgid "Creates a code block element"
+msgstr ""
+
+#: ../../lua-filters.rst:2132
+#: ../../lua-filters.rst:2235
+#: ../../lua-filters.rst:2279
+#: ../../lua-filters.rst:2341
+#: ../../lua-filters.rst:2351
+#: ../../lua-filters.rst:2361
+#: ../../lua-filters.rst:2416
+#: ../../lua-filters.rst:2458
+msgid "``text``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2133
+#: ../../lua-filters.rst:2280
+msgid "code string"
+msgstr ""
+
+#: ../../lua-filters.rst:2135
+#: ../../lua-filters.rst:2157
+#: ../../lua-filters.rst:2171
+#: ../../lua-filters.rst:2255
+#: ../../lua-filters.rst:2282
+#: ../../lua-filters.rst:2308
+#: ../../lua-filters.rst:2329
+#: ../../lua-filters.rst:2448
+msgid "``attr``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2135
+#: ../../lua-filters.rst:2157
+#: ../../lua-filters.rst:2171
+#: ../../lua-filters.rst:2255
+msgid "element attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:2137
+msgid "Returns: `CodeBlock`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2147
+msgid "``DefinitionList (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2140
+msgid "Creates a definition list, containing terms and their explanation."
+msgstr ""
+
+#: ../../lua-filters.rst:2147
+msgid "Returns: `DefinitionList`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2159
+msgid "``Div (content[, attr])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2150
+msgid "Creates a div element"
+msgstr ""
+
+#: ../../lua-filters.rst:2159
+msgid "Returns: `Div`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2173
+msgid "``Header (level, content[, attr])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2166
+msgid "``level``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2167
+msgid "header level"
+msgstr ""
+
+#: ../../lua-filters.rst:2173
+msgid "Returns: `Header`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2178
+msgid "``HorizontalRule ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:2176
+msgid "Creates a horizontal rule."
+msgstr ""
+
+#: ../../lua-filters.rst:2178
+msgid "Returns: `HorizontalRule`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2188
+msgid "``LineBlock (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2181
+msgid "Creates a line block element."
+msgstr ""
+
+#: ../../lua-filters.rst:2188
+msgid "Returns: `LineBlock`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2193
+msgid "``Null ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:2191
+msgid "Creates a null element."
+msgstr ""
+
+#: ../../lua-filters.rst:2193
+msgid "Returns: `Null`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2205
+msgid "``OrderedList (items[, listAttributes])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2196
+msgid "Creates an ordered list."
+msgstr ""
+
+#: ../../lua-filters.rst:2203
+msgid "``listAttributes``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2203
+msgid "list parameters"
+msgstr ""
+
+#: ../../lua-filters.rst:2205
+msgid "Returns: `OrderedList`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2215
+msgid "``Para (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2208
+msgid "Creates a para element."
+msgstr ""
+
+#: ../../lua-filters.rst:2215
+msgid "Returns: `Para`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2225
+msgid "``Plain (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2218
+msgid "Creates a plain element."
+msgstr ""
+
+#: ../../lua-filters.rst:2225
+msgid "Returns: `Plain`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2237
+msgid "``RawBlock (format, text)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2228
+msgid "Creates a raw content block of the specified format."
+msgstr ""
+
+#: ../../lua-filters.rst:2232
+#: ../../lua-filters.rst:2413
+#: ../../lua-filters.rst:2795
+msgid "``format``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2233
+msgid "format of content"
+msgstr ""
+
+#: ../../lua-filters.rst:2235
+#: ../../lua-filters.rst:2416
+msgid "string content"
+msgstr ""
+
+#: ../../lua-filters.rst:2237
+msgid "Returns: `RawBlock`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2257
+msgid "``Table (caption, colspecs, head, bodies, foot[, attr])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2240
+msgid "Creates a table element."
+msgstr ""
+
+#: ../../lua-filters.rst:2245
+msgid "table `caption`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2246
+msgid "``colspecs``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2247
+msgid "column alignments and widths (list of `ColSpec`_\\ s)"
+msgstr ""
+
+#: ../../lua-filters.rst:2248
+msgid "``head``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2249
+msgid "`table head`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2250
+msgid "``bodies``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2251
+msgid "`table bodies`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2252
+msgid "``foot``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2253
+msgid "`table foot`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2257
+msgid "Returns: `Table`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2272
+msgid "``Cite (content, citations)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2263
+msgid "Creates a Cite inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2268
+msgid "List of inlines"
+msgstr ""
+
+#: ../../lua-filters.rst:2270
+msgid "``citations``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2270
+msgid "List of citations"
+msgstr ""
+
+#: ../../lua-filters.rst:2272
+msgid "Returns: `Cite`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2284
+msgid "``Code (text[, attr])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2275
+msgid "Creates a Code inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2282
+#: ../../lua-filters.rst:2308
+#: ../../lua-filters.rst:2329
+#: ../../lua-filters.rst:2448
+msgid "additional attributes"
+msgstr ""
+
+#: ../../lua-filters.rst:2284
+msgid "Returns: `Code`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2294
+msgid "``Emph (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2287
+msgid "Creates an inline element representing emphasized text."
+msgstr ""
+
+#: ../../lua-filters.rst:2294
+msgid "Returns: `Emph`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2310
+msgid "``Image (caption, src[, title[, attr]])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2297
+msgid "Creates a Image inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2302
+msgid "text used to describe the image"
+msgstr ""
+
+#: ../../lua-filters.rst:2303
+msgid "``src``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2304
+msgid "path to the image file"
+msgstr ""
+
+#: ../../lua-filters.rst:2305
+#: ../../lua-filters.rst:2326
+msgid "``title``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2310
+msgid "Returns: `Image`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2315
+msgid "``LineBreak ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:2313
+msgid "Create a LineBreak inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2315
+msgid "Returns: `LineBreak`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2331
+msgid "``Link (content, target[, title[, attr]])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2318
+msgid "Creates a link inline element, usually a hyperlink."
+msgstr ""
+
+#: ../../lua-filters.rst:2323
+msgid "text for this link"
+msgstr ""
+
+#: ../../lua-filters.rst:2324
+msgid "``target``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2325
+msgid "the link target"
+msgstr ""
+
+#: ../../lua-filters.rst:2331
+msgid "Returns: `Link`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2343
+msgid "``Math (mathtype, text)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2334
+msgid "Creates a Math element, either inline or displayed."
+msgstr ""
+
+#: ../../lua-filters.rst:2338
+msgid "``mathtype``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2339
+msgid "rendering specifier"
+msgstr ""
+
+#: ../../lua-filters.rst:2341
+#: ../../lua-filters.rst:2351
+#: ../../lua-filters.rst:2361
+msgid "Math content"
+msgstr ""
+
+#: ../../lua-filters.rst:2343
+#: ../../lua-filters.rst:2353
+#: ../../lua-filters.rst:2363
+msgid "Returns: `Math`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2353
+msgid "``DisplayMath (text)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2346
+msgid "Creates a math element of type “DisplayMath” (DEPRECATED)."
+msgstr ""
+
+#: ../../lua-filters.rst:2363
+msgid "``InlineMath (text)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2356
+msgid "Creates a math element of type “InlineMath” (DEPRECATED)."
+msgstr ""
+
+#: ../../lua-filters.rst:2373
+msgid "``Note (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2366
+msgid "Creates a Note inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2371
+msgid "footnote block content"
+msgstr ""
+
+#: ../../lua-filters.rst:2373
+msgid "Returns: `Note`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2386
+msgid "``Quoted (quotetype, content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2376
+msgid "Creates a Quoted inline element given the quote type and quoted content."
+msgstr ""
+
+#: ../../lua-filters.rst:2381
+msgid "``quotetype``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2382
+msgid "type of quotes to be used"
+msgstr ""
+
+#: ../../lua-filters.rst:2386
+msgid "Returns: `Quoted`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2396
+msgid "``SingleQuoted (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2389
+#: ../../lua-filters.rst:2399
+msgid "Creates a single-quoted inline element (DEPRECATED)."
+msgstr ""
+
+#: ../../lua-filters.rst:2396
+#: ../../lua-filters.rst:2406
+msgid "Returns: `Quoted`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2406
+msgid "``DoubleQuoted (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2418
+msgid "``RawInline (format, text)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2409
+msgid "Creates a raw inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2414
+msgid "format of the contents"
+msgstr ""
+
+#: ../../lua-filters.rst:2418
+msgid "Returns: `RawInline`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2428
+msgid "``SmallCaps (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2421
+msgid "Creates text rendered in small caps"
+msgstr ""
+
+#: ../../lua-filters.rst:2428
+msgid "Returns: `SmallCaps`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2433
+msgid "``SoftBreak ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:2431
+msgid "Creates a SoftBreak inline element."
+msgstr ""
+
+#: ../../lua-filters.rst:2433
+msgid "Returns: `SoftBreak`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2438
+msgid "``Space ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:2436
+msgid "Create a Space inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2438
+msgid "Returns: `Space`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2450
+msgid "``Span (content[, attr])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2441
+msgid "Creates a Span inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2450
+msgid "Returns: `Span`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2460
+msgid "``Str (text)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2453
+msgid "Creates a Str inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2458
+msgid "content"
+msgstr ""
+
+#: ../../lua-filters.rst:2460
+msgid "Returns: `Str`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2470
+msgid "``Strikeout (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2463
+msgid "Creates text which is struck out."
+msgstr ""
+
+#: ../../lua-filters.rst:2470
+msgid "Returns: `Strikeout`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2481
+msgid "``Strong (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2473
+msgid "Creates a Strong element, whose text is usually displayed in a bold font."
+msgstr ""
+
+#: ../../lua-filters.rst:2481
+msgid "Returns: `Strong`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2491
+msgid "``Subscript (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2484
+msgid "Creates a Subscript inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2491
+msgid "Returns: `Subscript`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2501
+msgid "``Superscript (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2494
+msgid "Creates a Superscript inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2501
+msgid "Returns: `Superscript`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2511
+msgid "``Underline (content)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2504
+msgid "Creates an Underline inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2511
+msgid "Returns: `Underline`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2530
+msgid "``Attr ([identifier[, classes[, attributes]]])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2519
+msgid "Create a new set of attributes (Attr)."
+msgstr ""
+
+#: ../../lua-filters.rst:2523
+msgid "``identifier``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2524
+msgid "element identifier"
+msgstr ""
+
+#: ../../lua-filters.rst:2525
+msgid "``classes``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2526
+msgid "element classes"
+msgstr ""
+
+#: ../../lua-filters.rst:2528
+msgid "``attributes``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2528
+msgid "table containing string keys and values"
+msgstr ""
+
+#: ../../lua-filters.rst:2530
+msgid "Returns: `Attr`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2550
+msgid "``Citation (id, mode[, prefix[, suffix[, note_num[, hash]]]])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2533
+msgid "Creates a single citation."
+msgstr ""
+
+#: ../../lua-filters.rst:2537
+msgid "``id``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2538
+msgid "citation identifier (like a bibtex key)"
+msgstr ""
+
+#: ../../lua-filters.rst:2539
+msgid "``mode``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2540
+msgid "citation mode"
+msgstr ""
+
+#: ../../lua-filters.rst:2541
+msgid "``prefix``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2542
+msgid "citation prefix"
+msgstr ""
+
+#: ../../lua-filters.rst:2543
+msgid "``suffix``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2544
+msgid "citation suffix"
+msgstr ""
+
+#: ../../lua-filters.rst:2545
+msgid "``note_num``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2546
+msgid "note number"
+msgstr ""
+
+#: ../../lua-filters.rst:2548
+msgid "``hash``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2548
+msgid "hash number"
+msgstr ""
+
+#: ../../lua-filters.rst:2550
+msgid "Returns: `Citation`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2564
+msgid "``ListAttributes ([start[, style[, delimiter]]])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2553
+msgid "Creates a set of list attributes."
+msgstr ""
+
+#: ../../lua-filters.rst:2557
+msgid "``start``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2558
+msgid "number of the first list item"
+msgstr ""
+
+#: ../../lua-filters.rst:2559
+msgid "``style``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2560
+msgid "style used for list numbering"
+msgstr ""
+
+#: ../../lua-filters.rst:2562
+msgid "``delimiter``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2562
+msgid "delimiter of list numbers"
+msgstr ""
+
+#: ../../lua-filters.rst:2564
+msgid "Returns: `ListAttributes`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2567
+msgid "Legacy types"
+msgstr ""
+
+#: ../../lua-filters.rst:2607
+msgid "``SimpleTable (caption, aligns, widths, headers, rows)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2570
+msgid "Creates a simple table resembling the old (pre pandoc 2.10) table type."
+msgstr ""
+
+#: ../../lua-filters.rst:2587
+msgid "Returns: `SimpleTable`_ object"
+msgstr ""
+
+#: ../../lua-filters.rst:2610
+msgid "Constants"
+msgstr ""
+
+#: ../../lua-filters.rst:2615
+msgid "``AuthorInText``"
+msgstr ""
+
+#: ../../lua-filters.rst:2613
+msgid "Author name is mentioned in the text."
+msgstr ""
+
+#: ../../lua-filters.rst:2615
+#: ../../lua-filters.rst:2620
+#: ../../lua-filters.rst:2625
+msgid "See also: `Citation`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2620
+msgid "``SuppressAuthor``"
+msgstr ""
+
+#: ../../lua-filters.rst:2618
+msgid "Author name is suppressed."
+msgstr ""
+
+#: ../../lua-filters.rst:2625
+msgid "``NormalCitation``"
+msgstr ""
+
+#: ../../lua-filters.rst:2623
+msgid "Default citation style is used."
+msgstr ""
+
+#: ../../lua-filters.rst:2630
+msgid "``AlignLeft``"
+msgstr ""
+
+#: ../../lua-filters.rst:2628
+msgid "Table cells aligned left."
+msgstr ""
+
+#: ../../lua-filters.rst:2630
+#: ../../lua-filters.rst:2635
+#: ../../lua-filters.rst:2640
+#: ../../lua-filters.rst:2645
+msgid "See also: `Table <#type-alignment>`__"
+msgstr ""
+
+#: ../../lua-filters.rst:2635
+msgid "``AlignRight``"
+msgstr ""
+
+#: ../../lua-filters.rst:2633
+msgid "Table cells right-aligned."
+msgstr ""
+
+#: ../../lua-filters.rst:2640
+msgid "``AlignCenter``"
+msgstr ""
+
+#: ../../lua-filters.rst:2638
+msgid "Table cell content is centered."
+msgstr ""
+
+#: ../../lua-filters.rst:2645
+msgid "``AlignDefault``"
+msgstr ""
+
+#: ../../lua-filters.rst:2643
+msgid "Table cells are alignment is unaltered."
+msgstr ""
+
+#: ../../lua-filters.rst:2650
+msgid "``DefaultDelim``"
+msgstr ""
+
+#: ../../lua-filters.rst:2648
+msgid "Default list number delimiters are used."
+msgstr ""
+
+#: ../../lua-filters.rst:2650
+#: ../../lua-filters.rst:2655
+#: ../../lua-filters.rst:2660
+#: ../../lua-filters.rst:2665
+#: ../../lua-filters.rst:2670
+#: ../../lua-filters.rst:2675
+#: ../../lua-filters.rst:2680
+#: ../../lua-filters.rst:2685
+#: ../../lua-filters.rst:2690
+#: ../../lua-filters.rst:2695
+#: ../../lua-filters.rst:2700
+msgid "See also: `ListAttributes`_"
+msgstr ""
+
+#: ../../lua-filters.rst:2655
+msgid "``Period``"
+msgstr ""
+
+#: ../../lua-filters.rst:2653
+msgid "List numbers are delimited by a period."
+msgstr ""
+
+#: ../../lua-filters.rst:2660
+msgid "``OneParen``"
+msgstr ""
+
+#: ../../lua-filters.rst:2658
+msgid "List numbers are delimited by a single parenthesis."
+msgstr ""
+
+#: ../../lua-filters.rst:2665
+msgid "``TwoParens``"
+msgstr ""
+
+#: ../../lua-filters.rst:2663
+msgid "List numbers are delimited by a double parentheses."
+msgstr ""
+
+#: ../../lua-filters.rst:2670
+msgid "``DefaultStyle``"
+msgstr ""
+
+#: ../../lua-filters.rst:2668
+msgid "List are numbered in the default style"
+msgstr ""
+
+#: ../../lua-filters.rst:2675
+msgid "``Example``"
+msgstr ""
+
+#: ../../lua-filters.rst:2673
+msgid "List items are numbered as examples."
+msgstr ""
+
+#: ../../lua-filters.rst:2680
+msgid "``Decimal``"
+msgstr ""
+
+#: ../../lua-filters.rst:2678
+msgid "List are numbered using decimal integers."
+msgstr ""
+
+#: ../../lua-filters.rst:2685
+msgid "``LowerRoman``"
+msgstr ""
+
+#: ../../lua-filters.rst:2683
+msgid "List are numbered using lower-case roman numerals."
+msgstr ""
+
+#: ../../lua-filters.rst:2690
+msgid "``UpperRoman``"
+msgstr ""
+
+#: ../../lua-filters.rst:2688
+msgid "List are numbered using upper-case roman numerals"
+msgstr ""
+
+#: ../../lua-filters.rst:2695
+msgid "``LowerAlpha``"
+msgstr ""
+
+#: ../../lua-filters.rst:2693
+msgid "List are numbered using lower-case alphabetic characters."
+msgstr ""
+
+#: ../../lua-filters.rst:2700
+msgid "``UpperAlpha``"
+msgstr ""
+
+#: ../../lua-filters.rst:2698
+msgid "List are numbered using upper-case alphabetic characters."
+msgstr ""
+
+#: ../../lua-filters.rst:2703
+msgid "``sha1``"
+msgstr ""
+
+#: ../../lua-filters.rst:2703
+msgid "Alias for ```pandoc.utils.sha1```_ (DEPRECATED)."
+msgstr ""
+
+#: ../../lua-filters.rst:2706
+msgid "Helper functions"
+msgstr ""
+
+#: ../../lua-filters.rst:2711
+msgid "pipe"
+msgstr ""
+
+#: ../../lua-filters.rst:2713
+msgid "``pipe (command, args, input)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2715
+msgid "Runs command with arguments, passing it some input, and returns the output."
+msgstr ""
+
+#: ../../lua-filters.rst:2721
+msgid "``command``"
+msgstr ""
+
+#: ../../lua-filters.rst:2721
+msgid "program to run; the executable will be resolved using default system methods (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:2723
+msgid "``args``"
+msgstr ""
+
+#: ../../lua-filters.rst:2724
+msgid "list of arguments to pass to the program (list of strings)."
+msgstr ""
+
+#: ../../lua-filters.rst:2726
+msgid "``input``"
+msgstr ""
+
+#: ../../lua-filters.rst:2726
+msgid "data which is piped into the program via stdin (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:2728
+#: ../../lua-filters.rst:2843
+#: ../../lua-filters.rst:2879
+#: ../../lua-filters.rst:2894
+#: ../../lua-filters.rst:2923
+#: ../../lua-filters.rst:2955
+#: ../../lua-filters.rst:2983
+#: ../../lua-filters.rst:2996
+#: ../../lua-filters.rst:3016
+#: ../../lua-filters.rst:3037
+#: ../../lua-filters.rst:3058
+#: ../../lua-filters.rst:3154
+#: ../../lua-filters.rst:3211
+#: ../../lua-filters.rst:3233
+#: ../../lua-filters.rst:3440
+#: ../../lua-filters.rst:3454
+#: ../../lua-filters.rst:3478
+#: ../../lua-filters.rst:3504
+#: ../../lua-filters.rst:3527
+#: ../../lua-filters.rst:3552
+msgid "Returns:"
+msgstr ""
+
+#: ../../lua-filters.rst:2730
+msgid "Output of command, i.e. data printed to stdout (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:2732
+msgid "Raises:"
+msgstr ""
+
+#: ../../lua-filters.rst:2734
+msgid "A table containing the keys ``command``, ``error_code``, and ``output`` is thrown if the command exits with a non-zero error code."
+msgstr ""
+
+#: ../../lua-filters.rst:2746
+msgid "walk_block"
+msgstr ""
+
+#: ../../lua-filters.rst:2748
+msgid "``walk_block (element, filter)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2750
+msgid "Apply a filter inside a block element, walking its contents."
+msgstr ""
+
+#: ../../lua-filters.rst:2754
+#: ../../lua-filters.rst:2773
+msgid "``element``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2755
+msgid "the block element"
+msgstr ""
+
+#: ../../lua-filters.rst:2758
+#: ../../lua-filters.rst:2777
+#: ../../lua-filters.rst:2950
+msgid "``filter``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2757
+msgid "a Lua filter (table of functions) to be applied within the block element"
+msgstr ""
+
+#: ../../lua-filters.rst:2760
+msgid "Returns: the transformed block element"
+msgstr ""
+
+#: ../../lua-filters.rst:2765
+msgid "walk_inline"
+msgstr ""
+
+#: ../../lua-filters.rst:2767
+msgid "``walk_inline (element, filter)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2769
+msgid "Apply a filter inside an inline element, walking its contents."
+msgstr ""
+
+#: ../../lua-filters.rst:2774
+msgid "the inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2776
+msgid "a Lua filter (table of functions) to be applied within the inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2779
+msgid "Returns: the transformed inline element"
+msgstr ""
+
+#: ../../lua-filters.rst:2784
+msgid "read"
+msgstr ""
+
+#: ../../lua-filters.rst:2786
+msgid "``read (markup[, format])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2788
+msgid "Parse the given string into a Pandoc document."
+msgstr ""
+
+#: ../../lua-filters.rst:2792
+msgid "``markup``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2793
+msgid "the markup to be parsed"
+msgstr ""
+
+#: ../../lua-filters.rst:2795
+msgid "format specification, defaults to ``\"markdown\"``."
+msgstr ""
+
+#: ../../lua-filters.rst:2797
+msgid "Returns: pandoc document"
+msgstr ""
+
+#: ../../lua-filters.rst:2811
+msgid "Module pandoc.utils"
+msgstr ""
+
+#: ../../lua-filters.rst:2813
+msgid "This module exposes internal pandoc functions and utility functions."
+msgstr ""
+
+#: ../../lua-filters.rst:2815
+msgid "The module is loaded as part of the ``pandoc`` module and available as ``pandoc.utils``. In versions up-to and including pandoc 2.6, this module had to be loaded explicitly. Example:"
+msgstr ""
+
+#: ../../lua-filters.rst:2823
+msgid "Use the above for backwards compatibility."
+msgstr ""
+
+#: ../../lua-filters.rst:2830
+msgid "``blocks_to_inlines (blocks[, sep])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2832
+msgid "Squash a list of blocks into a list of inlines."
+msgstr ""
+
+#: ../../lua-filters.rst:2837
+msgid "List of `Blocks`_ to be flattened."
+msgstr ""
+
+#: ../../lua-filters.rst:2841
+msgid "``sep``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2839
+msgid "List of `Inlines`_ inserted as separator between two consecutive blocks; defaults to ``{ pandoc.Space(), pandoc.Str'¶', pandoc.Space()}``."
+msgstr ""
+
+#: ../../lua-filters.rst:2867
+msgid "``equals (element1, element2)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2869
+msgid "Test equality of AST elements. Elements in Lua are considered equal if and only if the objects obtained by unmarshaling are equal."
+msgstr ""
+
+#: ../../lua-filters.rst:2877
+msgid "``element1``, ``element2``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2875
+msgid "Objects to be compared. Acceptable input types are `Pandoc`_, `Meta`_, `MetaValue`_, `Block`_, `Inline`_, `Attr`_, `ListAttributes`_, and `Citation`_."
+msgstr ""
+
+#: ../../lua-filters.rst:2881
+msgid "Whether the two objects represent the same element (boolean)"
+msgstr ""
+
+#: ../../lua-filters.rst:2888
+msgid "``from_simple_table (table)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2890
+msgid "Creates a `Table`_ block element from a `SimpleTable`_. This is useful for dealing with legacy code which was written for pandoc versions older than 2.10."
+msgstr ""
+
+#: ../../lua-filters.rst:2896
+msgid "table block element (`Table`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:2913
+msgid "``make_sections (number_sections, base_level, blocks)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2915
+msgid "Converts list of `Blocks`_ into sections. ``Div``\\ s will be created beginning at each ``Header`` and containing following content until the next ``Header`` of comparable level. If ``number_sections`` is true, a ``number`` attribute will be added to each ``Header`` containing the section number. If ``base_level`` is non-null, ``Header`` levels will be reorganized so that there are no gaps, and so that the base level is the level specified."
+msgstr ""
+
+#: ../../lua-filters.rst:2925
+msgid "List of `Blocks`_."
+msgstr ""
+
+#: ../../lua-filters.rst:2942
+msgid "``run_json_filter (doc, filter[, args])``"
+msgstr ""
+
+#: ../../lua-filters.rst:2944
+msgid "Filter the given doc by passing it through the a JSON filter."
+msgstr ""
+
+#: ../../lua-filters.rst:2948
+msgid "``doc``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2949
+msgid "the Pandoc document to filter"
+msgstr ""
+
+#: ../../lua-filters.rst:2951
+msgid "filter to run"
+msgstr ""
+
+#: ../../lua-filters.rst:2953
+msgid "``args``:"
+msgstr ""
+
+#: ../../lua-filters.rst:2953
+msgid "list of arguments passed to the filter. Defaults to ``{FORMAT}``."
+msgstr ""
+
+#: ../../lua-filters.rst:2957
+msgid "(`Pandoc`_) Filtered document"
+msgstr ""
+
+#: ../../lua-filters.rst:2977
+msgid "``normalize_date (date_string)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2979
+msgid "Parse a date and convert (if possible) to “YYYY-MM-DD” format. We limit years to the range 1601-9999 (ISO 8601 accepts greater than or equal to 1583, but MS Word only accepts dates starting 1601)."
+msgstr ""
+
+#: ../../lua-filters.rst:2985
+msgid "A date string, or nil when the conversion failed."
+msgstr ""
+
+#: ../../lua-filters.rst:2992
+msgid "``sha1 (contents)``"
+msgstr ""
+
+#: ../../lua-filters.rst:2994
+msgid "Returns the SHA1 has of the contents."
+msgstr ""
+
+#: ../../lua-filters.rst:2998
+msgid "SHA1 hash of the contents."
+msgstr ""
+
+#: ../../lua-filters.rst:3011
+msgid "``stringify (element)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3013
+msgid "Converts the given element (Pandoc, Meta, Block, or Inline) into a string with all formatting removed."
+msgstr ""
+
+#: ../../lua-filters.rst:3018
+msgid "A plain string representation of the given element."
+msgstr ""
+
+#: ../../lua-filters.rst:3033
+msgid "``to_roman_numeral (integer)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3035
+msgid "Converts an integer < 4000 to uppercase roman numeral."
+msgstr ""
+
+#: ../../lua-filters.rst:3039
+msgid "A roman numeral string."
+msgstr ""
+
+#: ../../lua-filters.rst:3054
+msgid "``to_simple_table (table)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3056
+msgid "Creates a `SimpleTable`_ out of a `Table`_ block."
+msgstr ""
+
+#: ../../lua-filters.rst:3060
+msgid "a simple table object (`SimpleTable`_)"
+msgstr ""
+
+#: ../../lua-filters.rst:3073
+msgid "Module pandoc.mediabag"
+msgstr ""
+
+#: ../../lua-filters.rst:3075
+msgid "The ``pandoc.mediabag`` module allows accessing pandoc’s media storage. The “media bag” is used when pandoc is called with the ``--extract-media`` or (for HTML only) ``--self-contained`` option."
+msgstr ""
+
+#: ../../lua-filters.rst:3079
+msgid "The module is loaded as part of module ``pandoc`` and can either be accessed via the ``pandoc.mediabag`` field, or explicitly required, e.g.:"
+msgstr ""
+
+#: ../../lua-filters.rst:3092
+msgid "``delete (filepath)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3094
+msgid "Removes a single entry from the media bag."
+msgstr ""
+
+#: ../../lua-filters.rst:3100
+#: ../../lua-filters.rst:3122
+#: ../../lua-filters.rst:3209
+msgid "``filepath``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3099
+msgid "filename of the item to be deleted. The media bag will be left unchanged if no entry with the given filename exists."
+msgstr ""
+
+#: ../../lua-filters.rst:3107
+msgid "``empty ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3109
+msgid "Clear-out the media bag, deleting all items."
+msgstr ""
+
+#: ../../lua-filters.rst:3116
+msgid "``insert (filepath, mime_type, contents)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3118
+msgid "Adds a new entry to pandoc’s media bag."
+msgstr ""
+
+#: ../../lua-filters.rst:3123
+msgid "filename and path relative to the output folder."
+msgstr ""
+
+#: ../../lua-filters.rst:3124
+msgid "``mime_type``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3125
+msgid "the file’s MIME type"
+msgstr ""
+
+#: ../../lua-filters.rst:3127
+msgid "``contents``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3127
+msgid "the binary contents of the file."
+msgstr ""
+
+#: ../../lua-filters.rst:3143
+msgid "``items ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3145
+msgid "Returns an iterator triple to be used with Lua’s generic ``for`` statement. The iterator returns the filepath, MIME type, and content of a media bag item on each invocation. Items are processed one-by-one to avoid excessive memory use."
+msgstr ""
+
+#: ../../lua-filters.rst:3150
+msgid "This function should be used only when full access to all items, including their contents, is required. For all other cases, ```list```_ should be preferred."
+msgstr ""
+
+#: ../../lua-filters.rst:3156
+msgid "The iterator function; must be called with the iterator state and the current iterator value."
+msgstr ""
+
+#: ../../lua-filters.rst:3158
+msgid "Iterator state – an opaque value to be passed to the iterator function."
+msgstr ""
+
+#: ../../lua-filters.rst:3160
+msgid "Initial iterator value."
+msgstr ""
+
+#: ../../lua-filters.rst:3175
+msgid "``list ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3177
+msgid "Get a summary of the current media bag contents."
+msgstr ""
+
+#: ../../lua-filters.rst:3179
+msgid "Returns: A list of elements summarizing each entry in the media bag. The summary item contains the keys ``path``, ``type``, and ``length``, giving the filepath, MIME type, and length of contents in bytes, respectively."
+msgstr ""
+
+#: ../../lua-filters.rst:3201
+msgid "``lookup (filepath)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3203
+msgid "Lookup a media item in the media bag, and return its MIME type and contents."
+msgstr ""
+
+#: ../../lua-filters.rst:3209
+msgid "name of the file to look up."
+msgstr ""
+
+#: ../../lua-filters.rst:3213
+msgid "the entry’s MIME type, or nil if the file was not found."
+msgstr ""
+
+#: ../../lua-filters.rst:3214
+#: ../../lua-filters.rst:3236
+msgid "contents of the file, or nil if the file was not found."
+msgstr ""
+
+#: ../../lua-filters.rst:3228
+msgid "``fetch (source, base_url)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3230
+msgid "Fetches the given source from a URL or local file. Returns two values: the contents of the file and the MIME type (or an empty string)."
+msgstr ""
+
+#: ../../lua-filters.rst:3235
+msgid "the entries MIME type, or nil if the file was not found."
+msgstr ""
+
+#: ../../lua-filters.rst:3246
+msgid "Module pandoc.List"
+msgstr ""
+
+#: ../../lua-filters.rst:3248
+msgid "The this module defines pandoc’s list type. It comes with useful methods and convenience functions."
+msgstr ""
+
+#: ../../lua-filters.rst:3252
+msgid "Constructor"
+msgstr ""
+
+#: ../../lua-filters.rst:3257
+msgid "``pandoc.List([table])``"
+msgstr ""
+
+#: ../../lua-filters.rst:3255
+msgid "Create a new List. If the optional argument ``table`` is given, set the metatable of that value to ``pandoc.List``. This is an alias for ```pandoc.List:new([table])```_."
+msgstr ""
+
+#: ../../lua-filters.rst:3260
+msgid "Metamethods"
+msgstr ""
+
+#: ../../lua-filters.rst:3270
+msgid "``pandoc.List:__concat (list)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3263
+msgid "Concatenates two lists."
+msgstr ""
+
+#: ../../lua-filters.rst:3268
+#: ../../lua-filters.rst:3284
+msgid "``list``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3268
+msgid "second list concatenated to the first"
+msgstr ""
+
+#: ../../lua-filters.rst:3270
+msgid "Returns: a new list containing all elements from list1 and list2"
+msgstr ""
+
+#: ../../lua-filters.rst:3273
+msgid "Methods"
+msgstr ""
+
+#: ../../lua-filters.rst:3276
+msgid "``pandoc.List:clone ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3276
+msgid "Returns a (shallow) copy of the list."
+msgstr ""
+
+#: ../../lua-filters.rst:3284
+msgid "``pandoc.List:extend (list)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3279
+msgid "Adds the given list to the end of this list."
+msgstr ""
+
+#: ../../lua-filters.rst:3284
+msgid "list to appended"
+msgstr ""
+
+#: ../../lua-filters.rst:3298
+msgid "``pandoc.List:find (needle, init)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3287
+msgid "Returns the value and index of the first occurrence of the given item."
+msgstr ""
+
+#: ../../lua-filters.rst:3292
+#: ../../lua-filters.rst:3329
+msgid "``needle``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3293
+#: ../../lua-filters.rst:3330
+msgid "item to search for"
+msgstr ""
+
+#: ../../lua-filters.rst:3295
+#: ../../lua-filters.rst:3309
+#: ../../lua-filters.rst:3332
+msgid "``init``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3295
+#: ../../lua-filters.rst:3309
+#: ../../lua-filters.rst:3332
+msgid "index at which the search is started"
+msgstr ""
+
+#: ../../lua-filters.rst:3297
+msgid "Returns: first item equal to the needle, or nil if no such item exists."
+msgstr ""
+
+#: ../../lua-filters.rst:3312
+msgid "``pandoc.List:find_if (pred, init)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3301
+msgid "Returns the value and index of the first element for which the predicate holds true."
+msgstr ""
+
+#: ../../lua-filters.rst:3306
+#: ../../lua-filters.rst:3320
+msgid "``pred``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3307
+msgid "the predicate function"
+msgstr ""
+
+#: ../../lua-filters.rst:3311
+msgid "Returns: first item for which \\`test\\` succeeds, or nil if no such item exists."
+msgstr ""
+
+#: ../../lua-filters.rst:3322
+msgid "``pandoc.List:filter (pred)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3315
+msgid "Returns a new list containing all items satisfying a given condition."
+msgstr ""
+
+#: ../../lua-filters.rst:3320
+msgid "condition items must satisfy."
+msgstr ""
+
+#: ../../lua-filters.rst:3322
+msgid "Returns: a new list containing all items for which \\`test\\` was true."
+msgstr ""
+
+#: ../../lua-filters.rst:3334
+msgid "``pandoc.List:includes (needle, init)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3325
+msgid "Checks if the list has an item equal to the given needle."
+msgstr ""
+
+#: ../../lua-filters.rst:3334
+msgid "Returns: true if a list item is equal to the needle, false otherwise"
+msgstr ""
+
+#: ../../lua-filters.rst:3347
+msgid "``pandoc.List:insert ([pos], value)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3337
+msgid "Inserts element ``value`` at position ``pos`` in list, shifting elements to the next-greater index if necessary."
+msgstr ""
+
+#: ../../lua-filters.rst:3340
+msgid "This function is identical to ```table.insert```_."
+msgstr ""
+
+#: ../../lua-filters.rst:3344
+#: ../../lua-filters.rst:3380
+msgid "``pos``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3345
+msgid "index of the new value; defaults to length of the list + 1"
+msgstr ""
+
+#: ../../lua-filters.rst:3347
+msgid "``value``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3347
+msgid "value to insert into the list"
+msgstr ""
+
+#: ../../lua-filters.rst:3356
+msgid "``pandoc.List:map (fn)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3350
+msgid "Returns a copy of the current list by applying the given function to all elements."
+msgstr ""
+
+#: ../../lua-filters.rst:3356
+msgid "``fn``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3356
+msgid "function which is applied to all list items."
+msgstr ""
+
+#: ../../lua-filters.rst:3368
+msgid "``pandoc.List:new([table])``"
+msgstr ""
+
+#: ../../lua-filters.rst:3359
+msgid "Create a new List. If the optional argument ``table`` is given, set the metatable of that value to ``pandoc.List``."
+msgstr ""
+
+#: ../../lua-filters.rst:3365
+msgid "table which should be treatable as a list; defaults to an empty table"
+msgstr ""
+
+#: ../../lua-filters.rst:3368
+msgid "Returns: the updated input value"
+msgstr ""
+
+#: ../../lua-filters.rst:3382
+msgid "``pandoc.List:remove ([pos])``"
+msgstr ""
+
+#: ../../lua-filters.rst:3371
+msgid "Removes the element at position ``pos``, returning the value of the removed element."
+msgstr ""
+
+#: ../../lua-filters.rst:3374
+msgid "This function is identical to ```table.remove```_."
+msgstr ""
+
+#: ../../lua-filters.rst:3379
+msgid "position of the list value that will be removed; defaults to the index of the last element"
+msgstr ""
+
+#: ../../lua-filters.rst:3382
+msgid "Returns: the removed element"
+msgstr ""
+
+#: ../../lua-filters.rst:3404
+msgid "``pandoc.List:sort ([comp])``"
+msgstr ""
+
+#: ../../lua-filters.rst:3385
+msgid "Sorts list elements in a given order, in-place. If ``comp`` is given, then it must be a function that receives two list elements and returns true when the first element must come before the second in the final order (so that, after the sort, ``i < j`` implies ``not comp(list[j],list[i]))``. If comp is not given, then the standard Lua operator ``<`` is used instead."
+msgstr ""
+
+#: ../../lua-filters.rst:3392
+msgid "Note that the comp function must define a strict partial order over the elements in the list; that is, it must be asymmetric and transitive. Otherwise, no valid sort may be possible."
+msgstr ""
+
+#: ../../lua-filters.rst:3396
+msgid "The sort algorithm is not stable: elements considered equal by the given order may have their relative positions changed by the sort."
+msgstr ""
+
+#: ../../lua-filters.rst:3399
+msgid "This function is identical to ```table.sort```_."
+msgstr ""
+
+#: ../../lua-filters.rst:3404
+msgid "``comp``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3404
+msgid "Comparison function as described above."
+msgstr ""
+
+#: ../../lua-filters.rst:3407
+msgid "Module pandoc.system"
+msgstr ""
+
+#: ../../lua-filters.rst:3409
+msgid "Access to system information and functionality."
+msgstr ""
+
+#: ../../lua-filters.rst:3412
+msgid "Static Fields"
+msgstr ""
+
+#: ../../lua-filters.rst:3417
+msgid "arch"
+msgstr ""
+
+#: ../../lua-filters.rst:3419
+msgid "The machine architecture on which the program is running."
+msgstr ""
+
+#: ../../lua-filters.rst:3424
+msgid "os"
+msgstr ""
+
+#: ../../lua-filters.rst:3426
+msgid "The operating system on which the program is running."
+msgstr ""
+
+#: ../../lua-filters.rst:3429
+msgid "Functions"
+msgstr ""
+
+#: ../../lua-filters.rst:3434
+msgid "environment"
+msgstr ""
+
+#: ../../lua-filters.rst:3436
+msgid "``environment ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3438
+msgid "Retrieve the entire environment as a string-indexed table."
+msgstr ""
+
+#: ../../lua-filters.rst:3442
+msgid "A table mapping environment variables names to their string value (table)."
+msgstr ""
+
+#: ../../lua-filters.rst:3448
+msgid "get_working_directory"
+msgstr ""
+
+#: ../../lua-filters.rst:3450
+msgid "``get_working_directory ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3452
+msgid "Obtain the current working directory as an absolute path."
+msgstr ""
+
+#: ../../lua-filters.rst:3456
+msgid "The current working directory (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:3461
+msgid "with_environment"
+msgstr ""
+
+#: ../../lua-filters.rst:3463
+msgid "``with_environment (environment, callback)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3465
+msgid "Run an action within a custom environment. Only the environment variables given by ``environment`` will be set, when ``callback`` is called. The original environment is restored after this function finishes, even if an error occurs while running the callback action."
+msgstr ""
+
+#: ../../lua-filters.rst:3473
+msgid "``environment``"
+msgstr ""
+
+#: ../../lua-filters.rst:3473
+msgid "Environment variables and their values to be set before running ``callback``. (table with string keys and string values)"
+msgstr ""
+
+#: ../../lua-filters.rst:3476
+#: ../../lua-filters.rst:3502
+#: ../../lua-filters.rst:3525
+msgid "``callback``"
+msgstr ""
+
+#: ../../lua-filters.rst:3476
+msgid "Action to execute in the custom environment (function)"
+msgstr ""
+
+#: ../../lua-filters.rst:3480
+#: ../../lua-filters.rst:3529
+msgid "The result(s) of the call to ``callback``"
+msgstr ""
+
+#: ../../lua-filters.rst:3485
+msgid "with_temporary_directory"
+msgstr ""
+
+#: ../../lua-filters.rst:3487
+msgid "``with_temporary_directory ([parent_dir,] templ, callback)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3489
+msgid "Create and use a temporary directory inside the given directory. The directory is deleted after the callback returns."
+msgstr ""
+
+#: ../../lua-filters.rst:3496
+msgid "``parent_dir``"
+msgstr ""
+
+#: ../../lua-filters.rst:3495
+msgid "Parent directory to create the directory in (string). If this parameter is omitted, the system’s canonical temporary directory is used."
+msgstr ""
+
+#: ../../lua-filters.rst:3498
+msgid "``templ``"
+msgstr ""
+
+#: ../../lua-filters.rst:3499
+msgid "Directory name template (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:3501
+msgid "Function which takes the name of the temporary directory as its first argument (function)."
+msgstr ""
+
+#: ../../lua-filters.rst:3506
+msgid "The result of the call to ``callback``."
+msgstr ""
+
+#: ../../lua-filters.rst:3511
+msgid "with_working_directory"
+msgstr ""
+
+#: ../../lua-filters.rst:3513
+msgid "``with_working_directory (directory, callback)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3515
+msgid "Run an action within a different directory. This function will change the working directory to ``directory``, execute ``callback``, then switch back to the original working directory, even if an error occurs while running the callback action."
+msgstr ""
+
+#: ../../lua-filters.rst:3522
+msgid "``directory``"
+msgstr ""
+
+#: ../../lua-filters.rst:3523
+msgid "Directory in which the given ``callback`` should be executed (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3525
+msgid "Action to execute in the given directory (function)"
+msgstr ""
+
+#: ../../lua-filters.rst:3532
+msgid "Module pandoc.types"
+msgstr ""
+
+#: ../../lua-filters.rst:3534
+msgid "Constructors for types which are not part of the pandoc AST."
+msgstr ""
+
+#: ../../lua-filters.rst:3541
+msgid "``Version (version_specifier)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3543
+msgid "Creates a Version object."
+msgstr ""
+
+#: ../../lua-filters.rst:3550
+msgid "``version_specifier``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3548
+msgid "Version specifier: this can be a version string like ``'2.7.3'``, a list of integers like ``{2, 7, 3}``, a single integer, or a `Version`_."
+msgstr ""
+
+#: ../../lua-filters.rst:3554
+msgid "A new `Version`_ object."
+msgstr ""

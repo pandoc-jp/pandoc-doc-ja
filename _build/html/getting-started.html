@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Getting started with pandoc 日本語版 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started-with-pandoc">
+<h1><a class="toc-backref" href="#id3">Getting started with pandoc 日本語版</a><a class="headerlink" href="#getting-started-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>現在の翻訳は <em>プレリリース版</em> です。不完全な翻訳を含んでいます。
+（ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）</p>
+<ul class="simple">
+<li><p>正確な情報については英語の公式 <a class="reference external" href="https://pandoc.org/MANUAL.html">User's Guide</a> を参照してください</p></li>
+<li><p>この翻訳に対する問題・改善案については <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/issues">GitHubリポジトリのIssue</a> に投稿してください</p></li>
+<li><p>翻訳のレビュー作業や翻訳作業へのご協力を希望の方は <a class="reference internal" href="trans-intro.html"><span class="doc">翻訳の手引 for Pandocユーザーズガイド</span></a> をご覧ください</p></li>
+</ul>
+</div>
+<p>原著者:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>John MacFarlane</p></li>
+</ul>
+</div></blockquote>
+<p>原著バージョン: 2.11.0.2</p>
+<p>更新日: 2020/10/17</p>
+<p>翻訳者（アルファベット順）:</p>
+<ul class="simple">
+<li><p>becolomochi</p></li>
+<li><p>makotosan</p></li>
+<li><p>niszet</p></li>
+<li><p>Takada Atsushi</p></li>
+<li><p><a class="reference external" href="https://ishibaki.github.io">Tomoki Ishibashi</a></p></li>
+<li><p>Yuki Fujiwara</p></li>
+</ul>
+<div class="contents topic" id="id1">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#getting-started-with-pandoc" id="id3">Getting started with pandoc 日本語版</a></p>
+<ul>
+<li><p><a class="reference internal" href="#step-1-install-pandoc" id="id4">Step 1: Install pandoc</a></p></li>
+<li><p><a class="reference internal" href="#step-2-open-a-terminal" id="id5">Step 2: Open a terminal</a></p></li>
+<li><p><a class="reference internal" href="#step-3-changing-directories" id="id6">Step 3: Changing directories</a></p></li>
+<li><p><a class="reference internal" href="#step-4-using-pandoc-as-a-filter" id="id7">Step 4: Using pandoc as a filter</a></p></li>
+<li><p><a class="reference internal" href="#step-5-text-editor-basics" id="id8">Step 5: Text editor basics</a></p></li>
+<li><p><a class="reference internal" href="#step-6-converting-a-file" id="id9">Step 6: Converting a file</a></p></li>
+<li><p><a class="reference internal" href="#step-7-command-line-options" id="id10">Step 7: Command-line options</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>This document is for people who are unfamiliar with command line tools.
+Command-line experts can go straight to the <a class="reference external" href="https://pandoc.org/MANUAL.html">User’s Guide</a> or the
+pandoc man page.</p>
+<div class="section" id="step-1-install-pandoc">
+<h2><a class="toc-backref" href="#id4">Step 1: Install pandoc</a><a class="headerlink" href="#step-1-install-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>First, install pandoc, following the <a class="reference external" href="https://pandoc.org/installing.html">instructions for your platform</a>.</p>
+</div>
+<div class="section" id="step-2-open-a-terminal">
+<h2><a class="toc-backref" href="#id5">Step 2: Open a terminal</a><a class="headerlink" href="#step-2-open-a-terminal" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Pandoc is a command-line tool. There is no graphic user interface. So,
+to use it, you’ll need to open a terminal window:</p>
+<ul class="simple">
+<li><p>On OS X, the Terminal application can be found in
+<code class="docutils literal notranslate"><span class="pre">/Applications/Utilities</span></code>. Open a Finder window and go to
+<code class="docutils literal notranslate"><span class="pre">Applications</span></code>, then <code class="docutils literal notranslate"><span class="pre">Utilities</span></code>. Then double click on
+<code class="docutils literal notranslate"><span class="pre">Terminal</span></code>. (Or, click the spotlight icon in the upper right hand
+corner of your screen and type <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> – you should see
+<code class="docutils literal notranslate"><span class="pre">Terminal</span></code> under <code class="docutils literal notranslate"><span class="pre">Applications</span></code>.)</p></li>
+<li><p>On Windows, you can use either the classic command prompt or the more
+modern PowerShell terminal. If you use Windows in desktop mode, run
+the <code class="docutils literal notranslate"><span class="pre">cmd</span></code> or <code class="docutils literal notranslate"><span class="pre">powershell</span></code> command from the Start menu. If you use
+the Windows 8 start screen instead, simply type <code class="docutils literal notranslate"><span class="pre">cmd</span></code> or
+<code class="docutils literal notranslate"><span class="pre">powershell</span></code>, and then run either the “Command Prompt” or “Windows
+Powershell” application. If you are using <code class="docutils literal notranslate"><span class="pre">cmd</span></code>, type
+<code class="docutils literal notranslate"><span class="pre">chcp</span> <span class="pre">65001</span></code> before using pandoc, to set the encoding to UTF-8.</p></li>
+<li><p>On Linux, there are many possible configurations, depending on what
+desktop environment you’re using:</p>
+<ul>
+<li><p>In Unity, use the search function on the <code class="docutils literal notranslate"><span class="pre">Dash</span></code>, and search for
+<code class="docutils literal notranslate"><span class="pre">Terminal</span></code>. Or, use the keyboard shortcut <code class="docutils literal notranslate"><span class="pre">Ctrl-Alt-T</span></code>.</p></li>
+<li><p>In Gnome, go to <code class="docutils literal notranslate"><span class="pre">Applications</span></code>, then <code class="docutils literal notranslate"><span class="pre">Accessories</span></code>, and select
+<code class="docutils literal notranslate"><span class="pre">Terminal</span></code>, or use <code class="docutils literal notranslate"><span class="pre">Ctrl-Alt-T</span></code>.</p></li>
+<li><p>In XFCE, go to <code class="docutils literal notranslate"><span class="pre">Applications</span></code>, then <code class="docutils literal notranslate"><span class="pre">System</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">Terminal</span></code>, or use <code class="docutils literal notranslate"><span class="pre">Super-T</span></code>.</p></li>
+<li><p>In KDE, go to <code class="docutils literal notranslate"><span class="pre">KMenu</span></code>, then <code class="docutils literal notranslate"><span class="pre">System</span></code>, then
+<code class="docutils literal notranslate"><span class="pre">Terminal</span> <span class="pre">Program</span> <span class="pre">(Konsole)</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p>You should now see a rectangle with a “prompt” (possibly just a symbol
+like <code class="docutils literal notranslate"><span class="pre">%</span></code>, but probably including more information, such as your
+username and directory), and a blinking cursor.</p>
+<p>Let’s verify that pandoc is installed. Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+<p>and hit enter. You should see a message telling you which version of
+pandoc is installed, and giving you some additional information.</p>
+</div>
+<div class="section" id="step-3-changing-directories">
+<h2><a class="toc-backref" href="#id6">Step 3: Changing directories</a><a class="headerlink" href="#step-3-changing-directories" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>First, let’s see where we are. Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+</pre></div>
+</div>
+<p>on Linux or OSX, or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="o">%</span><span class="n">cd</span><span class="o">%</span>
+</pre></div>
+</div>
+<p>on Windows, and hit enter. Your terminal should print your current
+working directory. (Guess what <code class="docutils literal notranslate"><span class="pre">pwd</span></code> stands for?) This should be your
+home directory.</p>
+<p>Let’s navigate now to our <code class="docutils literal notranslate"><span class="pre">Documents</span></code> directory: type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">Documents</span>
+</pre></div>
+</div>
+<p>and hit enter. Now type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+</pre></div>
+</div>
+<p>(or <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">%cd%</span></code> on Windows) again. You should be in the <code class="docutils literal notranslate"><span class="pre">Documents</span></code>
+subdirectory of your home directory. To go back to your home directory,
+you could type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">..</span></code> means “one level up.”</p>
+<p>Go back to your <code class="docutils literal notranslate"><span class="pre">Documents</span></code> directory if you’re not there already.
+Let’s try creating a subdirectory called <code class="docutils literal notranslate"><span class="pre">pandoc-test</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">pandoc</span><span class="o">-</span><span class="n">test</span>
+</pre></div>
+</div>
+<p>Now change to the <code class="docutils literal notranslate"><span class="pre">pandoc-test</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">pandoc</span><span class="o">-</span><span class="n">test</span>
+</pre></div>
+</div>
+<p>If the prompt doesn’t tell you what directory you’re in, you can confirm
+that you’re there by doing</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+</pre></div>
+</div>
+<p>(or <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">%cd%</span></code>) again.</p>
+<p>OK, that’s all you need to know for now about using the terminal. But
+here’s a secret that will save you a lot of typing. You can always type
+the up-arrow key to go back through your history of commands. So if you
+want to use a command you typed earlier, you don’t need to type it
+again: just use up-arrow until it comes up. Try this. (You can use
+down-arrow as well, to go the other direction.) Once you have the
+command, you can also use the left and right arrows and the
+backspace/delete key to edit it.</p>
+<p>Most terminals also support tab completion of directories and filenames.
+To try this, let’s first go back up to our <code class="docutils literal notranslate"><span class="pre">Documents</span></code> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+</div>
+<p>Now, type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">pandoc</span><span class="o">-</span>
+</pre></div>
+</div>
+<p>and hit the tab key instead of enter. Your terminal should fill in the
+rest (<code class="docutils literal notranslate"><span class="pre">test</span></code>), and then you can hit enter.</p>
+<p>To review:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pwd</span></code> (or <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">%cd%</span></code> on Windows) to see what the current working
+directory is.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">foo</span></code> to change to the <code class="docutils literal notranslate"><span class="pre">foo</span></code> subdirectory of your working
+directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> to move up to the parent of the working directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">foo</span></code> to create a subdirectory called <code class="docutils literal notranslate"><span class="pre">foo</span></code> in the working
+directory.</p></li>
+<li><p>up-arrow to go back through your command history.</p></li>
+<li><p>tab to complete directories and file names.</p></li>
+</ul>
+</div>
+<div class="section" id="step-4-using-pandoc-as-a-filter">
+<h2><a class="toc-backref" href="#id7">Step 4: Using pandoc as a filter</a><a class="headerlink" href="#step-4-using-pandoc-as-a-filter" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span>
+</pre></div>
+</div>
+<p>and hit enter. You should see the cursor just sitting there, waiting for
+you to type something. Type this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Hello *pandoc*!
+
+- one
+- two
+</pre></div>
+</div>
+<p>When you’re finished (the cursor should be at the beginning of the
+line), type <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> on OS X or Linux, or <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> followed by
+<code class="docutils literal notranslate"><span class="pre">Enter</span></code> on Windows. You should now see your text converted to HTML!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;p&gt;Hello &lt;em&gt;pandoc&lt;/em&gt;!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+&lt;/ul&gt;
+</pre></div>
+</div>
+<p>What just happened? When pandoc is invoked without specifying any input
+files, it operates as a “filter,” taking input from the terminal and
+sending its output back to the terminal. You can use this feature to
+play around with pandoc.</p>
+<p>By default, input is interpreted as pandoc markdown, and output is HTML.
+But we can change that. Let’s try converting <em>from</em> HTML <em>to</em> markdown:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">html</span> <span class="o">-</span><span class="n">t</span> <span class="n">markdown</span>
+</pre></div>
+</div>
+<p>Now type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;p&gt;Hello &lt;em&gt;pandoc&lt;/em&gt;!&lt;/p&gt;
+</pre></div>
+</div>
+<p>and hit <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> (or <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> followed by <code class="docutils literal notranslate"><span class="pre">Enter</span></code> on Windows). You
+should see:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Hello *pandoc*!
+</pre></div>
+</div>
+<p>Now try converting something from markdown to LaTeX. What command do you
+think you should use?</p>
+</div>
+<div class="section" id="step-5-text-editor-basics">
+<h2><a class="toc-backref" href="#id8">Step 5: Text editor basics</a><a class="headerlink" href="#step-5-text-editor-basics" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>You’ll probably want to use pandoc to convert a file, not to read text
+from the terminal. That’s easy, but first we need to create a text file
+in our <code class="docutils literal notranslate"><span class="pre">pandoc-test</span></code> subdirectory.</p>
+<p><strong>Important:</strong> To create a text file, you’ll need to use a text editor,
+<em>not</em> a word processor like Microsoft Word. On Windows, you can use
+Notepad (in <code class="docutils literal notranslate"><span class="pre">Accessories</span></code>). On OS X, you can use <code class="docutils literal notranslate"><span class="pre">TextEdit</span></code> (in
+<code class="docutils literal notranslate"><span class="pre">Applications</span></code>). On Linux, different platforms come with different
+text editors: Gnome has <code class="docutils literal notranslate"><span class="pre">GEdit</span></code>, and KDE has <code class="docutils literal notranslate"><span class="pre">Kate</span></code>.</p>
+<p>Start up your text editor. Type the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span>
+<span class="n">title</span><span class="p">:</span> <span class="n">Test</span>
+<span class="o">...</span>
+
+<span class="c1"># Test!</span>
+
+<span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">test</span> <span class="n">of</span> <span class="o">*</span><span class="n">pandoc</span><span class="o">*.</span>
+
+<span class="o">-</span> <span class="nb">list</span> <span class="n">one</span>
+<span class="o">-</span> <span class="nb">list</span> <span class="n">two</span>
+</pre></div>
+</div>
+<p>Now save your file as <code class="docutils literal notranslate"><span class="pre">test1.md</span></code> in the directory
+<code class="docutils literal notranslate"><span class="pre">Documents/pandoc-test</span></code>.</p>
+<p>Note: If you use plain text a lot, you’ll want a better editor than
+<code class="docutils literal notranslate"><span class="pre">Notepad</span></code> or <code class="docutils literal notranslate"><span class="pre">TextEdit</span></code>. You might want to look at <a class="reference external" href="https://www.sublimetext.com/">Sublime Text</a>
+or (if you’re willing to put in some time learning an unfamiliar
+interface) <a class="reference external" href="https://www.vim.org">Vim</a> or <a class="reference external" href="https://www.gnu.org/software/emacs">Emacs</a>.</p>
+</div>
+<div class="section" id="step-6-converting-a-file">
+<h2><a class="toc-backref" href="#id9">Step 6: Converting a file</a><a class="headerlink" href="#step-6-converting-a-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Go back to your terminal. We should still be in the
+<code class="docutils literal notranslate"><span class="pre">Documents/pandoc-test</span></code> directory. Verify that with <code class="docutils literal notranslate"><span class="pre">pwd</span></code>.</p>
+<p>Now type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span>
+</pre></div>
+</div>
+<p>(or <code class="docutils literal notranslate"><span class="pre">dir</span></code> if you’re on Windows). This will list the files in the
+current directory. You should see the file you created, <code class="docutils literal notranslate"><span class="pre">test1.md</span></code>.</p>
+<p>To convert it to HTML, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="n">test1</span><span class="o">.</span><span class="n">md</span> <span class="o">-</span><span class="n">f</span> <span class="n">markdown</span> <span class="o">-</span><span class="n">t</span> <span class="n">html</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="n">test1</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>The filename <code class="docutils literal notranslate"><span class="pre">test1.md</span></code> tells pandoc which file to convert. The <code class="docutils literal notranslate"><span class="pre">-s</span></code>
+option says to create a “standalone” file, with a header and footer, not
+just a fragment. And the <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">test1.html</span></code> says to put the output in the
+file <code class="docutils literal notranslate"><span class="pre">test1.html</span></code>. Note that we could have omitted <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">markdown</span></code> and
+<code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">html</span></code>, since the default is to convert from markdown to HTML, but
+it doesn’t hurt to include them.</p>
+<p>Check that the file was created by typing <code class="docutils literal notranslate"><span class="pre">ls</span></code> again. You should see
+<code class="docutils literal notranslate"><span class="pre">test1.html</span></code>. Now open this in a browser. On OS X, you can type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span> <span class="n">test1</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>On Windows, type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span>\<span class="n">test1</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>You should see a browser window with your document.</p>
+<p>To create a LaTeX document, you just need to change the command
+slightly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="n">test1</span><span class="o">.</span><span class="n">md</span> <span class="o">-</span><span class="n">f</span> <span class="n">markdown</span> <span class="o">-</span><span class="n">t</span> <span class="n">latex</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="n">test1</span><span class="o">.</span><span class="n">tex</span>
+</pre></div>
+</div>
+<p>Try opening <code class="docutils literal notranslate"><span class="pre">test1.tex</span></code> in your text editor.</p>
+<p>Pandoc can often figure out the input and output formats from the
+filename extensions. So, you could have just used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="n">test1</span><span class="o">.</span><span class="n">md</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="n">test1</span><span class="o">.</span><span class="n">tex</span>
+</pre></div>
+</div>
+<p>Pandoc knows you’re trying to create a LaTeX document, because of the
+<code class="docutils literal notranslate"><span class="pre">.tex</span></code> extension.</p>
+<p>Now try creating a Word document (with extension <code class="docutils literal notranslate"><span class="pre">docx</span></code>).</p>
+<p>If you want to create a PDF, you’ll need to have LaTeX installed. (See
+<a class="reference external" href="https://tug.org/mactex/">MacTeX</a> on OS X, <a class="reference external" href="https://miktex.org">MiKTeX</a> on Windows, or install the texlive package
+on Linux.) Then do</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="n">test1</span><span class="o">.</span><span class="n">md</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">o</span> <span class="n">test1</span><span class="o">.</span><span class="n">pdf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-7-command-line-options">
+<h2><a class="toc-backref" href="#id10">Step 7: Command-line options</a><a class="headerlink" href="#step-7-command-line-options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>You now know the basics. Pandoc has a lot of options. At this point you
+can start to learn more about them by reading the <a class="reference external" href="https://pandoc.org/MANUAL.html">User’s Guide</a>.</p>
+<p>Here’s an example. The <code class="docutils literal notranslate"><span class="pre">--mathml</span></code> option causes pandoc to convert TeX
+math into MathML. Type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="n">mathml</span>
+</pre></div>
+</div>
+<p>then enter this text, followed by <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> (<code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> followed by
+<code class="docutils literal notranslate"><span class="pre">Enter</span></code> on Windows):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$x = y^2$
+</pre></div>
+</div>
+<p>Now try the same thing without <code class="docutils literal notranslate"><span class="pre">--mathml</span></code>. See the difference in
+output?</p>
+<p>If you forget an option, or forget which formats are supported, you can
+always do</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>to get a list of all the supported options.</p>
+<p>On OS X or Linux systems, you can also do</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">pandoc</span>
+</pre></div>
+</div>
+<p>to get the pandoc manual page. All of this information is also in the
+User’s Guide.</p>
+<p>If you get stuck, you can always ask questions on the <a class="reference external" href="https://groups.google.com/group/pandoc-discuss">pandoc-discuss</a>
+mailing list. But be sure to check the <a class="reference external" href="https://pandoc.org/faqs.html">FAQs</a> first, and search through
+the mailing list to see if your question has been answered before.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/icon_pandoc_square_small.jpg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">日本Pandocユーザ会</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=pandoc-jp&repo=pandoc-doc-ja&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">日本Pandocユーザ会</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide.html">Pandoc User’s Guide 日本語版</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trans-intro.html">翻訳の手引 for Pandocユーザーズガイド</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, 日本Pandocユーザ会.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -120,7 +120,7 @@ getVerbosity :: PandocMonad m => m Verbosity
 -- | Set the verbosity level.
 setVerbosity :: PandocMonad m => Verbosity -> m ()
 
--- Get the accomulated log messages (in temporal order).
+-- Get the accumulated log messages (in temporal order).
 getLog :: PandocMonad m => m [LogMessage]
 getLog = reverse <$> getsCommonState stLog
 
@@ -177,7 +177,8 @@ Some particularly important options to know about:
 1.  `writerTemplate`:  By default, this is `Nothing`, which
     means that a document fragment will be produced. If you
     want a full document, you need to specify `Just template`,
-    where `template` is a String containing the template's
+    where `template` is a `Template Text` from
+    [Text.Pandoc.Templates] containing the template's
     contents (not the path).
 
 2.  `readerExtensions` and `writerExtensions`:  These specify
@@ -336,7 +337,7 @@ use `throwError`.
 In addition to errors, which stop execution of the conversion
 pipeline, one can generate informational messages.
 Use `report` from [Text.Pandoc.Class] to issue a `LogMessage`.
-For a list of cosntructors for `LogMessage`, see
+For a list of constructors for `LogMessage`, see
 [Text.Pandoc.Logging].  Note that each type of log message
 is associated with a verbosity level.  The verbosity level
 (`setVerbosity`/`getVerbosity`) determines whether the report
@@ -431,7 +432,7 @@ structure and calling this function.
 1. Pandoc's parsers can exhibit pathological behavior on some
    inputs.  So it is always a good idea to wrap uses of pandoc
    in a timeout function (e.g. `System.Timeout.timeout` from `base`)
-   to prevent DOS attacks.
+   to prevent DoS attacks.
 
 2. If pandoc generates HTML from untrusted user input, it is
    always a good idea to filter the generated HTML through
@@ -459,4 +460,4 @@ structure and calling this function.
 [Text.Pandoc.Logging]: https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Logging.html
 [Text.Pandoc.App]: https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-App.html
 [Text.Pandoc.Error]: https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Error.html
-[Text.Pandoc.Writers.Shared]: https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Writers.Shared.html
+[Text.Pandoc.Writers.Shared]: https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Writers-Shared.html

@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pandoc filters 日本語版 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pandoc-filters">
+<h1><a class="toc-backref" href="#id2">Pandoc filters 日本語版</a><a class="headerlink" href="#pandoc-filters" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>現在の翻訳は <em>プレリリース版</em> です。不完全な翻訳を含んでいます。
+（ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）</p>
+<ul class="simple">
+<li><p>正確な情報については英語の公式 <a class="reference external" href="https://pandoc.org/MANUAL.html">User's Guide</a> を参照してください</p></li>
+<li><p>この翻訳に対する問題・改善案については <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/issues">GitHubリポジトリのIssue</a> に投稿してください</p></li>
+<li><p>翻訳のレビュー作業や翻訳作業へのご協力を希望の方は <a class="reference internal" href="trans-intro.html"><span class="doc">翻訳の手引 for Pandocユーザーズガイド</span></a> をご覧ください</p></li>
+</ul>
+</div>
+<p>原著者:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>John MacFarlane</p></li>
+</ul>
+</div></blockquote>
+<p>原著バージョン: 2.11.0.2</p>
+<p>更新日: 2020/10/17</p>
+<p>翻訳者（アルファベット順）:</p>
+<ul class="simple">
+<li><p>becolomochi</p></li>
+<li><p>makotosan</p></li>
+<li><p>niszet</p></li>
+<li><p>Takada Atsushi</p></li>
+<li><p><a class="reference external" href="https://ishibaki.github.io">Tomoki Ishibashi</a></p></li>
+<li><p>Yuki Fujiwara</p></li>
+</ul>
+<div class="contents topic" id="id1">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pandoc-filters" id="id2">Pandoc filters 日本語版</a></p>
+<ul>
+<li><p><a class="reference internal" href="#summary" id="id3">Summary</a></p></li>
+<li><p><a class="reference internal" href="#a-simple-example" id="id4">A simple example</a></p></li>
+<li><p><a class="reference internal" href="#latex-for-wordpress" id="id5">LaTeX for WordPress</a></p></li>
+<li><p><a class="reference internal" href="#but-i-dont-want-to-learn-haskell" id="id6">But I don’t want to learn Haskell!</a></p></li>
+<li><p><a class="reference internal" href="#include-files" id="id7">Include files</a></p></li>
+<li><p><a class="reference internal" href="#removing-links" id="id8">Removing links</a></p></li>
+<li><p><a class="reference internal" href="#a-filter-for-ruby-text" id="id9">A filter for ruby text</a></p></li>
+<li><p><a class="reference internal" href="#exercises" id="id10">Exercises</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="summary">
+<h2><a class="toc-backref" href="#id3">Summary</a><a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Pandoc provides an interface for users to write programs (known as
+filters) which act on pandoc’s AST.</p>
+<p>Pandoc consists of a set of readers and writers. When converting a
+document from one format to another, text is parsed by a reader into
+pandoc’s intermediate representation of the document—an “abstract syntax
+tree” or AST—which is then converted by the writer into the target
+format. The pandoc AST format is defined in the module
+<code class="docutils literal notranslate"><span class="pre">`Text.Pandoc.Definition</span></code> in the <code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code> package`_.</p>
+<p>A “filter” is a program that modifies the AST, between the reader and
+the writer.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INPUT</span> <span class="o">--</span><span class="n">reader</span><span class="o">--&gt;</span> <span class="n">AST</span> <span class="o">--</span><span class="nb">filter</span><span class="o">--&gt;</span> <span class="n">AST</span> <span class="o">--</span><span class="n">writer</span><span class="o">--&gt;</span> <span class="n">OUTPUT</span>
+</pre></div>
+</div>
+<p>Pandoc supports two kinds of filters:</p>
+<ul>
+<li><p><strong>Lua filters</strong> use the Lua language to define transformations on the
+pandoc AST. They are described in a <a class="reference external" href="lua-filters.html">separate document</a>.</p></li>
+<li><p><strong>JSON filters</strong>, described here, are pipes that read from standard
+input and write to standard output, consuming and producing a JSON
+representation of the pandoc AST:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   source format
+        ↓
+     (pandoc)
+        ↓
+JSON-formatted AST
+        ↓
+  (JSON filter)
+        ↓
+JSON-formatted AST
+        ↓
+     (pandoc)
+        ↓
+  target format
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Lua filters have a couple of advantages. They use a Lua interpreter that
+is embedded in pandoc, so you don’t need to have any external software
+installed. And they are usually faster than JSON filters. But if you
+wish to write your filter in a language other than Lua, you may prefer
+to use a JSON filter. JSON filters may be written in any programming
+language.</p>
+<p>You can use a JSON filter directly in a pipeline:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">t</span> <span class="n">json</span> <span class="o">|</span> \
+ <span class="n">pandoc</span><span class="o">-</span><span class="n">citeproc</span> <span class="o">|</span> \
+ <span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">f</span> <span class="n">json</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>But it is more convenient to use the <code class="docutils literal notranslate"><span class="pre">--filter</span></code> option, which handles
+the plumbing automatically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="nb">input</span><span class="o">.</span><span class="n">txt</span> <span class="o">--</span><span class="nb">filter</span> <span class="n">pandoc</span><span class="o">-</span><span class="n">citeproc</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>For a gentle introduction into writing your own filters, continue this
+guide. There’s also a <a class="reference external" href="https://github.com/jgm/pandoc/wiki/Pandoc-Filters">list of third party filters on the wiki</a>.</p>
+</div>
+<div class="section" id="a-simple-example">
+<h2><a class="toc-backref" href="#id4">A simple example</a><a class="headerlink" href="#a-simple-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Suppose you wanted to replace all level 2+ headings in a markdown
+document with regular paragraphs, with text in italics. How would you go
+about doing this?</p>
+<p>A first thought would be to use regular expressions. Something like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">perl</span> <span class="o">-</span><span class="n">pe</span> <span class="s1">&#39;s/^##+ (.*)$/\*</span><span class="se">\1</span><span class="s1">\*/&#39;</span> <span class="n">source</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>This should work most of the time. But don’t forget that ATX style
+headings can end with a sequence of <code class="docutils literal notranslate"><span class="pre">#</span></code>s that is not part of the
+heading text:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## My heading ##</span>
+</pre></div>
+</div>
+<p>And what if your document contains a line starting with <code class="docutils literal notranslate"><span class="pre">##</span></code> in an
+HTML comment or delimited code block?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!--
+## This is just a comment
+--&gt;
+
+~~~~
+### A third level heading in standard markdown
+~~~~
+</pre></div>
+</div>
+<p>We don’t want to touch <em>these</em> lines. Moreover, what about Setext style
+second-level heading?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="n">heading</span>
+<span class="o">---------</span>
+</pre></div>
+</div>
+<p>We need to handle those too. Finally, can we be sure that adding
+asterisks to each side of our string will put it in italics? What if the
+string already contains asterisks around it? Then we’ll end up with bold
+text, which is not what we want. And what if it contains a regular
+unescaped asterisk?</p>
+<p>How would you modify your regular expression to handle these cases? It
+would be hairy, to say the least.</p>
+<p>A better approach is to let pandoc handle the parsing, and then modify
+the AST before the document is written. For this, we can use a filter.</p>
+<p>To see what sort of AST is produced when pandoc parses our text, we can
+use pandoc’s <code class="docutils literal notranslate"><span class="pre">native</span></code> output format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cat</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span>
+<span class="c1">## my heading</span>
+
+<span class="n">text</span> <span class="k">with</span> <span class="o">*</span><span class="n">italics</span><span class="o">*</span>
+<span class="o">%</span> <span class="n">pandoc</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">t</span> <span class="n">native</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">Pandoc</span> <span class="p">(</span><span class="n">Meta</span> <span class="p">{</span><span class="n">unMeta</span> <span class="o">=</span> <span class="n">fromList</span> <span class="p">[]})</span>
+<span class="p">[</span><span class="n">Header</span> <span class="mi">2</span> <span class="p">(</span><span class="s2">&quot;my-heading&quot;</span><span class="p">,[],[])</span> <span class="p">[</span><span class="n">Str</span> <span class="s2">&quot;My&quot;</span><span class="p">,</span><span class="n">Space</span><span class="p">,</span><span class="n">Str</span> <span class="s2">&quot;heading&quot;</span><span class="p">]</span>
+<span class="p">,</span> <span class="n">Para</span> <span class="p">[</span><span class="n">Str</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span><span class="n">Space</span><span class="p">,</span><span class="n">Str</span> <span class="s2">&quot;with&quot;</span><span class="p">,</span><span class="n">Space</span><span class="p">,</span><span class="n">Emph</span> <span class="p">[</span><span class="n">Str</span> <span class="s2">&quot;italics&quot;</span><span class="p">]]</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">Pandoc</span></code> document consists of a <code class="docutils literal notranslate"><span class="pre">Meta</span></code> block (containing metadata
+like title, authors, and date) and a list of <code class="docutils literal notranslate"><span class="pre">Block</span></code> elements. In this
+case, we have two <code class="docutils literal notranslate"><span class="pre">Block</span></code>s, a <code class="docutils literal notranslate"><span class="pre">Header</span></code> and a <code class="docutils literal notranslate"><span class="pre">Para</span></code>. Each has as
+its content a list of <code class="docutils literal notranslate"><span class="pre">Inline</span></code> elements. For more details on the
+pandoc AST, see the <a class="reference external" href="https://hackage.haskell.org/package/pandoc-types">haddock documentation for
+``Text.Pandoc.Definition``</a>.</p>
+<p>We can use Haskell to create a JSON filter that transforms this AST,
+replacing each <code class="docutils literal notranslate"><span class="pre">Header</span></code> block with level &gt;= 2 with a <code class="docutils literal notranslate"><span class="pre">Para</span></code> with its
+contents wrapped inside an <code class="docutils literal notranslate"><span class="pre">Emph</span></code> inline:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="o">#!/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">runhaskell</span>
+<span class="c1">-- behead.hs</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc.JSON</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">toJSONFilter</span> <span class="n">behead</span>
+
+<span class="nf">behead</span> <span class="ow">::</span> <span class="kt">Block</span> <span class="ow">-&gt;</span> <span class="kt">Block</span>
+<span class="nf">behead</span> <span class="p">(</span><span class="kt">Header</span> <span class="n">n</span> <span class="kr">_</span> <span class="n">xs</span><span class="p">)</span> <span class="o">|</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">=</span> <span class="kt">Para</span> <span class="p">[</span><span class="kt">Emph</span> <span class="n">xs</span><span class="p">]</span>
+<span class="nf">behead</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> function does two things. First, it lifts the
+<code class="docutils literal notranslate"><span class="pre">behead</span></code> function (which maps <code class="docutils literal notranslate"><span class="pre">Block</span> <span class="pre">-&gt;</span> <span class="pre">Block</span></code>) onto a
+transformation of the entire <code class="docutils literal notranslate"><span class="pre">Pandoc</span></code> AST, walking the AST and
+transforming each block. Second, it wraps this <code class="docutils literal notranslate"><span class="pre">Pandoc</span> <span class="pre">-&gt;</span> <span class="pre">Pandoc</span></code>
+transformation with the necessary JSON serialization and
+deserialization, producing an executable that consumes JSON from stdin
+and produces JSON to stdout.</p>
+<p>To use the filter, make it executable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">behead</span><span class="o">.</span><span class="n">hs</span>
+</pre></div>
+</div>
+<p>and then</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">SOURCEFORMAT</span> <span class="o">-</span><span class="n">t</span> <span class="n">TARGETFORMAT</span> <span class="o">--</span><span class="nb">filter</span> <span class="o">./</span><span class="n">behead</span><span class="o">.</span><span class="n">hs</span>
+</pre></div>
+</div>
+<p>(It is also necessary that <code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code> be installed in the local
+package repository. To do this using cabal-install,
+<code class="docutils literal notranslate"><span class="pre">cabal</span> <span class="pre">v2-update</span> <span class="pre">&amp;&amp;</span> <span class="pre">cabal</span> <span class="pre">v2-install</span> <span class="pre">--lib</span> <span class="pre">pandoc-types</span></code>.)</p>
+<p>Alternatively, we could compile the filter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ghc</span> <span class="o">-</span><span class="n">package</span><span class="o">-</span><span class="n">env</span><span class="o">=</span><span class="n">default</span> <span class="o">--</span><span class="n">make</span> <span class="n">behead</span><span class="o">.</span><span class="n">hs</span>
+<span class="n">pandoc</span> <span class="o">-</span><span class="n">f</span> <span class="n">SOURCEFORMAT</span> <span class="o">-</span><span class="n">t</span> <span class="n">TARGETFORMAT</span> <span class="o">--</span><span class="nb">filter</span> <span class="o">./</span><span class="n">behead</span>
+</pre></div>
+</div>
+<p>Note that if the filter is placed in the system PATH, then the initial
+<code class="docutils literal notranslate"><span class="pre">./</span></code> is not needed. Note also that the command line can include
+multiple instances of <code class="docutils literal notranslate"><span class="pre">--filter</span></code>: the filters will be applied in
+sequence.</p>
+</div>
+<div class="section" id="latex-for-wordpress">
+<h2><a class="toc-backref" href="#id5">LaTeX for WordPress</a><a class="headerlink" href="#latex-for-wordpress" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Another easy example. WordPress blogs require a special format for LaTeX
+math. Instead of <code class="docutils literal notranslate"><span class="pre">$e=mc^2$</span></code>, you need: <code class="docutils literal notranslate"><span class="pre">$LaTeX</span> <span class="pre">e=mc^2$</span></code>. How can we
+convert a markdown document accordingly?</p>
+<p>Again, it’s difficult to do the job reliably with regexes. A <code class="docutils literal notranslate"><span class="pre">$</span></code> might
+be a regular currency indicator, or it might occur in a comment or code
+block or inline code span. We just want to find the <code class="docutils literal notranslate"><span class="pre">$</span></code>s that begin
+LaTeX math. If only we had a parser…</p>
+<p>We do. Pandoc already extracts LaTeX math, so:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="o">#!/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">runhaskell</span>
+<span class="c1">-- wordpressify.hs</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc.JSON</span>
+
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">toJSONFilter</span> <span class="n">wordpressify</span>
+  <span class="kr">where</span> <span class="n">wordpressify</span> <span class="p">(</span><span class="kt">Math</span> <span class="n">x</span> <span class="n">y</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Math</span> <span class="n">x</span> <span class="p">(</span><span class="s">&quot;LaTeX &quot;</span> <span class="o">++</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">wordpressify</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>Mission accomplished. (I’ve omitted type signatures here, just to show
+it can be done.)</p>
+</div>
+<div class="section" id="but-i-dont-want-to-learn-haskell">
+<h2><a class="toc-backref" href="#id6">But I don’t want to learn Haskell!</a><a class="headerlink" href="#but-i-dont-want-to-learn-haskell" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>While it’s easiest to write pandoc filters in Haskell, it is fairly easy
+to write them in python using the <code class="docutils literal notranslate"><span class="pre">pandocfilters</span></code> package. The package
+is in PyPI and can be installed using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandocfilters</span></code> or
+<code class="docutils literal notranslate"><span class="pre">easy_install</span> <span class="pre">pandocfilters</span></code>.</p>
+<p>Here’s our “beheading” filter in python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Pandoc filter to convert all level 2+ headings to paragraphs with</span>
+<span class="sd">emphasized text.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pandocfilters</span> <span class="kn">import</span> <span class="n">toJSONFilter</span><span class="p">,</span> <span class="n">Emph</span><span class="p">,</span> <span class="n">Para</span>
+
+<span class="k">def</span> <span class="nf">behead</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="n">meta</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;Header&#39;</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">Para</span><span class="p">([</span><span class="n">Emph</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">])])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">toJSONFilter</span><span class="p">(</span><span class="n">behead</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">toJSONFilter(behead)</span></code> walks the AST and applies the <code class="docutils literal notranslate"><span class="pre">behead</span></code> action
+to each element. If <code class="docutils literal notranslate"><span class="pre">behead</span></code> returns nothing, the node is unchanged;
+if it returns an object, the node is replaced; if it returns a list, the
+new list is spliced in.</p>
+<p>Note that, although these parameters are not used in this example,
+<code class="docutils literal notranslate"><span class="pre">format</span></code> provides access to the target format, and <code class="docutils literal notranslate"><span class="pre">meta</span></code> provides
+access to the document’s metadata.</p>
+<p>There are many examples of python filters in <a class="reference external" href="https://github.com/jgm/pandocfilters">the pandocfilters
+repository</a>.</p>
+<p>For a more Pythonic alternative to pandocfilters, see the <a class="reference external" href="https://pypi.org/project/panflute">panflute</a>
+library. Don’t like Python? There are also ports of pandocfilters in
+<a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a>, <a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a>, <a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">javascript/node.js</a>, <a class="reference external" href="https://github.com/dfrommi/groovy-pandoc">Groovy</a>, and <a class="reference external" href="https://heerdebeer.org/Software/markdown/paru/">Ruby</a>.</p>
+<p>Starting with pandoc 2.0, pandoc includes built-in support for writing
+filters in lua. The lua interpreter is built in to pandoc, so a lua
+filter does not require any additional software to run. See the
+<a class="reference external" href="https://pandoc.org/lua-filters.html">documentation on lua filters</a>.</p>
+</div>
+<div class="section" id="include-files">
+<h2><a class="toc-backref" href="#id7">Include files</a><a class="headerlink" href="#include-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>So none of our transforms have involved IO. How about a script that
+reads a markdown document, finds all the inline code blocks with
+attribute <code class="docutils literal notranslate"><span class="pre">include</span></code>, and replaces their contents with the contents of
+the file given?</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="o">#!/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">runhaskell</span>
+<span class="c1">-- includes.hs</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc.JSON</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Text.IO</span> <span class="k">as</span> <span class="n">TIO</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Text</span> <span class="k">as</span> <span class="n">T</span>
+
+<span class="nf">doInclude</span> <span class="ow">::</span> <span class="kt">Block</span> <span class="ow">-&gt;</span> <span class="kt">IO</span> <span class="kt">Block</span>
+<span class="nf">doInclude</span> <span class="n">cb</span><span class="o">@</span><span class="p">(</span><span class="kt">CodeBlock</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">namevals</span><span class="p">)</span> <span class="n">contents</span><span class="p">)</span> <span class="ow">=</span>
+  <span class="kr">case</span> <span class="n">lookup</span> <span class="s">&quot;include&quot;</span> <span class="n">namevals</span> <span class="kr">of</span>
+       <span class="kt">Just</span> <span class="n">f</span>     <span class="ow">-&gt;</span> <span class="kt">CodeBlock</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">namevals</span><span class="p">)</span> <span class="o">&lt;$&gt;</span>
+                      <span class="kt">TIO</span><span class="o">.</span><span class="n">readFile</span> <span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">unpack</span> <span class="n">f</span><span class="p">)</span>
+       <span class="kt">Nothing</span>    <span class="ow">-&gt;</span> <span class="n">return</span> <span class="n">cb</span>
+<span class="nf">doInclude</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">return</span> <span class="n">x</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">toJSONFilter</span> <span class="n">doInclude</span>
+</pre></div>
+</div>
+<p>Try this on the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Here</span><span class="s1">&#39;s the pandoc README:</span>
+
+<span class="o">~~~~</span> <span class="p">{</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;README&quot;</span><span class="p">}</span>
+<span class="n">this</span> <span class="n">will</span> <span class="n">be</span> <span class="n">replaced</span> <span class="n">by</span> <span class="n">contents</span> <span class="n">of</span> <span class="n">README</span>
+<span class="o">~~~~</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="removing-links">
+<h2><a class="toc-backref" href="#id8">Removing links</a><a class="headerlink" href="#removing-links" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>What if we want to remove every link from a document, retaining the
+link’s text?</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="o">#!/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">env</span> <span class="n">runhaskell</span>
+<span class="c1">-- delink.hs</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc.JSON</span>
+
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">toJSONFilter</span> <span class="n">delink</span>
+
+<span class="nf">delink</span> <span class="ow">::</span> <span class="kt">Inline</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Inline</span><span class="p">]</span>
+<span class="nf">delink</span> <span class="p">(</span><span class="kt">Link</span> <span class="kr">_</span> <span class="n">txt</span> <span class="kr">_</span><span class="p">)</span> <span class="ow">=</span> <span class="n">txt</span>
+<span class="nf">delink</span> <span class="n">x</span>              <span class="ow">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">delink</span></code> can’t be a function of type <code class="docutils literal notranslate"><span class="pre">Inline</span> <span class="pre">-&gt;</span> <span class="pre">Inline</span></code>,
+because the thing we want to replace the link with is not a single
+<code class="docutils literal notranslate"><span class="pre">Inline</span></code> element, but a list of them. So we make <code class="docutils literal notranslate"><span class="pre">delink</span></code> a function
+from an <code class="docutils literal notranslate"><span class="pre">Inline</span></code> element to a list of <code class="docutils literal notranslate"><span class="pre">Inline</span></code> elements.
+<code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> can still lift this function to a transformation of
+type <code class="docutils literal notranslate"><span class="pre">Pandoc</span> <span class="pre">-&gt;</span> <span class="pre">Pandoc</span></code>.</p>
+</div>
+<div class="section" id="a-filter-for-ruby-text">
+<h2><a class="toc-backref" href="#id9">A filter for ruby text</a><a class="headerlink" href="#a-filter-for-ruby-text" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Finally, here’s a nice real-world example, developed on the
+<a class="reference external" href="https://groups.google.com/group/pandoc-discuss/browse_thread/thread/7baea325565878c8">pandoc-discuss</a> list. Qubyte wrote:</p>
+<blockquote>
+<div><p>I’m interested in using pandoc to turn my markdown notes on Japanese
+into nicely set HTML and (Xe)LaTeX. With HTML5, ruby (typically used
+to phonetically read chinese characters by placing text above or to
+the side) is standard, and support from browsers is emerging (Webkit
+based browsers appear to fully support it). For those browsers that
+don’t support it yet (notably Firefox) the feature falls back in a
+nice way by placing the phonetic reading inside brackets to the side
+of each Chinese character, which is suitable for other output formats
+too. As for (Xe)LaTeX, ruby is not an issue.</p>
+<p>At the moment, I use inline HTML to achieve the result when the
+conversion is to HTML, but it’s ugly and uses a lot of keystrokes,
+for example</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ruby&gt;</span>ご<span class="nt">&lt;rt&gt;&lt;/rt&gt;</span>飯<span class="nt">&lt;rp&gt;</span>（<span class="nt">&lt;/rp&gt;&lt;rt&gt;</span>はん<span class="nt">&lt;/rt&gt;&lt;rp&gt;</span>）<span class="nt">&lt;/rp&gt;&lt;/ruby&gt;</span>
+</pre></div>
+</div>
+<p>sets ご飯 “gohan” with “han” spelt phonetically above the second
+character, or to the right of it in brackets if the browser does not
+support ruby. I’d like to have something more like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="p">[</span><span class="n">はん</span><span class="p">](</span><span class="n">飯</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or any keystroke saving convention would be welcome.</p>
+</div></blockquote>
+<p>We came up with the following script, which uses the convention that a
+markdown link with a URL beginning with a hyphen is interpreted as ruby:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">はん</span><span class="p">](</span><span class="o">-</span><span class="n">飯</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="cm">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="c1">-- handleruby.hs</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc.JSON</span>
+<span class="kr">import</span> <span class="nn">System.Environment</span> <span class="p">(</span><span class="nf">getArgs</span><span class="p">)</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Text</span> <span class="k">as</span> <span class="n">T</span>
+
+<span class="nf">handleRuby</span> <span class="ow">::</span> <span class="kt">Maybe</span> <span class="kt">Format</span> <span class="ow">-&gt;</span> <span class="kt">Inline</span> <span class="ow">-&gt;</span> <span class="kt">Inline</span>
+<span class="nf">handleRuby</span> <span class="p">(</span><span class="kt">Just</span> <span class="n">format</span><span class="p">)</span> <span class="n">x</span><span class="o">@</span><span class="p">(</span><span class="kt">Link</span> <span class="n">attr</span> <span class="p">[</span><span class="kt">Str</span> <span class="n">ruby</span><span class="p">]</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="kr">_</span><span class="p">))</span> <span class="ow">=</span>
+  <span class="kr">case</span> <span class="kt">T</span><span class="o">.</span><span class="n">uncons</span> <span class="n">src</span> <span class="kr">of</span>
+    <span class="kt">Just</span> <span class="p">(</span><span class="sc">&#39;-&#39;</span><span class="p">,</span><span class="n">kanji</span><span class="p">)</span>
+      <span class="o">|</span> <span class="n">format</span> <span class="o">==</span> <span class="kt">Format</span> <span class="s">&quot;html&quot;</span> <span class="ow">-&gt;</span> <span class="kt">RawInline</span> <span class="n">format</span> <span class="o">$</span>
+        <span class="s">&quot;&lt;ruby&gt;&quot;</span> <span class="o">&lt;&gt;</span> <span class="n">kanji</span> <span class="o">&lt;&gt;</span> <span class="s">&quot;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;&quot;</span> <span class="o">&lt;&gt;</span> <span class="n">ruby</span> <span class="o">&lt;&gt;</span>
+        <span class="s">&quot;&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;&quot;</span>
+      <span class="o">|</span> <span class="n">format</span> <span class="o">==</span> <span class="kt">Format</span> <span class="s">&quot;latex&quot;</span> <span class="ow">-&gt;</span> <span class="kt">RawInline</span> <span class="n">format</span> <span class="o">$</span>
+        <span class="s">&quot;</span><span class="se">\\</span><span class="s">ruby{&quot;</span> <span class="o">&lt;&gt;</span> <span class="n">kanji</span> <span class="o">&lt;&gt;</span> <span class="s">&quot;}{&quot;</span> <span class="o">&lt;&gt;</span> <span class="n">ruby</span> <span class="o">&lt;&gt;</span> <span class="s">&quot;}&quot;</span>
+      <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">-&gt;</span> <span class="kt">Str</span> <span class="n">ruby</span>
+    <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">x</span>
+<span class="nf">handleRuby</span> <span class="kr">_</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">toJSONFilter</span> <span class="n">handleRuby</span>
+</pre></div>
+</div>
+<p>Note that, when a script is called using <code class="docutils literal notranslate"><span class="pre">--filter</span></code>, pandoc passes it
+the target format as the first argument. When a function’s first
+argument is of type <code class="docutils literal notranslate"><span class="pre">Maybe</span> <span class="pre">Format</span></code>, <code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> will
+automatically assign it <code class="docutils literal notranslate"><span class="pre">Just</span></code> the target format or <code class="docutils literal notranslate"><span class="pre">Nothing</span></code>.</p>
+<p>We compile our script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ghc</span> <span class="o">--</span><span class="n">make</span> <span class="n">handleRuby</span>
+</pre></div>
+</div>
+<p>Then run it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">pandoc</span> <span class="o">-</span><span class="n">F</span> <span class="o">./</span><span class="n">handleRuby</span> <span class="o">-</span><span class="n">t</span> <span class="n">html</span>
+<span class="p">[</span><span class="n">はん</span><span class="p">](</span><span class="o">-</span><span class="n">飯</span><span class="p">)</span>
+<span class="o">^</span><span class="n">D</span>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&lt;</span><span class="n">ruby</span><span class="o">&gt;</span><span class="n">飯</span><span class="o">&lt;</span><span class="n">rp</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;/</span><span class="n">rp</span><span class="o">&gt;&lt;</span><span class="n">rt</span><span class="o">&gt;</span><span class="n">はん</span><span class="o">&lt;/</span><span class="n">rt</span><span class="o">&gt;&lt;</span><span class="n">rp</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">rp</span><span class="o">&gt;&lt;/</span><span class="n">ruby</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="o">%</span> <span class="n">pandoc</span> <span class="o">-</span><span class="n">F</span> <span class="o">./</span><span class="n">handleRuby</span> <span class="o">-</span><span class="n">t</span> <span class="n">latex</span>
+<span class="p">[</span><span class="n">はん</span><span class="p">](</span><span class="o">-</span><span class="n">飯</span><span class="p">)</span>
+<span class="o">^</span><span class="n">D</span>
+\<span class="n">ruby</span><span class="p">{</span><span class="n">飯</span><span class="p">}{</span><span class="n">はん</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Note: to use this to generate PDFs via LaTeX, you’ll need to use
+<code class="docutils literal notranslate"><span class="pre">--pdf-engine=xelatex</span></code>, specify a <code class="docutils literal notranslate"><span class="pre">mainfont</span></code> that has the Japanese
+characters (e.g. “Noto Sans CJK TC”), and add <code class="docutils literal notranslate"><span class="pre">\usepackage{ruby}</span></code> to
+your template or header-includes.</p>
+</div>
+<div class="section" id="exercises">
+<h2><a class="toc-backref" href="#id10">Exercises</a><a class="headerlink" href="#exercises" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Put all the regular text in a markdown document in ALL CAPS (without
+touching text in URLs or link titles).</p></li>
+<li><p>Remove all horizontal rules from a document.</p></li>
+<li><p>Renumber all enumerated lists with roman numerals.</p></li>
+<li><p>Replace each delimited code block with class <code class="docutils literal notranslate"><span class="pre">dot</span></code> with an image
+generated by running <code class="docutils literal notranslate"><span class="pre">dot</span> <span class="pre">-Tpng</span></code> (from graphviz) on the contents of
+the code block.</p></li>
+<li><p>Find all code blocks with class <code class="docutils literal notranslate"><span class="pre">python</span></code> and run them using the
+python interpreter, printing the results to the console.</p></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/icon_pandoc_square_small.jpg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">日本Pandocユーザ会</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=pandoc-jp&repo=pandoc-doc-ja&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">日本Pandocユーザ会</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide.html">Pandoc User’s Guide 日本語版</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trans-intro.html">翻訳の手引 for Pandocユーザーズガイド</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, 日本Pandocユーザ会.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

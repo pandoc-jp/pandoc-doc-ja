@@ -33,11 +33,18 @@
 --------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    index
    users-guide
    trans-intro
+
+.. getting-started
+.. epub
+.. filters
+.. lua-filters
+.. using-the-pandoc-api
+
 
 このサイトのソースコード
 ------------------------

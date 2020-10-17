@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Using the pandoc API 日本語版 &#8212; 日本Pandocユーザ会 2019.02.21 ドキュメント</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="using-the-pandoc-api">
+<h1><a class="toc-backref" href="#id2">Using the pandoc API 日本語版</a><a class="headerlink" href="#using-the-pandoc-api" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>現在の翻訳は <em>プレリリース版</em> です。不完全な翻訳を含んでいます。
+（ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）</p>
+<ul class="simple">
+<li><p>正確な情報については英語の公式 <a class="reference external" href="https://pandoc.org/MANUAL.html">User's Guide</a> を参照してください</p></li>
+<li><p>この翻訳に対する問題・改善案については <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/issues">GitHubリポジトリのIssue</a> に投稿してください</p></li>
+<li><p>翻訳のレビュー作業や翻訳作業へのご協力を希望の方は <a class="reference internal" href="trans-intro.html"><span class="doc">翻訳の手引 for Pandocユーザーズガイド</span></a> をご覧ください</p></li>
+</ul>
+</div>
+<p>原著者:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>John MacFarlane</p></li>
+</ul>
+</div></blockquote>
+<p>原著バージョン: 2.11.0.2</p>
+<p>更新日: 2020/10/17</p>
+<p>翻訳者（アルファベット順）:</p>
+<ul class="simple">
+<li><p>becolomochi</p></li>
+<li><p>makotosan</p></li>
+<li><p>niszet</p></li>
+<li><p>Takada Atsushi</p></li>
+<li><p><a class="reference external" href="https://ishibaki.github.io">Tomoki Ishibashi</a></p></li>
+<li><p>Yuki Fujiwara</p></li>
+</ul>
+<div class="contents topic" id="id1">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#using-the-pandoc-api" id="id2">Using the pandoc API 日本語版</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pandocs-architecture" id="id3">Pandoc’s architecture</a></p></li>
+<li><p><a class="reference internal" href="#a-simple-example" id="id4">A simple example</a></p></li>
+<li><p><a class="reference internal" href="#the-pandocmonad-class" id="id5">The PandocMonad class</a></p></li>
+<li><p><a class="reference internal" href="#options" id="id6">Options</a></p></li>
+<li><p><a class="reference internal" href="#builder" id="id7">Builder</a></p></li>
+<li><p><a class="reference internal" href="#data-files" id="id8">Data files</a></p></li>
+<li><p><a class="reference internal" href="#templates" id="id9">Templates</a></p></li>
+<li><p><a class="reference internal" href="#handling-errors-and-warnings" id="id10">Handling errors and warnings</a></p></li>
+<li><p><a class="reference internal" href="#walking-the-ast" id="id11">Walking the AST</a></p></li>
+<li><p><a class="reference internal" href="#creating-a-front-end" id="id12">Creating a front-end</a></p></li>
+<li><p><a class="reference internal" href="#notes-on-using-pandoc-in-web-applications" id="id13">Notes on using pandoc in web applications</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Pandoc can be used as a Haskell library, to write your own conversion
+tools or power a web application. This document offers an introduction
+to using the pandoc API.</p>
+<p>Detailed API documentation at the level of individual functions and
+types is available at <a class="reference external" href="https://hackage.haskell.org/package/pandoc">https://hackage.haskell.org/package/pandoc</a>.</p>
+<div class="section" id="pandocs-architecture">
+<h2><a class="toc-backref" href="#id3">Pandoc’s architecture</a><a class="headerlink" href="#pandocs-architecture" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Pandoc is structured as a set of <em>readers</em>, which translate various
+input formats into an abstract syntax tree (the Pandoc AST) representing
+a structured document, and a set of <em>writers</em>, which render this AST
+into various input formats. Pictorially:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">input</span> <span class="nb">format</span><span class="p">]</span> <span class="o">==</span><span class="n">reader</span><span class="o">==&gt;</span> <span class="p">[</span><span class="n">Pandoc</span> <span class="n">AST</span><span class="p">]</span> <span class="o">==</span><span class="n">writer</span><span class="o">==&gt;</span> <span class="p">[</span><span class="n">output</span> <span class="nb">format</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This architecture allows pandoc to perform <span class="math notranslate nohighlight">\(M \times N\)</span>
+conversions with <span class="math notranslate nohighlight">\(M\)</span> readers and <span class="math notranslate nohighlight">\(N\)</span> writers.</p>
+<p>The Pandoc AST is defined in the <a class="reference external" href="https://hackage.haskell.org/package/pandoc-types">pandoc-types</a> package. You should
+start by looking at the Haddock documentation for
+<a class="reference external" href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Definition.html">Text.Pandoc.Definition</a>. As you’ll see, a <code class="docutils literal notranslate"><span class="pre">Pandoc</span></code> is composed of
+some metadata and a list of <code class="docutils literal notranslate"><span class="pre">Block</span></code>s. There are various kinds of
+<code class="docutils literal notranslate"><span class="pre">Block</span></code>, including <code class="docutils literal notranslate"><span class="pre">Para</span></code> (paragraph), <code class="docutils literal notranslate"><span class="pre">Header</span></code> (section heading),
+and <code class="docutils literal notranslate"><span class="pre">BlockQuote</span></code>. Some of the <code class="docutils literal notranslate"><span class="pre">Block</span></code>s (like <code class="docutils literal notranslate"><span class="pre">BlockQuote</span></code>)
+contain lists of <code class="docutils literal notranslate"><span class="pre">Block</span></code>s, while others (like <code class="docutils literal notranslate"><span class="pre">Para</span></code>) contain
+lists of <code class="docutils literal notranslate"><span class="pre">Inline</span></code>s, and still others (like <code class="docutils literal notranslate"><span class="pre">CodeBlock</span></code>) contain
+plain text or nothing. <code class="docutils literal notranslate"><span class="pre">Inline</span></code>s are the basic elements of
+paragraphs. The distinction between <code class="docutils literal notranslate"><span class="pre">Block</span></code> and <code class="docutils literal notranslate"><span class="pre">Inline</span></code> in the type
+system makes it impossible to represent, for example, a link
+(<code class="docutils literal notranslate"><span class="pre">Inline</span></code>) whose link text is a block quote (<code class="docutils literal notranslate"><span class="pre">Block</span></code>). This
+expressive limitation is mostly a help rather than a hindrance, since
+many of the formats pandoc supports have similar limitations.</p>
+<p>The best way to explore the pandoc AST is to use <code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">-t</span> <span class="pre">native</span></code>,
+which will display the AST corresponding to some Markdown input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;1. *foo*</span><span class="se">\n</span><span class="s2">2. bar&quot;</span> <span class="o">|</span> <span class="n">pandoc</span> <span class="o">-</span><span class="n">t</span> <span class="n">native</span>
+<span class="p">[</span><span class="n">OrderedList</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">Decimal</span><span class="p">,</span><span class="n">Period</span><span class="p">)</span>
+ <span class="p">[[</span><span class="n">Plain</span> <span class="p">[</span><span class="n">Emph</span> <span class="p">[</span><span class="n">Str</span> <span class="s2">&quot;foo&quot;</span><span class="p">]]]</span>
+ <span class="p">,[</span><span class="n">Plain</span> <span class="p">[</span><span class="n">Str</span> <span class="s2">&quot;bar&quot;</span><span class="p">]]]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-simple-example">
+<h2><a class="toc-backref" href="#id4">A simple example</a><a class="headerlink" href="#a-simple-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Here is a simple example of the use of a pandoc reader and writer to
+perform a conversion:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="nn">Text.Pandoc</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Text</span> <span class="k">as</span> <span class="n">T</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Text.IO</span> <span class="k">as</span> <span class="n">TIO</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="kr">do</span>
+  <span class="n">result</span> <span class="ow">&lt;-</span> <span class="n">runIO</span> <span class="o">$</span> <span class="kr">do</span>
+    <span class="n">doc</span> <span class="ow">&lt;-</span> <span class="n">readMarkdown</span> <span class="n">def</span> <span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span> <span class="s">&quot;[testing](url)&quot;</span><span class="p">)</span>
+    <span class="n">writeRST</span> <span class="n">def</span> <span class="n">doc</span>
+  <span class="n">rst</span> <span class="ow">&lt;-</span> <span class="n">handleError</span> <span class="n">result</span>
+  <span class="kt">TIO</span><span class="o">.</span><span class="n">putStrLn</span> <span class="n">rst</span>
+</pre></div>
+</div>
+<p>Some notes:</p>
+<ol class="arabic simple">
+<li><p>The first part constructs a conversion pipeline: the input string is
+passed to <code class="docutils literal notranslate"><span class="pre">readMarkdown</span></code>, and the resulting Pandoc AST (<code class="docutils literal notranslate"><span class="pre">doc</span></code>) is
+then rendered by <code class="docutils literal notranslate"><span class="pre">writeRST</span></code>. The conversion pipeline is “run” by
+<code class="docutils literal notranslate"><span class="pre">runIO</span></code>—more on that below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> has the type <code class="docutils literal notranslate"><span class="pre">Either</span> <span class="pre">PandocError</span> <span class="pre">Text</span></code>. We could
+pattern-match on this manually, but it’s simpler in this context to
+use the <code class="docutils literal notranslate"><span class="pre">handleError</span></code> function from Text.Pandoc.Error. This exits
+with an appropriate error code and message if the value is a
+<code class="docutils literal notranslate"><span class="pre">Left</span></code>, and returns the <code class="docutils literal notranslate"><span class="pre">Text</span></code> if the value is a <code class="docutils literal notranslate"><span class="pre">Right</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="the-pandocmonad-class">
+<h2><a class="toc-backref" href="#id5">The PandocMonad class</a><a class="headerlink" href="#the-pandocmonad-class" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Let’s look at the types of <code class="docutils literal notranslate"><span class="pre">readMarkdown</span></code> and <code class="docutils literal notranslate"><span class="pre">writeRST</span></code>:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">readMarkdown</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">ReaderOptions</span> <span class="ow">-&gt;</span> <span class="kt">Text</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="kt">Pandoc</span>
+<span class="nf">writeRST</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">WriterOptions</span> <span class="ow">-&gt;</span> <span class="kt">Pandoc</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="kt">Text</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">PandocMonad</span> <span class="pre">m</span> <span class="pre">=&gt;</span></code> part is a typeclass constraint. It says that
+<code class="docutils literal notranslate"><span class="pre">readMarkdown</span></code> and <code class="docutils literal notranslate"><span class="pre">writeRST</span></code> define computations that can be used
+in any instance of the <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code> type class. <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code> is
+defined in the module <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Class.html">Text.Pandoc.Class</a>.</p>
+<p>Two instances of <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code> are provided: <code class="docutils literal notranslate"><span class="pre">PandocIO</span></code> and
+<code class="docutils literal notranslate"><span class="pre">PandocPure</span></code>. The difference is that computations run in <code class="docutils literal notranslate"><span class="pre">PandocIO</span></code>
+are allowed to do IO (for example, read a file), while computations in
+<code class="docutils literal notranslate"><span class="pre">PandocPure</span></code> are free of any side effects. <code class="docutils literal notranslate"><span class="pre">PandocPure</span></code> is useful
+for sandboxed environments, when you want to prevent users from doing
+anything malicious. To run the conversion in <code class="docutils literal notranslate"><span class="pre">PandocIO</span></code>, use <code class="docutils literal notranslate"><span class="pre">runIO</span></code>
+(as above). To run it in <code class="docutils literal notranslate"><span class="pre">PandocPure</span></code>, use <code class="docutils literal notranslate"><span class="pre">runPure</span></code>.</p>
+<p>As you can see from the Haddocks, <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Class.html">Text.Pandoc.Class</a> exports many
+auxiliary functions that can be used in any instance of <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code>.
+For example:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="c1">-- | Get the verbosity level.</span>
+<span class="nf">getVerbosity</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="n">m</span> <span class="kt">Verbosity</span>
+
+<span class="c1">-- | Set the verbosity level.</span>
+<span class="nf">setVerbosity</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">Verbosity</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+
+<span class="c1">-- Get the accumulated log messages (in temporal order).</span>
+<span class="nf">getLog</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="n">m</span> <span class="p">[</span><span class="kt">LogMessage</span><span class="p">]</span>
+<span class="nf">getLog</span> <span class="ow">=</span> <span class="n">reverse</span> <span class="o">&lt;$&gt;</span> <span class="n">getsCommonState</span> <span class="n">stLog</span>
+
+<span class="c1">-- | Log a message using &#39;logOutput&#39;.  Note that &#39;logOutput&#39; is</span>
+<span class="c1">-- called only if the verbosity level exceeds the level of the</span>
+<span class="c1">-- message, but the message is added to the list of log messages</span>
+<span class="c1">-- that will be retrieved by &#39;getLog&#39; regardless of its verbosity level.</span>
+<span class="nf">report</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="kt">LogMessage</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+
+<span class="c1">-- | Fetch an image or other item from the local filesystem or the net.</span>
+<span class="c1">-- Returns raw content and maybe mime type.</span>
+<span class="nf">fetchItem</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span>
+          <span class="ow">=&gt;</span> <span class="kt">String</span>
+          <span class="ow">-&gt;</span> <span class="n">m</span> <span class="p">(</span><span class="kt">B</span><span class="o">.</span><span class="kt">ByteString</span><span class="p">,</span> <span class="kt">Maybe</span> <span class="kt">MimeType</span><span class="p">)</span>
+
+<span class="c1">-- Set the resource path searched by &#39;fetchItem&#39;.</span>
+<span class="nf">setResourcePath</span> <span class="ow">::</span> <span class="kt">PandocMonad</span> <span class="n">m</span> <span class="ow">=&gt;</span> <span class="p">[</span><span class="kt">FilePath</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="nb">()</span>
+</pre></div>
+</div>
+<p>If we wanted more verbose informational messages during the conversion
+we defined in the previous section, we could do this:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">result</span> <span class="ow">&lt;-</span> <span class="n">runIO</span> <span class="o">$</span> <span class="kr">do</span>
+  <span class="n">setVerbosity</span> <span class="kt">INFO</span>
+  <span class="n">doc</span> <span class="ow">&lt;-</span> <span class="n">readMarkdown</span> <span class="n">def</span> <span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="n">pack</span> <span class="s">&quot;[testing](url)&quot;</span><span class="p">)</span>
+  <span class="n">writeRST</span> <span class="n">def</span> <span class="n">doc</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">PandocIO</span></code> is an instance of <code class="docutils literal notranslate"><span class="pre">MonadIO</span></code>, so you can use
+<code class="docutils literal notranslate"><span class="pre">liftIO</span></code> to perform arbitrary IO operations inside a pandoc conversion
+chain.</p>
+</div>
+<div class="section" id="options">
+<h2><a class="toc-backref" href="#id6">Options</a><a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The first argument of each reader or writer is for options controlling
+the behavior of the reader or writer: <code class="docutils literal notranslate"><span class="pre">ReaderOptions</span></code> for readers and
+<code class="docutils literal notranslate"><span class="pre">WriterOptions</span></code> for writers. These are defined in
+<a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Options.html">Text.Pandoc.Options</a>. It is a good idea to study these options to see
+what can be adjusted.</p>
+<p><code class="docutils literal notranslate"><span class="pre">def</span></code> (from Data.Default) denotes a default value for each kind of
+option. (You can also use <code class="docutils literal notranslate"><span class="pre">defaultWriterOptions</span></code> and
+<code class="docutils literal notranslate"><span class="pre">defaultReaderOptions</span></code>.) Generally you’ll want to use the defaults and
+modify them only when needed, for example:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">writeRST</span> <span class="n">def</span><span class="p">{</span> <span class="n">writerReferenceLinks</span> <span class="ow">=</span> <span class="kt">True</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Some particularly important options to know about:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">writerTemplate</span></code>: By default, this is <code class="docutils literal notranslate"><span class="pre">Nothing</span></code>, which means that
+a document fragment will be produced. If you want a full document,
+you need to specify <code class="docutils literal notranslate"><span class="pre">Just</span> <span class="pre">template</span></code>, where <code class="docutils literal notranslate"><span class="pre">template</span></code> is a
+<code class="docutils literal notranslate"><span class="pre">Template</span> <span class="pre">Text</span></code> from <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Templates.html">Text.Pandoc.Templates</a> containing the
+template’s contents (not the path).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">readerExtensions</span></code> and <code class="docutils literal notranslate"><span class="pre">writerExtensions</span></code>: These specify the
+extensions to be used in parsing and rendering. Extensions are
+defined in <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Extensions.html">Text.Pandoc.Extensions</a>.</p></li>
+</ol>
+</div>
+<div class="section" id="builder">
+<h2><a class="toc-backref" href="#id7">Builder</a><a class="headerlink" href="#builder" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Sometimes it’s useful to construct a Pandoc document programmatically.
+To make this easier we provide the module <a class="reference external" href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Builder.html">Text.Pandoc.Builder</a>
+<code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code>.</p>
+<p>Because concatenating lists is slow, we use special types <code class="docutils literal notranslate"><span class="pre">Inlines</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Blocks</span></code> that wrap a <code class="docutils literal notranslate"><span class="pre">Sequence</span></code> of <code class="docutils literal notranslate"><span class="pre">Inline</span></code> and <code class="docutils literal notranslate"><span class="pre">Block</span></code>
+elements. These are instances of the Monoid typeclass and can easily be
+concatenated:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="nn">Text.Pandoc.Builder</span>
+
+<span class="nf">mydoc</span> <span class="ow">::</span> <span class="kt">Pandoc</span>
+<span class="nf">mydoc</span> <span class="ow">=</span> <span class="n">doc</span> <span class="o">$</span> <span class="n">header</span> <span class="mi">1</span> <span class="p">(</span><span class="n">text</span> <span class="s">&quot;Hello!&quot;</span><span class="p">)</span>
+           <span class="o">&lt;&gt;</span> <span class="n">para</span> <span class="p">(</span><span class="n">emph</span> <span class="p">(</span><span class="n">text</span> <span class="s">&quot;hello world&quot;</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="n">text</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">print</span> <span class="n">mydoc</span>
+</pre></div>
+</div>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">OverloadedStrings</span></code> pragma, you can simplify this
+further:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">mydoc</span> <span class="ow">=</span> <span class="n">doc</span> <span class="o">$</span> <span class="n">header</span> <span class="mi">1</span> <span class="s">&quot;Hello!&quot;</span>
+           <span class="o">&lt;&gt;</span> <span class="n">para</span> <span class="p">(</span><span class="n">emph</span> <span class="s">&quot;hello world&quot;</span> <span class="o">&lt;&gt;</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here’s a more realistic example. Suppose your boss says: write me a
+letter in Word listing all the filling stations in Chicago that take the
+Voyager card. You find some JSON data in this format (<code class="docutils literal notranslate"><span class="pre">fuel.json</span></code>):</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>[ {
+  &quot;state&quot; : &quot;IL&quot;,
+  &quot;city&quot; : &quot;Chicago&quot;,
+  &quot;fuel_type_code&quot; : &quot;CNG&quot;,
+  &quot;zip&quot; : &quot;60607&quot;,
+  &quot;station_name&quot; : &quot;Clean Energy - Yellow Cab&quot;,
+  &quot;cards_accepted&quot; : &quot;A D M V Voyager Wright_Exp CleanEnergy&quot;,
+  &quot;street_address&quot; : &quot;540 W Grenshaw&quot;
+}, ...
+</pre></div>
+</div>
+<p>And then use aeson and pandoc to parse the JSON and create the Word
+document:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="cm">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc.Builder</span>
+<span class="kr">import</span> <span class="nn">Text.Pandoc</span>
+<span class="kr">import</span> <span class="nn">Data.Monoid</span> <span class="p">((</span><span class="o">&lt;&gt;</span><span class="p">),</span> <span class="nf">mempty</span><span class="p">,</span> <span class="nf">mconcat</span><span class="p">)</span>
+<span class="kr">import</span> <span class="nn">Data.Aeson</span>
+<span class="kr">import</span> <span class="nn">Control.Applicative</span>
+<span class="kr">import</span> <span class="nn">Control.Monad</span> <span class="p">(</span><span class="nf">mzero</span><span class="p">)</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString.Lazy</span> <span class="k">as</span> <span class="n">BL</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Text</span> <span class="k">as</span> <span class="n">T</span>
+<span class="kr">import</span> <span class="nn">Data.List</span> <span class="p">(</span><span class="nf">intersperse</span><span class="p">)</span>
+
+<span class="kr">data</span> <span class="kt">Station</span> <span class="ow">=</span> <span class="kt">Station</span><span class="p">{</span>
+    <span class="n">address</span>        <span class="ow">::</span> <span class="kt">String</span>
+  <span class="p">,</span> <span class="n">name</span>           <span class="ow">::</span> <span class="kt">String</span>
+  <span class="p">,</span> <span class="n">cardsAccepted</span>  <span class="ow">::</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+  <span class="p">}</span> <span class="kr">deriving</span> <span class="kt">Show</span>
+
+<span class="kr">instance</span> <span class="kt">FromJSON</span> <span class="kt">Station</span> <span class="kr">where</span>
+    <span class="n">parseJSON</span> <span class="p">(</span><span class="kt">Object</span> <span class="n">v</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Station</span> <span class="o">&lt;$&gt;</span>
+       <span class="n">v</span> <span class="o">.:</span> <span class="s">&quot;street_address&quot;</span> <span class="o">&lt;*&gt;</span>
+       <span class="n">v</span> <span class="o">.:</span> <span class="s">&quot;station_name&quot;</span> <span class="o">&lt;*&gt;</span>
+       <span class="p">(</span><span class="n">words</span> <span class="o">&lt;$&gt;</span> <span class="p">(</span><span class="n">v</span> <span class="o">.:?</span> <span class="s">&quot;cards_accepted&quot;</span> <span class="o">.!=</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+    <span class="n">parseJSON</span> <span class="kr">_</span>          <span class="ow">=</span> <span class="n">mzero</span>
+
+<span class="nf">createLetter</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Station</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Pandoc</span>
+<span class="nf">createLetter</span> <span class="n">stations</span> <span class="ow">=</span> <span class="n">doc</span> <span class="o">$</span>
+    <span class="n">para</span> <span class="s">&quot;Dear Boss:&quot;</span> <span class="o">&lt;&gt;</span>
+    <span class="n">para</span> <span class="s">&quot;Here are the CNG stations that accept Voyager cards:&quot;</span> <span class="o">&lt;&gt;</span>
+    <span class="n">simpleTable</span> <span class="p">[</span><span class="n">plain</span> <span class="s">&quot;Station&quot;</span><span class="p">,</span> <span class="n">plain</span> <span class="s">&quot;Address&quot;</span><span class="p">,</span> <span class="n">plain</span> <span class="s">&quot;Cards accepted&quot;</span><span class="p">]</span>
+           <span class="p">(</span><span class="n">map</span> <span class="n">stationToRow</span> <span class="n">stations</span><span class="p">)</span> <span class="o">&lt;&gt;</span>
+    <span class="n">para</span> <span class="s">&quot;Your loyal servant,&quot;</span> <span class="o">&lt;&gt;</span>
+    <span class="n">plain</span> <span class="p">(</span><span class="n">image</span> <span class="s">&quot;JohnHancock.png&quot;</span> <span class="s">&quot;&quot;</span> <span class="n">mempty</span><span class="p">)</span>
+  <span class="kr">where</span>
+    <span class="n">stationToRow</span> <span class="n">station</span> <span class="ow">=</span>
+      <span class="p">[</span> <span class="n">plain</span> <span class="p">(</span><span class="n">text</span> <span class="o">$</span> <span class="n">name</span> <span class="n">station</span><span class="p">)</span>
+      <span class="p">,</span> <span class="n">plain</span> <span class="p">(</span><span class="n">text</span> <span class="o">$</span> <span class="n">address</span> <span class="n">station</span><span class="p">)</span>
+      <span class="p">,</span> <span class="n">plain</span> <span class="p">(</span><span class="n">mconcat</span> <span class="o">$</span> <span class="n">intersperse</span> <span class="n">linebreak</span>
+                       <span class="o">$</span> <span class="n">map</span> <span class="n">text</span> <span class="o">$</span> <span class="n">cardsAccepted</span> <span class="n">station</span><span class="p">)</span>
+      <span class="p">]</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="kr">do</span>
+  <span class="n">json</span> <span class="ow">&lt;-</span> <span class="kt">BL</span><span class="o">.</span><span class="n">readFile</span> <span class="s">&quot;fuel.json&quot;</span>
+  <span class="kr">let</span> <span class="n">letter</span> <span class="ow">=</span> <span class="kr">case</span> <span class="n">decode</span> <span class="n">json</span> <span class="kr">of</span>
+                    <span class="kt">Just</span> <span class="n">stations</span> <span class="ow">-&gt;</span> <span class="n">createLetter</span> <span class="p">[</span><span class="n">s</span> <span class="o">|</span> <span class="n">s</span> <span class="ow">&lt;-</span> <span class="n">stations</span><span class="p">,</span>
+                                        <span class="s">&quot;Voyager&quot;</span> <span class="p">`</span><span class="n">elem</span><span class="p">`</span> <span class="n">cardsAccepted</span> <span class="n">s</span><span class="p">]</span>
+                    <span class="kt">Nothing</span>       <span class="ow">-&gt;</span> <span class="ne">error</span> <span class="s">&quot;Could not decode JSON&quot;</span>
+  <span class="n">docx</span> <span class="ow">&lt;-</span> <span class="n">runIO</span> <span class="p">(</span><span class="n">writeDocx</span> <span class="n">def</span> <span class="n">letter</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">handleError</span>
+  <span class="kt">BL</span><span class="o">.</span><span class="n">writeFile</span> <span class="s">&quot;letter.docx&quot;</span> <span class="n">docx</span>
+  <span class="n">putStrLn</span> <span class="s">&quot;Created letter.docx&quot;</span>
+</pre></div>
+</div>
+<p>Voila! You’ve written the letter without using Word and without looking
+at the data.</p>
+</div>
+<div class="section" id="data-files">
+<h2><a class="toc-backref" href="#id8">Data files</a><a class="headerlink" href="#data-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Pandoc has a number of data files, which can be found in the <code class="docutils literal notranslate"><span class="pre">data/</span></code>
+subdirectory of the repository. These are installed with pandoc (or, if
+pandoc was compiled with the <code class="docutils literal notranslate"><span class="pre">embed_data_files</span></code> flag, they are
+embedded in the binary). You can retrieve data files using
+<code class="docutils literal notranslate"><span class="pre">readDataFile</span></code> from Text.Pandoc.Class. <code class="docutils literal notranslate"><span class="pre">readDataFile</span></code> will first
+look for the file in the “user data directory” (<code class="docutils literal notranslate"><span class="pre">setUserDataDir</span></code>,
+<code class="docutils literal notranslate"><span class="pre">getUserDataDir</span></code>), and if it is not found there, it will return the
+default installed with the system. To force the use of the default,
+<code class="docutils literal notranslate"><span class="pre">setUserDataDir</span> <span class="pre">Nothing</span></code>.</p>
+</div>
+<div class="section" id="templates">
+<h2><a class="toc-backref" href="#id9">Templates</a><a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Pandoc has its own template system, described in the User’s Guide. To
+retrieve the default template for a system, use <code class="docutils literal notranslate"><span class="pre">getDefaultTemplate</span></code>
+from <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Templates.html">Text.Pandoc.Templates</a>. Note that this looks first in the
+<code class="docutils literal notranslate"><span class="pre">templates</span></code> subdirectory of the user data directory, allowing users to
+override the system defaults. If you want to disable this behavior, use
+<code class="docutils literal notranslate"><span class="pre">setUserDataDir</span> <span class="pre">Nothing</span></code>.</p>
+<p>To render a template, use <code class="docutils literal notranslate"><span class="pre">renderTemplate'</span></code>, which takes two
+arguments, a template (String) and a context (any instance of ToJSON).
+If you want to create a context from the metadata part of a Pandoc
+document, use <code class="docutils literal notranslate"><span class="pre">metaToJSON'</span></code> from <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Writers-Shared.html">Text.Pandoc.Writers.Shared</a>. If you
+also want to incorporate values from variables, use <code class="docutils literal notranslate"><span class="pre">metaToJSON</span></code>
+instead, and make sure <code class="docutils literal notranslate"><span class="pre">writerVariables</span></code> is set in <code class="docutils literal notranslate"><span class="pre">WriterOptions</span></code>.</p>
+</div>
+<div class="section" id="handling-errors-and-warnings">
+<h2><a class="toc-backref" href="#id10">Handling errors and warnings</a><a class="headerlink" href="#handling-errors-and-warnings" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">runIO</span></code> and <code class="docutils literal notranslate"><span class="pre">runPure</span></code> return an <code class="docutils literal notranslate"><span class="pre">Either</span> <span class="pre">PandocError</span> <span class="pre">a</span></code>. All errors
+raised in running a <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code> computation will be trapped and
+returned as a <code class="docutils literal notranslate"><span class="pre">Left</span></code> value, so they can be handled by the calling
+program. To see the constructors for <code class="docutils literal notranslate"><span class="pre">PandocError</span></code>, see the
+documentation for <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Error.html">Text.Pandoc.Error</a>.</p>
+<p>To raise a <code class="docutils literal notranslate"><span class="pre">PandocError</span></code> from inside a <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code> computation,
+use <code class="docutils literal notranslate"><span class="pre">throwError</span></code>.</p>
+<p>In addition to errors, which stop execution of the conversion pipeline,
+one can generate informational messages. Use <code class="docutils literal notranslate"><span class="pre">report</span></code> from
+<a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Class.html">Text.Pandoc.Class</a> to issue a <code class="docutils literal notranslate"><span class="pre">LogMessage</span></code>. For a list of
+constructors for <code class="docutils literal notranslate"><span class="pre">LogMessage</span></code>, see <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Logging.html">Text.Pandoc.Logging</a>. Note that
+each type of log message is associated with a verbosity level. The
+verbosity level (<code class="docutils literal notranslate"><span class="pre">setVerbosity</span></code>/<code class="docutils literal notranslate"><span class="pre">getVerbosity</span></code>) determines whether
+the report will be printed to stderr (when running in <code class="docutils literal notranslate"><span class="pre">PandocIO</span></code>), but
+regardless of verbosity level, all reported messages are stored
+internally and may be retrieved using <code class="docutils literal notranslate"><span class="pre">getLog</span></code>.</p>
+</div>
+<div class="section" id="walking-the-ast">
+<h2><a class="toc-backref" href="#id11">Walking the AST</a><a class="headerlink" href="#walking-the-ast" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>It is often useful to walk the Pandoc AST either to extract information
+(e.g., what are all the URLs linked to in this document?, do all the
+code samples compile?) or to transform a document (e.g., increase the
+level of every section header, remove emphasis, or replace specially
+marked code blocks with images). To make this easier and more efficient,
+<code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code> includes a module <a class="reference external" href="https://hackage.haskell.org/package/pandoc-types/docs/Text-Pandoc-Walk.html">Text.Pandoc.Walk</a>.</p>
+<p>Here’s the essential documentation:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="kt">Walkable</span> <span class="n">a</span> <span class="n">b</span> <span class="kr">where</span>
+  <span class="c1">-- | @walk f x@ walks the structure @x@ (bottom up) and replaces every</span>
+  <span class="c1">-- occurrence of an @a@ with the result of applying @f@ to it.</span>
+  <span class="n">walk</span>  <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">b</span>
+  <span class="n">walk</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">runIdentity</span> <span class="o">.</span> <span class="n">walkM</span> <span class="p">(</span><span class="n">return</span> <span class="o">.</span> <span class="n">f</span><span class="p">)</span>
+  <span class="c1">-- | A monadic version of &#39;walk&#39;.</span>
+  <span class="n">walkM</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Monad</span> <span class="n">m</span><span class="p">,</span> <span class="kt">Functor</span> <span class="n">m</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="n">b</span>
+  <span class="c1">-- | @query f x@ walks the structure @x@ (bottom up) and applies @f@</span>
+  <span class="c1">-- to every @a@, appending the results.</span>
+  <span class="n">query</span> <span class="ow">::</span> <span class="kt">Monoid</span> <span class="n">c</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">c</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Walkable</span></code> instances are defined for most combinations of Pandoc
+types. For example, the <code class="docutils literal notranslate"><span class="pre">Walkable</span> <span class="pre">Inline</span> <span class="pre">Block</span></code> instance allows you to
+take a function <code class="docutils literal notranslate"><span class="pre">Inline</span> <span class="pre">-&gt;</span> <span class="pre">Inline</span></code> and apply it over every inline in a
+<code class="docutils literal notranslate"><span class="pre">Block</span></code>. And <code class="docutils literal notranslate"><span class="pre">Walkable</span> <span class="pre">[Inline]</span> <span class="pre">Pandoc</span></code> allows you to take a
+function <code class="docutils literal notranslate"><span class="pre">[Inline]</span> <span class="pre">-&gt;</span> <span class="pre">[Inline]</span></code> and apply it over every maximal list
+of <code class="docutils literal notranslate"><span class="pre">Inline</span></code>s in a <code class="docutils literal notranslate"><span class="pre">Pandoc</span></code>.</p>
+<p>Here’s a simple example of a function that promotes the levels of
+headers:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">promoteHeaderLevels</span> <span class="ow">::</span> <span class="kt">Pandoc</span> <span class="ow">-&gt;</span> <span class="kt">Pandoc</span>
+<span class="nf">promoteHeaderLevels</span> <span class="ow">=</span> <span class="n">walk</span> <span class="n">promote</span>
+  <span class="kr">where</span> <span class="n">promote</span> <span class="ow">::</span> <span class="kt">Block</span> <span class="ow">-&gt;</span> <span class="kt">Block</span>
+        <span class="n">promote</span> <span class="p">(</span><span class="kt">Header</span> <span class="n">lev</span> <span class="n">attr</span> <span class="n">ils</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Header</span> <span class="p">(</span><span class="n">lev</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="n">attr</span> <span class="n">ils</span>
+        <span class="n">promote</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">walkM</span></code> is a monadic version of <code class="docutils literal notranslate"><span class="pre">walk</span></code>; it can be used, for example,
+when you need your transformations to perform IO operations, use
+PandocMonad operations, or update internal state. Here’s an example
+using the State monad to add unique identifiers to each code block:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">addCodeIdentifiers</span> <span class="ow">::</span> <span class="kt">Pandoc</span> <span class="ow">-&gt;</span> <span class="kt">Pandoc</span>
+<span class="nf">addCodeIdentifiers</span> <span class="n">doc</span> <span class="ow">=</span> <span class="n">evalState</span> <span class="p">(</span><span class="n">walkM</span> <span class="n">addCodeId</span> <span class="n">doc</span><span class="p">)</span> <span class="mi">1</span>
+  <span class="kr">where</span> <span class="n">addCodeId</span> <span class="ow">::</span> <span class="kt">Block</span> <span class="ow">-&gt;</span> <span class="kt">State</span> <span class="kt">Int</span> <span class="kt">Block</span>
+        <span class="n">addCodeId</span> <span class="p">(</span><span class="kt">CodeBlock</span> <span class="p">(</span><span class="kr">_</span><span class="p">,</span><span class="n">classes</span><span class="p">,</span><span class="n">kvs</span><span class="p">)</span> <span class="n">code</span><span class="p">)</span> <span class="ow">=</span> <span class="kr">do</span>
+          <span class="n">curId</span> <span class="ow">&lt;-</span> <span class="n">get</span>
+          <span class="n">put</span> <span class="p">(</span><span class="n">curId</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+          <span class="n">return</span> <span class="o">$</span> <span class="kt">CodeBlock</span> <span class="p">(</span><span class="n">show</span> <span class="n">curId</span><span class="p">,</span><span class="n">classes</span><span class="p">,</span><span class="n">kvs</span><span class="p">)</span> <span class="n">code</span>
+        <span class="n">addCodeId</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">query</span></code> is used to collect information from the AST. Its argument is a
+query function that produces a result in some monoidal type (e.g. a
+list). The results are concatenated together. Here’s an example that
+returns a list of the URLs linked to in a document:</p>
+<div class="highlight-haskell notranslate"><div class="highlight"><pre><span></span><span class="nf">listURLs</span> <span class="ow">::</span> <span class="kt">Pandoc</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
+<span class="nf">listURLs</span> <span class="ow">=</span> <span class="n">query</span> <span class="n">urls</span>
+  <span class="kr">where</span> <span class="n">urls</span> <span class="p">(</span><span class="kt">Link</span> <span class="kr">_</span> <span class="kr">_</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="kr">_</span><span class="p">))</span> <span class="ow">=</span> <span class="p">[</span><span class="n">src</span><span class="p">]</span>
+        <span class="n">urls</span> <span class="kr">_</span>                   <span class="ow">=</span> <span class="kt">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-front-end">
+<h2><a class="toc-backref" href="#id12">Creating a front-end</a><a class="headerlink" href="#creating-a-front-end" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>All of the functionality of the command-line program <code class="docutils literal notranslate"><span class="pre">pandoc</span></code> has been
+abstracted out in <code class="docutils literal notranslate"><span class="pre">convertWithOpts</span></code> in the module <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-App.html">Text.Pandoc.App</a>.
+Creating a GUI front-end for pandoc is thus just a matter of populating
+the <code class="docutils literal notranslate"><span class="pre">Opts</span></code> structure and calling this function.</p>
+</div>
+<div class="section" id="notes-on-using-pandoc-in-web-applications">
+<h2><a class="toc-backref" href="#id13">Notes on using pandoc in web applications</a><a class="headerlink" href="#notes-on-using-pandoc-in-web-applications" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Pandoc’s parsers can exhibit pathological behavior on some inputs. So
+it is always a good idea to wrap uses of pandoc in a timeout function
+(e.g. <code class="docutils literal notranslate"><span class="pre">System.Timeout.timeout</span></code> from <code class="docutils literal notranslate"><span class="pre">base</span></code>) to prevent DoS
+attacks.</p></li>
+<li><p>If pandoc generates HTML from untrusted user input, it is always a
+good idea to filter the generated HTML through a sanitizer (such as
+<code class="docutils literal notranslate"><span class="pre">xss-sanitize</span></code>) to avoid security problems.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">runPure</span></code> rather than <code class="docutils literal notranslate"><span class="pre">runIO</span></code> will ensure that pandoc’s
+functions perform no IO operations (e.g. writing files). If some
+resources need to be made available, a “fake environment” is provided
+inside the state available to <code class="docutils literal notranslate"><span class="pre">runPure</span></code> (see <code class="docutils literal notranslate"><span class="pre">PureState</span></code> and its
+associated functions in <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Class.html">Text.Pandoc.Class</a>). It is also possible to
+write a custom instance of <code class="docutils literal notranslate"><span class="pre">PandocMonad</span></code> that, for example, makes
+wiki resources available as files in the fake environment, while
+isolating pandoc from the rest of the system.</p></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/icon_pandoc_square_small.jpg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">日本Pandocユーザ会</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=pandoc-jp&repo=pandoc-doc-ja&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">日本Pandocユーザ会</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide.html">Pandoc User’s Guide 日本語版</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trans-intro.html">翻訳の手引 for Pandocユーザーズガイド</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, 日本Pandocユーザ会.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
