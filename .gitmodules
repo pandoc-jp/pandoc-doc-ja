@@ -1,4 +1,4 @@
-[submodule "pandoc"]
-	path = pandoc
+[submodule "jgm/pandoc"]
+	path = jgm/pandoc
 	url = https://github.com/jgm/pandoc.git
         ignore = dirty
