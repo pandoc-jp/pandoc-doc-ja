@@ -18,9 +18,14 @@ PANDOC_DIR := ./jgm/pandoc
 # Pandocバージョンを格納するファイル
 PANDOC_VER_LOCK_FILE := ./jgm/ja-pandoc-version-lock
 
-# ユーザーズガイド原文
-## jgm/pandocのMANUAL.txt
-MANUAL_TXT := $(PANDOC_DIR)/MANUAL.txt
+# ターゲットの原文 (.txt/Pandoc's Markdown)
+SRC_MD_DIR := src-md
+SRC_MD_ALL := $(PANDOC_DIR)/MANUAL.txt                # ユーザーズガイド原文 (jgm/pandocのMANUAL.txt)
+SRC_MD_ALL += $(PANDOC_DIR)/doc/epub.md               # EPUB
+SRC_MD_ALL += $(PANDOC_DIR)/doc/filters.md            # JSONフィルタの解説
+SRC_MD_ALL += $(PANDOC_DIR)/doc/getting-started.md    # 初心者向けチュートリアル
+SRC_MD_ALL += $(PANDOC_DIR)/doc/lua-filters.md        # Luaフィルタの解説
+SRC_MD_ALL += $(PANDOC_DIR)/doc/using-the-pandoc-api.md  # Pandoc API (Haskell)
 
 # ユーザーズガイドのrstをビルドするためのファイル
 ## ユーザーズガイドのbody部分 (翻訳対象)
@@ -28,9 +33,7 @@ DOC_USERS_GUIDE := users-guide
 ## Sphinx側のユーザーズガイドrst
 USERS_GUIDE_RST := $(DOC_USERS_GUIDE).rst
 ## ヘッダ
-HEADER_DIR := ./headers
-HEADER_USERS_GUIDE := $(HEADER_DIR)/$(DOC_USERS_GUIDE)-header.rst
-TEMPLATE_USERS_GUIDE := $(HEADER_DIR)/$(DOC_USERS_GUIDE)-header.txt
+HEADER_USERS_GUIDE := ./headers/$(DOC_USERS_GUIDE)-header.txt
 
 ################################################
 # ターゲット：まとめて実行
@@ -97,17 +100,26 @@ jgm-pandoc-checkout:
 	fi
 	cd $(PANDOC_DIR) && git checkout $(PANDOC_VER)
 	make ja-pandoc-version-lock
+	make jgm-copy-src-md
+
+# make jgm-copy-src-md
+# jgm/pandocの MANUAL.txt および doc/ の特定ドキュメント(md) をコピーする（翻訳対象のみ）
+# 注意: MANUAL.txt のみ users-guide.md にリネーム（既にこの名前で公開済のため）
+.PHONY: jgm-copy-src-md
+jgm-copy-src-md:
+	rm -rf $(SRC_MD_DIR)
+	mkdir -p $(SRC_MD_DIR)
+	cp -f $(SRC_MD_ALL) $(SRC_MD_DIR)
+	cd $(SRC_MD_DIR) && mv MANUAL.txt users-guide.md
 
 # make users-guide-rst
 # Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 .PHONY: users-guide-rst
 users-guide-rst:
-	pandoc -f markdown -t rst --reference-links $(MANUAL_TXT) -o tmp_rst
-	bash ./scripts/generate-header.sh \
-		$(TEMPLATE_USERS_GUIDE) $(shell cat $(PANDOC_VER_LOCK_FILE)) > $(HEADER_USERS_GUIDE)
-	awk 'FNR==1{print ""}{print}' $(HEADER_USERS_GUIDE) tmp_rst > $(USERS_GUIDE_RST)
-	rm -f tmp_rst
-
+	bash ./scripts/generate-rst.sh \
+	  $(HEADER_USERS_GUIDE) \
+	  src-md/users-guide.md \
+	  $(shell cat $(PANDOC_VER_LOCK_FILE))
 
 ################################################
 # ターゲット：Sphinx系（単品）
