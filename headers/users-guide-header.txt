@@ -1,5 +1,5 @@
 ===========================================================
-Pandocユーザーズガイド 日本語版 [$trans-pandoc-version$]
+$title$ 日本語版 [$trans-pandoc-version$]
 ===========================================================
 
 .. note::
@@ -10,7 +10,11 @@ Pandocユーザーズガイド 日本語版 [$trans-pandoc-version$]
    * この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-doc-ja/issues>`_ に投稿してください
    * 翻訳のレビュー作業や翻訳作業へのご協力を希望の方は :doc:`trans-intro` をご覧ください
 
-原著: John MacFarlane
+原著者:
+
+$for(author)$
+   * $author$
+$endfor$
 
 原著バージョン: $trans-pandoc-version$
 

@@ -20,20 +20,15 @@ PANDOC_VER_LOCK_FILE := ./jgm/ja-pandoc-version-lock
 
 # ターゲットの原文 (.txt/Pandoc's Markdown)
 SRC_MD_DIR := src-md
-SRC_MD_ALL := $(PANDOC_DIR)/MANUAL.txt                # ユーザーズガイド原文 (jgm/pandocのMANUAL.txt)
-SRC_MD_ALL += $(PANDOC_DIR)/doc/epub.md               # EPUB
-SRC_MD_ALL += $(PANDOC_DIR)/doc/filters.md            # JSONフィルタの解説
-SRC_MD_ALL += $(PANDOC_DIR)/doc/getting-started.md    # 初心者向けチュートリアル
-SRC_MD_ALL += $(PANDOC_DIR)/doc/lua-filters.md        # Luaフィルタの解説
-SRC_MD_ALL += $(PANDOC_DIR)/doc/using-the-pandoc-api.md  # Pandoc API (Haskell)
+SRC_MD := $(PANDOC_DIR)/MANUAL.txt                # ユーザーズガイド原文 (jgm/pandocのMANUAL.txt)
+SRC_MD += $(PANDOC_DIR)/doc/epub.md               # EPUB
+SRC_MD += $(PANDOC_DIR)/doc/filters.md            # JSONフィルタの解説
+SRC_MD += $(PANDOC_DIR)/doc/getting-started.md    # 初心者向けチュートリアル
+SRC_MD += $(PANDOC_DIR)/doc/lua-filters.md        # Luaフィルタの解説
+SRC_MD += $(PANDOC_DIR)/doc/using-the-pandoc-api.md  # Pandoc API (Haskell)
 
-# ユーザーズガイドのrstをビルドするためのファイル
-## ユーザーズガイドのbody部分 (翻訳対象)
-DOC_USERS_GUIDE := users-guide
-## Sphinx側のユーザーズガイドrst
-USERS_GUIDE_RST := $(DOC_USERS_GUIDE).rst
-## ヘッダ
-HEADER_USERS_GUIDE := ./headers/$(DOC_USERS_GUIDE)-header.txt
+# ターゲットの原文：ワイルドカード版（MANUAL.txt -> users-guide.md の変換が終わった前提）
+SRC_MD_ALL := src-md/*.md
 
 ################################################
 # ターゲット：まとめて実行
@@ -109,17 +104,14 @@ jgm-pandoc-checkout:
 jgm-copy-src-md:
 	rm -rf $(SRC_MD_DIR)
 	mkdir -p $(SRC_MD_DIR)
-	cp -f $(SRC_MD_ALL) $(SRC_MD_DIR)
+	cp -f $(SRC_MD) $(SRC_MD_DIR)
 	cd $(SRC_MD_DIR) && mv MANUAL.txt users-guide.md
 
 # make users-guide-rst
-# Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
+# Pandoc: src-md のMarkdownファイルをすべて、ヘッダ付きでrstに変換する
 .PHONY: users-guide-rst
 users-guide-rst:
-	bash ./scripts/generate-rst.sh \
-	  $(HEADER_USERS_GUIDE) \
-	  src-md/users-guide.md \
-	  $(shell cat $(PANDOC_VER_LOCK_FILE))
+	ls $(SRC_MD_ALL) | xargs -I {} bash ./scripts/generate-rst.sh {}
 
 ################################################
 # ターゲット：Sphinx系（単品）
