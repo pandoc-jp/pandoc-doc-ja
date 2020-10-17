@@ -8,3 +8,38 @@ source_file = _build/gettext/users-guide.pot
 source_lang = en
 type = PO
 
+[pandoc-users-guide.epub]
+file_filter = locale/<lang>/LC_MESSAGES/epub.po
+minimum_perc = 0
+source_file = _build/gettext/epub.pot
+source_lang = en
+type = PO
+
+[pandoc-users-guide.filters]
+file_filter = locale/<lang>/LC_MESSAGES/filters.po
+minimum_perc = 0
+source_file = _build/gettext/filters.pot
+source_lang = en
+type = PO
+
+[pandoc-users-guide.getting-started]
+file_filter = locale/<lang>/LC_MESSAGES/getting-started.po
+minimum_perc = 0
+source_file = _build/gettext/getting-started.pot
+source_lang = en
+type = PO
+
+[pandoc-users-guide.lua-filters]
+file_filter = locale/<lang>/LC_MESSAGES/lua-filters.po
+minimum_perc = 0
+source_file = _build/gettext/lua-filters.pot
+source_lang = en
+type = PO
+
+[pandoc-users-guide.using-the-pandoc-api]
+file_filter = locale/<lang>/LC_MESSAGES/using-the-pandoc-api.po
+minimum_perc = 0
+source_file = _build/gettext/using-the-pandoc-api.pot
+source_lang = en
+type = PO
+
