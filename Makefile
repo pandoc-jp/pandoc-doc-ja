@@ -10,14 +10,17 @@ SHELL := /bin/bash
 
 # jgm/pandocのbranch or tag（チェックアウトしたいバージョン番号を指定する）
 # 環境変数として与えること (Dockerfileで定義、またはコマンドで直接与える)
-PANDOC := ""
+PANDOC_VER := ""
+
+# jgm/pandoc のローカルGitリポジトリ（submoduleで管理）
+PANDOC_DIR := ./jgm/pandoc
 
 # Pandocバージョンを格納するファイル
-PANDOC_VER_LOCK_FILE := ./ja-pandoc-version-lock
+PANDOC_VER_LOCK_FILE := ./jgm/ja-pandoc-version-lock
 
 # ユーザーズガイド原文
 ## jgm/pandocのMANUAL.txt
-MANUAL_TXT := ./pandoc/MANUAL.txt
+MANUAL_TXT := $(PANDOC_DIR)/MANUAL.txt
 
 # ユーザーズガイドのrstをビルドするためのファイル
 ## ユーザーズガイドのbody部分 (翻訳対象)
@@ -72,7 +75,7 @@ ja-pandoc-version:
 # 翻訳対象Pandocバージョンをjgm/pandocのものに固定する (ファイルに書き出すだけ)
 .PHONY: ja-pandoc-version-lock
 ja-pandoc-version-lock:
-	bash ./scripts/pandoc-version.sh > $(PANDOC_VER_LOCK_FILE)
+	bash ./scripts/pandoc-version.sh $(PANDOC_DIR) > $(PANDOC_VER_LOCK_FILE)
 
 ################################################
 # ターゲット：リポジトリ・原文アップデート系
@@ -85,13 +88,14 @@ ja-pandoc-version-lock:
 ja-init:
 	git submodule update -i
 
-# make jgm-pandoc-checkout PANDOC=バージョン番号
+# make jgm-pandoc-checkout PANDOC_VER=バージョン番号
 # jgm/pandocを特定バージョンでチェックアウト
 .PHONY: jgm-pandoc-checkout
 jgm-pandoc-checkout:
-	[ -z $(PANDOC) ] && (echo "[ERROR] specify pandoc version: make pandoc-checkout PANDOC=<VERSION>"; exit 1)
-	cd pandoc && git checkout $(PANDOC)
-	git submodule update
+	if [ -z $(PANDOC_VER) ]; then \
+	  echo "[ERROR] specify version: make pandoc-checkout PANDOC_VER=<VERSION>" && exit 1; \
+	fi
+	cd $(PANDOC_DIR) && git checkout $(PANDOC_VER)
 	make ja-pandoc-version-lock
 
 # make users-guide-rst
