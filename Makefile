@@ -46,13 +46,6 @@ DOCKER_RUN=docker run $(DOCKER_OPTIONS) pandocjp/pandoc-doc-ja
 DOCKER_IT=docker run -it $(DOCKER_OPTIONS) pandocjp/pandoc-doc-ja
 
 ################################################
-# 変数：Transifex Client実行
-################################################
-
-# Transifexの初期化コマンド
-# TX_INIT=tx init --token=$$TX_TOKEN --force --no-interactive
-
-################################################
 # ターゲット：まとめて実行
 ################################################
 
@@ -160,7 +153,7 @@ ja-html:
 # Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
 .PHONY: tx-push-pot
 tx-push-pot:
-	$(DOCKER_RUN) tx push -s
+	$(DOCKER_RUN) tx push -s --skip
 
 # make tx-pull
 # Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
