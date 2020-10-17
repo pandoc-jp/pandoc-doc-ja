@@ -5,7 +5,7 @@
 - [日本Pandocユーザ会](https://pandoc-doc-ja.readthedocs.io/ja/latest/)
     - [Pandocユーザーズガイド 日本語版](https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html)
 
-### Pandocのバージョンについて
+## Pandocのバージョンについて
 
 ここでいう「Pandocのバージョン」は2つあります。
 
@@ -170,6 +170,9 @@ ja-html:
 ### ターゲット：まとめて実行
 
 ```
+$ make jgm-pandoc-checkout PANDOC=バージョン番号
+jgm/pandocを特定バージョンでチェックアウトし、独自のヘッダを付与する
+
 $ make ja-update-src
 アップデート作業をまとめてする
 (pandoc -> intl-update -> tx-push-pot)
@@ -204,9 +207,6 @@ $ make ja-pandoc-version-lock
 ```
 $ make ja-init
 git submodule を初期化する
-
-$ make jgm-pandoc-checkout PANDOC=バージョン番号
-jgm/pandocを特定バージョンでチェックアウト
 
 $ make users-guide-rst
 Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
