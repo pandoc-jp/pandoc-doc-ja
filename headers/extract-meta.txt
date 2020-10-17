@@ -1,0 +1,8 @@
+# $title$
+
+原著者：
+
+$for(author)$
+- $author$
+$endfor$
+
