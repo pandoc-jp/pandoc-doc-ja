@@ -25,7 +25,8 @@ DOC_USERS_GUIDE := users-guide
 ## Sphinx側のユーザーズガイドrst
 USERS_GUIDE_RST := $(DOC_USERS_GUIDE).rst
 ## ヘッダ
-HEADER_USERS_GUIDE := $(DOC_USERS_GUIDE)-header.rst
+HEADER_DIR := headers
+HEADER_USERS_GUIDE := $(HEADER_DIR)/$(DOC_USERS_GUIDE)-header.rst
 
 ################################################
 # ターゲット：まとめて実行
