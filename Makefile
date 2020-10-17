@@ -25,8 +25,9 @@ DOC_USERS_GUIDE := users-guide
 ## Sphinx側のユーザーズガイドrst
 USERS_GUIDE_RST := $(DOC_USERS_GUIDE).rst
 ## ヘッダ
-HEADER_DIR := headers
+HEADER_DIR := ./headers
 HEADER_USERS_GUIDE := $(HEADER_DIR)/$(DOC_USERS_GUIDE)-header.rst
+TEMPLATE_USERS_GUIDE := $(HEADER_DIR)/$(DOC_USERS_GUIDE)-header.txt
 
 ################################################
 # ターゲット：まとめて実行
@@ -98,7 +99,8 @@ jgm-pandoc-checkout:
 .PHONY: users-guide-rst
 users-guide-rst:
 	pandoc -f markdown -t rst --reference-links $(MANUAL_TXT) -o tmp_rst
-	bash ./scripts/generate-header.sh $(DOC_USERS_GUIDE) $(PANDOC_VER_LOCK_FILE) > $(HEADER_USERS_GUIDE)
+	bash ./scripts/generate-header.sh \
+		$(TEMPLATE_USERS_GUIDE) $(shell cat $(PANDOC_VER_LOCK_FILE)) > $(HEADER_USERS_GUIDE)
 	awk 'FNR==1{print ""}{print}' $(HEADER_USERS_GUIDE) tmp_rst > $(USERS_GUIDE_RST)
 	rm -f tmp_rst
 
