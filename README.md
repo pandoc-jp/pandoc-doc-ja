@@ -31,10 +31,9 @@
 - [Sphinx](https://www.sphinx-doc.org/ja/master/index.html)
     - reSTからHTML（サイト）を構築
     - [sphinx-intl](https://www.sphinx-doc.org/ja/master/usage/advanced/intl.html): 国際化のための拡張機能
-- [Transifex](https://www.transifex.com/) / `tx` コマンド (CLI)
-    - 事前に原文のpotファイルをアップロード
-    - 翻訳者がテキストを翻訳（ブラウザ上で共同作業）
-    - 翻訳ファイル(po)を最終的にダウンロードする
+-  `tx` コマンド (Transifex Client)
+    - 翻訳作業で使うWebサービス[Transifex](https://www.transifex.com/) のクライアント
+    - po/potファイルををpush/pullする（後述）
 
 ### Webサービス
 
@@ -45,6 +44,9 @@
     - [pandoc-jp/pandoc-doc-ja](https://github.com/pandoc-jp/pandoc-doc-ja/): このリポジトリ
         - 日本Pandocユーザ会 サイト
         - ユーザーズガイド日本語版
+- [Transifex](https://www.transifex.com/)
+    - 翻訳作業で使うWebサービス
+    - 翻訳者がテキストを翻訳（ブラウザ上で共同作業）
 - [Read the Docs](https://readthedocs.org/)
     - GitHub上のSphinxサイトをビルドして公開
     - 必要なライブラリに関しては requirements.txt が参照される（Pipenvから要エクスポート）
@@ -65,8 +67,9 @@ Docker Hubの[pandocjp/pandoc-doc-ja](https://hub.docker.com/r/pandocjp/pandoc-d
 - Transifexの[APIトークン](https://www.transifex.com/user/settings/api/)ページで「トークンを生成」
     - トークン文字列を記録しておく
 - ホスト側のカレントディレクトリに環境変数ファイル `.env` を新規作成する
-    - このファイルは`git add`しないこと！（`.gitignore`には入っている）
-    - 内容は次のように書く
+    - このファイルは`git add`しないこと！
+
+`.env` ファイルは次のように書きます。
 
 ```.env
 TX_TOKEN=【APIトークン】
@@ -145,23 +148,24 @@ docker run -v $(wslpath -aw $(pwd)):/docs -it pandocjp/pandoc-doc-ja bash
 このプロジェクトにおけるあらゆる操作は、`make`コマンドで行えます。
 Makefileに書いてある記述を元に、直接元のコマンドを打っても動くはずです。
 
-下記では`docker run ...`を省略した形で記述します。
+```shell
+# 例: Sphinxでhtmlをビルドする
+$ make ja-html
+```
 
-- 例: `make ja-html` を実行
-    - 直接実行
-        - `docker run -v $(pwd):/docs pandocjp/pandoc-doc-ja make ja-html`
-    - Bashから実行
-        - `docker run -v $(pwd):/docs -it pandocjp/pandoc-doc-ja bash`
-        - `make ja-html`
-- 例: `make tx-pull` の実行（環境変数が必要なコマンド）
-    - 直接実行
-        - `docker run -v $(pwd):/docs --env-file .env pandocjp/pandoc-doc-ja make tx-pull`
-    - Bashから実行
-        - `docker run -v $(pwd):/docs --env-file .env -it pandocjp/pandoc-doc-ja bash`
-        - `echo $TX_TOKEN` (環境変数が渡されていることを確認)
-        - `make tx-pull`
+※ Dockerが必要なコマンドは、あらかじめMakefileに`docker run`を書いています（変数 `$DOCKER_RUN` を参照）。
 
+```Makefile
+DOCKER_RUN=docker run -v $(shell pwd):/docs --env TX_TOKEN pandocjp/pandoc-doc-ja
 
+（略）
+
+# make ja-html
+# Sphinx: htmlをビルドする
+.PHONY: ja-html
+ja-html:
+	$(DOCKER_RUN) make -e SPHINXOPTS="-D language='ja'" html
+```
 
 ### ターゲット：まとめて実行
 

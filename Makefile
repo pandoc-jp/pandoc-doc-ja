@@ -31,6 +31,28 @@ SRC_MD += $(PANDOC_DIR)/doc/using-the-pandoc-api.md  # Pandoc API (Haskell)
 SRC_MD_ALL := src-md/*.md
 
 ################################################
+# 変数：Docker実行
+################################################
+
+# Dockerに与えるオプション
+# 1. カレントディレクトリを /docs にマウント
+# 2. .env ファイルから環境変数(TX_TOKEN)を読み込む
+DOCKER_OPTIONS=-v $(shell pwd):/docs --env-file .env
+
+# 1回のみ実行：docker run
+DOCKER_RUN=docker run $(DOCKER_OPTIONS) pandocjp/pandoc-doc-ja
+
+# ログインシェル実行：docker run -it
+DOCKER_IT=docker run -it $(DOCKER_OPTIONS) pandocjp/pandoc-doc-ja
+
+################################################
+# 変数：Transifex Client実行
+################################################
+
+# Transifexの初期化コマンド
+# TX_INIT=tx init --token=$$TX_TOKEN --force --no-interactive
+
+################################################
 # ターゲット：まとめて実行
 ################################################
 
@@ -121,14 +143,14 @@ users-guide-rst:
 # users-guide.rst (原文) を更新するときに、翻訳ファイル (pot/po) を更新する
 .PHONY: intl-update
 intl-update:
-	make gettext
-	sphinx-intl update -p _build/gettext -l ja
+	$(DOCKER_RUN) make gettext
+	$(DOCKER_RUN) sphinx-intl update -p _build/gettext -l ja
 
 # make ja-html
 # Sphinx: htmlをビルドする
 .PHONY: ja-html
 ja-html:
-	make -e SPHINXOPTS="-D language='ja'" html
+	$(DOCKER_RUN) make -e SPHINXOPTS="-D language='ja'" html
 
 ################################################
 # ターゲット：Transifex系
@@ -136,24 +158,31 @@ ja-html:
 
 # make tx-push-pot
 # Transifex: 【翻訳前pot】手元の更新後ソースファイル(pot)をpushする
-# 要環境変数
 .PHONY: tx-push-pot
 tx-push-pot:
-	tx push -s
+	$(DOCKER_RUN) tx push -s
 
 # make tx-pull
 # Transifex: 【翻訳後po】Transifexから最新の翻訳ファイル(po)をpullする
-# 要環境変数
 .PHONY: tx-pull
 tx-pull: 
-	tx pull -l ja
+	$(DOCKER_RUN) tx pull -l ja
 
 # make tx-push-local-po
 # Transifex: 【翻訳後po】手元の翻訳ファイル(po)をpushする
-# 
 .PHONY: tx-push-local-po
 tx-push-local-po:
-	tx push -t -l ja
+	$(DOCKER_RUN) tx push -t -l ja
+
+################################################
+# ターゲット：ユーティリティ
+################################################
+
+# make bash
+# Docker内でBashログインする
+.PHONY: bash
+bash:
+	$(DOCKER_IT) /bin/bash
 
 # ----------------------------------------------------------------
 # Rules for Sphinx
