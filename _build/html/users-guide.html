@@ -52,8 +52,8 @@
 <li><p>John MacFarlane</p></li>
 </ul>
 </div></blockquote>
-<p>原著バージョン: 2.11.0.2</p>
-<p>更新日: 2020/10/17</p>
+<p>原著バージョン: 2.11.0.4</p>
+<p>更新日: 2020/10/31</p>
 <p>翻訳者（アルファベット順）:</p>
 <ul class="simple">
 <li><p>becolomochi</p></li>
@@ -624,7 +624,8 @@ self signed).</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">--self-contained</span></code></dt><dd><p>外部ファイルに依存しないようなスタンドアロンのHTMLファイルを出力します。 リンクされたスクリプト、スタイルシート、画像、動画といったコンテンツを結合するために <code class="docutils literal notranslate"><span class="pre">data:</span></code> URIを利用します。暗黙に <code class="docutils literal notranslate"><span class="pre">--standalone</span></code> を指定します。ブラウザに正しく表示するために、他に外部のファイルやネットへのアクセスを必要としないという意味で、最終的なファイルは「自己完結している」(self-contained)というべきでしょう。</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">--html-q-tags</span></code></dt><dd><p>HTMLで <code class="docutils literal notranslate"><span class="pre">&lt;q&gt;</span></code> タグを引用に利用します。</p>
+<dt><code class="docutils literal notranslate"><span class="pre">--html-q-tags</span></code></dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">&lt;q&gt;</span></code> tags for quotes in HTML. (This option only has an effect
+if the <code class="docutils literal notranslate"><span class="pre">smart</span></code> extension is enabled for the input format used.)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">--ascii</span></code></dt><dd><p>出力にASCII文字のみを使用します。現在はXMLおよびHTMLフォーマット(このオプションを選択するとUTF-8のかわりに実体参照を使用します)、CommonMark、gfm、およびマークダウン(実体参照を使用)、roff ms(16進数エスケープを使用)でサポートされており、LaTeX(可能であればアクセント付き文字のための標準コマンドを使用します)では一部サポートされています。roff manの出力はデフォルトでASCIIを使用します。</p>
 </dd>
@@ -1730,7 +1731,9 @@ multiple options:</p>
 </pre></div>
 </div>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">indent</span></code> <em>[boolean]</em></dt><dd><p>インデントに関する文書クラスの設定 (設定がない場合、Pandoc既定のLaTeXテンプレートはパラグラフ間のインデントと空白を削除します)</p>
+<dt><code class="docutils literal notranslate"><span class="pre">indent</span></code> <em>[boolean]</em></dt><dd><p>if true, pandoc will use document class settings for indentation (the
+default LaTeX template otherwise removes indentation and adds space
+between paragraphs)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">linestretch</span></code></dt><dd><p>adjusts line spacing using the <code class="docutils literal notranslate"><span class="pre">`setspace```_</span> <span class="pre">package,</span>
 <span class="pre">e.g. ``1.25</span></code>, <code class="docutils literal notranslate"><span class="pre">1.5</span></code></p>
@@ -2079,7 +2082,8 @@ for HTML input.</p></li>
 <span class="pre">document.</span> <span class="pre">This</span> <span class="pre">extension</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">enabled/disabled</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">following</span>
 <span class="pre">formats</span> <span class="pre">(in</span> <span class="pre">addition</span> <span class="pre">to</span> <span class="pre">``markdown</span></code>):</p>
 <dl class="simple">
-<dt>入力フォーマット</dt><dd><p><code class="docutils literal notranslate"><span class="pre">latex</span></code>, <code class="docutils literal notranslate"><span class="pre">org</span></code>, <code class="docutils literal notranslate"><span class="pre">textile</span></code>, <code class="docutils literal notranslate"><span class="pre">html</span></code> (LaTeX環境 <code class="docutils literal notranslate"><span class="pre">\ref</span></code>, <code class="docutils literal notranslate"><span class="pre">\eqref</span></code> のみ), <code class="docutils literal notranslate"><span class="pre">ipynb</span></code></p>
+<dt>入力フォーマット</dt><dd><p><code class="docutils literal notranslate"><span class="pre">latex</span></code>, <code class="docutils literal notranslate"><span class="pre">textile</span></code>, <code class="docutils literal notranslate"><span class="pre">html</span></code> (environments, <code class="docutils literal notranslate"><span class="pre">\ref</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">\eqref</span></code> only), <code class="docutils literal notranslate"><span class="pre">ipynb</span></code></p>
 </dd>
 <dt>出力フォーマット</dt><dd><p><code class="docutils literal notranslate"><span class="pre">textile</span></code>, <code class="docutils literal notranslate"><span class="pre">commonmark</span></code></p>
 </dd>

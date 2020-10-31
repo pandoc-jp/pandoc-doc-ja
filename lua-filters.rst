@@ -17,9 +17,9 @@ Pandoc Lua Filters 日本語版
    * Albert Krewinkel
    * John MacFarlane
 
-原著バージョン: 2.11.0.2
+原著バージョン: 2.11.0.4
 
-更新日: 2020/10/17
+更新日: 2020/10/31
 
 翻訳者（アルファベット順）:
 

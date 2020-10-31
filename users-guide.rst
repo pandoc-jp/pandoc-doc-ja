@@ -16,9 +16,9 @@ Pandoc User’s Guide 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.11.0.2
+原著バージョン: 2.11.0.4
 
-更新日: 2020/10/17
+更新日: 2020/10/31
 
 翻訳者（アルファベット順）:
 
@@ -824,7 +824,8 @@ Options affecting specific writers
    an offline “self-contained” ``reveal.js`` slide show.
 
 ``--html-q-tags``
-   Use ``<q>`` tags for quotes in HTML.
+   Use ``<q>`` tags for quotes in HTML. (This option only has an effect
+   if the ``smart`` extension is enabled for the input format used.)
 
 ``--ascii``
    Use only ASCII characters in output. Currently supported for XML and
@@ -2188,9 +2189,9 @@ Layout
       ...
 
 ``indent``
-   uses document class settings for indentation (the default LaTeX
-   template otherwise removes indentation and adds space between
-   paragraphs)
+   if true, pandoc will use document class settings for indentation (the
+   default LaTeX template otherwise removes indentation and adds space
+   between paragraphs)
 ``linestretch``
    adjusts line spacing using the ```setspace```_ package,
    e.g. ``1.25``, ``1.5``
@@ -2642,8 +2643,8 @@ respective sections of `Pandoc’s Markdown`_:
    formats (in addition to ``markdown``):
 
    input formats
-      ``latex``, ``org``, ``textile``, ``html`` (environments, ``\ref``,
-      and ``\eqref`` only), ``ipynb``
+      ``latex``, ``textile``, ``html`` (environments, ``\ref``, and
+      ``\eqref`` only), ``ipynb``
    output formats
       ``textile``, ``commonmark``
 

@@ -1,7 +1,7 @@
 ---
 title: Pandoc User's Guide
 author: John MacFarlane
-date: July 23, 2020
+date: October 20, 2020
 ---
 
 # Synopsis
@@ -943,7 +943,9 @@ header when requesting a document from a URL:
 
 `--html-q-tags`
 
-:   Use `<q>` tags for quotes in HTML.
+:   Use `<q>` tags for quotes in HTML.  (This option only has an
+    effect if the `smart` extension is enabled for the input
+    format used.)
 
 `--ascii`
 
@@ -2364,7 +2366,7 @@ Pandoc uses these variables when [creating a PDF] with a LaTeX engine.
         ...
 
 `indent`
-:   uses document class settings for indentation (the default LaTeX template
+:   if true, pandoc will use document class settings for indentation (the default LaTeX template
     otherwise removes indentation and adds space between paragraphs)
 
 `linestretch`
@@ -2861,7 +2863,7 @@ their respective sections of [Pandoc's Markdown]:
   for the following formats (in addition to `markdown`):
 
   input formats
-  :  `latex`, `org`, `textile`, `html` (environments, `\ref`, and
+  :  `latex`, `textile`, `html` (environments, `\ref`, and
      `\eqref` only), `ipynb`
 
   output formats
