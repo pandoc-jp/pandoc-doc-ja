@@ -18,11 +18,14 @@
 # -- Project information -----------------------------------------------------
 
 project = '日本Pandocユーザ会'
-copyright = '2019, 日本Pandocユーザ会'
+copyright = '2020, 日本Pandocユーザ会'
 author = '日本Pandocユーザ会'
 
+# <title> タグ
+html_title = project
+
 # The full version, including alpha/beta/rc tags
-release = '2019.02.21'
+release = 'v2.11.0.4'
 
 
 # -- General configuration ---------------------------------------------------
