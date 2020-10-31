@@ -21,7 +21,7 @@
 誰でもご自由にご参加ください！
 
 日本Pandocユーザ会 Slack（参加自由・お気軽にご参加ください）
-   `Slack参加用リンク <https://docs.google.com/forms/d/e/1FAIpQLSeQJbr1up0nQUErE7hURqE5KJMfiImvAkMZg8ZyWEaxpT-zkA/viewform>`_
+   `Slack参加用リンク <https://docs.google.com/forms/d/e/1FAIpQLSc4bRaaw_t_J17LIvCiJ-CndWhFj3Et0rKSxkJbPG4VkpTfrA/viewform?usp=sf_link>`_
 
 ※ 注意：以前はSlack公式の招待リンクを発行していましたが、諸事情によりGoogleフォームでの手動対応に変更しています。
 追加が遅くなる可能性があるため、なかなか追加されない場合は再投稿でリマインドいただければ幸いです。
