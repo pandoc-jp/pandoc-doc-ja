@@ -29,6 +29,9 @@
 管理者（日本Pandocユーザ会 代表）
    藤原 惟 / Yuki Fujiwara (`@skyy_writing <https://twitter.com/skyy_writing>`_)
 
+お問い合わせ（Pandocに関すること、ユーザ会に関すること、ハラスメント報告等）
+   `お問い合わせフォーム <https://docs.google.com/forms/d/e/1FAIpQLSddkX4NAtHv5cLGDUJ3n3znnX2iCCGd6sG7FJ0KJ5vQ5EYEfw/viewform?usp=sf_link>`_ よりお願いいたします。
+
 目次
 --------
 
