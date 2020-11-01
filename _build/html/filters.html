@@ -80,23 +80,15 @@
 </div>
 <div class="section" id="summary">
 <h2><a class="toc-backref" href="#id3">Summary</a><a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Pandoc provides an interface for users to write programs (known as
-filters) which act on pandoc’s AST.</p>
-<p>Pandoc consists of a set of readers and writers. When converting a
-document from one format to another, text is parsed by a reader into
-pandoc’s intermediate representation of the document—an “abstract syntax
-tree” or AST—which is then converted by the writer into the target
-format. The pandoc AST format is defined in the module
-<code class="docutils literal notranslate"><span class="pre">`Text.Pandoc.Definition</span></code> in the <code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code> package`_.</p>
-<p>A “filter” is a program that modifies the AST, between the reader and
-the writer.</p>
+<p>Pandocは、ユーザがPandoc ASTを変換する(フィルタと呼ばれる)プログラムを書くためのインターフェースを提供しています。</p>
+<p>Pandocは、ReaderとWriterのセットで構成されています。ドキュメントをあるフォーマットから別のフォーマットへと変換するとき、Readerがテキストを解析し、Pandocにおける書類の中間表現である &quot;abstract syntax tree&quot;, ASTに変換され、WriterがさらにASTを目的とするフォーマットへと変換します。Pandoc ASTフォーマットは、モジュール <code class="docutils literal notranslate"><span class="pre">`Text.Pandoc.Definition</span></code> in the <code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code> package`_ に定義されています．</p>
+<p>&quot;フィルタ&quot;とは、ReaderとWriterとの間でASTを編集するプログラムのことです。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INPUT</span> <span class="o">--</span><span class="n">reader</span><span class="o">--&gt;</span> <span class="n">AST</span> <span class="o">--</span><span class="nb">filter</span><span class="o">--&gt;</span> <span class="n">AST</span> <span class="o">--</span><span class="n">writer</span><span class="o">--&gt;</span> <span class="n">OUTPUT</span>
 </pre></div>
 </div>
-<p>Pandoc supports two kinds of filters:</p>
+<p>Pandocは、以下の2種類のフィルタをサポートしています:</p>
 <ul>
-<li><p><strong>Lua filters</strong> use the Lua language to define transformations on the
-pandoc AST. They are described in a <a class="reference external" href="lua-filters.html">separate document</a>.</p></li>
+<li><p><strong>Lua フィルタ</strong> は、Lua言語を用いて、Pandoc ASTの変換を定義します。詳細は <a class="reference external" href="lua-filters.html">separate document</a> を参照ください。</p></li>
 <li><p><strong>JSON filters</strong>, described here, are pipes that read from standard
 input and write to standard output, consuming and producing a JSON
 representation of the pandoc AST:</p>

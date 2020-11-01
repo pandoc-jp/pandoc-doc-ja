@@ -69,10 +69,10 @@
 <li><p><a class="reference internal" href="#pandocs-architecture" id="id3">Pandoc’s architecture</a></p></li>
 <li><p><a class="reference internal" href="#a-simple-example" id="id4">A simple example</a></p></li>
 <li><p><a class="reference internal" href="#the-pandocmonad-class" id="id5">The PandocMonad class</a></p></li>
-<li><p><a class="reference internal" href="#options" id="id6">Options</a></p></li>
+<li><p><a class="reference internal" href="#options" id="id6">オプション</a></p></li>
 <li><p><a class="reference internal" href="#builder" id="id7">Builder</a></p></li>
 <li><p><a class="reference internal" href="#data-files" id="id8">Data files</a></p></li>
-<li><p><a class="reference internal" href="#templates" id="id9">Templates</a></p></li>
+<li><p><a class="reference internal" href="#templates" id="id9">テンプレート</a></p></li>
 <li><p><a class="reference internal" href="#handling-errors-and-warnings" id="id10">Handling errors and warnings</a></p></li>
 <li><p><a class="reference internal" href="#walking-the-ast" id="id11">Walking the AST</a></p></li>
 <li><p><a class="reference internal" href="#creating-a-front-end" id="id12">Creating a front-end</a></p></li>
@@ -210,7 +210,7 @@ we defined in the previous section, we could do this:</p>
 chain.</p>
 </div>
 <div class="section" id="options">
-<h2><a class="toc-backref" href="#id6">Options</a><a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">オプション</a><a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>The first argument of each reader or writer is for options controlling
 the behavior of the reader or writer: <code class="docutils literal notranslate"><span class="pre">ReaderOptions</span></code> for readers and
 <code class="docutils literal notranslate"><span class="pre">WriterOptions</span></code> for writers. These are defined in
@@ -344,7 +344,7 @@ default installed with the system. To force the use of the default,
 <code class="docutils literal notranslate"><span class="pre">setUserDataDir</span> <span class="pre">Nothing</span></code>.</p>
 </div>
 <div class="section" id="templates">
-<h2><a class="toc-backref" href="#id9">Templates</a><a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">テンプレート</a><a class="headerlink" href="#templates" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandoc has its own template system, described in the User’s Guide. To
 retrieve the default template for a system, use <code class="docutils literal notranslate"><span class="pre">getDefaultTemplate</span></code>
 from <a class="reference external" href="https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Templates.html">Text.Pandoc.Templates</a>. Note that this looks first in the
