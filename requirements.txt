@@ -2,4 +2,4 @@
 alabaster==0.7.12
 sphinx-intl~=2.0.1
 sphinx~=3.2.1
-transifex-client~=0.13.12
+transifex-client~=0.14.1
