@@ -250,11 +250,10 @@ docker run -v $(pwd):/docs --env-file .env -it pandocjp/pandoc-doc-ja bash
 例: Pandoc 2.9.2.1 にバージョンアップ
 
 ```
-make jgm-pandoc-checkout PANDOC=2.9.2.1
+make jgm-pandoc-checkout PANDOC_VER=2.9.2.1
 make ja-update-src
 git add *
 git commit -m '[pandoc upgrade] 翻訳対象バージョンを2.9.2.1にアップグレード'
-git tag -a v2.9.2.1 -m 'Pandoc 2.9.2.1 準拠'
 git push origin master
 ```
 
@@ -280,9 +279,14 @@ make ja-build-local
 
 ### ビルドしたものをGitHubにpush
 
+- リリース時は `git tag` でタグ付けする。（Read the Docs側でタグが反映される）
+- 同じバージョンを更新する際は `_revN` のプレフィックスを付ける
+    - 例: `v2.9.2.1_rev2`
+
 ```
 git add *
 git commit -m '[update] 現時点での翻訳を取り込んでビルド'
+git tag -a v2.9.2.1 -m 'Pandoc 2.9.2.1 準拠'
 git push origin master
 ```
 
