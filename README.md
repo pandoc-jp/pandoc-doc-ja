@@ -254,6 +254,7 @@ make jgm-pandoc-checkout PANDOC=2.9.2.1
 make ja-update-src
 git add *
 git commit -m '[pandoc upgrade] 翻訳対象バージョンを2.9.2.1にアップグレード'
+git tag -a v2.9.2.1 -m 'Pandoc 2.9.2.1 準拠'
 git push origin master
 ```
 
