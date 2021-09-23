@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2019, 日本Pandocユーザ会
+# Copyright (C) 2020, 日本Pandocユーザ会
 # This file is distributed under the same license as the 日本Pandocユーザ会 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-31 10:15+0000\n"
+"POT-Creation-Date: 2021-09-23 03:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,11 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../filters.rst:19
-msgid "原著バージョン: 2.11.0.4"
+msgid "原著バージョン: 2.14.2"
 msgstr ""
 
 #: ../../filters.rst:21
-msgid "更新日: 2020/10/31"
+msgid "更新日: 2021/09/23"
 msgstr ""
 
 #: ../../filters.rst:23
@@ -245,101 +245,321 @@ msgid "There are many examples of python filters in `the pandocfilters repositor
 msgstr ""
 
 #: ../../filters.rst:301
-msgid "For a more Pythonic alternative to pandocfilters, see the `panflute`_ library. Don’t like Python? There are also ports of pandocfilters in `PHP`_, `perl`_, `javascript/node.js`_, `Groovy`_, and `Ruby`_."
+msgid "For a more Pythonic alternative to pandocfilters, see the `panflute`_ library. Don’t like Python? There are also ports of pandocfilters in"
+msgstr ""
+
+#: ../../filters.rst:304
+msgid "`PHP`_,"
 msgstr ""
 
 #: ../../filters.rst:305
-msgid "Starting with pandoc 2.0, pandoc includes built-in support for writing filters in lua. The lua interpreter is built in to pandoc, so a lua filter does not require any additional software to run. See the `documentation on lua filters`_."
+msgid "`perl`_,"
+msgstr ""
+
+#: ../../filters.rst:306
+msgid "TypeScript/JavaScript via Node.js"
+msgstr ""
+
+#: ../../filters.rst:308
+msgid "`pandoc-filter`_,"
+msgstr ""
+
+#: ../../filters.rst:309
+msgid "`node-pandoc-filter`_,"
 msgstr ""
 
 #: ../../filters.rst:311
+msgid "`Groovy`_, and"
+msgstr ""
+
+#: ../../filters.rst:312
+msgid "`Ruby`_."
+msgstr ""
+
+#: ../../filters.rst:314
+msgid "Starting with pandoc 2.0, pandoc includes built-in support for writing filters in lua. The lua interpreter is built in to pandoc, so a lua filter does not require any additional software to run. See the `documentation on lua filters`_."
+msgstr ""
+
+#: ../../filters.rst:320
 msgid "Include files"
 msgstr ""
 
-#: ../../filters.rst:313
+#: ../../filters.rst:322
 msgid "So none of our transforms have involved IO. How about a script that reads a markdown document, finds all the inline code blocks with attribute ``include``, and replaces their contents with the contents of the file given?"
 msgstr ""
 
-#: ../../filters.rst:337
+#: ../../filters.rst:346
 msgid "Try this on the following:"
 msgstr ""
 
-#: ../../filters.rst:348
+#: ../../filters.rst:357
 msgid "Removing links"
 msgstr ""
 
-#: ../../filters.rst:350
+#: ../../filters.rst:359
 msgid "What if we want to remove every link from a document, retaining the link’s text?"
 msgstr ""
 
-#: ../../filters.rst:365
+#: ../../filters.rst:374
 msgid "Note that ``delink`` can’t be a function of type ``Inline -> Inline``, because the thing we want to replace the link with is not a single ``Inline`` element, but a list of them. So we make ``delink`` a function from an ``Inline`` element to a list of ``Inline`` elements. ``toJSONFilter`` can still lift this function to a transformation of type ``Pandoc -> Pandoc``."
 msgstr ""
 
-#: ../../filters.rst:373
+#: ../../filters.rst:382
 msgid "A filter for ruby text"
 msgstr ""
 
-#: ../../filters.rst:375
+#: ../../filters.rst:384
 msgid "Finally, here’s a nice real-world example, developed on the `pandoc-discuss`_ list. Qubyte wrote:"
 msgstr ""
 
-#: ../../filters.rst:378
+#: ../../filters.rst:387
 msgid "I’m interested in using pandoc to turn my markdown notes on Japanese into nicely set HTML and (Xe)LaTeX. With HTML5, ruby (typically used to phonetically read chinese characters by placing text above or to the side) is standard, and support from browsers is emerging (Webkit based browsers appear to fully support it). For those browsers that don’t support it yet (notably Firefox) the feature falls back in a nice way by placing the phonetic reading inside brackets to the side of each Chinese character, which is suitable for other output formats too. As for (Xe)LaTeX, ruby is not an issue."
 msgstr ""
 
-#: ../../filters.rst:388
+#: ../../filters.rst:397
 msgid "At the moment, I use inline HTML to achieve the result when the conversion is to HTML, but it’s ugly and uses a lot of keystrokes, for example"
 msgstr ""
 
-#: ../../filters.rst:396
+#: ../../filters.rst:405
 msgid "sets ご飯 “gohan” with “han” spelt phonetically above the second character, or to the right of it in brackets if the browser does not support ruby. I’d like to have something more like"
 msgstr ""
 
-#: ../../filters.rst:404
+#: ../../filters.rst:413
 msgid "or any keystroke saving convention would be welcome."
 msgstr ""
 
-#: ../../filters.rst:406
+#: ../../filters.rst:415
 msgid "We came up with the following script, which uses the convention that a markdown link with a URL beginning with a hyphen is interpreted as ruby:"
 msgstr ""
 
-#: ../../filters.rst:437
+#: ../../filters.rst:446
 msgid "Note that, when a script is called using ``--filter``, pandoc passes it the target format as the first argument. When a function’s first argument is of type ``Maybe Format``, ``toJSONFilter`` will automatically assign it ``Just`` the target format or ``Nothing``."
 msgstr ""
 
-#: ../../filters.rst:442
+#: ../../filters.rst:451
 msgid "We compile our script:"
 msgstr ""
 
-#: ../../filters.rst:448
+#: ../../filters.rst:459
 msgid "Then run it:"
 msgstr ""
 
-#: ../../filters.rst:461
+#: ../../filters.rst:472
 msgid "Note: to use this to generate PDFs via LaTeX, you’ll need to use ``--pdf-engine=xelatex``, specify a ``mainfont`` that has the Japanese characters (e.g. “Noto Sans CJK TC”), and add ``\\usepackage{ruby}`` to your template or header-includes."
 msgstr ""
 
-#: ../../filters.rst:467
+#: ../../filters.rst:478
 msgid "Exercises"
 msgstr ""
 
-#: ../../filters.rst:469
+#: ../../filters.rst:480
 msgid "Put all the regular text in a markdown document in ALL CAPS (without touching text in URLs or link titles)."
 msgstr ""
 
-#: ../../filters.rst:472
+#: ../../filters.rst:483
 msgid "Remove all horizontal rules from a document."
 msgstr ""
 
-#: ../../filters.rst:474
+#: ../../filters.rst:485
 msgid "Renumber all enumerated lists with roman numerals."
 msgstr ""
 
-#: ../../filters.rst:476
+#: ../../filters.rst:487
 msgid "Replace each delimited code block with class ``dot`` with an image generated by running ``dot -Tpng`` (from graphviz) on the contents of the code block."
 msgstr ""
 
-#: ../../filters.rst:480
+#: ../../filters.rst:491
 msgid "Find all code blocks with class ``python`` and run them using the python interpreter, printing the results to the console."
+msgstr ""
+
+#: ../../filters.rst:495
+msgid "Technical details of JSON filters"
+msgstr ""
+
+#: ../../filters.rst:497
+msgid "A JSON filter is any program which can consume and produce a valid pandoc JSON document representation. This section describes the technical details surrounding the invocation of filters."
+msgstr ""
+
+#: ../../filters.rst:502
+msgid "Arguments"
+msgstr ""
+
+#: ../../filters.rst:504
+msgid "The program will always be called with the target format as the only argument. A pandoc invocation like"
+msgstr ""
+
+#: ../../filters.rst:511
+msgid "will cause pandoc to call the program ``demo`` with argument ``html``."
+msgstr ""
+
+#: ../../filters.rst:514
+msgid "Environment variables"
+msgstr ""
+
+#: ../../filters.rst:516
+msgid "Pandoc sets additional environment variables before calling a filter."
+msgstr ""
+
+#: ../../filters.rst:519
+msgid "``PANDOC_VERSION``"
+msgstr ""
+
+#: ../../filters.rst:519
+msgid "The version of the pandoc binary used to process the document. Example: ``2.11.1``."
+msgstr ""
+
+#: ../../filters.rst:546
+msgid "``PANDOC_READER_OPTIONS``"
+msgstr ""
+
+#: ../../filters.rst:522
+msgid "JSON object representation of the options passed to the input parser."
+msgstr ""
+
+#: ../../filters.rst:524
+msgid "Object fields:"
+msgstr ""
+
+#: ../../filters.rst:526
+msgid "``readerAbbreviations``"
+msgstr ""
+
+#: ../../filters.rst:527
+msgid "set of known abbreviations (array of strings)."
+msgstr ""
+
+#: ../../filters.rst:528
+msgid "``readerColumns``"
+msgstr ""
+
+#: ../../filters.rst:529
+msgid "number of columns in terminal; an integer."
+msgstr ""
+
+#: ../../filters.rst:530
+msgid "``readerDefaultImageExtension``"
+msgstr ""
+
+#: ../../filters.rst:531
+msgid "default extension for images; a string."
+msgstr ""
+
+#: ../../filters.rst:532
+msgid "``readerExtensions``"
+msgstr ""
+
+#: ../../filters.rst:533
+msgid "integer representation of the syntax extensions bit field."
+msgstr ""
+
+#: ../../filters.rst:534
+msgid "``readerIndentedCodeClasses``"
+msgstr ""
+
+#: ../../filters.rst:535
+msgid "default classes for indented code blocks; array of strings."
+msgstr ""
+
+#: ../../filters.rst:537
+msgid "``readerStandalone``"
+msgstr ""
+
+#: ../../filters.rst:537
+msgid "whether the input was a standalone document with header; either ``true`` or ``false``."
+msgstr ""
+
+#: ../../filters.rst:540
+msgid "``readerStripComments``"
+msgstr ""
+
+#: ../../filters.rst:540
+msgid "HTML comments are stripped instead of parsed as raw HTML; either ``true`` or ``false``."
+msgstr ""
+
+#: ../../filters.rst:542
+msgid "``readerTabStop``"
+msgstr ""
+
+#: ../../filters.rst:543
+msgid "width (i.e. equivalent number of spaces) of tab stops; integer."
+msgstr ""
+
+#: ../../filters.rst:546
+msgid "``readerTrackChanges``"
+msgstr ""
+
+#: ../../filters.rst:545
+msgid "track changes setting for docx; one of ``\"accept-changes\"``, ``\"reject-changes\"``, and ``\"all-changes\"``."
+msgstr ""
+
+#: ../../filters.rst:549
+msgid "Supported interpreters"
+msgstr ""
+
+#: ../../filters.rst:551
+msgid "Files passed to the ``--filter``/``-F`` parameter are expected to be executable. However, if the executable bit is not set, then pandoc tries to guess a suitable interpreter from the file extension."
+msgstr ""
+
+#: ../../filters.rst:556
+msgid "file extension"
+msgstr ""
+
+#: ../../filters.rst:556
+msgid "interpreter"
+msgstr ""
+
+#: ../../filters.rst:558
+msgid ".py"
+msgstr ""
+
+#: ../../filters.rst:558
+msgid "``python``"
+msgstr ""
+
+#: ../../filters.rst:559
+msgid ".hs"
+msgstr ""
+
+#: ../../filters.rst:559
+msgid "``runhaskell``"
+msgstr ""
+
+#: ../../filters.rst:560
+msgid ".pl"
+msgstr ""
+
+#: ../../filters.rst:560
+msgid "``perl``"
+msgstr ""
+
+#: ../../filters.rst:561
+msgid ".rb"
+msgstr ""
+
+#: ../../filters.rst:561
+msgid "``ruby``"
+msgstr ""
+
+#: ../../filters.rst:562
+msgid ".php"
+msgstr ""
+
+#: ../../filters.rst:562
+msgid "``php``"
+msgstr ""
+
+#: ../../filters.rst:563
+msgid ".js"
+msgstr ""
+
+#: ../../filters.rst:563
+msgid "``node``"
+msgstr ""
+
+#: ../../filters.rst:564
+msgid ".r"
+msgstr ""
+
+#: ../../filters.rst:564
+msgid "``Rscript``"
 msgstr ""

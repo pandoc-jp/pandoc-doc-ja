@@ -253,12 +253,15 @@ repository](https://github.com/jgm/pandocfilters).
 
 For a more Pythonic alternative to pandocfilters, see
 the [panflute](https://pypi.org/project/panflute) library.
-Don't like Python?   There are also ports of pandocfilters in
-[PHP](https://github.com/vinai/pandocfilters-php),
-[perl](https://metacpan.org/pod/Pandoc::Filter),
-[javascript/node.js](https://github.com/mvhenderson/pandoc-filter-node),
-[Groovy](https://github.com/dfrommi/groovy-pandoc), and
-[Ruby](https://heerdebeer.org/Software/markdown/paru/).
+Don't like Python? There are also ports of pandocfilters in
+
+- [PHP](https://github.com/vinai/pandocfilters-php),
+- [perl](https://metacpan.org/pod/Pandoc::Filter),
+- TypeScript/JavaScript via Node.js
+  - [pandoc-filter](https://github.com/mvhenderson/pandoc-filter-node),
+  - [node-pandoc-filter](https://github.com/mu-io/node-pandoc-filter),
+- [Groovy](https://github.com/dfrommi/groovy-pandoc), and
+- [Ruby](https://heerdebeer.org/Software/markdown/paru/).
 
 Starting with pandoc 2.0, pandoc includes built-in support for
 writing filters in lua.  The lua interpreter is built in to
@@ -391,6 +394,8 @@ automatically assign it `Just` the target format or `Nothing`.
 
 We compile our script:
 
+    # first, make sure pandoc-types is installed:
+    cabal install --lib pandoc-types --package-env .
     ghc --make handleRuby
 
 Then run it:
@@ -425,3 +430,83 @@ the Japanese characters (e.g. "Noto Sans CJK TC"), and add
 5.  Find all code blocks with class `python` and run them
     using the python interpreter, printing the results to the console.
 
+# Technical details of JSON filters
+
+A JSON filter is any program which can consume and produce a
+valid pandoc JSON document representation. This section describes
+the technical details surrounding the invocation of filters.
+
+## Arguments
+
+The program will always be called with the target format as the
+only argument. A pandoc invocation like
+
+    pandoc --filter demo --to=html
+
+will cause pandoc to call the program `demo` with argument `html`.
+
+## Environment variables
+
+Pandoc sets additional environment variables before calling a
+filter.
+
+`PANDOC_VERSION`
+:   The version of the pandoc binary used to process the document.
+    Example: `2.11.1`.
+
+`PANDOC_READER_OPTIONS`
+:   JSON object representation of the options passed to the input
+    parser.
+
+    Object fields:
+
+    `readerAbbreviations`
+    :   set of known abbreviations (array of strings).
+
+    `readerColumns`
+    :   number of columns in terminal; an integer.
+
+    `readerDefaultImageExtension`
+    :   default extension for images; a string.
+
+    `readerExtensions`
+    :   integer representation of the syntax extensions bit
+        field.
+
+    `readerIndentedCodeClasses`
+    :   default classes for indented code blocks; array of
+        strings.
+
+    `readerStandalone`
+    :   whether the input was a standalone document with header;
+        either `true` or `false`.
+
+    `readerStripComments`
+    :   HTML comments are stripped instead of parsed as raw HTML;
+        either `true` or `false`.
+
+    `readerTabStop`
+    :   width (i.e. equivalent number of spaces) of tab stops;
+        integer.
+
+    `readerTrackChanges`
+    :   track changes setting for docx; one of
+        `"accept-changes"`, `"reject-changes"`, and
+        `"all-changes"`.
+
+## Supported interpreters
+
+Files passed to the `--filter`/`-F` parameter are expected to be
+executable. However, if the executable bit is not set, then
+pandoc tries to guess a suitable interpreter from the file
+extension.
+
+  file extension   interpreter
+  ---------------- --------------
+  .py              `python`
+  .hs              `runhaskell`
+  .pl              `perl`
+  .rb              `ruby`
+  .php             `php`
+  .js              `node`
+  .r               `Rscript`

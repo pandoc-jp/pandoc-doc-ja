@@ -1,26 +1,28 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2019, 日本Pandocユーザ会
-# This file is distributed under the same license as the 日本Pandocユーザ会 package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+# This file is distributed under the same license as the 日本Pandocユーザ会
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
 # Translators:
 # niszet <niszet0016@gmail.com>, 2020
 # Yuki Fujiwara <sky.y.0079@gmail.com>, 2020
-# 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 日本Pandocユーザ会\n"
+"Project-Id-Version:  日本Pandocユーザ会\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-31 10:15+0000\n"
+"POT-Creation-Date: 2021-09-23 03:37+0000\n"
 "PO-Revision-Date: 2020-10-17 13:32+0000\n"
 "Last-Translator: Yuki Fujiwara <sky.y.0079@gmail.com>, 2020\n"
-"Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)"
+"\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ../../epub.rst:4
 msgid "Creating an ebook with pandoc 日本語版"
@@ -35,18 +37,16 @@ msgstr ""
 "（ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）"
 
 #: ../../epub.rst:11
-msgid ""
-"正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
-msgstr ""
-"正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgid "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgstr "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
 
 #: ../../epub.rst:12
 msgid ""
-"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-"
-"doc-ja/issues>`_ に投稿してください"
+"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp"
+"/pandoc-doc-ja/issues>`_ に投稿してください"
 msgstr ""
-"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-"
-"doc-ja/issues>`_ に投稿してください"
+"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp"
+"/pandoc-doc-ja/issues>`_ に投稿してください"
 
 #: ../../epub.rst:13
 msgid "翻訳のレビュー作業や翻訳作業へのご協力を希望の方は :doc:`trans-intro` をご覧ください"
@@ -61,11 +61,13 @@ msgid "John MacFarlane"
 msgstr "John MacFarlane"
 
 #: ../../epub.rst:19
-msgid "原著バージョン: 2.11.0.4"
+#, fuzzy
+msgid "原著バージョン: 2.14.2"
 msgstr "原著バージョン: 2.11.0.4"
 
 #: ../../epub.rst:21
-msgid "更新日: 2020/10/31"
+#, fuzzy
+msgid "更新日: 2021/09/23"
 msgstr "更新日: 2020/10/31"
 
 #: ../../epub.rst:23
@@ -103,15 +105,15 @@ msgstr "目次"
 #: ../../epub.rst:35
 msgid ""
 "Starting with version 1.6, pandoc can produce output in the `EPUB`_ "
-"electronic book format. EPUB books can be viewed on iPads, Nooks, and other "
-"electronic book readers, including many smart phones. (They can also be "
-"converted to Kindle books using `KindleGen`_.)"
+"electronic book format. EPUB books can be viewed on iPads, Nooks, and "
+"other electronic book readers, including many smart phones. (They can "
+"also be converted to Kindle books using `KindleGen`_.)"
 msgstr ""
 
 #: ../../epub.rst:40
 msgid ""
-"This means that it’s now very easy to produce an electronic book! Let’s try "
-"it."
+"This means that it’s now very easy to produce an electronic book! Let’s "
+"try it."
 msgstr ""
 
 #: ../../epub.rst:44
@@ -134,7 +136,8 @@ msgstr ""
 
 #: ../../epub.rst:72
 msgid ""
-"Note that if your markdown file contains links to local images, for example"
+"Note that if your markdown file contains links to local images, for "
+"example"
 msgstr ""
 
 #: ../../epub.rst:79
@@ -148,22 +151,22 @@ msgstr ""
 #: ../../epub.rst:84
 msgid ""
 "To see what this would look like for a real book, let’s convert Scott "
-"Chacon’s book `Pro Git`_, which he wrote using pandoc’s markdown variant and"
-" released under a `Creative Commons`_ license. (If you use the book, please "
-"consider `buying a copy`_ to help support his excellent work.)"
+"Chacon’s book `Pro Git`_, which he wrote using pandoc’s markdown variant "
+"and released under a `Creative Commons`_ license. (If you use the book, "
+"please consider `buying a copy`_ to help support his excellent work.)"
 msgstr ""
 
 #: ../../epub.rst:89
 msgid ""
-"You can find the markdown source for the book on its `github site`_. Let’s "
-"get a copy of the whole repository: [1]_"
+"You can find the markdown source for the book on its `github site`_. "
+"Let’s get a copy of the whole repository: [1]_"
 msgstr ""
 
 #: ../../epub.rst:96
 msgid ""
 "This command will create a working directory called ``progit`` on your "
-"machine. The actual markdown sources for the English version of the book are"
-" in the ``en`` subdirectory, so start by changing to that directory:"
+"machine. The actual markdown sources for the English version of the book "
+"are in the ``en`` subdirectory, so start by changing to that directory:"
 msgstr ""
 
 #: ../../epub.rst:104
@@ -182,8 +185,9 @@ msgstr ""
 #: ../../epub.rst:116
 msgid ""
 "For demonstration purposes, we want pure markdown files, so let’s change "
-"this placeholder into a markdown image link. Pandoc will treat a paragraph "
-"containing a single image as a figure with a caption, which is what we want:"
+"this placeholder into a markdown image link. Pandoc will treat a "
+"paragraph containing a single image as a figure with a caption, which is "
+"what we want:"
 msgstr ""
 
 #: ../../epub.rst:125
@@ -192,16 +196,16 @@ msgstr ""
 
 #: ../../epub.rst:133
 msgid ""
-"This will modify the files in place. (We won’t worry about backing them up; "
-"if we mess up, we can get the original files back with ``git reset "
+"This will modify the files in place. (We won’t worry about backing them "
+"up; if we mess up, we can get the original files back with ``git reset "
 "--hard``.)"
 msgstr ""
 
 #: ../../epub.rst:137
 msgid ""
-"OK! Now we’re almost ready to make an ebook. We have the chapters, each in "
-"its own file, but we still need a title. Create a file, ``title.txt``, with "
-"a pandoc YAML metadata block:"
+"OK! Now we’re almost ready to make an ebook. We have the chapters, each "
+"in its own file, but we still need a title. Create a file, ``title.txt``,"
+" with a pandoc YAML metadata block:"
 msgstr ""
 
 #: ../../epub.rst:150
@@ -210,8 +214,8 @@ msgstr ""
 
 #: ../../epub.rst:152
 msgid ""
-"Now run pandoc to make the ebook, using our title page and modified chapter "
-"files as sources:"
+"Now run pandoc to make the ebook, using our title page and modified "
+"chapter files as sources:"
 msgstr ""
 
 #: ../../epub.rst:168
@@ -227,9 +231,9 @@ msgstr ""
 #: ../../epub.rst:174
 msgid ""
 "You can use the ``--css`` option to specify a CSS file for the book. The "
-"default CSS is minimal and can be found `on GitHub`_ or in the ``epub.css`` "
-"file in your data directory (see ``--data-dir`` in the `User’s Guide "
-"<https://pandoc.org/MANUAL.html>`__)."
+"default CSS is minimal and can be found `on GitHub`_ or in the "
+"``epub.css`` file in your data directory (see ``--data-dir`` in the "
+"`User’s Guide <https://pandoc.org/MANUAL.html>`__)."
 msgstr ""
 
 #: ../../epub.rst:179
@@ -245,20 +249,48 @@ msgstr "数式"
 
 #: ../../epub.rst:186
 msgid ""
-"Pandoc has an EPUB3 writer. It renders LaTeX math into MathML, which EPUB3 "
-"readers are supposed to support (but unfortunately few do)."
+"Pandoc has an EPUB3 writer. It renders LaTeX math into MathML, which "
+"EPUB3 readers are supposed to support (but unfortunately few do)."
 msgstr ""
 
 #: ../../epub.rst:189
 msgid ""
 "Of course, this isn’t much help if you want EPUB2 output (``pandoc -t "
-"epub2``) or target readers that don’t support MathML. Then you should try "
-"using the ``--webtex`` option, which will use a web service to convert the "
-"TeX to an image."
+"epub2``) or target readers that don’t support MathML. Then you have two "
+"options:"
+msgstr ""
+
+#: ../../epub.rst:193
+msgid ""
+"Use the ```--webtex```_ option, which will use a web service to convert "
+"the TeX to an image."
 msgstr ""
 
 #: ../../epub.rst:195
 msgid ""
+"Use the ```--gladtex```_ option to convert maths into SVG images on your "
+"local machine."
+msgstr ""
+
+#: ../../epub.rst:198
+msgid ""
+"Both GladTeX and WebTeX add the LaTeX source of the formula as "
+"alternative text of the image, increasing accessibility for blind users."
+msgstr ""
+
+#: ../../epub.rst:202
+msgid ""
 "If you don’t have `git`_, you can browse to the `github site`_ and click "
 "“Download Source” to get the same files in a zip or tar archive."
 msgstr ""
+
+#~ msgid ""
+#~ "Of course, this isn’t much help if"
+#~ " you want EPUB2 output (``pandoc -t"
+#~ " epub2``) or target readers that "
+#~ "don’t support MathML. Then you should"
+#~ " try using the ``--webtex`` option, "
+#~ "which will use a web service to"
+#~ " convert the TeX to an image."
+#~ msgstr ""
+

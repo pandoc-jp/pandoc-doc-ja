@@ -16,9 +16,9 @@ Using the pandoc API 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.11.0.4
+原著バージョン: 2.14.2
 
-更新日: 2020/10/31
+更新日: 2021/09/23
 
 翻訳者（アルファベット順）:
 
@@ -45,7 +45,7 @@ Pandoc’s architecture
 Pandoc is structured as a set of *readers*, which translate various
 input formats into an abstract syntax tree (the Pandoc AST) representing
 a structured document, and a set of *writers*, which render this AST
-into various input formats. Pictorially:
+into various output formats. Pictorially:
 
 ::
 
@@ -119,8 +119,14 @@ Let’s look at the types of ``readMarkdown`` and ``writeRST``:
 
 .. code:: haskell
 
-   readMarkdown :: PandocMonad m => ReaderOptions -> Text -> m Pandoc
-   writeRST :: PandocMonad m => WriterOptions -> Pandoc -> m Text
+   readMarkdown :: (PandocMonad m, ToSources a)
+                => ReaderOptions
+                -> a
+                -> m Pandoc
+   writeRST     :: PandocMonad m
+                => WriterOptions
+                -> Pandoc
+                -> m Text
 
 The ``PandocMonad m =>`` part is a typeclass constraint. It says that
 ``readMarkdown`` and ``writeRST`` define computations that can be used
@@ -160,7 +166,7 @@ For example:
    -- | Fetch an image or other item from the local filesystem or the net.
    -- Returns raw content and maybe mime type.
    fetchItem :: PandocMonad m
-             => String
+             => Text
              -> m (B.ByteString, Maybe MimeType)
 
    -- Set the resource path searched by 'fetchItem'.
@@ -179,6 +185,12 @@ we defined in the previous section, we could do this:
 Note that ``PandocIO`` is an instance of ``MonadIO``, so you can use
 ``liftIO`` to perform arbitrary IO operations inside a pandoc conversion
 chain.
+
+``readMarkdown`` is polymorphic in its second argument, which can be any
+type that is an instance of the ``ToSources`` typeclass. You can use
+``Text``, as in the example above. But you can also use
+``[(FilePath, Text)]``, if the input comes from multiple files and you
+want to track source positions accurately.
 
 Options
 =======
@@ -227,8 +239,8 @@ concatenated:
    import Text.Pandoc.Builder
 
    mydoc :: Pandoc
-   mydoc = doc $ header 1 (text "Hello!")
-              <> para (emph (text "hello world") <> text ".")
+   mydoc = doc $ header 1 (text (T.pack "Hello!"))
+              <> para (emph (text (T.pack "hello world")) <> text (T.pack "."))
 
    main :: IO ()
    main = print mydoc
@@ -274,16 +286,16 @@ document:
    import Data.List (intersperse)
 
    data Station = Station{
-       address        :: String
-     , name           :: String
-     , cardsAccepted  :: [String]
+       address        :: T.Text
+     , name           :: T.Text
+     , cardsAccepted  :: [T.Text]
      } deriving Show
 
    instance FromJSON Station where
        parseJSON (Object v) = Station <$>
           v .: "street_address" <*>
           v .: "station_name" <*>
-          (words <$> (v .:? "cards_accepted" .!= ""))
+          (T.words <$> (v .:? "cards_accepted" .!= ""))
        parseJSON _          = mzero
 
    createLetter :: [Station] -> Pandoc
@@ -340,8 +352,8 @@ override the system defaults. If you want to disable this behavior, use
 ``setUserDataDir Nothing``.
 
 To render a template, use ``renderTemplate'``, which takes two
-arguments, a template (String) and a context (any instance of ToJSON).
-If you want to create a context from the metadata part of a Pandoc
+arguments, a template (Text) and a context (any instance of ToJSON). If
+you want to create a context from the metadata part of a Pandoc
 document, use ``metaToJSON'`` from `Text.Pandoc.Writers.Shared`_. If you
 also want to incorporate values from variables, use ``metaToJSON``
 instead, and make sure ``writerVariables`` is set in ``WriterOptions``.
@@ -434,7 +446,7 @@ returns a list of the URLs linked to in a document:
 
 .. code:: haskell
 
-   listURLs :: Pandoc -> [String]
+   listURLs :: Pandoc -> [Text]
    listURLs = query urls
      where urls (Link _ _ (src, _)) = [src]
            urls _                   = []

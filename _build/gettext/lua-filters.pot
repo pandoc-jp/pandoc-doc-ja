@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2019, 日本Pandocユーザ会
+# Copyright (C) 2020, 日本Pandocユーザ会
 # This file is distributed under the same license as the 日本Pandocユーザ会 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-31 10:15+0000\n"
+"POT-Creation-Date: 2021-09-23 03:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,11 +49,11 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../lua-filters.rst:20
-msgid "原著バージョン: 2.11.0.4"
+msgid "原著バージョン: 2.14.2"
 msgstr ""
 
 #: ../../lua-filters.rst:22
-msgid "更新日: 2020/10/31"
+msgid "更新日: 2021/09/23"
 msgstr ""
 
 #: ../../lua-filters.rst:24
@@ -193,7 +193,7 @@ msgid "For each filter, the document is traversed and each element subjected to 
 msgstr ""
 
 #: ../../lua-filters.rst:141
-msgid "The return of a filter function must one of the following:"
+msgid "The return of a filter function must be one of the following:"
 msgstr ""
 
 #: ../../lua-filters.rst:143
@@ -575,21 +575,21 @@ msgstr ""
 #: ../../lua-filters.rst:766
 #: ../../lua-filters.rst:1934
 #: ../../lua-filters.rst:2589
-#: ../../lua-filters.rst:2737
-#: ../../lua-filters.rst:2799
-#: ../../lua-filters.rst:2847
-#: ../../lua-filters.rst:2898
-#: ../../lua-filters.rst:2927
-#: ../../lua-filters.rst:2959
-#: ../../lua-filters.rst:3000
-#: ../../lua-filters.rst:3020
-#: ../../lua-filters.rst:3041
-#: ../../lua-filters.rst:3062
-#: ../../lua-filters.rst:3129
-#: ../../lua-filters.rst:3162
-#: ../../lua-filters.rst:3184
-#: ../../lua-filters.rst:3216
-#: ../../lua-filters.rst:3238
+#: ../../lua-filters.rst:2738
+#: ../../lua-filters.rst:2800
+#: ../../lua-filters.rst:2848
+#: ../../lua-filters.rst:2899
+#: ../../lua-filters.rst:2928
+#: ../../lua-filters.rst:2960
+#: ../../lua-filters.rst:3001
+#: ../../lua-filters.rst:3021
+#: ../../lua-filters.rst:3042
+#: ../../lua-filters.rst:3063
+#: ../../lua-filters.rst:3131
+#: ../../lua-filters.rst:3164
+#: ../../lua-filters.rst:3186
+#: ../../lua-filters.rst:3218
+#: ../../lua-filters.rst:3249
 msgid "Usage:"
 msgstr ""
 
@@ -1797,7 +1797,7 @@ msgid "Attr"
 msgstr ""
 
 #: ../../lua-filters.rst:1587
-msgid "A set of element attributes. Values of this type can be created with the ```pandoc.Attr```_ constructor. For convenience, it is usually not necessary to construct the value directly if it is part of an element, and it is sufficient to pass an HTML-like table. E.g., to create a span with identifier “text” and classes “a” and “b”, on can write:"
+msgid "A set of element attributes. Values of this type can be created with the ```pandoc.Attr```_ constructor. For convenience, it is usually not necessary to construct the value directly if it is part of an element, and it is sufficient to pass an HTML-like table. E.g., to create a span with identifier “text” and classes “a” and “b”, one can write:"
 msgstr ""
 
 #: ../../lua-filters.rst:1597
@@ -2280,7 +2280,7 @@ msgstr ""
 
 #: ../../lua-filters.rst:1878
 #: ../../lua-filters.rst:2576
-#: ../../lua-filters.rst:2845
+#: ../../lua-filters.rst:2846
 msgid "`List`_ of `Inlines`_"
 msgstr ""
 
@@ -2398,31 +2398,42 @@ msgstr ""
 #: ../../lua-filters.rst:2535
 #: ../../lua-filters.rst:2555
 #: ../../lua-filters.rst:2573
-#: ../../lua-filters.rst:2718
-#: ../../lua-filters.rst:2752
-#: ../../lua-filters.rst:2771
-#: ../../lua-filters.rst:2790
-#: ../../lua-filters.rst:2834
-#: ../../lua-filters.rst:2872
-#: ../../lua-filters.rst:2946
-#: ../../lua-filters.rst:3096
-#: ../../lua-filters.rst:3120
-#: ../../lua-filters.rst:3206
-#: ../../lua-filters.rst:3265
-#: ../../lua-filters.rst:3281
-#: ../../lua-filters.rst:3290
-#: ../../lua-filters.rst:3304
-#: ../../lua-filters.rst:3317
-#: ../../lua-filters.rst:3327
-#: ../../lua-filters.rst:3342
+#: ../../lua-filters.rst:2719
+#: ../../lua-filters.rst:2753
+#: ../../lua-filters.rst:2772
+#: ../../lua-filters.rst:2791
+#: ../../lua-filters.rst:2835
+#: ../../lua-filters.rst:2873
+#: ../../lua-filters.rst:2947
+#: ../../lua-filters.rst:3097
+#: ../../lua-filters.rst:3122
+#: ../../lua-filters.rst:3208
+#: ../../lua-filters.rst:3239
+#: ../../lua-filters.rst:3276
+#: ../../lua-filters.rst:3292
+#: ../../lua-filters.rst:3301
+#: ../../lua-filters.rst:3315
+#: ../../lua-filters.rst:3328
+#: ../../lua-filters.rst:3338
 #: ../../lua-filters.rst:3353
-#: ../../lua-filters.rst:3362
-#: ../../lua-filters.rst:3376
-#: ../../lua-filters.rst:3401
-#: ../../lua-filters.rst:3470
-#: ../../lua-filters.rst:3492
-#: ../../lua-filters.rst:3520
-#: ../../lua-filters.rst:3545
+#: ../../lua-filters.rst:3364
+#: ../../lua-filters.rst:3373
+#: ../../lua-filters.rst:3387
+#: ../../lua-filters.rst:3412
+#: ../../lua-filters.rst:3455
+#: ../../lua-filters.rst:3471
+#: ../../lua-filters.rst:3487
+#: ../../lua-filters.rst:3504
+#: ../../lua-filters.rst:3521
+#: ../../lua-filters.rst:3542
+#: ../../lua-filters.rst:3569
+#: ../../lua-filters.rst:3585
+#: ../../lua-filters.rst:3603
+#: ../../lua-filters.rst:3623
+#: ../../lua-filters.rst:3696
+#: ../../lua-filters.rst:3718
+#: ../../lua-filters.rst:3746
+#: ../../lua-filters.rst:3771
 msgid "Parameters:"
 msgstr ""
 
@@ -2516,7 +2527,7 @@ msgstr ""
 
 #: ../../lua-filters.rst:2021
 #: ../../lua-filters.rst:2050
-#: ../../lua-filters.rst:2836
+#: ../../lua-filters.rst:2837
 msgid "``blocks``:"
 msgstr ""
 
@@ -2545,7 +2556,7 @@ msgid "Create a new Meta object."
 msgstr ""
 
 #: ../../lua-filters.rst:2037
-#: ../../lua-filters.rst:3366
+#: ../../lua-filters.rst:3377
 msgid "``table``:"
 msgstr ""
 
@@ -2892,7 +2903,7 @@ msgstr ""
 
 #: ../../lua-filters.rst:2232
 #: ../../lua-filters.rst:2413
-#: ../../lua-filters.rst:2795
+#: ../../lua-filters.rst:2796
 msgid "``format``:"
 msgstr ""
 
@@ -3451,7 +3462,7 @@ msgstr ""
 msgid "Legacy types"
 msgstr ""
 
-#: ../../lua-filters.rst:2607
+#: ../../lua-filters.rst:2608
 msgid "``SimpleTable (caption, aligns, widths, headers, rows)``"
 msgstr ""
 
@@ -3463,1102 +3474,1354 @@ msgstr ""
 msgid "Returns: `SimpleTable`_ object"
 msgstr ""
 
-#: ../../lua-filters.rst:2610
+#: ../../lua-filters.rst:2611
 msgid "Constants"
 msgstr ""
 
-#: ../../lua-filters.rst:2615
+#: ../../lua-filters.rst:2616
 msgid "``AuthorInText``"
 msgstr ""
 
-#: ../../lua-filters.rst:2613
+#: ../../lua-filters.rst:2614
 msgid "Author name is mentioned in the text."
 msgstr ""
 
-#: ../../lua-filters.rst:2615
-#: ../../lua-filters.rst:2620
-#: ../../lua-filters.rst:2625
+#: ../../lua-filters.rst:2616
+#: ../../lua-filters.rst:2621
+#: ../../lua-filters.rst:2626
 msgid "See also: `Citation`_"
 msgstr ""
 
-#: ../../lua-filters.rst:2620
+#: ../../lua-filters.rst:2621
 msgid "``SuppressAuthor``"
 msgstr ""
 
-#: ../../lua-filters.rst:2618
+#: ../../lua-filters.rst:2619
 msgid "Author name is suppressed."
 msgstr ""
 
-#: ../../lua-filters.rst:2625
+#: ../../lua-filters.rst:2626
 msgid "``NormalCitation``"
 msgstr ""
 
-#: ../../lua-filters.rst:2623
+#: ../../lua-filters.rst:2624
 msgid "Default citation style is used."
 msgstr ""
 
-#: ../../lua-filters.rst:2630
+#: ../../lua-filters.rst:2631
 msgid "``AlignLeft``"
 msgstr ""
 
-#: ../../lua-filters.rst:2628
+#: ../../lua-filters.rst:2629
 msgid "Table cells aligned left."
 msgstr ""
 
-#: ../../lua-filters.rst:2630
-#: ../../lua-filters.rst:2635
-#: ../../lua-filters.rst:2640
-#: ../../lua-filters.rst:2645
+#: ../../lua-filters.rst:2631
+#: ../../lua-filters.rst:2636
+#: ../../lua-filters.rst:2641
+#: ../../lua-filters.rst:2646
 msgid "See also: `Table <#type-alignment>`__"
 msgstr ""
 
-#: ../../lua-filters.rst:2635
+#: ../../lua-filters.rst:2636
 msgid "``AlignRight``"
 msgstr ""
 
-#: ../../lua-filters.rst:2633
+#: ../../lua-filters.rst:2634
 msgid "Table cells right-aligned."
 msgstr ""
 
-#: ../../lua-filters.rst:2640
+#: ../../lua-filters.rst:2641
 msgid "``AlignCenter``"
 msgstr ""
 
-#: ../../lua-filters.rst:2638
+#: ../../lua-filters.rst:2639
 msgid "Table cell content is centered."
 msgstr ""
 
-#: ../../lua-filters.rst:2645
+#: ../../lua-filters.rst:2646
 msgid "``AlignDefault``"
 msgstr ""
 
-#: ../../lua-filters.rst:2643
+#: ../../lua-filters.rst:2644
 msgid "Table cells are alignment is unaltered."
 msgstr ""
 
-#: ../../lua-filters.rst:2650
+#: ../../lua-filters.rst:2651
 msgid "``DefaultDelim``"
 msgstr ""
 
-#: ../../lua-filters.rst:2648
+#: ../../lua-filters.rst:2649
 msgid "Default list number delimiters are used."
 msgstr ""
 
-#: ../../lua-filters.rst:2650
-#: ../../lua-filters.rst:2655
-#: ../../lua-filters.rst:2660
-#: ../../lua-filters.rst:2665
-#: ../../lua-filters.rst:2670
-#: ../../lua-filters.rst:2675
-#: ../../lua-filters.rst:2680
-#: ../../lua-filters.rst:2685
-#: ../../lua-filters.rst:2690
-#: ../../lua-filters.rst:2695
-#: ../../lua-filters.rst:2700
+#: ../../lua-filters.rst:2651
+#: ../../lua-filters.rst:2656
+#: ../../lua-filters.rst:2661
+#: ../../lua-filters.rst:2666
+#: ../../lua-filters.rst:2671
+#: ../../lua-filters.rst:2676
+#: ../../lua-filters.rst:2681
+#: ../../lua-filters.rst:2686
+#: ../../lua-filters.rst:2691
+#: ../../lua-filters.rst:2696
+#: ../../lua-filters.rst:2701
 msgid "See also: `ListAttributes`_"
 msgstr ""
 
-#: ../../lua-filters.rst:2655
+#: ../../lua-filters.rst:2656
 msgid "``Period``"
 msgstr ""
 
-#: ../../lua-filters.rst:2653
+#: ../../lua-filters.rst:2654
 msgid "List numbers are delimited by a period."
 msgstr ""
 
-#: ../../lua-filters.rst:2660
+#: ../../lua-filters.rst:2661
 msgid "``OneParen``"
 msgstr ""
 
-#: ../../lua-filters.rst:2658
+#: ../../lua-filters.rst:2659
 msgid "List numbers are delimited by a single parenthesis."
 msgstr ""
 
-#: ../../lua-filters.rst:2665
+#: ../../lua-filters.rst:2666
 msgid "``TwoParens``"
 msgstr ""
 
-#: ../../lua-filters.rst:2663
+#: ../../lua-filters.rst:2664
 msgid "List numbers are delimited by a double parentheses."
 msgstr ""
 
-#: ../../lua-filters.rst:2670
+#: ../../lua-filters.rst:2671
 msgid "``DefaultStyle``"
 msgstr ""
 
-#: ../../lua-filters.rst:2668
+#: ../../lua-filters.rst:2669
 msgid "List are numbered in the default style"
 msgstr ""
 
-#: ../../lua-filters.rst:2675
+#: ../../lua-filters.rst:2676
 msgid "``Example``"
 msgstr ""
 
-#: ../../lua-filters.rst:2673
+#: ../../lua-filters.rst:2674
 msgid "List items are numbered as examples."
 msgstr ""
 
-#: ../../lua-filters.rst:2680
+#: ../../lua-filters.rst:2681
 msgid "``Decimal``"
 msgstr ""
 
-#: ../../lua-filters.rst:2678
+#: ../../lua-filters.rst:2679
 msgid "List are numbered using decimal integers."
 msgstr ""
 
-#: ../../lua-filters.rst:2685
+#: ../../lua-filters.rst:2686
 msgid "``LowerRoman``"
 msgstr ""
 
-#: ../../lua-filters.rst:2683
+#: ../../lua-filters.rst:2684
 msgid "List are numbered using lower-case roman numerals."
 msgstr ""
 
-#: ../../lua-filters.rst:2690
+#: ../../lua-filters.rst:2691
 msgid "``UpperRoman``"
 msgstr ""
 
-#: ../../lua-filters.rst:2688
+#: ../../lua-filters.rst:2689
 msgid "List are numbered using upper-case roman numerals"
 msgstr ""
 
-#: ../../lua-filters.rst:2695
+#: ../../lua-filters.rst:2696
 msgid "``LowerAlpha``"
 msgstr ""
 
-#: ../../lua-filters.rst:2693
+#: ../../lua-filters.rst:2694
 msgid "List are numbered using lower-case alphabetic characters."
 msgstr ""
 
-#: ../../lua-filters.rst:2700
+#: ../../lua-filters.rst:2701
 msgid "``UpperAlpha``"
 msgstr ""
 
-#: ../../lua-filters.rst:2698
+#: ../../lua-filters.rst:2699
 msgid "List are numbered using upper-case alphabetic characters."
 msgstr ""
 
-#: ../../lua-filters.rst:2703
+#: ../../lua-filters.rst:2704
 msgid "``sha1``"
 msgstr ""
 
-#: ../../lua-filters.rst:2703
+#: ../../lua-filters.rst:2704
 msgid "Alias for ```pandoc.utils.sha1```_ (DEPRECATED)."
 msgstr ""
 
-#: ../../lua-filters.rst:2706
+#: ../../lua-filters.rst:2707
 msgid "Helper functions"
 msgstr ""
 
-#: ../../lua-filters.rst:2711
+#: ../../lua-filters.rst:2712
 msgid "pipe"
 msgstr ""
 
-#: ../../lua-filters.rst:2713
+#: ../../lua-filters.rst:2714
 msgid "``pipe (command, args, input)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2715
+#: ../../lua-filters.rst:2716
 msgid "Runs command with arguments, passing it some input, and returns the output."
 msgstr ""
 
-#: ../../lua-filters.rst:2721
+#: ../../lua-filters.rst:2722
 msgid "``command``"
 msgstr ""
 
-#: ../../lua-filters.rst:2721
+#: ../../lua-filters.rst:2722
 msgid "program to run; the executable will be resolved using default system methods (string)."
 msgstr ""
 
-#: ../../lua-filters.rst:2723
+#: ../../lua-filters.rst:2724
 msgid "``args``"
 msgstr ""
 
-#: ../../lua-filters.rst:2724
+#: ../../lua-filters.rst:2725
 msgid "list of arguments to pass to the program (list of strings)."
 msgstr ""
 
-#: ../../lua-filters.rst:2726
+#: ../../lua-filters.rst:2727
 msgid "``input``"
 msgstr ""
 
-#: ../../lua-filters.rst:2726
+#: ../../lua-filters.rst:2727
 msgid "data which is piped into the program via stdin (string)."
 msgstr ""
 
-#: ../../lua-filters.rst:2728
-#: ../../lua-filters.rst:2843
-#: ../../lua-filters.rst:2879
-#: ../../lua-filters.rst:2894
-#: ../../lua-filters.rst:2923
-#: ../../lua-filters.rst:2955
-#: ../../lua-filters.rst:2983
-#: ../../lua-filters.rst:2996
-#: ../../lua-filters.rst:3016
-#: ../../lua-filters.rst:3037
-#: ../../lua-filters.rst:3058
-#: ../../lua-filters.rst:3154
-#: ../../lua-filters.rst:3211
-#: ../../lua-filters.rst:3233
-#: ../../lua-filters.rst:3440
-#: ../../lua-filters.rst:3454
-#: ../../lua-filters.rst:3478
-#: ../../lua-filters.rst:3504
-#: ../../lua-filters.rst:3527
-#: ../../lua-filters.rst:3552
+#: ../../lua-filters.rst:2729
+#: ../../lua-filters.rst:2844
+#: ../../lua-filters.rst:2880
+#: ../../lua-filters.rst:2895
+#: ../../lua-filters.rst:2924
+#: ../../lua-filters.rst:2956
+#: ../../lua-filters.rst:2984
+#: ../../lua-filters.rst:2997
+#: ../../lua-filters.rst:3017
+#: ../../lua-filters.rst:3038
+#: ../../lua-filters.rst:3059
+#: ../../lua-filters.rst:3156
+#: ../../lua-filters.rst:3213
+#: ../../lua-filters.rst:3244
+#: ../../lua-filters.rst:3460
+#: ../../lua-filters.rst:3476
+#: ../../lua-filters.rst:3492
+#: ../../lua-filters.rst:3509
+#: ../../lua-filters.rst:3526
+#: ../../lua-filters.rst:3551
+#: ../../lua-filters.rst:3574
+#: ../../lua-filters.rst:3590
+#: ../../lua-filters.rst:3608
+#: ../../lua-filters.rst:3628
+#: ../../lua-filters.rst:3666
+#: ../../lua-filters.rst:3680
+#: ../../lua-filters.rst:3704
+#: ../../lua-filters.rst:3730
+#: ../../lua-filters.rst:3753
+#: ../../lua-filters.rst:3778
 msgid "Returns:"
 msgstr ""
 
-#: ../../lua-filters.rst:2730
+#: ../../lua-filters.rst:2731
 msgid "Output of command, i.e. data printed to stdout (string)"
 msgstr ""
 
-#: ../../lua-filters.rst:2732
+#: ../../lua-filters.rst:2733
 msgid "Raises:"
 msgstr ""
 
-#: ../../lua-filters.rst:2734
+#: ../../lua-filters.rst:2735
 msgid "A table containing the keys ``command``, ``error_code``, and ``output`` is thrown if the command exits with a non-zero error code."
 msgstr ""
 
-#: ../../lua-filters.rst:2746
+#: ../../lua-filters.rst:2747
 msgid "walk_block"
 msgstr ""
 
-#: ../../lua-filters.rst:2748
+#: ../../lua-filters.rst:2749
 msgid "``walk_block (element, filter)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2750
+#: ../../lua-filters.rst:2751
 msgid "Apply a filter inside a block element, walking its contents."
 msgstr ""
 
-#: ../../lua-filters.rst:2754
-#: ../../lua-filters.rst:2773
+#: ../../lua-filters.rst:2755
+#: ../../lua-filters.rst:2774
 msgid "``element``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2755
+#: ../../lua-filters.rst:2756
 msgid "the block element"
 msgstr ""
 
-#: ../../lua-filters.rst:2758
-#: ../../lua-filters.rst:2777
-#: ../../lua-filters.rst:2950
+#: ../../lua-filters.rst:2759
+#: ../../lua-filters.rst:2778
+#: ../../lua-filters.rst:2951
 msgid "``filter``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2757
+#: ../../lua-filters.rst:2758
 msgid "a Lua filter (table of functions) to be applied within the block element"
 msgstr ""
 
-#: ../../lua-filters.rst:2760
+#: ../../lua-filters.rst:2761
 msgid "Returns: the transformed block element"
 msgstr ""
 
-#: ../../lua-filters.rst:2765
+#: ../../lua-filters.rst:2766
 msgid "walk_inline"
 msgstr ""
 
-#: ../../lua-filters.rst:2767
+#: ../../lua-filters.rst:2768
 msgid "``walk_inline (element, filter)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2769
+#: ../../lua-filters.rst:2770
 msgid "Apply a filter inside an inline element, walking its contents."
 msgstr ""
 
-#: ../../lua-filters.rst:2774
+#: ../../lua-filters.rst:2775
 msgid "the inline element"
 msgstr ""
 
-#: ../../lua-filters.rst:2776
+#: ../../lua-filters.rst:2777
 msgid "a Lua filter (table of functions) to be applied within the inline element"
 msgstr ""
 
-#: ../../lua-filters.rst:2779
+#: ../../lua-filters.rst:2780
 msgid "Returns: the transformed inline element"
 msgstr ""
 
-#: ../../lua-filters.rst:2784
+#: ../../lua-filters.rst:2785
 msgid "read"
 msgstr ""
 
-#: ../../lua-filters.rst:2786
+#: ../../lua-filters.rst:2787
 msgid "``read (markup[, format])``"
 msgstr ""
 
-#: ../../lua-filters.rst:2788
+#: ../../lua-filters.rst:2789
 msgid "Parse the given string into a Pandoc document."
 msgstr ""
 
-#: ../../lua-filters.rst:2792
+#: ../../lua-filters.rst:2793
 msgid "``markup``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2793
+#: ../../lua-filters.rst:2794
 msgid "the markup to be parsed"
 msgstr ""
 
-#: ../../lua-filters.rst:2795
+#: ../../lua-filters.rst:2796
 msgid "format specification, defaults to ``\"markdown\"``."
 msgstr ""
 
-#: ../../lua-filters.rst:2797
+#: ../../lua-filters.rst:2798
 msgid "Returns: pandoc document"
 msgstr ""
 
-#: ../../lua-filters.rst:2811
+#: ../../lua-filters.rst:2812
 msgid "Module pandoc.utils"
 msgstr ""
 
-#: ../../lua-filters.rst:2813
+#: ../../lua-filters.rst:2814
 msgid "This module exposes internal pandoc functions and utility functions."
 msgstr ""
 
-#: ../../lua-filters.rst:2815
+#: ../../lua-filters.rst:2816
 msgid "The module is loaded as part of the ``pandoc`` module and available as ``pandoc.utils``. In versions up-to and including pandoc 2.6, this module had to be loaded explicitly. Example:"
 msgstr ""
 
-#: ../../lua-filters.rst:2823
+#: ../../lua-filters.rst:2824
 msgid "Use the above for backwards compatibility."
 msgstr ""
 
-#: ../../lua-filters.rst:2830
+#: ../../lua-filters.rst:2831
 msgid "``blocks_to_inlines (blocks[, sep])``"
 msgstr ""
 
-#: ../../lua-filters.rst:2832
+#: ../../lua-filters.rst:2833
 msgid "Squash a list of blocks into a list of inlines."
 msgstr ""
 
-#: ../../lua-filters.rst:2837
+#: ../../lua-filters.rst:2838
 msgid "List of `Blocks`_ to be flattened."
 msgstr ""
 
-#: ../../lua-filters.rst:2841
+#: ../../lua-filters.rst:2842
 msgid "``sep``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2839
+#: ../../lua-filters.rst:2840
 msgid "List of `Inlines`_ inserted as separator between two consecutive blocks; defaults to ``{ pandoc.Space(), pandoc.Str'¶', pandoc.Space()}``."
 msgstr ""
 
-#: ../../lua-filters.rst:2867
+#: ../../lua-filters.rst:2868
 msgid "``equals (element1, element2)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2869
+#: ../../lua-filters.rst:2870
 msgid "Test equality of AST elements. Elements in Lua are considered equal if and only if the objects obtained by unmarshaling are equal."
 msgstr ""
 
-#: ../../lua-filters.rst:2877
+#: ../../lua-filters.rst:2878
 msgid "``element1``, ``element2``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2875
+#: ../../lua-filters.rst:2876
 msgid "Objects to be compared. Acceptable input types are `Pandoc`_, `Meta`_, `MetaValue`_, `Block`_, `Inline`_, `Attr`_, `ListAttributes`_, and `Citation`_."
 msgstr ""
 
-#: ../../lua-filters.rst:2881
+#: ../../lua-filters.rst:2882
 msgid "Whether the two objects represent the same element (boolean)"
 msgstr ""
 
-#: ../../lua-filters.rst:2888
+#: ../../lua-filters.rst:2889
 msgid "``from_simple_table (table)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2890
+#: ../../lua-filters.rst:2891
 msgid "Creates a `Table`_ block element from a `SimpleTable`_. This is useful for dealing with legacy code which was written for pandoc versions older than 2.10."
 msgstr ""
 
-#: ../../lua-filters.rst:2896
+#: ../../lua-filters.rst:2897
 msgid "table block element (`Table`_)"
 msgstr ""
 
-#: ../../lua-filters.rst:2913
+#: ../../lua-filters.rst:2914
 msgid "``make_sections (number_sections, base_level, blocks)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2915
+#: ../../lua-filters.rst:2916
 msgid "Converts list of `Blocks`_ into sections. ``Div``\\ s will be created beginning at each ``Header`` and containing following content until the next ``Header`` of comparable level. If ``number_sections`` is true, a ``number`` attribute will be added to each ``Header`` containing the section number. If ``base_level`` is non-null, ``Header`` levels will be reorganized so that there are no gaps, and so that the base level is the level specified."
 msgstr ""
 
-#: ../../lua-filters.rst:2925
+#: ../../lua-filters.rst:2926
 msgid "List of `Blocks`_."
 msgstr ""
 
-#: ../../lua-filters.rst:2942
+#: ../../lua-filters.rst:2943
 msgid "``run_json_filter (doc, filter[, args])``"
 msgstr ""
 
-#: ../../lua-filters.rst:2944
+#: ../../lua-filters.rst:2945
 msgid "Filter the given doc by passing it through the a JSON filter."
 msgstr ""
 
-#: ../../lua-filters.rst:2948
+#: ../../lua-filters.rst:2949
 msgid "``doc``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2949
+#: ../../lua-filters.rst:2950
 msgid "the Pandoc document to filter"
 msgstr ""
 
-#: ../../lua-filters.rst:2951
+#: ../../lua-filters.rst:2952
 msgid "filter to run"
 msgstr ""
 
-#: ../../lua-filters.rst:2953
+#: ../../lua-filters.rst:2954
 msgid "``args``:"
 msgstr ""
 
-#: ../../lua-filters.rst:2953
+#: ../../lua-filters.rst:2954
 msgid "list of arguments passed to the filter. Defaults to ``{FORMAT}``."
 msgstr ""
 
-#: ../../lua-filters.rst:2957
+#: ../../lua-filters.rst:2958
 msgid "(`Pandoc`_) Filtered document"
 msgstr ""
 
-#: ../../lua-filters.rst:2977
+#: ../../lua-filters.rst:2978
 msgid "``normalize_date (date_string)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2979
+#: ../../lua-filters.rst:2980
 msgid "Parse a date and convert (if possible) to “YYYY-MM-DD” format. We limit years to the range 1601-9999 (ISO 8601 accepts greater than or equal to 1583, but MS Word only accepts dates starting 1601)."
 msgstr ""
 
-#: ../../lua-filters.rst:2985
+#: ../../lua-filters.rst:2986
 msgid "A date string, or nil when the conversion failed."
 msgstr ""
 
-#: ../../lua-filters.rst:2992
+#: ../../lua-filters.rst:2993
 msgid "``sha1 (contents)``"
 msgstr ""
 
-#: ../../lua-filters.rst:2994
+#: ../../lua-filters.rst:2995
 msgid "Returns the SHA1 has of the contents."
 msgstr ""
 
-#: ../../lua-filters.rst:2998
+#: ../../lua-filters.rst:2999
 msgid "SHA1 hash of the contents."
 msgstr ""
 
-#: ../../lua-filters.rst:3011
+#: ../../lua-filters.rst:3012
 msgid "``stringify (element)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3013
+#: ../../lua-filters.rst:3014
 msgid "Converts the given element (Pandoc, Meta, Block, or Inline) into a string with all formatting removed."
 msgstr ""
 
-#: ../../lua-filters.rst:3018
+#: ../../lua-filters.rst:3019
 msgid "A plain string representation of the given element."
 msgstr ""
 
-#: ../../lua-filters.rst:3033
+#: ../../lua-filters.rst:3034
 msgid "``to_roman_numeral (integer)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3035
+#: ../../lua-filters.rst:3036
 msgid "Converts an integer < 4000 to uppercase roman numeral."
 msgstr ""
 
-#: ../../lua-filters.rst:3039
+#: ../../lua-filters.rst:3040
 msgid "A roman numeral string."
 msgstr ""
 
-#: ../../lua-filters.rst:3054
+#: ../../lua-filters.rst:3055
 msgid "``to_simple_table (table)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3056
+#: ../../lua-filters.rst:3057
 msgid "Creates a `SimpleTable`_ out of a `Table`_ block."
 msgstr ""
 
-#: ../../lua-filters.rst:3060
+#: ../../lua-filters.rst:3061
 msgid "a simple table object (`SimpleTable`_)"
 msgstr ""
 
-#: ../../lua-filters.rst:3073
+#: ../../lua-filters.rst:3074
 msgid "Module pandoc.mediabag"
 msgstr ""
 
-#: ../../lua-filters.rst:3075
+#: ../../lua-filters.rst:3076
 msgid "The ``pandoc.mediabag`` module allows accessing pandoc’s media storage. The “media bag” is used when pandoc is called with the ``--extract-media`` or (for HTML only) ``--self-contained`` option."
 msgstr ""
 
-#: ../../lua-filters.rst:3079
+#: ../../lua-filters.rst:3080
 msgid "The module is loaded as part of module ``pandoc`` and can either be accessed via the ``pandoc.mediabag`` field, or explicitly required, e.g.:"
 msgstr ""
 
-#: ../../lua-filters.rst:3092
+#: ../../lua-filters.rst:3093
 msgid "``delete (filepath)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3094
+#: ../../lua-filters.rst:3095
 msgid "Removes a single entry from the media bag."
 msgstr ""
 
-#: ../../lua-filters.rst:3100
-#: ../../lua-filters.rst:3122
-#: ../../lua-filters.rst:3209
+#: ../../lua-filters.rst:3101
+#: ../../lua-filters.rst:3124
+#: ../../lua-filters.rst:3211
 msgid "``filepath``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3099
+#: ../../lua-filters.rst:3100
 msgid "filename of the item to be deleted. The media bag will be left unchanged if no entry with the given filename exists."
 msgstr ""
 
-#: ../../lua-filters.rst:3107
+#: ../../lua-filters.rst:3108
 msgid "``empty ()``"
 msgstr ""
 
-#: ../../lua-filters.rst:3109
+#: ../../lua-filters.rst:3110
 msgid "Clear-out the media bag, deleting all items."
 msgstr ""
 
-#: ../../lua-filters.rst:3116
+#: ../../lua-filters.rst:3117
 msgid "``insert (filepath, mime_type, contents)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3118
-msgid "Adds a new entry to pandoc’s media bag."
-msgstr ""
-
-#: ../../lua-filters.rst:3123
-msgid "filename and path relative to the output folder."
-msgstr ""
-
-#: ../../lua-filters.rst:3124
-msgid "``mime_type``:"
+#: ../../lua-filters.rst:3119
+msgid "Adds a new entry to pandoc’s media bag. Replaces any existing mediabag entry with the same ``filepath``."
 msgstr ""
 
 #: ../../lua-filters.rst:3125
-msgid "the file’s MIME type"
+msgid "filename and path relative to the output folder."
+msgstr ""
+
+#: ../../lua-filters.rst:3126
+msgid "``mime_type``:"
 msgstr ""
 
 #: ../../lua-filters.rst:3127
+msgid "the file’s MIME type; use ``nil`` if unknown or unavailable."
+msgstr ""
+
+#: ../../lua-filters.rst:3129
 msgid "``contents``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3127
+#: ../../lua-filters.rst:3129
 msgid "the binary contents of the file."
 msgstr ""
 
-#: ../../lua-filters.rst:3143
+#: ../../lua-filters.rst:3145
 msgid "``items ()``"
 msgstr ""
 
-#: ../../lua-filters.rst:3145
+#: ../../lua-filters.rst:3147
 msgid "Returns an iterator triple to be used with Lua’s generic ``for`` statement. The iterator returns the filepath, MIME type, and content of a media bag item on each invocation. Items are processed one-by-one to avoid excessive memory use."
 msgstr ""
 
-#: ../../lua-filters.rst:3150
+#: ../../lua-filters.rst:3152
 msgid "This function should be used only when full access to all items, including their contents, is required. For all other cases, ```list```_ should be preferred."
 msgstr ""
 
-#: ../../lua-filters.rst:3156
+#: ../../lua-filters.rst:3158
 msgid "The iterator function; must be called with the iterator state and the current iterator value."
 msgstr ""
 
-#: ../../lua-filters.rst:3158
+#: ../../lua-filters.rst:3160
 msgid "Iterator state – an opaque value to be passed to the iterator function."
 msgstr ""
 
-#: ../../lua-filters.rst:3160
+#: ../../lua-filters.rst:3162
 msgid "Initial iterator value."
 msgstr ""
 
-#: ../../lua-filters.rst:3175
+#: ../../lua-filters.rst:3177
 msgid "``list ()``"
 msgstr ""
 
-#: ../../lua-filters.rst:3177
+#: ../../lua-filters.rst:3179
 msgid "Get a summary of the current media bag contents."
 msgstr ""
 
-#: ../../lua-filters.rst:3179
+#: ../../lua-filters.rst:3181
 msgid "Returns: A list of elements summarizing each entry in the media bag. The summary item contains the keys ``path``, ``type``, and ``length``, giving the filepath, MIME type, and length of contents in bytes, respectively."
 msgstr ""
 
-#: ../../lua-filters.rst:3201
+#: ../../lua-filters.rst:3203
 msgid "``lookup (filepath)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3203
+#: ../../lua-filters.rst:3205
 msgid "Lookup a media item in the media bag, and return its MIME type and contents."
 msgstr ""
 
-#: ../../lua-filters.rst:3209
+#: ../../lua-filters.rst:3211
 msgid "name of the file to look up."
 msgstr ""
 
-#: ../../lua-filters.rst:3213
+#: ../../lua-filters.rst:3215
 msgid "the entry’s MIME type, or nil if the file was not found."
 msgstr ""
 
-#: ../../lua-filters.rst:3214
-#: ../../lua-filters.rst:3236
+#: ../../lua-filters.rst:3216
+#: ../../lua-filters.rst:3247
 msgid "contents of the file, or nil if the file was not found."
 msgstr ""
 
-#: ../../lua-filters.rst:3228
-msgid "``fetch (source, base_url)``"
+#: ../../lua-filters.rst:3230
+msgid "``fetch (source)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3230
+#: ../../lua-filters.rst:3232
 msgid "Fetches the given source from a URL or local file. Returns two values: the contents of the file and the MIME type (or an empty string)."
 msgstr ""
 
 #: ../../lua-filters.rst:3235
-msgid "the entries MIME type, or nil if the file was not found."
+msgid "The function will first try to retrieve ``source`` from the mediabag; if that fails, it will try to download it or read it from the local file system while respecting pandoc’s “resource path” setting."
+msgstr ""
+
+#: ../../lua-filters.rst:3242
+msgid "``source``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3242
+msgid "path to a resource; either a local file path or URI"
 msgstr ""
 
 #: ../../lua-filters.rst:3246
-msgid "Module pandoc.List"
-msgstr ""
-
-#: ../../lua-filters.rst:3248
-msgid "The this module defines pandoc’s list type. It comes with useful methods and convenience functions."
-msgstr ""
-
-#: ../../lua-filters.rst:3252
-msgid "Constructor"
+msgid "the entries MIME type, or nil if the file was not found."
 msgstr ""
 
 #: ../../lua-filters.rst:3257
-msgid "``pandoc.List([table])``"
+msgid "Module pandoc.List"
 msgstr ""
 
-#: ../../lua-filters.rst:3255
-msgid "Create a new List. If the optional argument ``table`` is given, set the metatable of that value to ``pandoc.List``. This is an alias for ```pandoc.List:new([table])```_."
-msgstr ""
-
-#: ../../lua-filters.rst:3260
-msgid "Metamethods"
-msgstr ""
-
-#: ../../lua-filters.rst:3270
-msgid "``pandoc.List:__concat (list)``"
+#: ../../lua-filters.rst:3259
+msgid "This module defines pandoc’s list type. It comes with useful methods and convenience functions."
 msgstr ""
 
 #: ../../lua-filters.rst:3263
+msgid "Constructor"
+msgstr ""
+
+#: ../../lua-filters.rst:3268
+msgid "``pandoc.List([table])``"
+msgstr ""
+
+#: ../../lua-filters.rst:3266
+msgid "Create a new List. If the optional argument ``table`` is given, set the metatable of that value to ``pandoc.List``. This is an alias for ```pandoc.List:new([table])```_."
+msgstr ""
+
+#: ../../lua-filters.rst:3271
+msgid "Metamethods"
+msgstr ""
+
+#: ../../lua-filters.rst:3281
+msgid "``pandoc.List:__concat (list)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3274
 msgid "Concatenates two lists."
 msgstr ""
 
-#: ../../lua-filters.rst:3268
-#: ../../lua-filters.rst:3284
+#: ../../lua-filters.rst:3279
+#: ../../lua-filters.rst:3295
 msgid "``list``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3268
+#: ../../lua-filters.rst:3279
 msgid "second list concatenated to the first"
 msgstr ""
 
-#: ../../lua-filters.rst:3270
+#: ../../lua-filters.rst:3281
 msgid "Returns: a new list containing all elements from list1 and list2"
 msgstr ""
 
-#: ../../lua-filters.rst:3273
+#: ../../lua-filters.rst:3284
 msgid "Methods"
 msgstr ""
 
-#: ../../lua-filters.rst:3276
+#: ../../lua-filters.rst:3287
 msgid "``pandoc.List:clone ()``"
 msgstr ""
 
-#: ../../lua-filters.rst:3276
+#: ../../lua-filters.rst:3287
 msgid "Returns a (shallow) copy of the list."
 msgstr ""
 
-#: ../../lua-filters.rst:3284
+#: ../../lua-filters.rst:3295
 msgid "``pandoc.List:extend (list)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3279
+#: ../../lua-filters.rst:3290
 msgid "Adds the given list to the end of this list."
 msgstr ""
 
-#: ../../lua-filters.rst:3284
+#: ../../lua-filters.rst:3295
 msgid "list to appended"
 msgstr ""
 
-#: ../../lua-filters.rst:3298
+#: ../../lua-filters.rst:3309
 msgid "``pandoc.List:find (needle, init)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3287
+#: ../../lua-filters.rst:3298
 msgid "Returns the value and index of the first occurrence of the given item."
 msgstr ""
 
-#: ../../lua-filters.rst:3292
-#: ../../lua-filters.rst:3329
+#: ../../lua-filters.rst:3303
+#: ../../lua-filters.rst:3340
 msgid "``needle``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3293
-#: ../../lua-filters.rst:3330
+#: ../../lua-filters.rst:3304
+#: ../../lua-filters.rst:3341
 msgid "item to search for"
-msgstr ""
-
-#: ../../lua-filters.rst:3295
-#: ../../lua-filters.rst:3309
-#: ../../lua-filters.rst:3332
-msgid "``init``:"
-msgstr ""
-
-#: ../../lua-filters.rst:3295
-#: ../../lua-filters.rst:3309
-#: ../../lua-filters.rst:3332
-msgid "index at which the search is started"
-msgstr ""
-
-#: ../../lua-filters.rst:3297
-msgid "Returns: first item equal to the needle, or nil if no such item exists."
-msgstr ""
-
-#: ../../lua-filters.rst:3312
-msgid "``pandoc.List:find_if (pred, init)``"
-msgstr ""
-
-#: ../../lua-filters.rst:3301
-msgid "Returns the value and index of the first element for which the predicate holds true."
 msgstr ""
 
 #: ../../lua-filters.rst:3306
 #: ../../lua-filters.rst:3320
+#: ../../lua-filters.rst:3343
+msgid "``init``:"
+msgstr ""
+
+#: ../../lua-filters.rst:3306
+#: ../../lua-filters.rst:3320
+#: ../../lua-filters.rst:3343
+msgid "index at which the search is started"
+msgstr ""
+
+#: ../../lua-filters.rst:3308
+msgid "Returns: first item equal to the needle, or nil if no such item exists."
+msgstr ""
+
+#: ../../lua-filters.rst:3323
+msgid "``pandoc.List:find_if (pred, init)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3312
+msgid "Returns the value and index of the first element for which the predicate holds true."
+msgstr ""
+
+#: ../../lua-filters.rst:3317
+#: ../../lua-filters.rst:3331
 msgid "``pred``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3307
+#: ../../lua-filters.rst:3318
 msgid "the predicate function"
 msgstr ""
 
-#: ../../lua-filters.rst:3311
+#: ../../lua-filters.rst:3322
 msgid "Returns: first item for which \\`test\\` succeeds, or nil if no such item exists."
 msgstr ""
 
-#: ../../lua-filters.rst:3322
+#: ../../lua-filters.rst:3333
 msgid "``pandoc.List:filter (pred)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3315
+#: ../../lua-filters.rst:3326
 msgid "Returns a new list containing all items satisfying a given condition."
 msgstr ""
 
-#: ../../lua-filters.rst:3320
+#: ../../lua-filters.rst:3331
 msgid "condition items must satisfy."
 msgstr ""
 
-#: ../../lua-filters.rst:3322
+#: ../../lua-filters.rst:3333
 msgid "Returns: a new list containing all items for which \\`test\\` was true."
 msgstr ""
 
-#: ../../lua-filters.rst:3334
+#: ../../lua-filters.rst:3345
 msgid "``pandoc.List:includes (needle, init)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3325
+#: ../../lua-filters.rst:3336
 msgid "Checks if the list has an item equal to the given needle."
 msgstr ""
 
-#: ../../lua-filters.rst:3334
+#: ../../lua-filters.rst:3345
 msgid "Returns: true if a list item is equal to the needle, false otherwise"
 msgstr ""
 
-#: ../../lua-filters.rst:3347
+#: ../../lua-filters.rst:3358
 msgid "``pandoc.List:insert ([pos], value)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3337
+#: ../../lua-filters.rst:3348
 msgid "Inserts element ``value`` at position ``pos`` in list, shifting elements to the next-greater index if necessary."
 msgstr ""
 
-#: ../../lua-filters.rst:3340
+#: ../../lua-filters.rst:3351
 msgid "This function is identical to ```table.insert```_."
 msgstr ""
 
-#: ../../lua-filters.rst:3344
-#: ../../lua-filters.rst:3380
+#: ../../lua-filters.rst:3355
+#: ../../lua-filters.rst:3391
 msgid "``pos``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3345
+#: ../../lua-filters.rst:3356
 msgid "index of the new value; defaults to length of the list + 1"
 msgstr ""
 
-#: ../../lua-filters.rst:3347
+#: ../../lua-filters.rst:3358
 msgid "``value``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3347
+#: ../../lua-filters.rst:3358
 msgid "value to insert into the list"
 msgstr ""
 
-#: ../../lua-filters.rst:3356
+#: ../../lua-filters.rst:3367
 msgid "``pandoc.List:map (fn)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3350
+#: ../../lua-filters.rst:3361
 msgid "Returns a copy of the current list by applying the given function to all elements."
 msgstr ""
 
-#: ../../lua-filters.rst:3356
+#: ../../lua-filters.rst:3367
 msgid "``fn``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3356
+#: ../../lua-filters.rst:3367
 msgid "function which is applied to all list items."
 msgstr ""
 
-#: ../../lua-filters.rst:3368
+#: ../../lua-filters.rst:3379
 msgid "``pandoc.List:new([table])``"
 msgstr ""
 
-#: ../../lua-filters.rst:3359
+#: ../../lua-filters.rst:3370
 msgid "Create a new List. If the optional argument ``table`` is given, set the metatable of that value to ``pandoc.List``."
 msgstr ""
 
-#: ../../lua-filters.rst:3365
+#: ../../lua-filters.rst:3376
 msgid "table which should be treatable as a list; defaults to an empty table"
 msgstr ""
 
-#: ../../lua-filters.rst:3368
+#: ../../lua-filters.rst:3379
 msgid "Returns: the updated input value"
 msgstr ""
 
-#: ../../lua-filters.rst:3382
+#: ../../lua-filters.rst:3393
 msgid "``pandoc.List:remove ([pos])``"
 msgstr ""
 
-#: ../../lua-filters.rst:3371
+#: ../../lua-filters.rst:3382
 msgid "Removes the element at position ``pos``, returning the value of the removed element."
 msgstr ""
 
-#: ../../lua-filters.rst:3374
+#: ../../lua-filters.rst:3385
 msgid "This function is identical to ```table.remove```_."
 msgstr ""
 
-#: ../../lua-filters.rst:3379
+#: ../../lua-filters.rst:3390
 msgid "position of the list value that will be removed; defaults to the index of the last element"
 msgstr ""
 
-#: ../../lua-filters.rst:3382
+#: ../../lua-filters.rst:3393
 msgid "Returns: the removed element"
 msgstr ""
 
-#: ../../lua-filters.rst:3404
+#: ../../lua-filters.rst:3415
 msgid "``pandoc.List:sort ([comp])``"
 msgstr ""
 
-#: ../../lua-filters.rst:3385
+#: ../../lua-filters.rst:3396
 msgid "Sorts list elements in a given order, in-place. If ``comp`` is given, then it must be a function that receives two list elements and returns true when the first element must come before the second in the final order (so that, after the sort, ``i < j`` implies ``not comp(list[j],list[i]))``. If comp is not given, then the standard Lua operator ``<`` is used instead."
 msgstr ""
 
-#: ../../lua-filters.rst:3392
+#: ../../lua-filters.rst:3403
 msgid "Note that the comp function must define a strict partial order over the elements in the list; that is, it must be asymmetric and transitive. Otherwise, no valid sort may be possible."
 msgstr ""
 
-#: ../../lua-filters.rst:3396
+#: ../../lua-filters.rst:3407
 msgid "The sort algorithm is not stable: elements considered equal by the given order may have their relative positions changed by the sort."
 msgstr ""
 
-#: ../../lua-filters.rst:3399
+#: ../../lua-filters.rst:3410
 msgid "This function is identical to ```table.sort```_."
 msgstr ""
 
-#: ../../lua-filters.rst:3404
+#: ../../lua-filters.rst:3415
 msgid "``comp``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3404
+#: ../../lua-filters.rst:3415
 msgid "Comparison function as described above."
 msgstr ""
 
-#: ../../lua-filters.rst:3407
-msgid "Module pandoc.system"
+#: ../../lua-filters.rst:3418
+msgid "Module pandoc.path"
 msgstr ""
 
-#: ../../lua-filters.rst:3409
-msgid "Access to system information and functionality."
+#: ../../lua-filters.rst:3420
+msgid "Module for file path manipulations."
 msgstr ""
 
-#: ../../lua-filters.rst:3412
+#: ../../lua-filters.rst:3425
+#: ../../lua-filters.rst:3638
 msgid "Static Fields"
 msgstr ""
 
-#: ../../lua-filters.rst:3417
-msgid "arch"
+#: ../../lua-filters.rst:3430
+msgid "separator"
 msgstr ""
 
-#: ../../lua-filters.rst:3419
-msgid "The machine architecture on which the program is running."
+#: ../../lua-filters.rst:3432
+msgid "The character that separates directories."
 msgstr ""
 
-#: ../../lua-filters.rst:3424
-msgid "os"
+#: ../../lua-filters.rst:3437
+msgid "search_path_separator"
 msgstr ""
 
-#: ../../lua-filters.rst:3426
-msgid "The operating system on which the program is running."
+#: ../../lua-filters.rst:3439
+msgid "The character that is used to separate the entries in the ``PATH`` environment variable."
 msgstr ""
 
-#: ../../lua-filters.rst:3429
+#: ../../lua-filters.rst:3445
+#: ../../lua-filters.rst:3655
 msgid "Functions"
 msgstr ""
 
-#: ../../lua-filters.rst:3434
-msgid "environment"
-msgstr ""
-
-#: ../../lua-filters.rst:3436
-msgid "``environment ()``"
-msgstr ""
-
-#: ../../lua-filters.rst:3438
-msgid "Retrieve the entire environment as a string-indexed table."
-msgstr ""
-
-#: ../../lua-filters.rst:3442
-msgid "A table mapping environment variables names to their string value (table)."
-msgstr ""
-
-#: ../../lua-filters.rst:3448
-msgid "get_working_directory"
-msgstr ""
-
 #: ../../lua-filters.rst:3450
-msgid "``get_working_directory ()``"
+msgid "directory (filepath)"
 msgstr ""
 
 #: ../../lua-filters.rst:3452
-msgid "Obtain the current working directory as an absolute path."
+msgid "Gets the directory name, i.e., removes the last directory separator and everything after from the given path."
 msgstr ""
 
-#: ../../lua-filters.rst:3456
-msgid "The current working directory (string)."
+#: ../../lua-filters.rst:3458
+#: ../../lua-filters.rst:3474
+#: ../../lua-filters.rst:3490
+#: ../../lua-filters.rst:3507
+#: ../../lua-filters.rst:3572
+#: ../../lua-filters.rst:3588
+#: ../../lua-filters.rst:3606
+msgid "filepath"
 msgstr ""
 
-#: ../../lua-filters.rst:3461
-msgid "with_environment"
+#: ../../lua-filters.rst:3458
+#: ../../lua-filters.rst:3474
+#: ../../lua-filters.rst:3490
+#: ../../lua-filters.rst:3507
+#: ../../lua-filters.rst:3572
+#: ../../lua-filters.rst:3588
+#: ../../lua-filters.rst:3606
+msgid "path (string)"
 msgstr ""
 
-#: ../../lua-filters.rst:3463
-msgid "``with_environment (environment, callback)``"
+#: ../../lua-filters.rst:3462
+msgid "The filepath up to the last directory separator. (string)"
 msgstr ""
 
-#: ../../lua-filters.rst:3465
-msgid "Run an action within a custom environment. Only the environment variables given by ``environment`` will be set, when ``callback`` is called. The original environment is restored after this function finishes, even if an error occurs while running the callback action."
+#: ../../lua-filters.rst:3467
+msgid "filename (filepath)"
 msgstr ""
 
-#: ../../lua-filters.rst:3473
-msgid "``environment``"
+#: ../../lua-filters.rst:3469
+msgid "Get the file name."
 msgstr ""
 
-#: ../../lua-filters.rst:3473
-msgid "Environment variables and their values to be set before running ``callback``. (table with string keys and string values)"
+#: ../../lua-filters.rst:3478
+msgid "File name part of the input path. (string)"
 msgstr ""
 
-#: ../../lua-filters.rst:3476
-#: ../../lua-filters.rst:3502
-#: ../../lua-filters.rst:3525
-msgid "``callback``"
-msgstr ""
-
-#: ../../lua-filters.rst:3476
-msgid "Action to execute in the custom environment (function)"
-msgstr ""
-
-#: ../../lua-filters.rst:3480
-#: ../../lua-filters.rst:3529
-msgid "The result(s) of the call to ``callback``"
+#: ../../lua-filters.rst:3483
+msgid "is_absolute (filepath)"
 msgstr ""
 
 #: ../../lua-filters.rst:3485
-msgid "with_temporary_directory"
+msgid "Checks whether a path is absolute, i.e. not fixed to a root."
 msgstr ""
 
-#: ../../lua-filters.rst:3487
-msgid "``with_temporary_directory ([parent_dir,] templ, callback)``"
+#: ../../lua-filters.rst:3494
+msgid "``true`` iff ``filepath`` is an absolute path, ``false`` otherwise. (boolean)"
 msgstr ""
 
-#: ../../lua-filters.rst:3489
-msgid "Create and use a temporary directory inside the given directory. The directory is deleted after the callback returns."
+#: ../../lua-filters.rst:3500
+msgid "is_relative (filepath)"
 msgstr ""
 
-#: ../../lua-filters.rst:3496
-msgid "``parent_dir``"
-msgstr ""
-
-#: ../../lua-filters.rst:3495
-msgid "Parent directory to create the directory in (string). If this parameter is omitted, the system’s canonical temporary directory is used."
-msgstr ""
-
-#: ../../lua-filters.rst:3498
-msgid "``templ``"
-msgstr ""
-
-#: ../../lua-filters.rst:3499
-msgid "Directory name template (string)."
-msgstr ""
-
-#: ../../lua-filters.rst:3501
-msgid "Function which takes the name of the temporary directory as its first argument (function)."
-msgstr ""
-
-#: ../../lua-filters.rst:3506
-msgid "The result of the call to ``callback``."
+#: ../../lua-filters.rst:3502
+msgid "Checks whether a path is relative or fixed to a root."
 msgstr ""
 
 #: ../../lua-filters.rst:3511
+msgid "``true`` iff ``filepath`` is a relative path, ``false`` otherwise. (boolean)"
+msgstr ""
+
+#: ../../lua-filters.rst:3517
+msgid "join (filepaths)"
+msgstr ""
+
+#: ../../lua-filters.rst:3519
+msgid "Join path elements back together by the directory separator."
+msgstr ""
+
+#: ../../lua-filters.rst:3524
+msgid "filepaths"
+msgstr ""
+
+#: ../../lua-filters.rst:3524
+msgid "path components (list of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:3528
+msgid "The joined path. (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3533
+msgid "make_relative (path, root[, unsafe])"
+msgstr ""
+
+#: ../../lua-filters.rst:3535
+msgid "Contract a filename, based on a relative path. Note that the resulting path will usually not introduce ``..`` paths, as the presence of symlinks means ``../b`` may not reach ``a/b`` if it starts from ``a/c``. For a worked example see `this blog post`_."
+msgstr ""
+
+#: ../../lua-filters.rst:3540
+msgid "Set ``unsafe`` to a truthy value to a allow ``..`` in paths."
+msgstr ""
+
+#: ../../lua-filters.rst:3544
+msgid "path"
+msgstr ""
+
+#: ../../lua-filters.rst:3545
+msgid "path to be made relative (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3546
+msgid "root"
+msgstr ""
+
+#: ../../lua-filters.rst:3547
+msgid "root path (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3549
+msgid "unsafe"
+msgstr ""
+
+#: ../../lua-filters.rst:3549
+msgid "whether to allow ``..`` in the result. (boolean)"
+msgstr ""
+
+#: ../../lua-filters.rst:3553
+msgid "contracted filename (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3558
+msgid "normalize (filepath)"
+msgstr ""
+
+#: ../../lua-filters.rst:3560
+msgid "Normalizes a path."
+msgstr ""
+
+#: ../../lua-filters.rst:3562
+msgid "``//`` makes sense only as part of a (Windows) network drive; elsewhere, multiple slashes are reduced to a single ``path.separator`` (platform dependent)."
+msgstr ""
+
+#: ../../lua-filters.rst:3565
+msgid "``/`` becomes ``path.separator`` (platform dependent)"
+msgstr ""
+
+#: ../../lua-filters.rst:3566
+msgid "``./`` -> ’’"
+msgstr ""
+
+#: ../../lua-filters.rst:3567
+msgid "an empty path becomes ``.``"
+msgstr ""
+
+#: ../../lua-filters.rst:3576
+msgid "The normalized path. (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3581
+msgid "split (filepath)"
+msgstr ""
+
+#: ../../lua-filters.rst:3583
+msgid "Splits a path by the directory separator."
+msgstr ""
+
+#: ../../lua-filters.rst:3592
+msgid "List of all path components. (list of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:3597
+msgid "split_extension (filepath)"
+msgstr ""
+
+#: ../../lua-filters.rst:3599
+msgid "Splits the last extension from a file path and returns the parts. The extension, if present, includes the leading separator; if the path has no extension, then the empty string is returned as the extension."
+msgstr ""
+
+#: ../../lua-filters.rst:3610
+msgid "filepath without extension (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3612
+msgid "extension or empty string (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3617
+msgid "split_search_path (search_path)"
+msgstr ""
+
+#: ../../lua-filters.rst:3619
+msgid "Takes a string and splits it on the ``search_path_separator`` character. Blank items are ignored on Windows, and converted to ``.`` on Posix. On Windows path elements are stripped of quotes."
+msgstr ""
+
+#: ../../lua-filters.rst:3626
+msgid "search_path"
+msgstr ""
+
+#: ../../lua-filters.rst:3626
+msgid "platform-specific search path (string)"
+msgstr ""
+
+#: ../../lua-filters.rst:3630
+msgid "list of directories in search path (list of strings)"
+msgstr ""
+
+#: ../../lua-filters.rst:3633
+msgid "Module pandoc.system"
+msgstr ""
+
+#: ../../lua-filters.rst:3635
+msgid "Access to system information and functionality."
+msgstr ""
+
+#: ../../lua-filters.rst:3643
+msgid "arch"
+msgstr ""
+
+#: ../../lua-filters.rst:3645
+msgid "The machine architecture on which the program is running."
+msgstr ""
+
+#: ../../lua-filters.rst:3650
+msgid "os"
+msgstr ""
+
+#: ../../lua-filters.rst:3652
+msgid "The operating system on which the program is running."
+msgstr ""
+
+#: ../../lua-filters.rst:3660
+msgid "environment"
+msgstr ""
+
+#: ../../lua-filters.rst:3662
+msgid "``environment ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3664
+msgid "Retrieve the entire environment as a string-indexed table."
+msgstr ""
+
+#: ../../lua-filters.rst:3668
+msgid "A table mapping environment variables names to their string value (table)."
+msgstr ""
+
+#: ../../lua-filters.rst:3674
+msgid "get_working_directory"
+msgstr ""
+
+#: ../../lua-filters.rst:3676
+msgid "``get_working_directory ()``"
+msgstr ""
+
+#: ../../lua-filters.rst:3678
+msgid "Obtain the current working directory as an absolute path."
+msgstr ""
+
+#: ../../lua-filters.rst:3682
+msgid "The current working directory (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:3687
+msgid "with_environment"
+msgstr ""
+
+#: ../../lua-filters.rst:3689
+msgid "``with_environment (environment, callback)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3691
+msgid "Run an action within a custom environment. Only the environment variables given by ``environment`` will be set, when ``callback`` is called. The original environment is restored after this function finishes, even if an error occurs while running the callback action."
+msgstr ""
+
+#: ../../lua-filters.rst:3699
+msgid "``environment``"
+msgstr ""
+
+#: ../../lua-filters.rst:3699
+msgid "Environment variables and their values to be set before running ``callback``. (table with string keys and string values)"
+msgstr ""
+
+#: ../../lua-filters.rst:3702
+#: ../../lua-filters.rst:3728
+#: ../../lua-filters.rst:3751
+msgid "``callback``"
+msgstr ""
+
+#: ../../lua-filters.rst:3702
+msgid "Action to execute in the custom environment (function)"
+msgstr ""
+
+#: ../../lua-filters.rst:3706
+#: ../../lua-filters.rst:3755
+msgid "The result(s) of the call to ``callback``"
+msgstr ""
+
+#: ../../lua-filters.rst:3711
+msgid "with_temporary_directory"
+msgstr ""
+
+#: ../../lua-filters.rst:3713
+msgid "``with_temporary_directory ([parent_dir,] templ, callback)``"
+msgstr ""
+
+#: ../../lua-filters.rst:3715
+msgid "Create and use a temporary directory inside the given directory. The directory is deleted after the callback returns."
+msgstr ""
+
+#: ../../lua-filters.rst:3722
+msgid "``parent_dir``"
+msgstr ""
+
+#: ../../lua-filters.rst:3721
+msgid "Parent directory to create the directory in (string). If this parameter is omitted, the system’s canonical temporary directory is used."
+msgstr ""
+
+#: ../../lua-filters.rst:3724
+msgid "``templ``"
+msgstr ""
+
+#: ../../lua-filters.rst:3725
+msgid "Directory name template (string)."
+msgstr ""
+
+#: ../../lua-filters.rst:3727
+msgid "Function which takes the name of the temporary directory as its first argument (function)."
+msgstr ""
+
+#: ../../lua-filters.rst:3732
+msgid "The result of the call to ``callback``."
+msgstr ""
+
+#: ../../lua-filters.rst:3737
 msgid "with_working_directory"
 msgstr ""
 
-#: ../../lua-filters.rst:3513
+#: ../../lua-filters.rst:3739
 msgid "``with_working_directory (directory, callback)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3515
+#: ../../lua-filters.rst:3741
 msgid "Run an action within a different directory. This function will change the working directory to ``directory``, execute ``callback``, then switch back to the original working directory, even if an error occurs while running the callback action."
 msgstr ""
 
-#: ../../lua-filters.rst:3522
+#: ../../lua-filters.rst:3748
 msgid "``directory``"
 msgstr ""
 
-#: ../../lua-filters.rst:3523
+#: ../../lua-filters.rst:3749
 msgid "Directory in which the given ``callback`` should be executed (string)"
 msgstr ""
 
-#: ../../lua-filters.rst:3525
+#: ../../lua-filters.rst:3751
 msgid "Action to execute in the given directory (function)"
 msgstr ""
 
-#: ../../lua-filters.rst:3532
+#: ../../lua-filters.rst:3758
 msgid "Module pandoc.types"
 msgstr ""
 
-#: ../../lua-filters.rst:3534
+#: ../../lua-filters.rst:3760
 msgid "Constructors for types which are not part of the pandoc AST."
 msgstr ""
 
-#: ../../lua-filters.rst:3541
+#: ../../lua-filters.rst:3767
 msgid "``Version (version_specifier)``"
 msgstr ""
 
-#: ../../lua-filters.rst:3543
+#: ../../lua-filters.rst:3769
 msgid "Creates a Version object."
 msgstr ""
 
-#: ../../lua-filters.rst:3550
+#: ../../lua-filters.rst:3776
 msgid "``version_specifier``:"
 msgstr ""
 
-#: ../../lua-filters.rst:3548
+#: ../../lua-filters.rst:3774
 msgid "Version specifier: this can be a version string like ``'2.7.3'``, a list of integers like ``{2, 7, 3}``, a single integer, or a `Version`_."
 msgstr ""
 
-#: ../../lua-filters.rst:3554
+#: ../../lua-filters.rst:3780
 msgid "A new `Version`_ object."
 msgstr ""

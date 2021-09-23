@@ -17,9 +17,9 @@ Pandoc Lua Filters 日本語版
    * Albert Krewinkel
    * John MacFarlane
 
-原著バージョン: 2.11.0.4
+原著バージョン: 2.14.2
 
-更新日: 2020/10/31
+更新日: 2021/09/23
 
 翻訳者（アルファベット順）:
 
@@ -138,7 +138,7 @@ function of the same name) are passed to Lua element filtering function.
 In other words, filter entries will be called for each corresponding
 element in the document, getting the respective element as input.
 
-The return of a filter function must one of the following:
+The return of a filter function must be one of the following:
 
 -  nil: this means that the object should remain unchanged.
 -  a pandoc object: this must be of the same type as the input and will
@@ -1588,7 +1588,7 @@ A set of element attributes. Values of this type can be created with the
 ```pandoc.Attr```_ constructor. For convenience, it is usually not
 necessary to construct the value directly if it is part of an element,
 and it is sufficient to pass an HTML-like table. E.g., to create a span
-with identifier “text” and classes “a” and “b”, on can write:
+with identifier “text” and classes “a” and “b”, one can write:
 
 ::
 
@@ -2593,7 +2593,8 @@ Legacy types
       local caption = "Overview"
       local aligns = {pandoc.AlignDefault, pandoc.AlignDefault}
       local widths = {0, 0} -- let pandoc determine col widths
-      local headers = {"Language", "Typing"}
+      local headers = {{pandoc.Plain({pandoc.Str "Language"})},
+                       {pandoc.Plain({pandoc.Str "Typing"})}}
       local rows = {
         {{pandoc.Plain "Haskell"}, {pandoc.Plain "static"}},
         {{pandoc.Plain "Lua"}, {pandoc.Plain "Dynamic"}},
@@ -3115,14 +3116,15 @@ insert
 
 ``insert (filepath, mime_type, contents)``
 
-Adds a new entry to pandoc’s media bag.
+Adds a new entry to pandoc’s media bag. Replaces any existing mediabag
+entry with the same ``filepath``.
 
 Parameters:
 
 ``filepath``:
    filename and path relative to the output folder.
 ``mime_type``:
-   the file’s MIME type
+   the file’s MIME type; use ``nil`` if unknown or unavailable.
 ``contents``:
    the binary contents of the file.
 
@@ -3225,10 +3227,19 @@ Usage:
 fetch
 ~~~~~
 
-``fetch (source, base_url)``
+``fetch (source)``
 
 Fetches the given source from a URL or local file. Returns two values:
 the contents of the file and the MIME type (or an empty string).
+
+The function will first try to retrieve ``source`` from the mediabag; if
+that fails, it will try to download it or read it from the local file
+system while respecting pandoc’s “resource path” setting.
+
+Parameters:
+
+``source``:
+   path to a resource; either a local file path or URI
 
 Returns:
 
@@ -3240,13 +3251,13 @@ Usage:
 ::
 
    local diagram_url = "https://pandoc.org/diagram.jpg"
-   local mt, contents = pandoc.mediabag.fetch(diagram_url, ".")
+   local mt, contents = pandoc.mediabag.fetch(diagram_url)
 
 Module pandoc.List
 ==================
 
-The this module defines pandoc’s list type. It comes with useful methods
-and convenience functions.
+This module defines pandoc’s list type. It comes with useful methods and
+convenience functions.
 
 Constructor
 -----------
@@ -3402,6 +3413,221 @@ Methods
 
    ``comp``:
       Comparison function as described above.
+
+Module pandoc.path
+==================
+
+Module for file path manipulations.
+
+.. _pandoc.path-fields:
+
+Static Fields
+-------------
+
+.. _pandoc.path.separator:
+
+separator
+~~~~~~~~~
+
+The character that separates directories.
+
+.. _pandoc.path.search_path_separator:
+
+search_path_separator
+~~~~~~~~~~~~~~~~~~~~~
+
+The character that is used to separate the entries in the ``PATH``
+environment variable.
+
+.. _pandoc.path-functions:
+
+Functions
+---------
+
+.. _pandoc.path.directory:
+
+directory (filepath)
+~~~~~~~~~~~~~~~~~~~~
+
+Gets the directory name, i.e., removes the last directory separator and
+everything after from the given path.
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  The filepath up to the last directory separator. (string)
+
+.. _pandoc.path.filename:
+
+filename (filepath)
+~~~~~~~~~~~~~~~~~~~
+
+Get the file name.
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  File name part of the input path. (string)
+
+.. _pandoc.path.is_absolute:
+
+is_absolute (filepath)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Checks whether a path is absolute, i.e. not fixed to a root.
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  ``true`` iff ``filepath`` is an absolute path, ``false`` otherwise.
+   (boolean)
+
+.. _pandoc.path.is_relative:
+
+is_relative (filepath)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Checks whether a path is relative or fixed to a root.
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  ``true`` iff ``filepath`` is a relative path, ``false`` otherwise.
+   (boolean)
+
+.. _pandoc.path.join:
+
+join (filepaths)
+~~~~~~~~~~~~~~~~
+
+Join path elements back together by the directory separator.
+
+Parameters:
+
+filepaths
+   path components (list of strings)
+
+Returns:
+
+-  The joined path. (string)
+
+.. _pandoc.path.make_relative:
+
+make_relative (path, root[, unsafe])
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Contract a filename, based on a relative path. Note that the resulting
+path will usually not introduce ``..`` paths, as the presence of
+symlinks means ``../b`` may not reach ``a/b`` if it starts from ``a/c``.
+For a worked example see `this blog post`_.
+
+Set ``unsafe`` to a truthy value to a allow ``..`` in paths.
+
+Parameters:
+
+path
+   path to be made relative (string)
+root
+   root path (string)
+unsafe
+   whether to allow ``..`` in the result. (boolean)
+
+Returns:
+
+-  contracted filename (string)
+
+.. _pandoc.path.normalize:
+
+normalize (filepath)
+~~~~~~~~~~~~~~~~~~~~
+
+Normalizes a path.
+
+-  ``//`` makes sense only as part of a (Windows) network drive;
+   elsewhere, multiple slashes are reduced to a single
+   ``path.separator`` (platform dependent).
+-  ``/`` becomes ``path.separator`` (platform dependent)
+-  ``./`` -> ’’
+-  an empty path becomes ``.``
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  The normalized path. (string)
+
+.. _pandoc.path.split:
+
+split (filepath)
+~~~~~~~~~~~~~~~~
+
+Splits a path by the directory separator.
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  List of all path components. (list of strings)
+
+.. _pandoc.path.split_extension:
+
+split_extension (filepath)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Splits the last extension from a file path and returns the parts. The
+extension, if present, includes the leading separator; if the path has
+no extension, then the empty string is returned as the extension.
+
+Parameters:
+
+filepath
+   path (string)
+
+Returns:
+
+-  filepath without extension (string)
+
+-  extension or empty string (string)
+
+.. _pandoc.path.split_search_path:
+
+split_search_path (search_path)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Takes a string and splits it on the ``search_path_separator`` character.
+Blank items are ignored on Windows, and converted to ``.`` on Posix. On
+Windows path elements are stripped of quotes.
+
+Parameters:
+
+search_path
+   platform-specific search path (string)
+
+Returns:
+
+-  list of directories in search path (list of strings)
 
 Module pandoc.system
 ====================
@@ -3703,3 +3929,4 @@ Returns:
 .. _``table.insert``: https://www.lua.org/manual/5.3/manual.html#6.6
 .. _``table.remove``: https://www.lua.org/manual/5.3/manual.html#6.6
 .. _``table.sort``: https://www.lua.org/manual/5.3/manual.html#6.6
+.. _this blog post: https://neilmitchell.blogspot.co.uk/2015/10/filepaths-are-subtle-symlinks-are-hard.html

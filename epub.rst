@@ -16,9 +16,9 @@ Creating an ebook with pandoc 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.11.0.4
+原著バージョン: 2.14.2
 
-更新日: 2020/10/31
+更新日: 2021/09/23
 
 翻訳者（アルファベット順）:
 
@@ -188,8 +188,15 @@ EPUB3 readers are supposed to support (but unfortunately few do).
 
 Of course, this isn’t much help if you want EPUB2 output
 (``pandoc -t epub2``) or target readers that don’t support MathML. Then
-you should try using the ``--webtex`` option, which will use a web
-service to convert the TeX to an image.
+you have two options:
+
+1. Use the ```--webtex```_ option, which will use a web service to
+   convert the TeX to an image.
+2. Use the ```--gladtex```_ option to convert maths into SVG images on
+   your local machine.
+
+Both GladTeX and WebTeX add the LaTeX source of the formula as
+alternative text of the image, increasing accessibility for blind users.
 
 .. [1]
    If you don’t have `git`_, you can browse to the `github site`_ and
@@ -204,4 +211,6 @@ service to convert the TeX to an image.
 .. _github site: https://github.com/progit/progit
 .. _User’s Guide: https://pandoc.org/MANUAL.html#epub-metadata
 .. _on GitHub: https://github.com/jgm/pandoc/blob/master/data/epub.css
+.. _``--webtex``: https://pandoc.org/MANUAL.html#option--webtex
+.. _``--gladtex``: https://pandoc.org/MANUAL.html#option--gladtex
 .. _git: https://git-scm.com

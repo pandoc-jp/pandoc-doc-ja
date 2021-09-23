@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2019, 日本Pandocユーザ会
+# Copyright (C) 2020, 日本Pandocユーザ会
 # This file is distributed under the same license as the 日本Pandocユーザ会 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-31 10:15+0000\n"
+"POT-Creation-Date: 2021-09-23 03:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,11 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../epub.rst:19
-msgid "原著バージョン: 2.11.0.4"
+msgid "原著バージョン: 2.14.2"
 msgstr ""
 
 #: ../../epub.rst:21
-msgid "更新日: 2020/10/31"
+msgid "更新日: 2021/09/23"
 msgstr ""
 
 #: ../../epub.rst:23
@@ -189,9 +189,21 @@ msgid "Pandoc has an EPUB3 writer. It renders LaTeX math into MathML, which EPUB
 msgstr ""
 
 #: ../../epub.rst:189
-msgid "Of course, this isn’t much help if you want EPUB2 output (``pandoc -t epub2``) or target readers that don’t support MathML. Then you should try using the ``--webtex`` option, which will use a web service to convert the TeX to an image."
+msgid "Of course, this isn’t much help if you want EPUB2 output (``pandoc -t epub2``) or target readers that don’t support MathML. Then you have two options:"
+msgstr ""
+
+#: ../../epub.rst:193
+msgid "Use the ```--webtex```_ option, which will use a web service to convert the TeX to an image."
 msgstr ""
 
 #: ../../epub.rst:195
+msgid "Use the ```--gladtex```_ option to convert maths into SVG images on your local machine."
+msgstr ""
+
+#: ../../epub.rst:198
+msgid "Both GladTeX and WebTeX add the LaTeX source of the formula as alternative text of the image, increasing accessibility for blind users."
+msgstr ""
+
+#: ../../epub.rst:202
 msgid "If you don’t have `git`_, you can browse to the `github site`_ and click “Download Source” to get the same files in a zip or tar archive."
 msgstr ""

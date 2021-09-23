@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2019, 日本Pandocユーザ会
+# Copyright (C) 2020, 日本Pandocユーザ会
 # This file is distributed under the same license as the 日本Pandocユーザ会 package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-17 13:41+0000\n"
+"POT-Creation-Date: 2021-09-23 03:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "日本Pandocユーザ会 Slack（参加自由・お気軽にご参加く�
 msgstr ""
 
 #: ../../index.rst:24
-msgid "`Slack参加用リンク <https://docs.google.com/forms/d/e/1FAIpQLSeQJbr1up0nQUErE7hURqE5KJMfiImvAkMZg8ZyWEaxpT-zkA/viewform>`_"
+msgid "`Slack参加用リンク <https://docs.google.com/forms/d/e/1FAIpQLSc4bRaaw_t_J17LIvCiJ-CndWhFj3Et0rKSxkJbPG4VkpTfrA/viewform?usp=sf_link>`_"
 msgstr ""
 
 #: ../../index.rst:26
@@ -53,17 +53,25 @@ msgid "藤原 惟 / Yuki Fujiwara (`@skyy_writing <https://twitter.com/skyy_writ
 msgstr ""
 
 #: ../../index.rst:33
+msgid "お問い合わせ（Pandocに関すること、ユーザ会に関すること、ハラスメント報告等）"
+msgstr ""
+
+#: ../../index.rst:33
+msgid "`お問い合わせフォーム <https://docs.google.com/forms/d/e/1FAIpQLSddkX4NAtHv5cLGDUJ3n3znnX2iCCGd6sG7FJ0KJ5vQ5EYEfw/viewform?usp=sf_link>`_ よりお願いいたします。"
+msgstr ""
+
+#: ../../index.rst:36
 msgid "目次"
 msgstr ""
 
-#: ../../index.rst:50
+#: ../../index.rst:53
 msgid "このサイトのソースコード"
 msgstr ""
 
-#: ../../index.rst:52
+#: ../../index.rst:55
 msgid "GitHub: `pandoc-jp/pandoc-doc-ja <https://github.com/pandoc-jp/pandoc-doc-ja>`_"
 msgstr ""
 
-#: ../../index.rst:54
+#: ../../index.rst:57
 msgid "Pandoc is free software, released under the `GPL <https://www.gnu.org/licenses/gpl-3.0.html>`_. Copyright 2006–2019 `John MacFarlane <https://johnmacfarlane.net/>`_."
 msgstr ""
