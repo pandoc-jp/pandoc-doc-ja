@@ -4,7 +4,8 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Pandoc filters 日本語版 &#8212; 日本Pandocユーザ会</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -33,7 +34,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="pandoc-filters">
+  <section id="pandoc-filters">
 <h1><a class="toc-backref" href="#id2">Pandoc filters 日本語版</a><a class="headerlink" href="#pandoc-filters" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
@@ -51,8 +52,8 @@
 <li><p>John MacFarlane</p></li>
 </ul>
 </div></blockquote>
-<p>原著バージョン: 2.11.0.4</p>
-<p>更新日: 2020/10/31</p>
+<p>原著バージョン: 2.14.2</p>
+<p>更新日: 2021/09/23</p>
 <p>翻訳者（アルファベット順）:</p>
 <ul class="simple">
 <li><p>becolomochi</p></li>
@@ -75,11 +76,18 @@
 <li><p><a class="reference internal" href="#removing-links" id="id8">Removing links</a></p></li>
 <li><p><a class="reference internal" href="#a-filter-for-ruby-text" id="id9">A filter for ruby text</a></p></li>
 <li><p><a class="reference internal" href="#exercises" id="id10">Exercises</a></p></li>
+<li><p><a class="reference internal" href="#technical-details-of-json-filters" id="id11">Technical details of JSON filters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#arguments" id="id12">Arguments</a></p></li>
+<li><p><a class="reference internal" href="#environment-variables" id="id13">Environment variables</a></p></li>
+<li><p><a class="reference internal" href="#supported-interpreters" id="id14">Supported interpreters</a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="section" id="summary">
+<section id="summary">
 <h2><a class="toc-backref" href="#id3">Summary</a><a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Pandocは、ユーザがPandoc ASTを変換する(フィルタと呼ばれる)プログラムを書くためのインターフェースを提供しています。</p>
 <p>Pandocは、ReaderとWriterのセットで構成されています。ドキュメントをあるフォーマットから別のフォーマットへと変換するとき、Readerがテキストを解析し、Pandocにおける書類の中間表現である &quot;abstract syntax tree&quot;, ASTに変換され、WriterがさらにASTを目的とするフォーマットへと変換します。Pandoc ASTフォーマットは、モジュール <code class="docutils literal notranslate"><span class="pre">`Text.Pandoc.Definition</span></code> in the <code class="docutils literal notranslate"><span class="pre">pandoc-types</span></code> package`_ に定義されています．</p>
@@ -129,8 +137,8 @@ the plumbing automatically:</p>
 </div>
 <p>For a gentle introduction into writing your own filters, continue this
 guide. There’s also a <a class="reference external" href="https://github.com/jgm/pandoc/wiki/Pandoc-Filters">list of third party filters on the wiki</a>.</p>
-</div>
-<div class="section" id="a-simple-example">
+</section>
+<section id="a-simple-example">
 <h2><a class="toc-backref" href="#id4">A simple example</a><a class="headerlink" href="#a-simple-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Suppose you wanted to replace all level 2+ headings in a markdown
 document with regular paragraphs, with text in italics. How would you go
@@ -232,8 +240,8 @@ package repository. To do this using cabal-install,
 <code class="docutils literal notranslate"><span class="pre">./</span></code> is not needed. Note also that the command line can include
 multiple instances of <code class="docutils literal notranslate"><span class="pre">--filter</span></code>: the filters will be applied in
 sequence.</p>
-</div>
-<div class="section" id="latex-for-wordpress">
+</section>
+<section id="latex-for-wordpress">
 <h2><a class="toc-backref" href="#id5">LaTeX for WordPress</a><a class="headerlink" href="#latex-for-wordpress" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Another easy example. WordPress blogs require a special format for LaTeX
 math. Instead of <code class="docutils literal notranslate"><span class="pre">$e=mc^2$</span></code>, you need: <code class="docutils literal notranslate"><span class="pre">$LaTeX</span> <span class="pre">e=mc^2$</span></code>. How can we
@@ -254,8 +262,8 @@ LaTeX math. If only we had a parser…</p>
 </div>
 <p>Mission accomplished. (I’ve omitted type signatures here, just to show
 it can be done.)</p>
-</div>
-<div class="section" id="but-i-dont-want-to-learn-haskell">
+</section>
+<section id="but-i-dont-want-to-learn-haskell">
 <h2><a class="toc-backref" href="#id6">But I don’t want to learn Haskell!</a><a class="headerlink" href="#but-i-dont-want-to-learn-haskell" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>While it’s easiest to write pandoc filters in Haskell, it is fairly easy
 to write them in python using the <code class="docutils literal notranslate"><span class="pre">pandocfilters</span></code> package. The package
@@ -289,14 +297,25 @@ access to the document’s metadata.</p>
 <p>There are many examples of python filters in <a class="reference external" href="https://github.com/jgm/pandocfilters">the pandocfilters
 repository</a>.</p>
 <p>For a more Pythonic alternative to pandocfilters, see the <a class="reference external" href="https://pypi.org/project/panflute">panflute</a>
-library. Don’t like Python? There are also ports of pandocfilters in
-<a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a>, <a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a>, <a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">javascript/node.js</a>, <a class="reference external" href="https://github.com/dfrommi/groovy-pandoc">Groovy</a>, and <a class="reference external" href="https://heerdebeer.org/Software/markdown/paru/">Ruby</a>.</p>
+library. Don’t like Python? There are also ports of pandocfilters in</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/vinai/pandocfilters-php">PHP</a>,</p></li>
+<li><p><a class="reference external" href="https://metacpan.org/pod/Pandoc::Filter">perl</a>,</p></li>
+<li><p>TypeScript/JavaScript via Node.js</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/mvhenderson/pandoc-filter-node">pandoc-filter</a>,</p></li>
+<li><p><a class="reference external" href="https://github.com/mu-io/node-pandoc-filter">node-pandoc-filter</a>,</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/dfrommi/groovy-pandoc">Groovy</a>, and</p></li>
+<li><p><a class="reference external" href="https://heerdebeer.org/Software/markdown/paru/">Ruby</a>.</p></li>
+</ul>
 <p>Starting with pandoc 2.0, pandoc includes built-in support for writing
 filters in lua. The lua interpreter is built in to pandoc, so a lua
 filter does not require any additional software to run. See the
 <a class="reference external" href="https://pandoc.org/lua-filters.html">documentation on lua filters</a>.</p>
-</div>
-<div class="section" id="include-files">
+</section>
+<section id="include-files">
 <h2><a class="toc-backref" href="#id7">Include files</a><a class="headerlink" href="#include-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>So none of our transforms have involved IO. How about a script that
 reads a markdown document, finds all the inline code blocks with
@@ -328,8 +347,8 @@ the file given?</p>
 <span class="o">~~~~</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="removing-links">
+</section>
+<section id="removing-links">
 <h2><a class="toc-backref" href="#id8">Removing links</a><a class="headerlink" href="#removing-links" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>What if we want to remove every link from a document, retaining the
 link’s text?</p>
@@ -350,8 +369,8 @@ because the thing we want to replace the link with is not a single
 from an <code class="docutils literal notranslate"><span class="pre">Inline</span></code> element to a list of <code class="docutils literal notranslate"><span class="pre">Inline</span></code> elements.
 <code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> can still lift this function to a transformation of
 type <code class="docutils literal notranslate"><span class="pre">Pandoc</span> <span class="pre">-&gt;</span> <span class="pre">Pandoc</span></code>.</p>
-</div>
-<div class="section" id="a-filter-for-ruby-text">
+</section>
+<section id="a-filter-for-ruby-text">
 <h2><a class="toc-backref" href="#id9">A filter for ruby text</a><a class="headerlink" href="#a-filter-for-ruby-text" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Finally, here’s a nice real-world example, developed on the
 <a class="reference external" href="https://groups.google.com/group/pandoc-discuss/browse_thread/thread/7baea325565878c8">pandoc-discuss</a> list. Qubyte wrote:</p>
@@ -412,7 +431,9 @@ the target format as the first argument. When a function’s first
 argument is of type <code class="docutils literal notranslate"><span class="pre">Maybe</span> <span class="pre">Format</span></code>, <code class="docutils literal notranslate"><span class="pre">toJSONFilter</span></code> will
 automatically assign it <code class="docutils literal notranslate"><span class="pre">Just</span></code> the target format or <code class="docutils literal notranslate"><span class="pre">Nothing</span></code>.</p>
 <p>We compile our script:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ghc</span> <span class="o">--</span><span class="n">make</span> <span class="n">handleRuby</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># first, make sure pandoc-types is installed:</span>
+<span class="n">cabal</span> <span class="n">install</span> <span class="o">--</span><span class="n">lib</span> <span class="n">pandoc</span><span class="o">-</span><span class="n">types</span> <span class="o">--</span><span class="n">package</span><span class="o">-</span><span class="n">env</span> <span class="o">.</span>
+<span class="n">ghc</span> <span class="o">--</span><span class="n">make</span> <span class="n">handleRuby</span>
 </pre></div>
 </div>
 <p>Then run it:</p>
@@ -430,8 +451,8 @@ automatically assign it <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">--pdf-engine=xelatex</span></code>, specify a <code class="docutils literal notranslate"><span class="pre">mainfont</span></code> that has the Japanese
 characters (e.g. “Noto Sans CJK TC”), and add <code class="docutils literal notranslate"><span class="pre">\usepackage{ruby}</span></code> to
 your template or header-includes.</p>
-</div>
-<div class="section" id="exercises">
+</section>
+<section id="exercises">
 <h2><a class="toc-backref" href="#id10">Exercises</a><a class="headerlink" href="#exercises" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Put all the regular text in a markdown document in ALL CAPS (without
@@ -444,8 +465,98 @@ the code block.</p></li>
 <li><p>Find all code blocks with class <code class="docutils literal notranslate"><span class="pre">python</span></code> and run them using the
 python interpreter, printing the results to the console.</p></li>
 </ol>
+</section>
+<section id="technical-details-of-json-filters">
+<h2><a class="toc-backref" href="#id11">Technical details of JSON filters</a><a class="headerlink" href="#technical-details-of-json-filters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>A JSON filter is any program which can consume and produce a valid
+pandoc JSON document representation. This section describes the
+technical details surrounding the invocation of filters.</p>
+<section id="arguments">
+<h3><a class="toc-backref" href="#id12">Arguments</a><a class="headerlink" href="#arguments" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>The program will always be called with the target format as the only
+argument. A pandoc invocation like</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandoc</span> <span class="o">--</span><span class="nb">filter</span> <span class="n">demo</span> <span class="o">--</span><span class="n">to</span><span class="o">=</span><span class="n">html</span>
+</pre></div>
 </div>
-</div>
+<p>will cause pandoc to call the program <code class="docutils literal notranslate"><span class="pre">demo</span></code> with argument <code class="docutils literal notranslate"><span class="pre">html</span></code>.</p>
+</section>
+<section id="environment-variables">
+<h3><a class="toc-backref" href="#id13">Environment variables</a><a class="headerlink" href="#environment-variables" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Pandoc sets additional environment variables before calling a filter.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">PANDOC_VERSION</span></code></dt><dd><p>The version of the pandoc binary used to process the document.
+Example: <code class="docutils literal notranslate"><span class="pre">2.11.1</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">PANDOC_READER_OPTIONS</span></code></dt><dd><p>JSON object representation of the options passed to the input parser.</p>
+<p>Object fields:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">readerAbbreviations</span></code></dt><dd><p>set of known abbreviations (array of strings).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerColumns</span></code></dt><dd><p>number of columns in terminal; an integer.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerDefaultImageExtension</span></code></dt><dd><p>default extension for images; a string.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerExtensions</span></code></dt><dd><p>integer representation of the syntax extensions bit field.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerIndentedCodeClasses</span></code></dt><dd><p>default classes for indented code blocks; array of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerStandalone</span></code></dt><dd><p>whether the input was a standalone document with header; either
+<code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerStripComments</span></code></dt><dd><p>HTML comments are stripped instead of parsed as raw HTML; either
+<code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerTabStop</span></code></dt><dd><p>width (i.e. equivalent number of spaces) of tab stops; integer.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">readerTrackChanges</span></code></dt><dd><p>track changes setting for docx; one of <code class="docutils literal notranslate"><span class="pre">&quot;accept-changes&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;reject-changes&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;all-changes&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="supported-interpreters">
+<h3><a class="toc-backref" href="#id14">Supported interpreters</a><a class="headerlink" href="#supported-interpreters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Files passed to the <code class="docutils literal notranslate"><span class="pre">--filter</span></code>/<code class="docutils literal notranslate"><span class="pre">-F</span></code> parameter are expected to be
+executable. However, if the executable bit is not set, then pandoc tries
+to guess a suitable interpreter from the file extension.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>file extension</p></th>
+<th class="head"><p>interpreter</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.py</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>.hs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">runhaskell</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>.pl</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">perl</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>.rb</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ruby</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>.php</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">php</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>.js</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">node</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>.r</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Rscript</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
 
 
           </div>

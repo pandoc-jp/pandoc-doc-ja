@@ -4,7 +4,8 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>翻訳の手引 for Pandocユーザーズガイド &#8212; 日本Pandocユーザ会</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -34,11 +35,11 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="for-pandoc">
+  <section id="for-pandoc">
 <h1>翻訳の手引 for Pandocユーザーズガイド<a class="headerlink" href="#for-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>※ 順次書いていきます。</p>
 <p>Pandocユーザーズガイドの翻訳作業に参加される方向けに説明します。</p>
-<div class="section" id="id1">
+<section id="id1">
 <h2>サイトまとめ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul>
 <li><p>Slack</p>
@@ -75,8 +76,8 @@
 </div></blockquote>
 </li>
 </ul>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h2>前提<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul>
 <li><p><strong>reStructuredText (reST)</strong> という、Markdownよりも高機能な記法を使います</p>
@@ -89,8 +90,8 @@
 </li>
 <li><p>実際には <strong>Transifex</strong> というWebアプリを使って、翻訳作業を進めていただきます</p></li>
 </ul>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>参加方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a class="reference external" href="https://docs.google.com/forms/d/e/1FAIpQLScOdbrRWXKWAOHop7yyxrmq-D8DcwHo6u8aNAywRgfd3pX6dQ/viewform">Pandocユーザーズガイド日本語版 翻訳ボランティア 登録フォーム</a> よりご参加ください。</p>
 <p>管理者（藤原）が下記に登録します。</p>
@@ -104,10 +105,10 @@
 </li>
 <li><p>Pandocユーザ会 Slack</p></li>
 </ul>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>作業手順<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="transifex">
+<section id="transifex">
 <h3>Transifexのトップ（「翻訳」を選ぶ）<a class="headerlink" href="#transifex" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <img alt="_images/transifex-top.jpg" src="_images/transifex-top.jpg" />
 <ul>
@@ -119,8 +120,8 @@
 </div></blockquote>
 </li>
 </ul>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3>ケース1: 普通に翻訳する場合<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <img alt="_images/transifex-main1.jpg" src="_images/transifex-main1.jpg" />
 <ol class="arabic simple">
@@ -142,8 +143,8 @@
 <li><p>よくわからないテキストは放置してください。</p></li>
 <li><p>訳したいけどわからない場合は、Slack <code class="docutils literal notranslate"><span class="pre">#users-guide-trans</span></code> で質問してください。</p></li>
 </ul>
-</div>
-<div class="section" id="rest">
+</section>
+<section id="rest">
 <h3>ケース2: reST記法を含む場合<a class="headerlink" href="#rest" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <img alt="_images/transifex-main2.jpg" src="_images/transifex-main2.jpg" />
 <ul>
@@ -170,8 +171,8 @@
 </div>
 <p>また、reSTの見出し（見出しの次の行に <code class="docutils literal notranslate"><span class="pre">=</span></code> または <code class="docutils literal notranslate"><span class="pre">-</span></code> をたくさん並べる）は <strong>Transifexの文字列には現れない</strong> ので注意してください。</p>
 <p>(原文のreST版 <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/blob/master/users-guide.rst">users-guide.rst</a> を見ると、見出しの様子がわかります)</p>
-</div>
-<div class="section" id="id7">
+</section>
+<section id="id7">
 <h3>ケース3: (reST記法) 内部ハイパーリンクターゲット<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PandocでMarkdown → reSTに変換する際、現在は <code class="docutils literal notranslate"><span class="pre">--reference-links</span></code> というオプションを付けています。
 これにより、リンクは原則として `foo`_ という形式（参照リンク・内部リンク）として現れます。</p>
@@ -187,9 +188,9 @@
 <li><p>原文 Markdown版: <a class="reference external" href="https://github.com/jgm/pandoc/blob/master/MANUAL.txt">jgm/pandoc: MANUAL.txt</a></p></li>
 <li><p>原文 reST版: <a class="reference external" href="https://github.com/pandoc-jp/pandoc-doc-ja/blob/master/users-guide.rst">pandoc-jp/pandoc-doc-ja: users-guide.rst</a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="id8">
+</section>
+</section>
+<section id="id8">
 <h2>お礼について<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><strong>金銭的なお礼はありません。</strong> あらかじめご了承ください。</p>
 <p>翻訳・レビューにおいて貢献実績が確認された方には、お名前・Twitter ID・リンクなど（あれば）をサイトに掲載するようにします。
@@ -201,8 +202,8 @@
 <li><p>niszetさん</p></li>
 <li><p>べこさん (becolomochi)</p></li>
 </ul>
-</div>
-<div class="section" id="q-a">
+</section>
+<section id="q-a">
 <h2>Q&amp;A<a class="headerlink" href="#q-a" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul>
 <li><p>Q: Issueを見つけた。どうしたらいい？</p>
@@ -216,10 +217,10 @@
 </div></blockquote>
 </li>
 </ul>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h2>参考<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id10">
+<section id="id10">
 <h3>ビルド・デプロイに使用しているツールまとめ<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul>
 <li><p>Pandoc</p>
@@ -252,8 +253,8 @@
 </div></blockquote>
 </li>
 </ul>
-</div>
-<div class="section" id="id11">
+</section>
+<section id="id11">
 <h3>機械翻訳について<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>機械翻訳は <strong>各自の責任において、参考・補助のために</strong> 利用可能とします。ただし、各自で最終的には <strong>Transifex上に訳文を反映させてください</strong> 。
 (訳文のマスターデータ[.poファイル]は、Transifexにあるものとします)</p>
@@ -290,8 +291,8 @@
 &gt;
 &gt; で長文を乗り切ることができました。
 &gt; 良ければ試してみてください。</p>
-</div>
-<div class="section" id="textlint">
+</section>
+<section id="textlint">
 <h3>textlintについて<a class="headerlink" href="#textlint" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>日本語を自動的に校正してくれるツール <a class="reference external" href="https://textlint.github.io/">textlint</a> については、
 現状のプロジェクトとしては導入していませんが、現状各自で利用してかまいません。</p>
@@ -300,9 +301,9 @@
 <li><p>レビュー時に一度適用してみようと思います。</p></li>
 </ul>
 <p>ルールを利用する際は <a class="reference external" href="https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing">textlint-rule-preset-ja-technical-writing</a> というプリセットを利用してください。</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>

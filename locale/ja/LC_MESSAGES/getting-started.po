@@ -1,28 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2019, 日本Pandocユーザ会
-# This file is distributed under the same license as the 日本Pandocユーザ会
-# package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
-#
+# Copyright (C) 2020, 日本Pandocユーザ会
+# This file is distributed under the same license as the 日本Pandocユーザ会 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
 # Translators:
 # niszet <niszet0016@gmail.com>, 2020
-# Yuki Fujiwara <sky.y.0079@gmail.com>, 2020
+# Yuki Fujiwara <sky.y.0079@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  日本Pandocユーザ会\n"
+"Project-Id-Version: 日本Pandocユーザ会\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-23 03:37+0000\n"
 "PO-Revision-Date: 2020-10-17 13:32+0000\n"
-"Last-Translator: Yuki Fujiwara <sky.y.0079@gmail.com>, 2020\n"
-"Language: ja\n"
-"Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)"
-"\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Last-Translator: Yuki Fujiwara <sky.y.0079@gmail.com>, 2021\n"
+"Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../getting-started.rst:4
 msgid "Getting started with pandoc 日本語版"
@@ -37,16 +35,18 @@ msgstr ""
 "（ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）"
 
 #: ../../getting-started.rst:11
-msgid "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
-msgstr "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgid ""
+"正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgstr ""
+"正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
 
 #: ../../getting-started.rst:12
 msgid ""
-"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp"
-"/pandoc-doc-ja/issues>`_ に投稿してください"
+"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-"
+"doc-ja/issues>`_ に投稿してください"
 msgstr ""
-"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp"
-"/pandoc-doc-ja/issues>`_ に投稿してください"
+"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-"
+"doc-ja/issues>`_ に投稿してください"
 
 #: ../../getting-started.rst:13
 msgid "翻訳のレビュー作業や翻訳作業へのご協力を希望の方は :doc:`trans-intro` をご覧ください"
@@ -61,14 +61,12 @@ msgid "John MacFarlane"
 msgstr "John MacFarlane"
 
 #: ../../getting-started.rst:19
-#, fuzzy
 msgid "原著バージョン: 2.14.2"
-msgstr "原著バージョン: 2.11.0.4"
+msgstr "原著バージョン: 2.14.2"
 
 #: ../../getting-started.rst:21
-#, fuzzy
 msgid "更新日: 2021/09/23"
-msgstr "更新日: 2020/10/31"
+msgstr "更新日: 2021/09/23"
 
 #: ../../getting-started.rst:23
 msgid "翻訳者（アルファベット順）:"
@@ -105,8 +103,8 @@ msgstr "目次"
 #: ../../getting-started.rst:35
 msgid ""
 "This document is for people who are unfamiliar with command line tools. "
-"Command-line experts can go straight to the `User’s Guide`_ or the pandoc"
-" man page."
+"Command-line experts can go straight to the `User’s Guide`_ or the pandoc "
+"man page."
 msgstr ""
 
 #: ../../getting-started.rst:40
@@ -114,7 +112,8 @@ msgid "Step 1: Install pandoc"
 msgstr ""
 
 #: ../../getting-started.rst:42
-msgid "First, install pandoc, following the `instructions for your platform`_."
+msgid ""
+"First, install pandoc, following the `instructions for your platform`_."
 msgstr ""
 
 #: ../../getting-started.rst:45
@@ -123,8 +122,8 @@ msgstr ""
 
 #: ../../getting-started.rst:47
 msgid ""
-"Pandoc is a command-line tool. There is no graphic user interface. So, to"
-" use it, you’ll need to open a terminal window:"
+"Pandoc is a command-line tool. There is no graphic user interface. So, to "
+"use it, you’ll need to open a terminal window:"
 msgstr ""
 
 #: ../../getting-started.rst:50
@@ -132,26 +131,25 @@ msgid ""
 "On OS X, the Terminal application can be found in "
 "``/Applications/Utilities``. Open a Finder window and go to "
 "``Applications``, then ``Utilities``. Then double click on ``Terminal``. "
-"(Or, click the spotlight icon in the upper right hand corner of your "
-"screen and type ``Terminal`` – you should see ``Terminal`` under "
-"``Applications``.)"
+"(Or, click the spotlight icon in the upper right hand corner of your screen "
+"and type ``Terminal`` – you should see ``Terminal`` under ``Applications``.)"
 msgstr ""
 
 #: ../../getting-started.rst:57
 msgid ""
-"On Windows, you can use either the classic command prompt or the more "
-"modern PowerShell terminal. If you use Windows in desktop mode, run the "
-"``cmd`` or ``powershell`` command from the Start menu. If you use the "
-"Windows 8 start screen instead, simply type ``cmd`` or ``powershell``, "
-"and then run either the “Command Prompt” or “Windows Powershell” "
-"application. If you are using ``cmd``, type ``chcp 65001`` before using "
-"pandoc, to set the encoding to UTF-8."
+"On Windows, you can use either the classic command prompt or the more modern"
+" PowerShell terminal. If you use Windows in desktop mode, run the ``cmd`` or"
+" ``powershell`` command from the Start menu. If you use the Windows 8 start "
+"screen instead, simply type ``cmd`` or ``powershell``, and then run either "
+"the “Command Prompt” or “Windows Powershell” application. If you are using "
+"``cmd``, type ``chcp 65001`` before using pandoc, to set the encoding to "
+"UTF-8."
 msgstr ""
 
 #: ../../getting-started.rst:65
 msgid ""
-"On Linux, there are many possible configurations, depending on what "
-"desktop environment you’re using:"
+"On Linux, there are many possible configurations, depending on what desktop "
+"environment you’re using:"
 msgstr ""
 
 #: ../../getting-started.rst:68
@@ -168,8 +166,8 @@ msgstr ""
 
 #: ../../getting-started.rst:72
 msgid ""
-"In XFCE, go to ``Applications``, then ``System``, then ``Terminal``, or "
-"use ``Super-T``."
+"In XFCE, go to ``Applications``, then ``System``, then ``Terminal``, or use "
+"``Super-T``."
 msgstr ""
 
 #: ../../getting-started.rst:74
@@ -180,9 +178,9 @@ msgstr ""
 
 #: ../../getting-started.rst:77
 msgid ""
-"You should now see a rectangle with a “prompt” (possibly just a symbol "
-"like ``%``, but probably including more information, such as your "
-"username and directory), and a blinking cursor."
+"You should now see a rectangle with a “prompt” (possibly just a symbol like "
+"``%``, but probably including more information, such as your username and "
+"directory), and a blinking cursor."
 msgstr ""
 
 #: ../../getting-started.rst:81
@@ -191,8 +189,8 @@ msgstr ""
 
 #: ../../getting-started.rst:87
 msgid ""
-"and hit enter. You should see a message telling you which version of "
-"pandoc is installed, and giving you some additional information."
+"and hit enter. You should see a message telling you which version of pandoc "
+"is installed, and giving you some additional information."
 msgstr ""
 
 #: ../../getting-started.rst:91
@@ -209,9 +207,9 @@ msgstr ""
 
 #: ../../getting-started.rst:105
 msgid ""
-"on Windows, and hit enter. Your terminal should print your current "
-"working directory. (Guess what ``pwd`` stands for?) This should be your "
-"home directory."
+"on Windows, and hit enter. Your terminal should print your current working "
+"directory. (Guess what ``pwd`` stands for?) This should be your home "
+"directory."
 msgstr ""
 
 #: ../../getting-started.rst:109
@@ -223,11 +221,10 @@ msgid "and hit enter. Now type"
 msgstr ""
 
 #: ../../getting-started.rst:121
-#, python-format
 msgid ""
 "(or ``echo %cd%`` on Windows) again. You should be in the ``Documents`` "
-"subdirectory of your home directory. To go back to your home directory, "
-"you could type"
+"subdirectory of your home directory. To go back to your home directory, you "
+"could type"
 msgstr ""
 
 #: ../../getting-started.rst:129
@@ -236,8 +233,8 @@ msgstr ""
 
 #: ../../getting-started.rst:131
 msgid ""
-"Go back to your ``Documents`` directory if you’re not there already. "
-"Let’s try creating a subdirectory called ``pandoc-test``:"
+"Go back to your ``Documents`` directory if you’re not there already. Let’s "
+"try creating a subdirectory called ``pandoc-test``:"
 msgstr ""
 
 #: ../../getting-started.rst:138
@@ -251,26 +248,24 @@ msgid ""
 msgstr ""
 
 #: ../../getting-started.rst:151
-#, python-format
 msgid "(or ``echo %cd%``) again."
 msgstr ""
 
 #: ../../getting-started.rst:153
 msgid ""
-"OK, that’s all you need to know for now about using the terminal. But "
-"here’s a secret that will save you a lot of typing. You can always type "
-"the up-arrow key to go back through your history of commands. So if you "
-"want to use a command you typed earlier, you don’t need to type it again:"
-" just use up-arrow until it comes up. Try this. (You can use down-arrow "
-"as well, to go the other direction.) Once you have the command, you can "
-"also use the left and right arrows and the backspace/delete key to edit "
-"it."
+"OK, that’s all you need to know for now about using the terminal. But here’s"
+" a secret that will save you a lot of typing. You can always type the up-"
+"arrow key to go back through your history of commands. So if you want to use"
+" a command you typed earlier, you don’t need to type it again: just use up-"
+"arrow until it comes up. Try this. (You can use down-arrow as well, to go "
+"the other direction.) Once you have the command, you can also use the left "
+"and right arrows and the backspace/delete key to edit it."
 msgstr ""
 
 #: ../../getting-started.rst:162
 msgid ""
-"Most terminals also support tab completion of directories and filenames. "
-"To try this, let’s first go back up to our ``Documents`` directory:"
+"Most terminals also support tab completion of directories and filenames. To "
+"try this, let’s first go back up to our ``Documents`` directory:"
 msgstr ""
 
 #: ../../getting-started.rst:169
@@ -279,8 +274,8 @@ msgstr ""
 
 #: ../../getting-started.rst:175
 msgid ""
-"and hit the tab key instead of enter. Your terminal should fill in the "
-"rest (``test``), and then you can hit enter."
+"and hit the tab key instead of enter. Your terminal should fill in the rest "
+"(``test``), and then you can hit enter."
 msgstr ""
 
 #: ../../getting-started.rst:178
@@ -288,7 +283,6 @@ msgid "To review:"
 msgstr ""
 
 #: ../../getting-started.rst:180
-#, python-format
 msgid ""
 "``pwd`` (or ``echo %cd%`` on Windows) to see what the current working "
 "directory is."
@@ -296,8 +290,7 @@ msgstr ""
 
 #: ../../getting-started.rst:182
 msgid ""
-"``cd foo`` to change to the ``foo`` subdirectory of your working "
-"directory."
+"``cd foo`` to change to the ``foo`` subdirectory of your working directory."
 msgstr ""
 
 #: ../../getting-started.rst:184
@@ -328,29 +321,29 @@ msgstr ""
 
 #: ../../getting-started.rst:199
 msgid ""
-"and hit enter. You should see the cursor just sitting there, waiting for "
-"you to type something. Type this:"
+"and hit enter. You should see the cursor just sitting there, waiting for you"
+" to type something. Type this:"
 msgstr ""
 
 #: ../../getting-started.rst:209
 msgid ""
-"When you’re finished (the cursor should be at the beginning of the line),"
-" type ``Ctrl-D`` on OS X or Linux, or ``Ctrl-Z`` followed by ``Enter`` on"
-" Windows. You should now see your text converted to HTML!"
+"When you’re finished (the cursor should be at the beginning of the line), "
+"type ``Ctrl-D`` on OS X or Linux, or ``Ctrl-Z`` followed by ``Enter`` on "
+"Windows. You should now see your text converted to HTML!"
 msgstr ""
 
 #: ../../getting-started.rst:221
 msgid ""
 "What just happened? When pandoc is invoked without specifying any input "
-"files, it operates as a “filter,” taking input from the terminal and "
-"sending its output back to the terminal. You can use this feature to play"
-" around with pandoc."
+"files, it operates as a “filter,” taking input from the terminal and sending"
+" its output back to the terminal. You can use this feature to play around "
+"with pandoc."
 msgstr ""
 
 #: ../../getting-started.rst:226
 msgid ""
-"By default, input is interpreted as pandoc markdown, and output is HTML. "
-"But we can change that. Let’s try converting *from* HTML *to* markdown:"
+"By default, input is interpreted as pandoc markdown, and output is HTML. But"
+" we can change that. Let’s try converting *from* HTML *to* markdown:"
 msgstr ""
 
 #: ../../getting-started.rst:233
@@ -375,18 +368,18 @@ msgstr ""
 
 #: ../../getting-started.rst:252
 msgid ""
-"You’ll probably want to use pandoc to convert a file, not to read text "
-"from the terminal. That’s easy, but first we need to create a text file "
-"in our ``pandoc-test`` subdirectory."
+"You’ll probably want to use pandoc to convert a file, not to read text from "
+"the terminal. That’s easy, but first we need to create a text file in our "
+"``pandoc-test`` subdirectory."
 msgstr ""
 
 #: ../../getting-started.rst:256
 msgid ""
 "**Important:** To create a text file, you’ll need to use a text editor, "
-"*not* a word processor like Microsoft Word. On Windows, you can use "
-"Notepad (in ``Accessories``). On OS X, you can use ``TextEdit`` (in "
-"``Applications``). On Linux, different platforms come with different text"
-" editors: Gnome has ``GEdit``, and KDE has ``Kate``."
+"*not* a word processor like Microsoft Word. On Windows, you can use Notepad "
+"(in ``Accessories``). On OS X, you can use ``TextEdit`` (in "
+"``Applications``). On Linux, different platforms come with different text "
+"editors: Gnome has ``GEdit``, and KDE has ``Kate``."
 msgstr ""
 
 #: ../../getting-started.rst:262
@@ -402,9 +395,9 @@ msgstr ""
 #: ../../getting-started.rst:280
 msgid ""
 "Note: If you use plain text a lot, you’ll want a better editor than "
-"``Notepad`` or ``TextEdit``. You might want to look at `Sublime Text`_ or"
-" (if you’re willing to put in some time learning an unfamiliar interface)"
-" `Vim`_ or `Emacs`_."
+"``Notepad`` or ``TextEdit``. You might want to look at `Sublime Text`_ or "
+"(if you’re willing to put in some time learning an unfamiliar interface) "
+"`Vim`_ or `Emacs`_."
 msgstr ""
 
 #: ../../getting-started.rst:286
@@ -423,8 +416,8 @@ msgstr ""
 
 #: ../../getting-started.rst:297
 msgid ""
-"(or ``dir`` if you’re on Windows). This will list the files in the "
-"current directory. You should see the file you created, ``test1.md``."
+"(or ``dir`` if you’re on Windows). This will list the files in the current "
+"directory. You should see the file you created, ``test1.md``."
 msgstr ""
 
 #: ../../getting-started.rst:300
@@ -437,8 +430,8 @@ msgid ""
 "option says to create a “standalone” file, with a header and footer, not "
 "just a fragment. And the ``-o test1.html`` says to put the output in the "
 "file ``test1.html``. Note that we could have omitted ``-f markdown`` and "
-"``-t html``, since the default is to convert from markdown to HTML, but "
-"it doesn’t hurt to include them."
+"``-t html``, since the default is to convert from markdown to HTML, but it "
+"doesn’t hurt to include them."
 msgstr ""
 
 #: ../../getting-started.rst:313
@@ -456,7 +449,8 @@ msgid "You should see a browser window with your document."
 msgstr ""
 
 #: ../../getting-started.rst:328
-msgid "To create a LaTeX document, you just need to change the command slightly:"
+msgid ""
+"To create a LaTeX document, you just need to change the command slightly:"
 msgstr ""
 
 #: ../../getting-started.rst:335
@@ -465,8 +459,8 @@ msgstr ""
 
 #: ../../getting-started.rst:337
 msgid ""
-"Pandoc can often figure out the input and output formats from the "
-"filename extensions. So, you could have just used:"
+"Pandoc can often figure out the input and output formats from the filename "
+"extensions. So, you could have just used:"
 msgstr ""
 
 #: ../../getting-started.rst:344
@@ -482,8 +476,8 @@ msgstr ""
 #: ../../getting-started.rst:349
 msgid ""
 "If you want to create a PDF, you’ll need to have LaTeX installed. (See "
-"`MacTeX`_ on OS X, `MiKTeX`_ on Windows, or install the texlive package "
-"on Linux.) Then do"
+"`MacTeX`_ on OS X, `MiKTeX`_ on Windows, or install the texlive package on "
+"Linux.) Then do"
 msgstr ""
 
 #: ../../getting-started.rst:358
@@ -492,14 +486,14 @@ msgstr ""
 
 #: ../../getting-started.rst:360
 msgid ""
-"You now know the basics. Pandoc has a lot of options. At this point you "
-"can start to learn more about them by reading the `User’s Guide`_."
+"You now know the basics. Pandoc has a lot of options. At this point you can "
+"start to learn more about them by reading the `User’s Guide`_."
 msgstr ""
 
 #: ../../getting-started.rst:363
 msgid ""
-"Here’s an example. The ``--mathml`` option causes pandoc to convert TeX "
-"math into MathML. Type"
+"Here’s an example. The ``--mathml`` option causes pandoc to convert TeX math"
+" into MathML. Type"
 msgstr ""
 
 #: ../../getting-started.rst:370
@@ -509,7 +503,8 @@ msgid ""
 msgstr ""
 
 #: ../../getting-started.rst:377
-msgid "Now try the same thing without ``--mathml``. See the difference in output?"
+msgid ""
+"Now try the same thing without ``--mathml``. See the difference in output?"
 msgstr ""
 
 #: ../../getting-started.rst:380
@@ -528,14 +523,13 @@ msgstr ""
 
 #: ../../getting-started.rst:395
 msgid ""
-"to get the pandoc manual page. All of this information is also in the "
-"User’s Guide."
+"to get the pandoc manual page. All of this information is also in the User’s"
+" Guide."
 msgstr ""
 
 #: ../../getting-started.rst:398
 msgid ""
 "If you get stuck, you can always ask questions on the `pandoc-discuss`_ "
-"mailing list. But be sure to check the `FAQs`_ first, and search through "
-"the mailing list to see if your question has been answered before."
+"mailing list. But be sure to check the `FAQs`_ first, and search through the"
+" mailing list to see if your question has been answered before."
 msgstr ""
-

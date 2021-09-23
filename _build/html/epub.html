@@ -4,7 +4,8 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Creating an ebook with pandoc 日本語版 &#8212; 日本Pandocユーザ会</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -33,8 +34,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="creating-an-ebook-with-pandoc">
-<h1><a class="toc-backref" href="#id4">Creating an ebook with pandoc 日本語版</a><a class="headerlink" href="#creating-an-ebook-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <section id="creating-an-ebook-with-pandoc">
+<h1><a class="toc-backref" href="#id8">Creating an ebook with pandoc 日本語版</a><a class="headerlink" href="#creating-an-ebook-with-pandoc" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
 <p>現在の翻訳は <em>プレリリース版</em> です。不完全な翻訳を含んでいます。
@@ -51,8 +52,8 @@
 <li><p>John MacFarlane</p></li>
 </ul>
 </div></blockquote>
-<p>原著バージョン: 2.11.0.4</p>
-<p>更新日: 2020/10/31</p>
+<p>原著バージョン: 2.14.2</p>
+<p>更新日: 2021/09/23</p>
 <p>翻訳者（アルファベット順）:</p>
 <ul class="simple">
 <li><p>becolomochi</p></li>
@@ -65,13 +66,13 @@
 <div class="contents topic" id="id1">
 <p class="topic-title">目次</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#creating-an-ebook-with-pandoc" id="id4">Creating an ebook with pandoc 日本語版</a></p>
+<li><p><a class="reference internal" href="#creating-an-ebook-with-pandoc" id="id8">Creating an ebook with pandoc 日本語版</a></p>
 <ul>
-<li><p><a class="reference internal" href="#a-toy-example" id="id5">A toy example</a></p></li>
-<li><p><a class="reference internal" href="#a-real-book" id="id6">A real book</a></p>
+<li><p><a class="reference internal" href="#a-toy-example" id="id9">A toy example</a></p></li>
+<li><p><a class="reference internal" href="#a-real-book" id="id10">A real book</a></p>
 <ul>
-<li><p><a class="reference internal" href="#changing-the-format" id="id7">Changing the format</a></p></li>
-<li><p><a class="reference internal" href="#math" id="id8">数式</a></p></li>
+<li><p><a class="reference internal" href="#changing-the-format" id="id11">Changing the format</a></p></li>
+<li><p><a class="reference internal" href="#math" id="id12">数式</a></p></li>
 </ul>
 </li>
 </ul>
@@ -84,8 +85,8 @@ other electronic book readers, including many smart phones. (They can
 also be converted to Kindle books using <a class="reference external" href="https://www.amazon.com/gp/feature.html?ie=UTF8&amp;docId=1000765211">KindleGen</a>.)</p>
 <p>This means that it’s now very easy to produce an electronic book! Let’s
 try it.</p>
-<div class="section" id="a-toy-example">
-<h2><a class="toc-backref" href="#id5">A toy example</a><a class="headerlink" href="#a-toy-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<section id="a-toy-example">
+<h2><a class="toc-backref" href="#id9">A toy example</a><a class="headerlink" href="#a-toy-example" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Use your text editor to create a file <code class="docutils literal notranslate"><span class="pre">mybook.txt</span></code>, with the following
 contents:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% My Book
@@ -113,15 +114,15 @@ example</p>
 </pre></div>
 </div>
 <p>pandoc will automatically include the images in the generated epub.</p>
-</div>
-<div class="section" id="a-real-book">
-<h2><a class="toc-backref" href="#id6">A real book</a><a class="headerlink" href="#a-real-book" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</section>
+<section id="a-real-book">
+<h2><a class="toc-backref" href="#id10">A real book</a><a class="headerlink" href="#a-real-book" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>To see what this would look like for a real book, let’s convert Scott
 Chacon’s book <a class="reference external" href="https://git-scm.com/book/en/v2">Pro Git</a>, which he wrote using pandoc’s markdown variant
 and released under a <a class="reference external" href="https://creativecommons.org/">Creative Commons</a> license. (If you use the book,
 please consider <a class="reference external" href="https://git-scm.com/book/en/v2">buying a copy</a> to help support his excellent work.)</p>
 <p>You can find the markdown source for the book on its <a class="reference external" href="https://github.com/progit/progit">github site</a>.
-Let’s get a copy of the whole repository: <a class="footnote-reference brackets" href="#id3" id="id2">1</a></p>
+Let’s get a copy of the whole repository: <a class="footnote-reference brackets" href="#id7" id="id2">1</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">progit</span><span class="o">/</span><span class="n">progit</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
@@ -184,8 +185,8 @@ chapter files as sources:</p>
 </div>
 <p>That’s it! The ebook, <code class="docutils literal notranslate"><span class="pre">progit.epub</span></code>, is ready to be uploaded to your
 reader.</p>
-<div class="section" id="changing-the-format">
-<h3><a class="toc-backref" href="#id7">Changing the format</a><a class="headerlink" href="#changing-the-format" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<section id="changing-the-format">
+<h3><a class="toc-backref" href="#id11">Changing the format</a><a class="headerlink" href="#changing-the-format" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">--css</span></code> option to specify a CSS file for the book. The
 default CSS is minimal and can be found <a class="reference external" href="https://github.com/jgm/pandoc/blob/master/data/epub.css">on GitHub</a> or in the
 <code class="docutils literal notranslate"><span class="pre">epub.css</span></code> file in your data directory (see <code class="docutils literal notranslate"><span class="pre">--data-dir</span></code> in the
@@ -193,25 +194,32 @@ default CSS is minimal and can be found <a class="reference external" href="http
 <p>You can even embed fonts in the EPUB if you want; see the <a class="reference external" href="https://pandoc.org/MANUAL.html">User’s
 Guide</a> under <code class="docutils literal notranslate"><span class="pre">--epub-embed-font</span></code>
 for instructions.</p>
-</div>
-<div class="section" id="math">
-<h3><a class="toc-backref" href="#id8">数式</a><a class="headerlink" href="#math" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</section>
+<section id="math">
+<h3><a class="toc-backref" href="#id12">数式</a><a class="headerlink" href="#math" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Pandoc has an EPUB3 writer. It renders LaTeX math into MathML, which
 EPUB3 readers are supposed to support (but unfortunately few do).</p>
 <p>Of course, this isn’t much help if you want EPUB2 output
 (<code class="docutils literal notranslate"><span class="pre">pandoc</span> <span class="pre">-t</span> <span class="pre">epub2</span></code>) or target readers that don’t support MathML. Then
-you should try using the <code class="docutils literal notranslate"><span class="pre">--webtex</span></code> option, which will use a web
-service to convert the TeX to an image.</p>
+you have two options:</p>
+<ol class="arabic simple">
+<li><p>Use the <a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id13"><span class="problematic" id="id14">`--webtex```_</span></a> option, which will use a web service to
+convert the TeX to an image.</p></li>
+<li><p>Use the <a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id15"><span class="problematic" id="id16">`--gladtex```_</span></a> option to convert maths into SVG images on
+your local machine.</p></li>
+</ol>
+<p>Both GladTeX and WebTeX add the LaTeX source of the formula as
+alternative text of the image, increasing accessibility for blind users.</p>
 <dl class="footnote brackets">
-<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
 <dd><p>If you don’t have <a class="reference external" href="https://git-scm.com">git</a>, you can browse to the <a class="reference external" href="https://github.com/progit/progit">github site</a> and
 click “Download Source” to get the same files in a zip or tar
 archive.</p>
 </dd>
 </dl>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
