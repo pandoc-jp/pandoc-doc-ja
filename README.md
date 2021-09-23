@@ -49,7 +49,7 @@
     - 翻訳者がテキストを翻訳（ブラウザ上で共同作業）
 - [Read the Docs](https://readthedocs.org/)
     - GitHub上のSphinxサイトをビルドして公開
-    - 必要なライブラリに関しては requirements.txt が参照される（Pipenvから要エクスポート）
+    - 必要なライブラリに関しては requirements.txt が参照される
 
 ## 初期設定：Dockerを使う場合
 
@@ -151,20 +151,6 @@ Makefileに書いてある記述を元に、直接元のコマンドを打って
 ```shell
 # 例: Sphinxでhtmlをビルドする
 $ make ja-html
-```
-
-※ Dockerが必要なコマンドは、あらかじめMakefileに`docker run`を書いています（変数 `$DOCKER_RUN` を参照）。
-
-```Makefile
-DOCKER_RUN=docker run -v $(shell pwd):/docs --env TX_TOKEN pandocjp/pandoc-doc-ja
-
-（略）
-
-# make ja-html
-# Sphinx: htmlをビルドする
-.PHONY: ja-html
-ja-html:
-	$(DOCKER_RUN) make -e SPHINXOPTS="-D language='ja'" html
 ```
 
 ### ターゲット：まとめて実行
