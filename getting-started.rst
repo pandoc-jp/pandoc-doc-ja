@@ -16,9 +16,9 @@ Getting started with pandoc 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.14.2
+原著バージョン: 2.18
 
-更新日: 2021/09/23
+更新日: 2022/04/29
 
 翻訳者（アルファベット順）:
 
@@ -278,9 +278,9 @@ Now save your file as ``test1.md`` in the directory
 ``Documents/pandoc-test``.
 
 Note: If you use plain text a lot, you’ll want a better editor than
-``Notepad`` or ``TextEdit``. You might want to look at `Sublime Text`_
-or (if you’re willing to put in some time learning an unfamiliar
-interface) `Vim`_ or `Emacs`_.
+``Notepad`` or ``TextEdit``. You might want to look at `Visual Studio
+Code`_ or `Sublime Text`_ or (if you’re willing to put in some time
+learning an unfamiliar interface) `Vim`_ or `Emacs`_.
 
 Step 6: Converting a file
 =========================
@@ -401,6 +401,7 @@ the mailing list to see if your question has been answered before.
 
 .. _User’s Guide: https://pandoc.org/MANUAL.html
 .. _instructions for your platform: https://pandoc.org/installing.html
+.. _Visual Studio Code: https://code.visualstudio.com/
 .. _Sublime Text: https://www.sublimetext.com/
 .. _Vim: https://www.vim.org
 .. _Emacs: https://www.gnu.org/software/emacs

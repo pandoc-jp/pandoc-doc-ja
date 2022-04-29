@@ -238,9 +238,6 @@ docker run -v $(pwd):/docs --env-file .env -it pandocjp/pandoc-doc-ja bash
 ```
 make jgm-pandoc-checkout PANDOC_VER=2.9.2.1
 make ja-update-src
-git add *
-git commit -m '[pandoc upgrade] 翻訳対象バージョンを2.9.2.1にアップグレード'
-git push origin master
 ```
 
 ### HTMLビルド（Transifex上で翻訳済のpoファイルをpullしてから）

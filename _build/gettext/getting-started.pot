@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-23 03:37+0000\n"
+"POT-Creation-Date: 2022-04-29 05:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,11 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../getting-started.rst:19
-msgid "原著バージョン: 2.14.2"
+msgid "原著バージョン: 2.18"
 msgstr ""
 
 #: ../../getting-started.rst:21
-msgid "更新日: 2021/09/23"
+msgid "更新日: 2022/04/29"
 msgstr ""
 
 #: ../../getting-started.rst:23
@@ -293,7 +293,7 @@ msgid "Now save your file as ``test1.md`` in the directory ``Documents/pandoc-te
 msgstr ""
 
 #: ../../getting-started.rst:280
-msgid "Note: If you use plain text a lot, you’ll want a better editor than ``Notepad`` or ``TextEdit``. You might want to look at `Sublime Text`_ or (if you’re willing to put in some time learning an unfamiliar interface) `Vim`_ or `Emacs`_."
+msgid "Note: If you use plain text a lot, you’ll want a better editor than ``Notepad`` or ``TextEdit``. You might want to look at `Visual Studio Code`_ or `Sublime Text`_ or (if you’re willing to put in some time learning an unfamiliar interface) `Vim`_ or `Emacs`_."
 msgstr ""
 
 #: ../../getting-started.rst:286

@@ -17,9 +17,9 @@ Pandoc Lua Filters 日本語版
    * Albert Krewinkel
    * John MacFarlane
 
-原著バージョン: 2.14.2
+原著バージョン: 2.18
 
-更新日: 2021/09/23
+更新日: 2022/04/29
 
 翻訳者（アルファベット順）:
 
@@ -138,7 +138,7 @@ function of the same name) are passed to Lua element filtering function.
 In other words, filter entries will be called for each corresponding
 element in the document, getting the respective element as input.
 
-The return of a filter function must be one of the following:
+The return value of a filter function must be one of the following:
 
 -  nil: this means that the object should remain unchanged.
 -  a pandoc object: this must be of the same type as the input and will
@@ -178,13 +178,13 @@ filters on lists of blocks or lists of inlines.
    If present in a filter, this function will be called on all lists of
    inline elements, like the content of a `Para`_ (paragraph) block, or
    the description of an `Image`_. The ``inlines`` argument passed to
-   the function will be a `List`_ of `Inlines`_ for each call.
+   the function will be a `List`_ of `Inline`_ elements for each call.
 ``Blocks (blocks)``
    If present in a filter, this function will be called on all lists of
    block elements, like the content of a `MetaBlocks`_ meta element
    block, on each item of a list, and the main content of the `Pandoc`_
    document. The ``blocks`` argument passed to the function will be a
-   `List`_ of `Blocks`_ for each call.
+   `List`_ of `Block`_ elements for each call.
 
 These filter functions are special in that the result must either be
 nil, in which case the list is left unchanged, or must be a list of the
@@ -196,8 +196,28 @@ See `“Remove spaces before normal citations”`_ for an example.
 
 This functionality has been added in pandoc 2.9.2.
 
-Execution Order
+Traversal order
 ---------------
+
+The traversal order of filters can be selected by setting the key
+``traverse`` to either ``'topdown'`` or ``'typewise'``; the default is
+``'typewise'``.
+
+Example:
+
+.. code:: lua
+
+   local filter = {
+     traverse = 'topdown',
+     -- ... filter functions ...
+   }
+   return {filter}
+
+Support for this was added in pandoc 2.17; previous versions ignore the
+``traverse`` setting.
+
+Typewise traversal
+~~~~~~~~~~~~~~~~~~
 
 Element filter functions within a filter set are called in a fixed
 order, skipping any which are not present:
@@ -227,6 +247,30 @@ functions in set (1) are thus run before those in (2), causing the
 filter function for *Meta* to be run before the filtering of *Str*
 elements is started.
 
+Topdown traversal
+~~~~~~~~~~~~~~~~~
+
+It is sometimes more natural to traverse the document tree depth-first
+from the root towards the leaves, and all in a single run.
+
+For example, a block list ``[Plain [Str "a"], Para [Str "b"]]`` will try
+the following filter functions, in order: ``Blocks``, ``Plain``,
+``Inlines``, ``Str``, ``Para``, ``Inlines``, ``Str``.
+
+Topdown traversals can be cut short by returning ``false`` as a second
+value from the filter function. No child-element of the returned element
+is processed in that case.
+
+For example, to exclude the contents of a footnote from being processed,
+one might write
+
+.. code:: lua
+
+   traverse = 'topdown'
+   function Note (n)
+     return n, false
+   end
+
 Global variables
 ----------------
 
@@ -239,6 +283,16 @@ variables.
    made conditional on the eventual output format.
 ``PANDOC_READER_OPTIONS``
    Table of the options which were provided to the parser.
+   (`ReaderOptions`_)
+``PANDOC_WRITER_OPTIONS``
+   Table of the options that will be passed to the writer. While the
+   object can be modified, the changes will **not** be picked up by
+   pandoc. (`WriterOptions`_)
+
+   This variable is also set in custom writers.
+
+   *Since: pandoc 2.17*
+
 ``PANDOC_VERSION``
    Contains the pandoc version as a `Version`_ object which behaves like
    a numerically indexed table, most significant number first. E.g., for
@@ -261,6 +315,30 @@ variables.
    The state shared by all readers and writers. It is used by pandoc to
    collect and pass information. The value of this variable is of type
    `CommonState`_ and is read-only.
+``pandoc``
+   The *pandoc* module, described in the next section, is available
+   through the global ``pandoc``. The other modules described herein are
+   loaded as subfields under their respective name.
+``lpeg``
+   This variable holds the ``lpeg`` module, a package based on Parsing
+   Expression Grammars (PEG). It provides excellent parsing utilities
+   and is documented on the official `LPeg homepage`_. Pandoc uses a
+   built-in version of the library, unless it has been configured by the
+   package maintainer to rely on a system-wide installation.
+
+   Note that the result of ``require 'lpeg'`` is not necessarily equal
+   to this value; the ``require`` mechanism prefers the system’s lpeg
+   library over the built-in version.
+
+``re``
+   Contains the LPeg.re module, which is built on top of LPeg and offers
+   an implementation of a `regex engine`_. Pandoc uses a built-in
+   version of the library, unless it has been configured by the package
+   maintainer to rely on a system-wide installation.
+
+   Note that the result of ``require 're`` is not necessarily equal to
+   this value; the ``require`` mechanism prefers the system’s lpeg
+   library over the built-in version.
 
 Pandoc Module
 =============
@@ -457,7 +535,7 @@ the same file:
 
    function get_vars (meta)
      for k, v in pairs(meta) do
-       if type(v) == 'table' and v.t == 'MetaInlines' then
+       if pandoc.utils.type(v) == 'Inlines' then
          vars["%" .. k .. "%"] = {table.unpack(v)}
        end
      end
@@ -508,21 +586,22 @@ Modifying pandoc’s ``MANUAL.txt`` for man pages
 -----------------------------------------------
 
 This is the filter we use when converting ``MANUAL.txt`` to man pages.
-It converts level-1 headers to uppercase (using ``walk_block`` to
-transform inline elements inside headers), removes footnotes, and
-replaces links with regular text.
+It converts level-1 headers to uppercase (using ```walk```_ to transform
+inline elements inside headers), removes footnotes, and replaces links
+with regular text.
 
 .. code:: lua
 
-   -- we use preloaded text to get a UTF-8 aware 'upper' function
-   local text = require('text')
+   -- we use pandoc.text to get a UTF-8 aware 'upper' function
+   local text = pandoc.text
 
    function Header(el)
        if el.level == 1 then
-         return pandoc.walk_block(el, {
+         return el:walk {
            Str = function(el)
                return pandoc.Str(text.upper(el.text))
-           end })
+           end
+         }
        end
    end
 
@@ -599,7 +678,7 @@ of an ATX header, or tags in HTML documents, as words. To run it,
 
    function Pandoc(el)
        -- skip metadata, just count body:
-       pandoc.walk_block(pandoc.Div(el.blocks), wordcount)
+       el.blocks:walk(wordcount)
        print(words .. " words in body")
        os.exit(0)
    end
@@ -713,12 +792,12 @@ version of this might put these in a special cache directory.)
    function RawBlock(el)
      if starts_with('\\begin{tikzpicture}', el.text) then
        local filetype = extension_for[FORMAT] or 'svg'
-       local fname = system.get_working_directory() .. '/' ..
-           pandoc.sha1(el.text) .. '.' .. filetype
+       local fbasename = pandoc.sha1(el.text) .. '.' .. filetype
+       local fname = system.get_working_directory() .. '/' .. fbasename
        if not file_exists(fname) then
          tikz2image(el.text, filetype, fname)
        end
-       return pandoc.Para({pandoc.Image({}, fname)})
+       return pandoc.Para({pandoc.Image({}, fbasename)})
      else
       return el
      end
@@ -778,13 +857,45 @@ Pandoc
 Pandoc document
 
 Values of this type can be created with the ```pandoc.Pandoc```_
-constructor. Object equality is determined via
-```pandoc.utils.equals```_.
+constructor. Pandoc values are equal in Lua if and only if they are
+equal in Haskell.
 
 ``blocks``
-   document content (`List`_ of `Blocks`_)
+   document content (`Blocks`_)
 ``meta``
    document meta information (`Meta`_ object)
+
+.. _`type-pandoc:walk`:
+
+walk
+~~~~
+
+``walk(self, lua_filter)``
+
+Applies a Lua filter to the Pandoc element. Just as for full-document
+filters, the order in which elements are traversed can be controlled by
+setting the ``traverse`` field of the filter; see the section on
+`traversal order`_.
+
+Parameters:
+
+``self``
+   the element (`Pandoc`_)
+``lua_filter``
+   map of filter functions (table)
+
+Result:
+
+-  filtered document (`Pandoc`_)
+
+Usage:
+
+::
+
+   -- returns `pandoc.Pandoc{pandoc.Para{pandoc.Str 'Bye'}}`
+   return pandoc.Pandoc{pandoc.Para('Hi')}:walk {
+     Str = function (_) return 'Bye' end,
+   }
 
 .. _type-meta:
 
@@ -795,100 +906,85 @@ Meta information on a document; string-indexed collection of
 `MetaValues`_.
 
 Values of this type can be created with the ```pandoc.Meta```_
-constructor. Object equality is determined via
-```pandoc.utils.equals```_.
+constructor. Meta values are equal in Lua if and only if they are equal
+in Haskell.
 
 .. _type-metavalue:
 
 MetaValue
 ---------
 
-Document meta information items.
+Document meta information items. This is not a separate type, but
+describes a set of types that can be used in places were a MetaValue is
+expected. The types correspond to the following Haskell type
+constructors:
 
-Object equality is determined via ```pandoc.utils.equals```_.
+-  boolean → MetaBool
+-  string or number → MetaString
+-  Inlines → MetaInlines
+-  Blocks → MetaBlocks
+-  List/integer indexed table → MetaList
+-  string-indexed table → MetaMap
 
-.. _type-metablocks:
+The corresponding constructors ```pandoc.MetaBool```_,
+```pandoc.MetaString```_, ```pandoc.MetaInlines```_,
+```pandoc.MetaBlocks```_, ```pandoc.MetaList```_, and
+```pandoc.MetaMap```_ can be used to ensure that a value is treated in
+the intended way. E.g., an empty table is normally treated as a
+``MetaMap``, but can be made into an empty ``MetaList`` by calling
+``pandoc.MetaList{}``. However, the same can be accomplished by using
+the generic functions like ``pandoc.List``, ``pandoc.Inlines``, or
+``pandoc.Blocks``.
 
-MetaBlocks
-~~~~~~~~~~
-
-A list of blocks usable as meta value (`List`_ of `Blocks`_).
-
-Fields:
-
-``tag``, ``t``
-   the literal ``MetaBlocks`` (string)
-
-.. _type-metabool:
-
-MetaBool
-~~~~~~~~
-
-Alias for Lua boolean, i.e. the values ``true`` and ``false``.
-
-.. _type-metainlines:
-
-MetaInlines
-~~~~~~~~~~~
-
-List of inlines used in metadata (`List`_ of `Inlines`_)
-
-Values of this type can be created with the ```pandoc.MetaInlines```_
-constructor.
-
-Fields:
-
-``tag``, ``t``
-   the literal ``MetaInlines`` (string)
-
-.. _type-metalist:
-
-MetaList
-~~~~~~~~
-
-A list of other metadata values (`List`_ of `MetaValues`_).
-
-Values of this type can be created with the ```pandoc.MetaList```_
-constructor.
-
-Fields:
-
-``tag``, ``t``
-   the literal ``MetaList`` (string)
-
-All methods available for `List`_\ s can be used on this type as well.
-
-.. _type-metamap:
-
-MetaMap
-~~~~~~~
-
-A string-indexed map of meta-values. (table).
-
-Values of this type can be created with the ```pandoc.MetaMap```_
-constructor.
-
-Fields:
-
-``tag``, ``t``
-   the literal ``MetaMap`` (string)
-
-*Note*: The fields will be shadowed if the map contains a field with the
-same name as those listed.
-
-.. _type-metastring:
-
-MetaString
-~~~~~~~~~~
-
-Plain Lua string value (string).
+Use the function ```pandoc.utils.type```_ to get the type of a metadata
+value.
 
 .. _type-block:
 
 Block
 -----
 
-Object equality is determined via ```pandoc.utils.equals```_.
+Block values are equal in Lua if and only if they are equal in Haskell.
+
+Common methods
+~~~~~~~~~~~~~~
+
+.. _`type-block:walk`:
+
+walk
+^^^^
+
+``walk(self, lua_filter)``
+
+Applies a Lua filter to the block element. Just as for full-document
+filters, the order in which elements are traversed can be controlled by
+setting the ``traverse`` field of the filter; see the section on
+`traversal order`_.
+
+Note that the filter is applied to the subtree, but not to the ``self``
+block element. The rationale is that otherwise the element could be
+deleted by the filter, or replaced with multiple block elements, which
+might lead to possibly unexpected results.
+
+Parameters:
+
+``self``
+   the element (`Block`_)
+``lua_filter``
+   map of filter functions (table)
+
+Result:
+
+-  filtered block (`Block`_)
+
+Usage:
+
+::
+
+   -- returns `pandoc.Para{pandoc.Str 'Bye'}`
+   return pandoc.Para('Hi'):walk {
+     Str = function (_) return 'Bye' end,
+   }
 
 .. _type-blockquote:
 
@@ -902,8 +998,8 @@ constructor.
 
 Fields:
 
-``content``:
-   block content (`List`_ of `Blocks`_)
+``content``
+   block content (`Blocks`_)
 ``tag``, ``t``
    the literal ``BlockQuote`` (string)
 
@@ -920,7 +1016,7 @@ constructor.
 Fields:
 
 ``content``
-   list items (`List`_ of `List`_ of `Blocks`_)
+   list items (`List`_ of items, i.e., `List`_ of `Blocks`_)
 ``tag``, ``t``
    the literal ``BulletList`` (string)
 
@@ -979,7 +1075,7 @@ constructor.
 Fields:
 
 ``content``
-   block content (`List`_ of `Blocks`_)
+   block content (`Blocks`_)
 ``attr``
    element attributes (`Attr`_)
 ``identifier``
@@ -1006,7 +1102,7 @@ Fields:
 ``level``
    header level (integer)
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``attr``
    element attributes (`Attr`_)
 ``identifier``
@@ -1047,7 +1143,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content
+   inline content (`List`_ of lines, i.e. `List`_ of `Inlines`_)
 ``tag``, ``t``
    the literal ``LineBlock`` (string)
 
@@ -1078,7 +1174,7 @@ constructor.
 Fields:
 
 ``content``
-   list items (`List`_ of `List`_ of `Blocks`_)
+   list items (`List`_ of items, i.e., `List`_ of `Blocks`_)
 ``listAttributes``
    list parameters (`ListAttributes`_)
 ``start``
@@ -1103,7 +1199,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Para`` (string)
 
@@ -1120,7 +1216,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Plain`` (string)
 
@@ -1185,12 +1281,110 @@ cell content to be left-aligned, right-aligned, and centered,
 respectively. The default alignment is ``AlignDefault`` (often
 equivalent to centered).
 
+.. _type-blocks:
+
+Blocks
+------
+
+List of `Block`_ elements, with the same methods as a generic `List`_.
+It is usually not necessary to create values of this type in user
+scripts, as pandoc can convert other types into Blocks wherever a value
+of this type is expected:
+
+-  a list of `Block`_ (or Block-like) values is used directly;
+-  a single `Inlines`_ value is wrapped into a `Plain`_ element;
+-  string values are turned into an `Inlines`_ value by splitting the
+   string into words (see `Inlines`_), and then wrapping the result into
+   a Plain singleton.
+
+Methods
+~~~~~~~
+
+Lists of type ``Blocks`` share all methods available in generic lists,
+see the ```pandoc.List`` module`_.
+
+Additionally, the following methods are available on Blocks values:
+
+.. _`type-blocks:walk`:
+
+walk
+^^^^
+
+``walk(self, lua_filter)``
+
+Applies a Lua filter to the Blocks list. Just as for full-document
+filters, the order in which elements are traversed can be controlled by
+setting the ``traverse`` field of the filter; see the section on
+`traversal order`_.
+
+Parameters:
+
+``self``
+   the list (`Blocks`_)
+``lua_filter``
+   map of filter functions (table)
+
+Result:
+
+-  filtered list (`Blocks`_)
+
+Usage:
+
+::
+
+   -- returns `pandoc.Blocks{pandoc.Para('Salve!')}`
+   return pandoc.Blocks{pandoc.Plain('Salve!)}:walk {
+     Plain = function (p) return pandoc.Para(p.content) end,
+   }
+
 .. _type-inline:
 
 Inline
 ------
 
-Object equality is determined via ```pandoc.utils.equals```_.
+Inline values are equal in Lua if and only if they are equal in Haskell.
+
+.. _common-methods-1:
+
+Common methods
+~~~~~~~~~~~~~~
+
+.. _`type-inline:walk`:
+
+walk
+^^^^
+
+``walk(self, lua_filter)``
+
+Applies a Lua filter to the Inline element. Just as for full-document
+filters, the order in which elements are traversed can be controlled by
+setting the ``traverse`` field of the filter; see the section on
+`traversal order`_.
+
+Note that the filter is applied to the subtree, but not to the ``self``
+inline element. The rationale is that otherwise the element could be
+deleted by the filter, or replaced with multiple inline elements, which
+might lead to possibly unexpected results.
+
+Parameters:
+
+``self``
+   the element (`Inline`_)
+``lua_filter``
+   map of filter functions (table)
+
+Result:
+
+-  filtered inline element (`Inline`_)
+
+Usage:
+
+::
+
+   -- returns `pandoc.SmallCaps('SPQR)`
+   return pandoc.SmallCaps('spqr'):walk {
+     Str = function (s) return string.upper(s.text) end,
+   }
 
 .. _type-cite:
 
@@ -1205,7 +1399,7 @@ constructor.
 Fields:
 
 ``content``
-   (`List`_ of `Inlines`_)
+   (`Inlines`_)
 ``citations``
    citation entries (`List`_ of `Citations`_)
 ``tag``, ``t``
@@ -1249,7 +1443,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Emph`` (string)
 
@@ -1265,14 +1459,14 @@ constructor.
 
 Fields:
 
-``attr``
-   attributes (`Attr`_)
 ``caption``
-   text used to describe the image (`List`_ of `Inlines`_)
+   text used to describe the image (`Inlines`_)
 ``src``
    path to the image file (string)
 ``title``
-   brief image description
+   brief image description (string)
+``attr``
+   attributes (`Attr`_)
 ``identifier``
    alias for ``attr.identifier`` (string)
 ``classes``
@@ -1312,7 +1506,7 @@ Fields:
 ``attr``
    attributes (`Attr`_)
 ``content``
-   text for this link (`List`_ of `Inlines`_)
+   text for this link (`Inlines`_)
 ``target``
    the link target (string)
 ``title``
@@ -1359,7 +1553,7 @@ constructor.
 Fields:
 
 ``content``
-   (`List`_ of `Blocks`_)
+   (`Blocks`_)
 ``tag``, ``t``
    the literal ``Note`` (string)
 
@@ -1379,7 +1573,7 @@ Fields:
    type of quotes to be used; one of ``SingleQuote`` or ``DoubleQuote``
    (string)
 ``content``
-   quoted text (`List`_ of `Inlines`_)
+   quoted text (`Inlines`_)
 ``tag``, ``t``
    the literal ``Quoted`` (string)
 
@@ -1415,7 +1609,7 @@ constructor.
 Fields:
 
 ``content``
-   (`List`_ of `Inlines`_)
+   (`Inlines`_)
 ``tag``, ``t``
    the literal ``SmallCaps`` (string)
 
@@ -1464,7 +1658,7 @@ Fields:
 ``attr``
    attributes (`Attr`_)
 ``content``
-   wrapped content (`List`_ of `Inlines`_)
+   wrapped content (`Inlines`_)
 ``identifier``
    alias for ``attr.identifier`` (string)
 ``classes``
@@ -1504,7 +1698,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Strikeout`` (string)
 
@@ -1521,7 +1715,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Strong`` (string)
 
@@ -1538,7 +1732,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Subscript`` (string)
 
@@ -1555,7 +1749,7 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Superscript`` (string)
 
@@ -1572,9 +1766,69 @@ constructor.
 Fields:
 
 ``content``
-   inline content (`List`_ of `Inlines`_)
+   inline content (`Inlines`_)
 ``tag``, ``t``
    the literal ``Underline`` (string)
+
+.. _type-inlines:
+
+Inlines
+-------
+
+List of `Inline`_ elements, with the same methods as a generic `List`_.
+It is usually not necessary to create values of this type in user
+scripts, as pandoc can convert other types into Blocks wherever a value
+of this type is expected:
+
+-  lists of `Inline`_ (or Inline-like) values are used directly;
+-  single `Inline`_ values are converted into a list containing just
+   that element;
+-  String values are split into words, converting line breaks into
+   `SoftBreak`_ elements, and other whitespace characters into
+   `Spaces`_.
+
+.. _methods-1:
+
+Methods
+~~~~~~~
+
+Lists of type ``Inlines`` share all methods available in generic lists,
+see the ```pandoc.List`` module`_.
+
+Additionally, the following methods are available on *Inlines* values:
+
+.. _`type-inlines:walk`:
+
+walk
+^^^^
+
+``walk(self, lua_filter)``
+
+Applies a Lua filter to the Inlines list. Just as for full-document
+filters, the order in which elements are handled are are Inline →
+Inlines → Block → Blocks. The filter is applied to all list items *and*
+to the list itself.
+
+Parameters:
+
+``self``
+   the list (`Inlines`_)
+``lua_filter``
+   map of filter functions (table)
+
+Result:
+
+-  filtered list (`Inlines`_)
+
+Usage:
+
+::
+
+   -- returns `pandoc.Inlines{pandoc.SmallCaps('SPQR')}`
+   return pandoc.Inlines{pandoc.Emph('spqr')}:walk {
+     Str = function (s) return string.upper(s.text) end,
+     Emph = function (e) return pandoc.SmallCaps(e.content) end,
+   }
 
 Element components
 ------------------
@@ -1601,7 +1855,7 @@ This also works when using the ``attr`` setter:
    local span = pandoc.Span 'text'
    span.attr = {id = 'text', class = 'a b', other_attribute = '1'}
 
-Object equality is determined via ```pandoc.utils.equals```_.
+Attr values are equal in Lua if and only if they are equal in Haskell.
 
 Fields:
 
@@ -1620,6 +1874,9 @@ Attributes
 List of key/value pairs. Values can be accessed by using keys as indices
 to the list table.
 
+Attributes values are equal in Lua if and only if they are equal in
+Haskell.
+
 .. _type-caption:
 
 Caption
@@ -1630,9 +1887,9 @@ The caption of a table, with an optional short caption.
 Fields:
 
 ``long``
-   long caption (list of `Blocks`_)
+   long caption (`Blocks`_)
 ``short``
-   short caption (list of `Inlines`_)
+   short caption (`Inlines`_)
 
 .. _type-cell:
 
@@ -1648,13 +1905,19 @@ Fields:
 ``alignment``
    individual cell alignment (`Alignment`_).
 ``contents``
-   cell contents (list of `Blocks`_).
+   cell contents (`Blocks`_).
 ``col_span``
-   number of columns occupied by the cell; the height of the cell
-   (integer).
+   number of columns spanned by the cell; the width of the cell in
+   columns (integer).
 ``row_span``
-   number of rows occupied by the cell; the height of the cell
+   number of rows spanned by the cell; the height of the cell in rows
    (integer).
+``identifier``
+   alias for ``attr.identifier`` (string)
+``classes``
+   alias for ``attr.classes`` (`List`_ of strings)
+``attributes``
+   alias for ``attr.attributes`` (`Attributes`_)
 
 .. _type-citation:
 
@@ -1666,7 +1929,8 @@ Single citation entry
 Values of this type can be created with the ```pandoc.Citation```_
 constructor.
 
-Object equality is determined via ```pandoc.utils.equals```_.
+Citation values are equal in Lua if and only if they are equal in
+Haskell.
 
 Fields:
 
@@ -1676,9 +1940,9 @@ Fields:
    citation mode, one of ``AuthorInText``, ``SuppressAuthor``, or
    ``NormalCitation`` (string)
 ``prefix``
-   citation prefix (`List`_ of `Inlines`_)
+   citation prefix (`Inlines`_)
 ``suffix``
-   citation suffix (`List`_ of `Inlines`_)
+   citation suffix (`Inlines`_)
 ``note_num``
    note number (integer)
 ``hash``
@@ -1691,10 +1955,10 @@ ColSpec
 
 Column alignment and width specification for a single table column.
 
-This is a pair with the following components:
+This is a pair, i.e., a plain table, with the following components:
 
 1. cell alignment (`Alignment`_).
-2. table column width, as a fraction of the total table width (number).
+2. table column width, as a fraction of the page width (number).
 
 .. _type-listattributes:
 
@@ -1705,8 +1969,6 @@ List attributes
 
 Values of this type can be created with the ```pandoc.ListAttributes```_
 constructor.
-
-Object equality is determined via ```pandoc.utils.equals```_.
 
 Fields:
 
@@ -1727,10 +1989,12 @@ Row
 
 A table row.
 
-Tuple fields:
+Fields:
 
-1. row attributes
-2. row cells (list of `Cells`_)
+``attr``
+   element attributes (`Attr`_)
+``cells``
+   list of table cells (`List`_ of `Cell`_\ s)
 
 .. _type-tablebody:
 
@@ -1745,9 +2009,9 @@ Fields:
 ``attr``
    table body attributes (`Attr`_)
 ``body``
-   table body rows (list of `Rows`_)
+   table body rows (`List`_ of `Row`_\ s)
 ``head``
-   intermediate head (list of `Rows`_)
+   intermediate head (`List`_ of `Row`_\ s)
 ``row_head_columns``
    number of columns taken up by the row head of each row of a
    `TableBody`_. The row body takes up the remaining columns.
@@ -1759,10 +2023,18 @@ TableFoot
 
 The foot of a table.
 
-This is a pair with the following components:
+Fields:
 
-1. attributes
-2. foot rows (`Rows`_)
+``attr``
+   element attributes (`Attr`_)
+``rows``
+   list of rows (`List`_ of `Row`_\ s)
+``identifier``
+   alias for ``attr.identifier`` (string)
+``classes``
+   alias for ``attr.classes`` (`List`_ of strings)
+``attributes``
+   alias for ``attr.attributes`` (`Attributes`_)
 
 .. _type-tablehead:
 
@@ -1771,10 +2043,18 @@ TableHead
 
 The head of a table.
 
-This is a pair with the following components:
+Fields:
 
-1. attributes
-2. head rows (`Rows`_)
+``attr``
+   element attributes (`Attr`_)
+``rows``
+   list of rows (`List`_ of `Row`_\ s)
+``identifier``
+   alias for ``attr.identifier`` (string)
+``classes``
+   alias for ``attr.classes`` (`List`_ of strings)
+``attributes``
+   alias for ``attr.attributes`` (`Attributes`_)
 
 .. _type-readeroptions:
 
@@ -1792,7 +2072,8 @@ Fields:
 ``default_image_extension``
    default extension for images (string)
 ``extensions``
-   string representation of the syntax extensions bit field (string)
+   string representation of the syntax extensions bit field (sequence of
+   strings)
 ``indented_code_classes``
    default classes for indented code blocks (list of strings)
 ``standalone``
@@ -1802,8 +2083,94 @@ Fields:
 ``tab_stop``
    width (i.e. equivalent number of spaces) of tab stops (integer)
 ``track_changes``
-   track changes setting for docx; one of ``AcceptChanges``,
-   ``RejectChanges``, and ``AllChanges`` (string)
+   track changes setting for docx; one of ``accept-changes``,
+   ``reject-changes``, and ``all-changes`` (string)
+
+.. _type-writeroptions:
+
+WriterOptions
+-------------
+
+Pandoc writer options
+
+Fields:
+
+``cite_method``
+   How to print cites – one of ‘citeproc’, ‘natbib’, or ‘biblatex’
+   (string)
+``columns``
+   Characters in a line (for text wrapping) (integer)
+``dpi``
+   DPI for pixel to/from inch/cm conversions (integer)
+``email_obfuscation``
+   How to obfuscate emails – one of ‘none’, ‘references’, or
+   ‘javascript’ (string)
+``epub_chapter_level``
+   Header level for chapters, i.e., how the document is split into
+   separate files (integer)
+``epub_fonts``
+   Paths to fonts to embed (sequence of strings)
+``epub_metadata``
+   Metadata to include in EPUB (string|nil)
+``epub_subdirectory``
+   Subdir for epub in OCF (string)
+``extensions``
+   Markdown extensions that can be used (sequence of strings)
+``highlight_style``
+   Style to use for highlighting; see the output of
+   ``pandoc --print-highlight-style=...`` for an example structure. The
+   value ``nil`` means that no highlighting is used. (table|nil)
+``html_math_method``
+   How to print math in HTML; one ‘plain’, ‘gladtex’, ‘webtex’,
+   ‘mathml’, ‘mathjax’, or a table with keys ``method`` and ``url``.
+   (string|table)
+``html_q_tags``
+   Use ``<q>`` tags for quotes in HTML (boolean)
+``identifier_prefix``
+   Prefix for section & note ids in HTML and for footnote marks in
+   markdown (string)
+``incremental``
+   True if lists should be incremental (boolean)
+``listings``
+   Use listings package for code (boolean)
+``number_offset``
+   Starting number for section, subsection, … (sequence of integers)
+``number_sections``
+   Number sections in LaTeX (boolean)
+``prefer_ascii``
+   Prefer ASCII representations of characters when possible (boolean)
+``reference_doc``
+   Path to reference document if specified (string|nil)
+``reference_links``
+   Use reference links in writing markdown, rst (boolean)
+``reference_location``
+   Location of footnotes and references for writing markdown; one of
+   ‘end-of-block’, ‘end-of-section’, ‘end-of-document’. The common
+   prefix may be omitted when setting this value. (string)
+``section_divs``
+   Put sections in div tags in HTML (boolean)
+``setext_headers``
+   Use setext headers for levels 1-2 in markdown (boolean)
+``slide_level``
+   Force header level of slides (integer|nil)
+``tab_stop``
+   Tabstop for conversion btw spaces and tabs (integer)
+``table_of_contents``
+   Include table of contents (boolean)
+``template``
+   Template to use (`Template`_\ \|nil)
+``toc_depth``
+   Number of levels to include in TOC (integer)
+``top_level_division``
+   Type of top-level divisions; one of ‘top-level-part’,
+   ‘top-level-chapter’, ‘top-level-section’, or ‘top-level-default’. The
+   prefix ``top-level`` may be omitted when setting this value. (string)
+``variables``
+   Variables to set in template; string-indexed table (table)
+``wrap_text``
+   Option for wrapping text; one of ‘wrap-auto’, ‘wrap-none’, or
+   ‘wrap-preserve’. The ``wrap-`` prefix may be omitted when setting
+   this value. (string)
 
 .. _type-commonstate:
 
@@ -1835,6 +2202,28 @@ Fields:
    Whether tracing messages are issued (boolean)
 ``verbosity``
    Verbosity level; one of ``INFO``, ``WARNING``, ``ERROR`` (string)
+
+.. _type-doc:
+
+Doc
+---
+
+Reflowable plain-text document. A Doc value can be rendered and reflown
+to fit a given column width.
+
+The ```pandoc.layout```_ module can be used to create and modify Doc
+values. All functions in that module that take a Doc value as their
+first argument are also available as Doc methods. E.g.,
+``(pandoc.layout.literal 'text'):render()``.
+
+If a string is passed to a function expecting a Doc, then the string is
+treated as a literal value. I.e., the following two lines are
+equivalent:
+
+.. code:: lua
+
+   test = pandoc.layout.quotes(pandoc.layout.literal 'this')
+   test = pandoc.layout.quotes('this')
 
 .. _type-list:
 
@@ -1874,17 +2263,25 @@ of this type can also be created directly with the
 
 Fields:
 
-``caption``:
-   `List`_ of `Inlines`_
-``aligns``:
+``caption``
+   `Inlines`_
+``aligns``
    column alignments (`List`_ of `Alignments`_)
-``widths``:
+``widths``
    column widths; a (`List`_ of numbers)
-``headers``:
-   table header row (`List`_ of lists of `Blocks`_)
-``rows``:
-   table rows (`List`_ of rows, where a row is a list of lists of
+``headers``
+   table header row (`List`_ of simple cells, i.e., `List`_ of
    `Blocks`_)
+``rows``
+   table rows (`List`_ of rows, where a row is a list of simple cells,
+   i.e., `List`_ of `Blocks`_)
+
+.. _type-template:
+
+Template
+--------
+
+Opaque type holding a compiled template.
 
 .. _type-version:
 
@@ -1917,8 +2314,8 @@ constructor.
 ``must_be_at_least(actual, expected [, error_message])``
 
 Raise an error message if the actual version is older than the expected
-version; does nothing if actual is equal to or newer than the expected
-version.
+version; does nothing if ``actual`` is equal to or newer than the
+expected version.
 
 Parameters:
 
@@ -2013,599 +2410,913 @@ to filter and modify a subtree.
 Pandoc
 ------
 
+.. _pandoc.pandoc:
+
 ``Pandoc (blocks[, meta])``
-   A complete pandoc document
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+A complete pandoc document
 
-   ``blocks``:
-      document content
-   ``meta``:
-      document meta data
+Parameters:
 
-   Returns: `Pandoc`_ object
+``blocks``
+   document content
+``meta``
+   document meta data
+
+Returns: `Pandoc`_ object
 
 Meta
 ----
 
+.. _pandoc.meta:
+
 ``Meta (table)``
-   Create a new Meta object.
+~~~~~~~~~~~~~~~~
 
-   Parameters:
+Create a new Meta object.
 
-   ``table``:
-      table containing document meta information
+Parameters:
 
-   Returns: `Meta`_ object
+``table``
+   table containing document meta information
+
+Returns: `Meta`_ object
 
 MetaValue
 ---------
 
+.. _pandoc.metablocks:
+
 ``MetaBlocks (blocks)``
-   Meta blocks
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a value to be used as a MetaBlocks value in meta data; creates a
+copy of the input list via ``pandoc.Blocks``, discarding all non-list
+keys.
 
-   ``blocks``:
-      blocks
+Parameters:
 
-   Returns: `MetaBlocks`_ object
+``blocks``
+   blocks
+
+Returns: `Blocks`_
+
+.. _pandoc.metainlines:
 
 ``MetaInlines (inlines)``
-   Meta inlines
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a value to be used as a MetaInlines value in meta data; creates
+a copy of the input list via ``pandoc.Inlines``, discarding all non-list
+keys.
 
-   ``inlines``:
-      inlines
+Parameters:
 
-   Returns: `MetaInlines`_ object
+``inlines``
+   inlines
+
+Returns: `Inlines`_
+
+.. _pandoc.metalist:
 
 ``MetaList (meta_values)``
-   Meta list
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a value to be used as a MetaList in meta data; creates a copy of
+the input list via ``pandoc.List``, discarding all non-list keys.
 
-   ``meta_values``:
-      list of meta values
+Parameters:
 
-   Returns: `MetaList`_ object
+``meta_values``
+   list of meta values
+
+Returns: `List`_
+
+.. _pandoc.metamap:
 
 ``MetaMap (key_value_map)``
-   Meta map
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a value to be used as a MetaMap in meta data; creates a copy of
+the input table, keeping only pairs with string keys and discards all
+other keys.
 
-   ``key_value_map``:
-      a string-indexed map of meta values
+Parameters:
 
-   Returns: `MetaMap`_ object
+``key_value_map``
+   a string-indexed map of meta values
+
+Returns: table
+
+.. _pandoc.metastring:
 
 ``MetaString (str)``
-   Creates string to be used in meta data.
+~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a value to be used as a MetaString in meta data; this is the
+identity function for boolean values and exists only for completeness.
 
-   ``str``:
-      string value
+Parameters:
 
-   Returns: `MetaString`_ object
+``str``
+   string value
+
+Returns: string
+
+.. _pandoc.metabool:
 
 ``MetaBool (bool)``
-   Creates boolean to be used in meta data.
+~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a value to be used as MetaBool in meta data; this is the
+identity function for boolean values and exists only for completeness.
 
-   ``bool``:
-      boolean value
+Parameters:
 
-   Returns: `MetaBool`_ object
+``bool``
+   boolean value
+
+Returns: boolean
+
+Block
+-----
+
+.. _pandoc.blockquote:
+
+``BlockQuote (content)``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a block quote element
+
+Parameters:
+
+``content``
+   block content
+
+Returns: `BlockQuote`_ object
+
+.. _pandoc.bulletlist:
+
+``BulletList (items)``
+~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a bullet list.
+
+Parameters:
+
+``items``
+   list items
+
+Returns: `BulletList`_ object
+
+.. _pandoc.codeblock:
+
+``CodeBlock (text[, attr])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a code block element
+
+Parameters:
+
+``text``
+   code string
+``attr``
+   element attributes
+
+Returns: `CodeBlock`_ object
+
+.. _pandoc.definitionlist:
+
+``DefinitionList (content)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a definition list, containing terms and their explanation.
+
+Parameters:
+
+``content``
+   list of items
+
+Returns: `DefinitionList`_ object
+
+.. _pandoc.div:
+
+``Div (content[, attr])``
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a div element
+
+Parameters:
+
+``content``
+   block content
+``attr``
+   element attributes
+
+Returns: `Div`_ object
+
+.. _pandoc.header:
+
+``Header (level, content[, attr])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a header element.
+
+Parameters:
+
+``level``
+   header level
+``content``
+   inline content
+``attr``
+   element attributes
+
+Returns: `Header`_ object
+
+.. _pandoc.horizontalrule:
+
+``HorizontalRule ()``
+~~~~~~~~~~~~~~~~~~~~~
+
+Creates a horizontal rule.
+
+Returns: `HorizontalRule`_ object
+
+.. _pandoc.lineblock:
+
+``LineBlock (content)``
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a line block element.
+
+Parameters:
+
+``content``
+   inline content
+
+Returns: `LineBlock`_ object
+
+.. _pandoc.null:
+
+``Null ()``
+~~~~~~~~~~~
+
+Creates a null element.
+
+Returns: `Null`_ object
+
+.. _pandoc.orderedlist:
+
+``OrderedList (items[, listAttributes])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates an ordered list.
+
+Parameters:
+
+``items``
+   list items
+``listAttributes``
+   list parameters
+
+Returns: `OrderedList`_ object
+
+.. _pandoc.para:
+
+``Para (content)``
+~~~~~~~~~~~~~~~~~~
+
+Creates a para element.
+
+Parameters:
+
+``content``
+   inline content
+
+Returns: `Para`_ object
+
+.. _pandoc.plain:
+
+``Plain (content)``
+~~~~~~~~~~~~~~~~~~~
+
+Creates a plain element.
+
+Parameters:
+
+``content``
+   inline content
+
+Returns: `Plain`_ object
+
+.. _pandoc.rawblock:
+
+``RawBlock (format, text)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a raw content block of the specified format.
+
+Parameters:
+
+``format``
+   format of content
+``text``
+   string content
+
+Returns: `RawBlock`_ object
+
+.. _pandoc.table:
+
+``Table (caption, colspecs, head, bodies, foot[, attr])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a table element.
+
+Parameters:
+
+``caption``
+   table `caption`_
+``colspecs``
+   column alignments and widths (list of `ColSpec`_\ s)
+``head``
+   `table head`_
+``bodies``
+   `table bodies`_
+``foot``
+   `table foot`_
+``attr``
+   element attributes
+
+Returns: `Table`_ object
 
 Blocks
 ------
 
-``BlockQuote (content)``
-   Creates a block quote element
+.. _pandoc.blocks:
 
-   Parameters:
+``Blocks (block_like_elements)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   ``content``:
-      block content
+Creates a `Blocks`_ list.
 
-   Returns: `BlockQuote`_ object
+Parameters:
 
-``BulletList (items)``
-   Creates a bullet list.
+``block_like_elements``
+   List where each element can be treated as a `Block`_ value, or a
+   single such value.
 
-   Parameters:
-
-   ``items``:
-      list items
-
-   Returns: `BulletList`_ object
-
-``CodeBlock (text[, attr])``
-   Creates a code block element
-
-   Parameters:
-
-   ``text``:
-      code string
-   ``attr``:
-      element attributes
-
-   Returns: `CodeBlock`_ object
-
-``DefinitionList (content)``
-   Creates a definition list, containing terms and their explanation.
-
-   Parameters:
-
-   ``content``:
-      list of items
-
-   Returns: `DefinitionList`_ object
-
-``Div (content[, attr])``
-   Creates a div element
-
-   Parameters:
-
-   ``content``:
-      block content
-   ``attr``:
-      element attributes
-
-   Returns: `Div`_ object
-
-``Header (level, content[, attr])``
-   Creates a header element.
-
-   Parameters:
-
-   ``level``:
-      header level
-   ``content``:
-      inline content
-   ``attr``:
-      element attributes
-
-   Returns: `Header`_ object
-
-``HorizontalRule ()``
-   Creates a horizontal rule.
-
-   Returns: `HorizontalRule`_ object
-
-``LineBlock (content)``
-   Creates a line block element.
-
-   Parameters:
-
-   ``content``:
-      inline content
-
-   Returns: `LineBlock`_ object
-
-``Null ()``
-   Creates a null element.
-
-   Returns: `Null`_ object
-
-``OrderedList (items[, listAttributes])``
-   Creates an ordered list.
-
-   Parameters:
-
-   ``items``:
-      list items
-   ``listAttributes``:
-      list parameters
-
-   Returns: `OrderedList`_ object
-
-``Para (content)``
-   Creates a para element.
-
-   Parameters:
-
-   ``content``:
-      inline content
-
-   Returns: `Para`_ object
-
-``Plain (content)``
-   Creates a plain element.
-
-   Parameters:
-
-   ``content``:
-      inline content
-
-   Returns: `Plain`_ object
-
-``RawBlock (format, text)``
-   Creates a raw content block of the specified format.
-
-   Parameters:
-
-   ``format``:
-      format of content
-   ``text``:
-      string content
-
-   Returns: `RawBlock`_ object
-
-``Table (caption, colspecs, head, bodies, foot[, attr])``
-   Creates a table element.
-
-   Parameters:
-
-   ``caption``:
-      table `caption`_
-   ``colspecs``:
-      column alignments and widths (list of `ColSpec`_\ s)
-   ``head``:
-      `table head`_
-   ``bodies``:
-      `table bodies`_
-   ``foot``:
-      `table foot`_
-   ``attr``:
-      element attributes
-
-   Returns: `Table`_ object
+Returns: `Blocks`_
 
 Inline
 ------
 
+.. _pandoc.cite:
+
 ``Cite (content, citations)``
-   Creates a Cite inline element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Cite inline element
 
-   ``content``:
-      List of inlines
-   ``citations``:
-      List of citations
+Parameters:
 
-   Returns: `Cite`_ object
+``content``
+   List of inlines
+``citations``
+   List of citations
+
+Returns: `Cite`_ object
+
+.. _pandoc.code:
 
 ``Code (text[, attr])``
-   Creates a Code inline element
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Code inline element
 
-   ``text``:
-      code string
-   ``attr``:
-      additional attributes
+Parameters:
 
-   Returns: `Code`_ object
+``text``
+   code string
+``attr``
+   additional attributes
+
+Returns: `Code`_ object
+
+.. _pandoc.emph:
 
 ``Emph (content)``
-   Creates an inline element representing emphasized text.
+~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates an inline element representing emphasized text.
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Emph`_ object
+``content``
+   inline content
+
+Returns: `Emph`_ object
+
+.. _pandoc.image:
 
 ``Image (caption, src[, title[, attr]])``
-   Creates a Image inline element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Image inline element
 
-   ``caption``:
-      text used to describe the image
-   ``src``:
-      path to the image file
-   ``title``:
-      brief image description
-   ``attr``:
-      additional attributes
+Parameters:
 
-   Returns: `Image`_ object
+``caption``
+   text used to describe the image
+``src``
+   path to the image file
+``title``
+   brief image description
+``attr``
+   additional attributes
+
+Returns: `Image`_ object
+
+.. _pandoc.linebreak:
 
 ``LineBreak ()``
-   Create a LineBreak inline element
+~~~~~~~~~~~~~~~~
 
-   Returns: `LineBreak`_ object
+Create a LineBreak inline element
+
+Returns: `LineBreak`_ object
+
+.. _pandoc.link:
 
 ``Link (content, target[, title[, attr]])``
-   Creates a link inline element, usually a hyperlink.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a link inline element, usually a hyperlink.
 
-   ``content``:
-      text for this link
-   ``target``:
-      the link target
-   ``title``:
-      brief link description
-   ``attr``:
-      additional attributes
+Parameters:
 
-   Returns: `Link`_ object
+``content``
+   text for this link
+``target``
+   the link target
+``title``
+   brief link description
+``attr``
+   additional attributes
+
+Returns: `Link`_ object
+
+.. _pandoc.math:
 
 ``Math (mathtype, text)``
-   Creates a Math element, either inline or displayed.
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Math element, either inline or displayed.
 
-   ``mathtype``:
-      rendering specifier
-   ``text``:
-      Math content
+Parameters:
 
-   Returns: `Math`_ object
+``mathtype``
+   rendering specifier
+``text``
+   Math content
+
+Returns: `Math`_ object
+
+.. _pandoc.displaymath:
 
 ``DisplayMath (text)``
-   Creates a math element of type “DisplayMath” (DEPRECATED).
+~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a math element of type “DisplayMath” (DEPRECATED).
 
-   ``text``:
-      Math content
+Parameters:
 
-   Returns: `Math`_ object
+``text``
+   Math content
+
+Returns: `Math`_ object
+
+.. _pandoc.inlinemath:
 
 ``InlineMath (text)``
-   Creates a math element of type “InlineMath” (DEPRECATED).
+~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a math element of type “InlineMath” (DEPRECATED).
 
-   ``text``:
-      Math content
+Parameters:
 
-   Returns: `Math`_ object
+``text``
+   Math content
+
+Returns: `Math`_ object
+
+.. _pandoc.note:
 
 ``Note (content)``
-   Creates a Note inline element
+~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Note inline element
 
-   ``content``:
-      footnote block content
+Parameters:
 
-   Returns: `Note`_ object
+``content``
+   footnote block content
+
+Returns: `Note`_ object
+
+.. _pandoc.quoted:
 
 ``Quoted (quotetype, content)``
-   Creates a Quoted inline element given the quote type and quoted
-   content.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Quoted inline element given the quote type and quoted content.
 
-   ``quotetype``:
-      type of quotes to be used
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Quoted`_ object
+``quotetype``
+   type of quotes to be used
+``content``
+   inline content
+
+Returns: `Quoted`_ object
+
+.. _pandoc.singlequoted:
 
 ``SingleQuoted (content)``
-   Creates a single-quoted inline element (DEPRECATED).
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a single-quoted inline element (DEPRECATED).
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Quoted`_
+``content``
+   inline content
+
+Returns: `Quoted`_
+
+.. _pandoc.doublequoted:
 
 ``DoubleQuoted (content)``
-   Creates a single-quoted inline element (DEPRECATED).
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a single-quoted inline element (DEPRECATED).
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Quoted`_
+``content``
+   inline content
+
+Returns: `Quoted`_
+
+.. _pandoc.rawinline:
 
 ``RawInline (format, text)``
-   Creates a raw inline element
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a raw inline element
 
-   ``format``:
-      format of the contents
-   ``text``:
-      string content
+Parameters:
 
-   Returns: `RawInline`_ object
+``format``
+   format of the contents
+``text``
+   string content
+
+Returns: `RawInline`_ object
+
+.. _pandoc.smallcaps:
 
 ``SmallCaps (content)``
-   Creates text rendered in small caps
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates text rendered in small caps
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `SmallCaps`_ object
+``content``
+   inline content
+
+Returns: `SmallCaps`_ object
+
+.. _pandoc.softbreak:
 
 ``SoftBreak ()``
-   Creates a SoftBreak inline element.
+~~~~~~~~~~~~~~~~
 
-   Returns: `SoftBreak`_ object
+Creates a SoftBreak inline element.
+
+Returns: `SoftBreak`_ object
+
+.. _pandoc.space:
 
 ``Space ()``
-   Create a Space inline element
+~~~~~~~~~~~~
 
-   Returns: `Space`_ object
+Create a Space inline element
+
+Returns: `Space`_ object
+
+.. _pandoc.span:
 
 ``Span (content[, attr])``
-   Creates a Span inline element
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Span inline element
 
-   ``content``:
-      inline content
-   ``attr``:
-      additional attributes
+Parameters:
 
-   Returns: `Span`_ object
+``content``
+   inline content
+``attr``
+   additional attributes
+
+Returns: `Span`_ object
+
+.. _pandoc.str:
 
 ``Str (text)``
-   Creates a Str inline element
+~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Str inline element
 
-   ``text``:
-      content
+Parameters:
 
-   Returns: `Str`_ object
+``text``
+   content
+
+Returns: `Str`_ object
+
+.. _pandoc.strikeout:
 
 ``Strikeout (content)``
-   Creates text which is struck out.
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates text which is struck out.
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Strikeout`_ object
+``content``
+   inline content
+
+Returns: `Strikeout`_ object
+
+.. _pandoc.strong:
 
 ``Strong (content)``
-   Creates a Strong element, whose text is usually displayed in a bold
-   font.
+~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Strong element, whose text is usually displayed in a bold
+font.
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Strong`_ object
+``content``
+   inline content
+
+Returns: `Strong`_ object
+
+.. _pandoc.subscript:
 
 ``Subscript (content)``
-   Creates a Subscript inline element
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Subscript inline element
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Subscript`_ object
+``content``
+   inline content
+
+Returns: `Subscript`_ object
+
+.. _pandoc.superscript:
 
 ``Superscript (content)``
-   Creates a Superscript inline element
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a Superscript inline element
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Superscript`_ object
+``content``
+   inline content
+
+Returns: `Superscript`_ object
+
+.. _pandoc.underline:
 
 ``Underline (content)``
-   Creates an Underline inline element
+~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates an Underline inline element
 
-   ``content``:
-      inline content
+Parameters:
 
-   Returns: `Underline`_ object
+``content``
+   inline content
+
+Returns: `Underline`_ object
+
+Inlines
+-------
+
+.. _pandoc.inlines:
+
+``Inlines (inline_like_elements)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Converts its argument into an `Inlines`_ list:
+
+-  copies a list of `Inline`_ elements into a fresh list; any string
+   ``s`` within the list is treated as ``pandoc.Str(s)``;
+-  turns a single `Inline`_ into a singleton list;
+-  splits a string into ``Str``-wrapped words, treating interword spaces
+   as ``Space``\ s or ``SoftBreak``\ s.
+
+Parameters:
+
+``inline_like_elements``
+   List where each element can be treated as an `Inline`_ values, or
+   just a single such value.
+
+Returns: `Inlines`_ list
 
 .. _element-components-1:
 
 Element components
 ------------------
 
+.. _pandoc.attr:
+
 ``Attr ([identifier[, classes[, attributes]]])``
-   Create a new set of attributes (Attr).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Create a new set of attributes (Attr).
 
-   ``identifier``:
-      element identifier
-   ``classes``:
-      element classes
-   ``attributes``:
-      table containing string keys and values
+Parameters:
 
-   Returns: `Attr`_ object
+``identifier``
+   element identifier
+``classes``
+   element classes
+``attributes``
+   table containing string keys and values
+
+Returns: `Attr`_ object
+
+.. _pandoc.cell:
+
+``Cell (blocks[, align[, rowspan[, colspan[, attr]]]])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create a new table cell.
+
+Parameters:
+
+``blocks``
+   cell contents (`Blocks`_)
+``align``
+   text alignment; defaults to ``AlignDefault`` (Alignment)
+``rowspan``
+   number of rows occupied by the cell; defaults to ``1`` (integer)
+``colspan``
+   number of columns spanned by the cell; defaults to ``1`` (integer)
+``attr``
+   cell attributes (`Attr`_)
+
+Returns:
+
+-  `Cell`_ object
+
+.. _pandoc.citation:
 
 ``Citation (id, mode[, prefix[, suffix[, note_num[, hash]]]])``
-   Creates a single citation.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a single citation.
 
-   ``id``:
-      citation identifier (like a bibtex key)
-   ``mode``:
-      citation mode
-   ``prefix``:
-      citation prefix
-   ``suffix``:
-      citation suffix
-   ``note_num``:
-      note number
-   ``hash``:
-      hash number
+Parameters:
 
-   Returns: `Citation`_ object
+``id``
+   citation identifier (like a bibtex key)
+``mode``
+   citation mode
+``prefix``
+   citation prefix
+``suffix``
+   citation suffix
+``note_num``
+   note number
+``hash``
+   hash number
+
+Returns: `Citation`_ object
+
+.. _pandoc.listattributes:
 
 ``ListAttributes ([start[, style[, delimiter]]])``
-   Creates a set of list attributes.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a set of list attributes.
 
-   ``start``:
-      number of the first list item
-   ``style``:
-      style used for list numbering
-   ``delimiter``:
-      delimiter of list numbers
+Parameters:
 
-   Returns: `ListAttributes`_ object
+``start``
+   number of the first list item
+``style``
+   style used for list numbering
+``delimiter``
+   delimiter of list numbers
+
+Returns: `ListAttributes`_ object
+
+.. _pandoc.row:
+
+``Row ([cells[, attr]])``
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a table row.
+
+Parameters:
+
+``cells``
+   list of table cells in this row
+``attr``
+   row attributes
+
+.. _pandoc.tablefoot:
+
+``TableFoot ([rows[, attr]])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a table foot.
+
+Parameters:
+
+``rows``
+   list of table rows
+``attr``
+   table foot attributes
+
+.. _pandoc.tablehead:
+
+``TableHead ([rows[, attr]])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a table head.
+
+Parameters:
+
+``rows``
+   list of table rows
+``attr``
+   table head attributes
 
 Legacy types
 ------------
 
+.. _pandoc.simpletable:
+
 ``SimpleTable (caption, aligns, widths, headers, rows)``
-   Creates a simple table resembling the old (pre pandoc 2.10) table
-   type.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Creates a simple table resembling the old (pre pandoc 2.10) table type.
 
-   ``caption``:
-      `List`_ of `Inlines`_
-   ``aligns``:
-      column alignments (`List`_ of `Alignments`_)
-   ``widths``:
-      column widths; a (`List`_ of numbers)
-   ``headers``:
-      table header row (`List`_ of lists of `Blocks`_)
-   ``rows``:
-      table rows (`List`_ of rows, where a row is a list of lists of
-      `Blocks`_)
+Parameters:
 
-   Returns: `SimpleTable`_ object
+``caption``
+   `Inlines`_
+``aligns``
+   column alignments (`List`_ of `Alignments`_)
+``widths``
+   column widths; a (`List`_ of numbers)
+``headers``
+   table header row (`List`_ of `Blocks`_)
+``rows``
+   table rows (`List`_ of rows, where a row is a list of `Blocks`_)
 
-   Usage:
+Returns: `SimpleTable`_ object
 
-   ::
+Usage:
 
-      local caption = "Overview"
-      local aligns = {pandoc.AlignDefault, pandoc.AlignDefault}
-      local widths = {0, 0} -- let pandoc determine col widths
-      local headers = {{pandoc.Plain({pandoc.Str "Language"})},
-                       {pandoc.Plain({pandoc.Str "Typing"})}}
-      local rows = {
-        {{pandoc.Plain "Haskell"}, {pandoc.Plain "static"}},
-        {{pandoc.Plain "Lua"}, {pandoc.Plain "Dynamic"}},
-      }
-      simple_table = pandoc.SimpleTable(
-        caption,
-        aligns,
-        widths,
-        headers,
-        rows
-      )
+::
+
+   local caption = "Overview"
+   local aligns = {pandoc.AlignDefault, pandoc.AlignDefault}
+   local widths = {0, 0} -- let pandoc determine col widths
+   local headers = {{pandoc.Plain({pandoc.Str "Language"})},
+                    {pandoc.Plain({pandoc.Str "Typing"})}}
+   local rows = {
+     {{pandoc.Plain "Haskell"}, {pandoc.Plain "static"}},
+     {{pandoc.Plain "Lua"}, {pandoc.Plain "Dynamic"}},
+   }
+   simple_table = pandoc.SimpleTable(
+     caption,
+     aligns,
+     widths,
+     headers,
+     rows
+   )
 
 Constants
 ---------
@@ -2701,17 +3412,75 @@ Constants
    See also: `ListAttributes`_
 
 ``sha1``
-   Alias for ```pandoc.utils.sha1```_ (DEPRECATED).
+   Alias for ```pandoc.utils.sha1```_ (DEPRECATED, use
+   ``pandoc.utils.sha1`` instead).
+
+Other constructors
+------------------
+
+.. _pandoc.readeroptions:
+
+``ReaderOptions (opts)``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a new `ReaderOptions`_ value.
+
+Parameters
+
+``opts``
+   Either a table with a subset of the properties of a `ReaderOptions`_
+   object, or another ReaderOptions object. Uses the defaults specified
+   in the manual for all properties that are not explicitly specified.
+   Throws an error if a table contains properties which are not present
+   in a ReaderOptions object. (`ReaderOptions`_\ \|table)
+
+Returns: new `ReaderOptions`_ object
+
+Usage:
+
+::
+
+   -- copy of the reader options that were defined on the command line.
+   local cli_opts = pandoc.ReaderOptions(PANDOC_READER_OPTIONS)
+
+   -- default reader options, but columns set to 66.
+   local short_colums_opts = pandoc.ReaderOptions {columns = 66}
+
+.. _pandoc.writeroptions:
+
+``WriterOptions (opts)``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Creates a new `WriterOptions`_ value.
+
+Parameters
+
+``opts``
+   Either a table with a subset of the properties of a `WriterOptions`_
+   object, or another WriterOptions object. Uses the defaults specified
+   in the manual for all properties that are not explicitly specified.
+   Throws an error if a table contains properties which are not present
+   in a WriterOptions object. (`WriterOptions`_\ \|table)
+
+Returns: new `WriterOptions`_ object
+
+Usage:
+
+::
+
+   -- copy of the writer options that were defined on the command line.
+   local cli_opts = pandoc.WriterOptions(PANDOC_WRITER_OPTIONS)
+
+   -- default writer options, but DPI set to 300.
+   local short_colums_opts = pandoc.WriterOptions {dpi = 300}
 
 Helper functions
 ----------------
 
 .. _pandoc.pipe:
 
-pipe
-~~~~
-
 ``pipe (command, args, input)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Runs command with arguments, passing it some input, and returns the
 output.
@@ -2743,18 +3512,16 @@ Usage:
 
 .. _pandoc.walk_block:
 
-walk_block
-~~~~~~~~~~
-
 ``walk_block (element, filter)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Apply a filter inside a block element, walking its contents.
 
 Parameters:
 
-``element``:
+``element``
    the block element
-``filter``:
+``filter``
    a Lua filter (table of functions) to be applied within the block
    element
 
@@ -2762,18 +3529,16 @@ Returns: the transformed block element
 
 .. _pandoc.walk_inline:
 
-walk_inline
-~~~~~~~~~~~
-
 ``walk_inline (element, filter)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Apply a filter inside an inline element, walking its contents.
 
 Parameters:
 
-``element``:
+``element``
    the inline element
-``filter``:
+``filter``
    a Lua filter (table of functions) to be applied within the inline
    element
 
@@ -2781,21 +3546,31 @@ Returns: the transformed inline element
 
 .. _pandoc.read:
 
-read
-~~~~
-
-``read (markup[, format])``
+``read (markup[, format[, reader_options]])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parse the given string into a Pandoc document.
 
+The parser is run in the same environment that was used to read the main
+input files; it has full access to the file-system and the mediabag.
+This means that if the document specifies files to be included, as is
+possible in formats like LaTeX, reStructuredText, and Org, then these
+will be included in the resulting document. Any media elements are added
+to those retrieved from the other parsed input files.
+
 Parameters:
 
-``markup``:
-   the markup to be parsed
-``format``:
-   format specification, defaults to ``"markdown"``.
+``markup``
+   the markup to be parsed (string|Sources)
+``format``
+   format specification, defaults to ``"markdown"`` (string)
+``reader_options``
+   options passed to the reader; may be a ReaderOptions object or a
+   table with a subset of the keys and values of a ReaderOptions object;
+   defaults to the default values documented in the manual.
+   (`ReaderOptions`_\ \|table)
 
-Returns: pandoc document
+Returns: pandoc document (`Pandoc`_)
 
 Usage:
 
@@ -2807,6 +3582,37 @@ Usage:
    local block = document.blocks[1]
    -- The inline element in that block is an `Emph`
    assert(block.content[1].t == "Emph")
+
+.. _pandoc.write:
+
+``write (doc[, format[, writer_options]])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Converts a document to the given target format.
+
+Parameters:
+
+``doc``
+   document to convert (`Pandoc`_)
+``format``
+   format specification, defaults to ``'html'`` (string)
+``writer_options``
+   options passed to the writer; may be a WriterOptions object or a
+   table with a subset of the keys and values of a WriterOptions object;
+   defaults to the default values documented in the manual.
+   (`WriterOptions`_\ \|table)
+
+Returns: - converted document (string)
+
+Usage:
+
+::
+
+   local doc = pandoc.Pandoc(
+     {pandoc.Para {pandoc.Strong 'Tea'}}
+   )
+   local html = pandoc.write(doc, 'html')
+   assert(html == "<p><strong>Tea</strong></p>")
 
 Module pandoc.utils
 ===================
@@ -2825,25 +3631,23 @@ Use the above for backwards compatibility.
 
 .. _pandoc.utils.blocks_to_inlines:
 
-blocks_to_inlines
-~~~~~~~~~~~~~~~~~
-
 ``blocks_to_inlines (blocks[, sep])``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Squash a list of blocks into a list of inlines.
 
 Parameters:
 
-``blocks``:
-   List of `Blocks`_ to be flattened.
-``sep``:
-   List of `Inlines`_ inserted as separator between two consecutive
-   blocks; defaults to
+``blocks``
+   List of `Block`_ elements to be flattened.
+``sep``
+   List of `Inline`_ elements inserted as separator between two
+   consecutive blocks; defaults to
    ``{ pandoc.Space(), pandoc.Str'¶', pandoc.Space()}``.
 
 Returns:
 
--  `List`_ of `Inlines`_
+-  `Inlines`_
 
 Usage:
 
@@ -2862,20 +3666,19 @@ Usage:
 
 .. _pandoc.utils.equals:
 
-equals
-~~~~~~
-
 ``equals (element1, element2)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Test equality of AST elements. Elements in Lua are considered equal if
 and only if the objects obtained by unmarshaling are equal.
 
+**This function is deprecated.** Use the normal Lua ``==`` equality
+operator instead.
+
 Parameters:
 
-``element1``, ``element2``:
-   Objects to be compared. Acceptable input types are `Pandoc`_,
-   `Meta`_, `MetaValue`_, `Block`_, `Inline`_, `Attr`_,
-   `ListAttributes`_, and `Citation`_.
+``element1``, ``element2``
+   Objects to be compared (any type)
 
 Returns:
 
@@ -2883,10 +3686,8 @@ Returns:
 
 .. _pandoc.utils.from_simple_table:
 
-from_simple_table
-~~~~~~~~~~~~~~~~~
-
 ``from_simple_table (table)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Creates a `Table`_ block element from a `SimpleTable`_. This is useful
 for dealing with legacy code which was written for pandoc versions older
@@ -2908,22 +3709,30 @@ Usage:
 
 .. _pandoc.utils.make_sections:
 
-make_sections
-~~~~~~~~~~~~~
-
 ``make_sections (number_sections, base_level, blocks)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Converts list of `Blocks`_ into sections. ``Div``\ s will be created
-beginning at each ``Header`` and containing following content until the
-next ``Header`` of comparable level. If ``number_sections`` is true, a
-``number`` attribute will be added to each ``Header`` containing the
-section number. If ``base_level`` is non-null, ``Header`` levels will be
-reorganized so that there are no gaps, and so that the base level is the
-level specified.
+Converts list of `Block`_ elements into sections. ``Div``\ s will be
+created beginning at each ``Header`` and containing following content
+until the next ``Header`` of comparable level. If ``number_sections`` is
+true, a ``number`` attribute will be added to each ``Header`` containing
+the section number. If ``base_level`` is non-null, ``Header`` levels
+will be reorganized so that there are no gaps, and so that the base
+level is the level specified.
+
+Parameters:
+
+``number_sections``
+   whether section divs should get an additional ``number`` attribute
+   containing the section number. (boolean)
+``base_level``
+   shift top-level headings to this level. (integer|nil)
+``blocks``
+   list of blocks to process (`Blocks`_)
 
 Returns:
 
--  List of `Blocks`_.
+-  `Blocks`_.
 
 Usage:
 
@@ -2934,6 +3743,43 @@ Usage:
      pandoc.Header(2, pandoc.Str 'second'),
    }
    local newblocks = pandoc.utils.make_sections(true, 1, blocks)
+
+.. _pandoc.references:
+
+references
+~~~~~~~~~~
+
+``references (doc)``
+
+Get references defined inline in the metadata and via an external
+bibliography. Only references that are actually cited in the document
+(either with a genuine citation or with ``nocite``) are returned. URL
+variables are converted to links.
+
+The structure used represent reference values corresponds to that used
+in CSL JSON; the return value can be use as ``references`` metadata,
+which is one of the values used by pandoc and citeproc when generating
+bibliographies.
+
+Parameters:
+
+``doc``
+   document (`Pandoc`_)
+
+Returns:
+
+-  list of references. (table)
+
+Usage:
+
+::
+
+   -- Include all cited references in document
+   function Pandoc (doc)
+     doc.meta.references = pandoc.utils.references(doc)
+     doc.meta.bibliography = nil
+     return doc
+   end
 
 .. _pandoc.utils.run_json_filter:
 
@@ -2946,11 +3792,11 @@ Filter the given doc by passing it through the a JSON filter.
 
 Parameters:
 
-``doc``:
+``doc``
    the Pandoc document to filter
-``filter``:
+``filter``
    filter to run
-``args``:
+``args``
    list of arguments passed to the filter. Defaults to ``{FORMAT}``.
 
 Returns:
@@ -3070,6 +3916,42 @@ Usage:
    -- create normal table block again
    table = pandoc.utils.from_simple_table(simple)
 
+.. _pandoc.utils.type:
+
+type
+~~~~
+
+``type (value)``
+
+Pandoc-friendly version of Lua’s default ``type`` function, returning
+the type of a value. This function works with all types listed in
+section `Lua type reference`_, except if noted otherwise.
+
+The function works by checking the metafield ``__name``. If the argument
+has a string-valued metafield ``__name``, then it returns that string.
+Otherwise it behaves just like the normal ``type`` function.
+
+Parameters:
+
+``value``
+   any Lua value
+
+Returns:
+
+-  type of the given value (string)
+
+Usage:
+
+::
+
+   -- Prints one of 'string', 'boolean', 'Inlines', 'Blocks',
+   -- 'table', and 'nil', corresponding to the Haskell constructors
+   -- MetaString, MetaBool, MetaInlines, MetaBlocks, MetaMap,
+   -- and an unset value, respectively.
+   function Meta (meta)
+     print('type of metavalue `author`:', pandoc.utils.type(meta.author))
+   end
+
 Module pandoc.mediabag
 ======================
 
@@ -3096,7 +3978,7 @@ Removes a single entry from the media bag.
 
 Parameters:
 
-``filepath``:
+``filepath``
    filename of the item to be deleted. The media bag will be left
    unchanged if no entry with the given filename exists.
 
@@ -3121,11 +4003,11 @@ entry with the same ``filepath``.
 
 Parameters:
 
-``filepath``:
+``filepath``
    filename and path relative to the output folder.
-``mime_type``:
+``mime_type``
    the file’s MIME type; use ``nil`` if unknown or unavailable.
-``contents``:
+``contents``
    the binary contents of the file.
 
 Usage:
@@ -3207,7 +4089,7 @@ contents.
 
 Parameters:
 
-``filepath``:
+``filepath``
    name of the file to look up.
 
 Returns:
@@ -3238,7 +4120,7 @@ system while respecting pandoc’s “resource path” setting.
 
 Parameters:
 
-``source``:
+``source``
    path to a resource; either a local file path or URI
 
 Returns:
@@ -3270,149 +4152,214 @@ Constructor
 Metamethods
 -----------
 
+.. _`pandoc.list:__concat`:
+
 ``pandoc.List:__concat (list)``
-   Concatenates two lists.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Concatenates two lists.
 
-   ``list``:
-      second list concatenated to the first
+Parameters:
 
-   Returns: a new list containing all elements from list1 and list2
+``list``
+   second list concatenated to the first
+
+Returns: a new list containing all elements from list1 and list2
+
+.. _`pandoc.list:__eq`:
+
+``pandoc.List:__eq (a, b)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Compares two lists for equality. The lists are taken as equal if and
+only if they are of the same type (i.e., have the same non-nil
+metatable), have the same length, and if all elements are equal.
+
+Parameters:
+
+``a``, ``b``
+   any Lua object
+
+Returns:
+
+-  ``true`` if the two lists are equal, ``false`` otherwise.
+
+.. _methods-2:
 
 Methods
 -------
 
+.. _`pandoc.list:clone`:
+
 ``pandoc.List:clone ()``
-   Returns a (shallow) copy of the list.
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Returns a (shallow) copy of the list.
+
+.. _`pandoc.list:extend`:
 
 ``pandoc.List:extend (list)``
-   Adds the given list to the end of this list.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Adds the given list to the end of this list.
 
-   ``list``:
-      list to appended
+Parameters:
+
+``list``
+   list to appended
+
+.. _`pandoc.list:find`:
 
 ``pandoc.List:find (needle, init)``
-   Returns the value and index of the first occurrence of the given
-   item.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Returns the value and index of the first occurrence of the given item.
 
-   ``needle``:
-      item to search for
-   ``init``:
-      index at which the search is started
+Parameters:
 
-   Returns: first item equal to the needle, or nil if no such item
-   exists.
+``needle``
+   item to search for
+``init``
+   index at which the search is started
+
+Returns: first item equal to the needle, or nil if no such item exists.
+
+.. _`pandoc.list:find_if`:
 
 ``pandoc.List:find_if (pred, init)``
-   Returns the value and index of the first element for which the
-   predicate holds true.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Returns the value and index of the first element for which the predicate
+holds true.
 
-   ``pred``:
-      the predicate function
-   ``init``:
-      index at which the search is started
+Parameters:
 
-   Returns: first item for which \`test\` succeeds, or nil if no such
-   item exists.
+``pred``
+   the predicate function
+``init``
+   index at which the search is started
+
+Returns: first item for which \`test\` succeeds, or nil if no such item
+exists.
+
+.. _`pandoc.list:filter`:
 
 ``pandoc.List:filter (pred)``
-   Returns a new list containing all items satisfying a given condition.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Returns a new list containing all items satisfying a given condition.
 
-   ``pred``:
-      condition items must satisfy.
+Parameters:
 
-   Returns: a new list containing all items for which \`test\` was true.
+``pred``
+   condition items must satisfy.
+
+Returns: a new list containing all items for which \`test\` was true.
+
+.. _`pandoc.list:includes`:
 
 ``pandoc.List:includes (needle, init)``
-   Checks if the list has an item equal to the given needle.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Checks if the list has an item equal to the given needle.
 
-   ``needle``:
-      item to search for
-   ``init``:
-      index at which the search is started
+Parameters:
 
-   Returns: true if a list item is equal to the needle, false otherwise
+``needle``
+   item to search for
+``init``
+   index at which the search is started
+
+Returns: true if a list item is equal to the needle, false otherwise
+
+.. _`pandoc.list:insert`:
 
 ``pandoc.List:insert ([pos], value)``
-   Inserts element ``value`` at position ``pos`` in list, shifting
-   elements to the next-greater index if necessary.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   This function is identical to ```table.insert```_.
+Inserts element ``value`` at position ``pos`` in list, shifting elements
+to the next-greater index if necessary.
 
-   Parameters:
+This function is identical to ```table.insert```_.
 
-   ``pos``:
-      index of the new value; defaults to length of the list + 1
-   ``value``:
-      value to insert into the list
+Parameters:
+
+``pos``
+   index of the new value; defaults to length of the list + 1
+``value``
+   value to insert into the list
+
+.. _`pandoc.list:map`:
 
 ``pandoc.List:map (fn)``
-   Returns a copy of the current list by applying the given function to
-   all elements.
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Returns a copy of the current list by applying the given function to all
+elements.
 
-   ``fn``:
-      function which is applied to all list items.
+Parameters:
+
+``fn``
+   function which is applied to all list items.
+
+.. _`pandoc.list:new`:
 
 ``pandoc.List:new([table])``
-   Create a new List. If the optional argument ``table`` is given, set
-   the metatable of that value to ``pandoc.List``.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Parameters:
+Create a new List. If the optional argument ``table`` is given, set the
+metatable of that value to ``pandoc.List``.
 
-   ``table``:
-      table which should be treatable as a list; defaults to an empty
-      table
+Parameters:
 
-   Returns: the updated input value
+``table``
+   table which should be treatable as a list; defaults to an empty table
+
+Returns: the updated input value
+
+.. _`pandoc.list:remove`:
 
 ``pandoc.List:remove ([pos])``
-   Removes the element at position ``pos``, returning the value of the
-   removed element.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   This function is identical to ```table.remove```_.
+Removes the element at position ``pos``, returning the value of the
+removed element.
 
-   Parameters:
+This function is identical to ```table.remove```_.
 
-   ``pos``:
-      position of the list value that will be removed; defaults to the
-      index of the last element
+Parameters:
 
-   Returns: the removed element
+``pos``
+   position of the list value that will be removed; defaults to the
+   index of the last element
+
+Returns: the removed element
+
+.. _`pandoc.list:sort`:
 
 ``pandoc.List:sort ([comp])``
-   Sorts list elements in a given order, in-place. If ``comp`` is given,
-   then it must be a function that receives two list elements and
-   returns true when the first element must come before the second in
-   the final order (so that, after the sort, ``i < j`` implies
-   ``not comp(list[j],list[i]))``. If comp is not given, then the
-   standard Lua operator ``<`` is used instead.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Note that the comp function must define a strict partial order over
-   the elements in the list; that is, it must be asymmetric and
-   transitive. Otherwise, no valid sort may be possible.
+Sorts list elements in a given order, in-place. If ``comp`` is given,
+then it must be a function that receives two list elements and returns
+true when the first element must come before the second in the final
+order (so that, after the sort, ``i < j`` implies
+``not comp(list[j],list[i]))``. If comp is not given, then the standard
+Lua operator ``<`` is used instead.
 
-   The sort algorithm is not stable: elements considered equal by the
-   given order may have their relative positions changed by the sort.
+Note that the comp function must define a strict partial order over the
+elements in the list; that is, it must be asymmetric and transitive.
+Otherwise, no valid sort may be possible.
 
-   This function is identical to ```table.sort```_.
+The sort algorithm is not stable: elements considered equal by the given
+order may have their relative positions changed by the sort.
 
-   Parameters:
+This function is identical to ```table.sort```_.
 
-   ``comp``:
-      Comparison function as described above.
+Parameters:
+
+``comp``
+   Comparison function as described above.
 
 Module pandoc.path
 ==================
@@ -3454,7 +4401,7 @@ everything after from the given path.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
@@ -3470,7 +4417,7 @@ Get the file name.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
@@ -3486,12 +4433,12 @@ Checks whether a path is absolute, i.e. not fixed to a root.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
 
--  ``true`` iff ``filepath`` is an absolute path, ``false`` otherwise.
+-  ``true`` if ``filepath`` is an absolute path, ``false`` otherwise.
    (boolean)
 
 .. _pandoc.path.is_relative:
@@ -3503,12 +4450,12 @@ Checks whether a path is relative or fixed to a root.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
 
--  ``true`` iff ``filepath`` is a relative path, ``false`` otherwise.
+-  ``true`` if ``filepath`` is a relative path, ``false`` otherwise.
    (boolean)
 
 .. _pandoc.path.join:
@@ -3520,7 +4467,7 @@ Join path elements back together by the directory separator.
 
 Parameters:
 
-filepaths
+``filepaths``
    path components (list of strings)
 
 Returns:
@@ -3541,11 +4488,11 @@ Set ``unsafe`` to a truthy value to a allow ``..`` in paths.
 
 Parameters:
 
-path
+``path``
    path to be made relative (string)
-root
+``root``
    root path (string)
-unsafe
+``unsafe``
    whether to allow ``..`` in the result. (boolean)
 
 Returns:
@@ -3568,7 +4515,7 @@ Normalizes a path.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
@@ -3584,7 +4531,7 @@ Splits a path by the directory separator.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
@@ -3602,7 +4549,7 @@ no extension, then the empty string is returned as the extension.
 
 Parameters:
 
-filepath
+``filepath``
    path (string)
 
 Returns:
@@ -3622,7 +4569,7 @@ Windows path elements are stripped of quotes.
 
 Parameters:
 
-search_path
+``search_path``
    platform-specific search path (string)
 
 Returns:
@@ -3754,6 +4701,678 @@ Returns:
 
 -  The result(s) of the call to ``callback``
 
+Module pandoc.layout
+====================
+
+Plain-text document layouting.
+
+.. _pandoc.layout-fields:
+
+Fields
+------
+
+.. _pandoc.layout.blankline:
+
+blankline
+~~~~~~~~~
+
+Inserts a blank line unless one exists already.
+
+.. _pandoc.layout.cr:
+
+cr
+~~
+
+A carriage return. Does nothing if we're at the beginning of a line;
+otherwise inserts a newline.
+
+.. _pandoc.layout.empty:
+
+empty
+~~~~~
+
+The empty document.
+
+.. _pandoc.layout.space:
+
+space
+~~~~~
+
+A breaking (reflowable) space.
+
+.. _pandoc.layout-functions:
+
+Functions
+---------
+
+.. _pandoc.layout.after_break:
+
+after_break
+~~~~~~~~~~~
+
+``after_break (text)``
+
+Creates a ``Doc`` which is conditionally included only if it comes at
+the beginning of a line.
+
+An example where this is useful is for escaping line-initial ``.`` in
+roff man.
+
+Parameters
+
+``text``
+   content to include when placed after a break (string)
+
+Returns
+
+-  new doc (`Doc`_)
+
+.. _pandoc.layout.before_non_blank:
+
+before_non_blank
+~~~~~~~~~~~~~~~~
+
+``before_non_blank (doc)``
+
+Conditionally includes the given ``doc`` unless it is followed by a
+blank space.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  conditional doc (`Doc`_)
+
+.. _pandoc.layout.blanklines:
+
+blanklines
+~~~~~~~~~~
+
+``blanklines (n)``
+
+Inserts blank lines unless they exist already.
+
+Parameters
+
+``n``
+   number of blank lines (integer)
+
+Returns
+
+-  conditional blank lines (`Doc`_)
+
+.. _pandoc.layout.braces:
+
+braces
+~~~~~~
+
+``braces (doc)``
+
+Puts the ``doc`` in curly braces.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  doc enclosed by {}. (`Doc`_)
+
+.. _pandoc.layout.brackets:
+
+brackets
+~~~~~~~~
+
+``brackets (doc)``
+
+Puts the ``doc`` in square brackets
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  doc enclosed by []. (`Doc`_)
+
+.. _pandoc.layout.cblock:
+
+cblock
+~~~~~~
+
+``cblock (doc, width)``
+
+Creates a block with the given width and content, aligned centered.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+``width``
+   block width in chars (integer)
+
+Returns
+
+-  doc, aligned centered in a block with max\ ``width`` chars per line.
+   (`Doc`_)
+
+.. _pandoc.layout.chomp:
+
+chomp
+~~~~~
+
+``chomp (doc)``
+
+Chomps trailing blank space off of the ``doc``.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  ``doc`` without trailing blanks (`Doc`_)
+
+.. _pandoc.layout.concat:
+
+concat
+~~~~~~
+
+``concat (docs[, sep])``
+
+Concatenates a list of ``Doc``\ s.
+
+Parameters
+
+``docs``
+   list of Docs (``{Doc,...}``)
+
+``sep``
+   separator (default: none) (`Doc`_)
+
+Returns
+
+-  concatenated doc (`Doc`_)
+
+.. _pandoc.layout.double_quotes:
+
+double_quotes
+~~~~~~~~~~~~~
+
+``double_quotes (doc)``
+
+Wraps a ``Doc`` in double quotes.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  ``doc`` enclosed by ``"`` chars (`Doc`_)
+
+.. _pandoc.layout.flush:
+
+flush
+~~~~~
+
+``flush (doc)``
+
+Makes a ``Doc`` flush against the left margin.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  flushed ``doc`` (`Doc`_)
+
+.. _pandoc.layout.hang:
+
+hang
+~~~~
+
+``hang (doc, ind, start)``
+
+Creates a hanging indent.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+``ind``
+   indentation width (integer)
+
+``start``
+   document (`Doc`_)
+
+Returns
+
+-  ``doc`` prefixed by ``start`` on the first line, subsequent lines
+   indented by ``ind`` spaces. (`Doc`_)
+
+.. _pandoc.layout.inside:
+
+inside
+~~~~~~
+
+``inside (contents, start, end)``
+
+Encloses a ``Doc`` inside a start and end ``Doc``.
+
+Parameters
+
+``contents``
+   document (`Doc`_)
+
+``start``
+   document (`Doc`_)
+
+``end``
+   document (`Doc`_)
+
+Returns
+
+-  enclosed contents (`Doc`_)
+
+.. _pandoc.layout.lblock:
+
+lblock
+~~~~~~
+
+``lblock (doc, width)``
+
+Creates a block with the given width and content, aligned to the left.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+``width``
+   block width in chars (integer)
+
+Returns
+
+-  doc put into block with max ``width`` chars per line. (`Doc`_)
+
+.. _pandoc.layout.literal:
+
+literal
+~~~~~~~
+
+``literal (text)``
+
+Creates a ``Doc`` from a string.
+
+Parameters
+
+``text``
+   literal value (string)
+
+Returns
+
+-  doc contatining just the literal string (`Doc`_)
+
+.. _pandoc.layout.nest:
+
+nest
+~~~~
+
+``nest (doc, ind)``
+
+Indents a ``Doc`` by the specified number of spaces.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+``ind``
+   indentation size (integer)
+
+Returns
+
+-  ``doc`` indented by ``ind`` spaces (`Doc`_)
+
+.. _pandoc.layout.nestle:
+
+nestle
+~~~~~~
+
+``nestle (doc)``
+
+Removes leading blank lines from a ``Doc``.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  ``doc`` with leading blanks removed (`Doc`_)
+
+.. _pandoc.layout.nowrap:
+
+nowrap
+~~~~~~
+
+``nowrap (doc)``
+
+Makes a ``Doc`` non-reflowable.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  same as input, but non-reflowable (`Doc`_)
+
+.. _pandoc.layout.parens:
+
+parens
+~~~~~~
+
+``parens (doc)``
+
+Puts the ``doc`` in parentheses.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  doc enclosed by (). (`Doc`_)
+
+.. _pandoc.layout.prefixed:
+
+prefixed
+~~~~~~~~
+
+``prefixed (doc, prefix)``
+
+Uses the specified string as a prefix for every line of the inside
+document (except the first, if not at the beginning of the line).
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+``prefix``
+   prefix for each line (string)
+
+Returns
+
+-  prefixed ``doc`` (`Doc`_)
+
+.. _pandoc.layout.quotes:
+
+quotes
+~~~~~~
+
+``quotes (doc)``
+
+Wraps a ``Doc`` in single quotes.
+
+Parameters
+
+``doc``
+   document (Doc)
+
+Returns
+
+-  doc enclosed in ``'``. (`Doc`_)
+
+.. _pandoc.layout.rblock:
+
+rblock
+~~~~~~
+
+``rblock (doc, width)``
+
+Creates a block with the given width and content, aligned to the right.
+
+Parameters
+
+``doc``
+   document (Doc)
+
+``width``
+   block width in chars (integer)
+
+Returns
+
+-  doc, right aligned in a block with max\ ``width`` chars per line.
+   (`Doc`_)
+
+.. _pandoc.layout.vfill:
+
+vfill
+~~~~~
+
+``vfill (border)``
+
+An expandable border that, when placed next to a box, expands to the
+height of the box. Strings cycle through the list provided.
+
+Parameters
+
+``border``
+   vertically expanded characters (string)
+
+Returns
+
+-  automatically expanding border Doc (`Doc`_)
+
+.. _pandoc.layout.render:
+
+render
+~~~~~~
+
+``render (doc[, colwidth])``
+
+Render a @'Doc'@. The text is reflowed on breakable spacesto match the
+given line length. Text is not reflowed if theline length parameter is
+omitted or nil.
+
+Parameters
+
+``doc``
+   document (Doc)
+
+``colwidth``
+   planned maximum line length (integer)
+
+Returns
+
+-  rendered doc (`Doc`_)
+
+.. _pandoc.layout.is_empty:
+
+is_empty
+~~~~~~~~
+
+``is_empty (doc)``
+
+Checks whether a doc is empty.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  ``true`` iff ``doc`` is the empty document, ``false`` otherwise.
+   (boolean)
+
+.. _pandoc.layout.height:
+
+height
+~~~~~~
+
+``height (doc)``
+
+Returns the height of a block or other Doc.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  doc height (integer|string)
+
+.. _pandoc.layout.min_offset:
+
+min_offset
+~~~~~~~~~~
+
+``min_offset (doc)``
+
+Returns the minimal width of a ``Doc`` when reflowed at breakable
+spaces.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  minimal possible width (integer|string)
+
+.. _pandoc.layout.offset:
+
+offset
+~~~~~~
+
+``offset (doc)``
+
+Returns the width of a ``Doc`` as number of characters.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+Returns
+
+-  doc width (integer|string)
+
+.. _pandoc.layout.real_length:
+
+real_length
+~~~~~~~~~~~
+
+``real_length (str)``
+
+Returns the real length of a string in a monospace font: 0 for a
+combining chaeracter, 1 for a regular character, 2 for an East Asian
+wide character.
+
+Parameters
+
+``str``
+   UTF-8 string to measure (string)
+
+Returns
+
+-  text length (integer|string)
+
+.. _pandoc.layout.update_column:
+
+update_column
+~~~~~~~~~~~~~
+
+``update_column (doc, i)``
+
+Returns the column that would be occupied by the last laid out
+character.
+
+Parameters
+
+``doc``
+   document (`Doc`_)
+
+``i``
+   start column (integer)
+
+Returns
+
+-  column number (integer|string)
+
+Module pandoc.template
+======================
+
+Handle pandoc templates.
+
+.. _pandoc.template.compile:
+
+compile
+~~~~~~~
+
+``compile (template[, templates_path])``
+
+Compiles a template string into a `Template`_ object usable by pandoc.
+
+If the ``templates_path`` parameter is specified, should be the file
+path associated with the template. It is used when checking for
+partials. Partials will be taken only from the default data files if
+this parameter is omitted.
+
+An error is raised if compilation fails.
+
+Parameters:
+
+``template``
+   template string (string)
+``templates_path``
+   parameter to determine a default path and extension for partials;
+   uses the data files templates path by default. (string)
+
+Returns:
+
+-  compiled template (Template)
+
+.. _pandoc.template.default:
+
+default
+~~~~~~~
+
+``default ([writer])``
+
+Returns the default template for a given writer as a string. An error if
+no such template can be found.
+
+Parameters:
+
+``writer``
+   name of the writer for which the template should be retrieved;
+   defaults to the global ``FORMAT``.
+
+Returns:
+
+-  raw template (string)
+
 Module pandoc.types
 ===================
 
@@ -3770,7 +5389,7 @@ Creates a Version object.
 
 Parameters:
 
-``version_specifier``:
+``version_specifier``
    Version specifier: this can be a version string like ``'2.7.3'``, a
    list of integers like ``{2, 7, 3}``, a single integer, or a
    `Version`_.
@@ -3784,10 +5403,10 @@ Returns:
 .. _Para: #type-para
 .. _Image: #type-image
 .. _List: #type-list
-.. _Inlines: #type-inline
+.. _Inline: #type-inline
 .. _MetaBlocks: #type-metablocks
 .. _Pandoc: #type-pandoc
-.. _Blocks: #type-block
+.. _Block: #type-block
 .. _“Remove spaces before normal citations”: #remove-spaces-before-citations
 .. _Inline elements: #type-inline
 .. _``Inlines``: #inlines-filter
@@ -3795,8 +5414,12 @@ Returns:
 .. _``Blocks``: #inlines-filter
 .. _``Meta``: #type-meta
 .. _``Pandoc``: #type-pandoc
+.. _ReaderOptions: #type-readeroptions
+.. _WriterOptions: #type-writeroptions
 .. _Version: #type-version
 .. _CommonState: #type-commonstate
+.. _LPeg homepage: http://www.inf.puc-rio.br/~roberto/lpeg/
+.. _regex engine: http://www.inf.puc-rio.br/~roberto/lpeg/re.html
 .. _``walk_block``: #pandoc.walk_block
 .. _``walk_inline``: #pandoc.walk_inline
 .. _``read``: #pandoc.read
@@ -3809,16 +5432,22 @@ Returns:
 .. _``luasocket``: https://luarocks.org/modules/luasocket/luasocket
 .. _``luarocks``: https://luarocks.org
 .. _see detailed instructions here: https://studio.zerobrane.com/doc-remote-debugging
+.. _``walk``: #type-block:walk
 .. _``pdf2svg``: https://github.com/dawbarton/pdf2svg
 .. _pandoc module: #module-pandoc
 .. _``pandoc.Pandoc``: #pandoc.pandoc
-.. _``pandoc.utils.equals``: #pandoc.utils.equals
+.. _Blocks: #type-blocks
 .. _Meta: #type-meta
+.. _traversal order: #traversal-order
 .. _MetaValues: #type-metavalue
 .. _``pandoc.Meta``: #pandoc.meta
+.. _``pandoc.MetaBool``: #pandoc.metabool
+.. _``pandoc.MetaString``: #pandoc.metastring
 .. _``pandoc.MetaInlines``: #pandoc.metainlines
+.. _``pandoc.MetaBlocks``: #pandoc.metablocks
 .. _``pandoc.MetaList``: #pandoc.metalist
 .. _``pandoc.MetaMap``: #pandoc.metamap
+.. _``pandoc.utils.type``: #pandoc.utils.type
 .. _``pandoc.BlockQuote``: #pandoc.blockquote
 .. _``pandoc.BulletList``: #pandoc.bulletlist
 .. _``pandoc.CodeBlock``: #pandoc.codeblock
@@ -3827,6 +5456,7 @@ Returns:
 .. _``pandoc.DefinitionList``: #pandoc.definitionlist
 .. _``pandoc.Div``: #pandoc.div
 .. _``pandoc.Header``: #pandoc.header
+.. _Inlines: #type-inlines
 .. _``pandoc.HorizontalRule``: #pandoc.horizontalrule
 .. _``pandoc.LineBlock``: #pandoc.lineblock
 .. _``pandoc.Null``: #pandoc.null
@@ -3841,6 +5471,8 @@ Returns:
 .. _TableHead: #type-tablehead
 .. _TableBody: #type-tablebody
 .. _TableFoot: #type-tablefoot
+.. _Plain: #type-plain
+.. _``pandoc.List`` module: #module-pandoc.list
 .. _``pandoc.Cite``: #pandoc.cite
 .. _Citations: #type-citation
 .. _``pandoc.Code``: #pandoc.code
@@ -3862,13 +5494,17 @@ Returns:
 .. _``pandoc.Subscript``: #pandoc.subscript
 .. _``pandoc.Superscript``: #pandoc.superscript
 .. _``pandoc.Underline``: #pandoc.underline
+.. _SoftBreak: #type-softbreak
+.. _Spaces: #type-space
 .. _``pandoc.Attr``: #pandoc.attr
 .. _Alignment: #type-alignment
 .. _``pandoc.Citation``: #pandoc.citation
 .. _``pandoc.ListAttributes``: #pandoc.listattributes
-.. _Cells: #type-cell
-.. _Rows: #type-row
+.. _Cell: #type-cell
+.. _Row: #type-row
+.. _Template: #type-template
 .. _LogMessage: #type-logmessage
+.. _``pandoc.layout``: #module-pandoc.layout
 .. _pandoc.List: #module-pandoc.list
 .. _``pandoc.List``: #pandoc.list
 .. _Tables: #type-table
@@ -3877,11 +5513,6 @@ Returns:
 .. _``pandoc.SimpleTable``: #pandoc.simpletable
 .. _Alignments: #type-alignment
 .. _``pandoc.types.Version``: #pandoc.types.version
-.. _MetaInlines: #type-metainlines
-.. _MetaList: #type-metalist
-.. _MetaMap: #type-metamap
-.. _MetaString: #type-metastring
-.. _MetaBool: #type-metabool
 .. _BlockQuote: #type-blockquote
 .. _BulletList: #type-bulletlist
 .. _CodeBlock: #type-codeblock
@@ -3892,7 +5523,6 @@ Returns:
 .. _LineBlock: #type-lineblock
 .. _Null: #type-null
 .. _OrderedList: #type-orderedlist
-.. _Plain: #type-plain
 .. _RawBlock: #type-rawblock
 .. _caption: #type-caption
 .. _table head: #type-tablehead
@@ -3909,7 +5539,6 @@ Returns:
 .. _Quoted: #type-quoted
 .. _RawInline: #type-rawinline
 .. _SmallCaps: #type-smallcaps
-.. _SoftBreak: #type-softbreak
 .. _Space: #type-space
 .. _Span: #type-span
 .. _Str: #type-str
@@ -3921,12 +5550,11 @@ Returns:
 .. _Citation: #type-citation
 .. _SimpleTable: #type-simpletable
 .. _``pandoc.utils.sha1``: #pandoc.utils.sha1
-.. _MetaValue: #type-metavalue
-.. _Block: #type-block
-.. _Inline: #type-inline
+.. _Lua type reference: #lua-type-reference
 .. _``list``: #pandoc.mediabag.list
 .. _```pandoc.List:new([table])```: #pandoc.list:new
 .. _``table.insert``: https://www.lua.org/manual/5.3/manual.html#6.6
 .. _``table.remove``: https://www.lua.org/manual/5.3/manual.html#6.6
 .. _``table.sort``: https://www.lua.org/manual/5.3/manual.html#6.6
 .. _this blog post: https://neilmitchell.blogspot.co.uk/2015/10/filepaths-are-subtle-symlinks-are-hard.html
+.. _Doc: #type-doc

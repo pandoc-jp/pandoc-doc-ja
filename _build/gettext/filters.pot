@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-23 03:37+0000\n"
+"POT-Creation-Date: 2022-04-29 05:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,11 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../filters.rst:19
-msgid "原著バージョン: 2.14.2"
+msgid "原著バージョン: 2.18"
 msgstr ""
 
 #: ../../filters.rst:21
-msgid "更新日: 2021/09/23"
+msgid "更新日: 2022/04/29"
 msgstr ""
 
 #: ../../filters.rst:23
@@ -421,7 +421,7 @@ msgid "Object fields:"
 msgstr ""
 
 #: ../../filters.rst:526
-msgid "``readerAbbreviations``"
+msgid "``abbreviations``"
 msgstr ""
 
 #: ../../filters.rst:527
@@ -429,7 +429,7 @@ msgid "set of known abbreviations (array of strings)."
 msgstr ""
 
 #: ../../filters.rst:528
-msgid "``readerColumns``"
+msgid "``columns``"
 msgstr ""
 
 #: ../../filters.rst:529
@@ -437,7 +437,7 @@ msgid "number of columns in terminal; an integer."
 msgstr ""
 
 #: ../../filters.rst:530
-msgid "``readerDefaultImageExtension``"
+msgid "default-image-extension\\`"
 msgstr ""
 
 #: ../../filters.rst:531
@@ -445,7 +445,7 @@ msgid "default extension for images; a string."
 msgstr ""
 
 #: ../../filters.rst:532
-msgid "``readerExtensions``"
+msgid "``extensions``"
 msgstr ""
 
 #: ../../filters.rst:533
@@ -453,7 +453,7 @@ msgid "integer representation of the syntax extensions bit field."
 msgstr ""
 
 #: ../../filters.rst:534
-msgid "``readerIndentedCodeClasses``"
+msgid "``indented-code-classes``"
 msgstr ""
 
 #: ../../filters.rst:535
@@ -461,7 +461,7 @@ msgid "default classes for indented code blocks; array of strings."
 msgstr ""
 
 #: ../../filters.rst:537
-msgid "``readerStandalone``"
+msgid "``standalone``"
 msgstr ""
 
 #: ../../filters.rst:537
@@ -469,7 +469,7 @@ msgid "whether the input was a standalone document with header; either ``true`` 
 msgstr ""
 
 #: ../../filters.rst:540
-msgid "``readerStripComments``"
+msgid "``strip-comments``"
 msgstr ""
 
 #: ../../filters.rst:540
@@ -477,7 +477,7 @@ msgid "HTML comments are stripped instead of parsed as raw HTML; either ``true``
 msgstr ""
 
 #: ../../filters.rst:542
-msgid "``readerTabStop``"
+msgid "``tab-stop``"
 msgstr ""
 
 #: ../../filters.rst:543
@@ -485,7 +485,7 @@ msgid "width (i.e. equivalent number of spaces) of tab stops; integer."
 msgstr ""
 
 #: ../../filters.rst:546
-msgid "``readerTrackChanges``"
+msgid "``track-changes``"
 msgstr ""
 
 #: ../../filters.rst:545

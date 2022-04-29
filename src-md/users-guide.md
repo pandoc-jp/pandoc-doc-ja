@@ -1,7 +1,7 @@
 ---
 title: Pandoc User's Guide
 author: John MacFarlane
-date: August 20, 2021
+date: April 4, 2022
 ---
 
 # Synopsis
@@ -57,7 +57,7 @@ use the `-s` or `--standalone` flag:
 For more information on how standalone documents are produced, see
 [Templates] below.
 
-If multiple input files are given, `pandoc` will concatenate them all (with
+If multiple input files are given, pandoc will concatenate them all (with
 blank lines between them) before parsing. (Use `--file-scope` to parse files
 individually.)
 
@@ -80,7 +80,7 @@ can also use `pandoc --list-input-formats` and
 `pandoc --list-output-formats` to print lists of supported
 formats.
 
-If the input or output format is not specified explicitly, `pandoc`
+If the input or output format is not specified explicitly, pandoc
 will attempt to guess it from the extensions of the filenames.
 Thus, for example,
 
@@ -142,11 +142,11 @@ When using LaTeX, the following packages need to be available
 contains images), [`hyperref`], [`xcolor`],
 [`ulem`], [`geometry`] (with the `geometry` variable set),
 [`setspace`] (with `linestretch`), and
-[`babel`] (with `lang`).  The use of `xelatex` or `lualatex` as
+[`babel`] (with `lang`).  If `CJKmainfont` is set, [`xeCJK`]
+is needed.  The use of `xelatex` or `lualatex` as
 the PDF engine requires [`fontspec`].  `lualatex` uses
-[`selnolig`]. `xelatex` uses [`polyglossia`] (with `lang`),
-[`xecjk`], and [`bidi`] (with the `dir` variable set). If the
-`mathspec` variable is set, `xelatex` will use [`mathspec`]
+[`selnolig`]. `xelatex` uses [`bidi`] (with the `dir` variable set).
+If the `mathspec` variable is set, `xelatex` will use [`mathspec`]
 instead of [`unicode-math`].  The [`upquote`] and [`microtype`]
 packages are used if available, and [`csquotes`] will be used
 for [typography] if the `csquotes` variable or metadata field is
@@ -197,7 +197,7 @@ footnotes in tables).
 [`weasyprint`]: https://weasyprint.org
 [`wkhtmltopdf`]: https://wkhtmltopdf.org
 [`xcolor`]: https://ctan.org/pkg/xcolor
-[`xecjk`]: https://ctan.org/pkg/xecjk
+[`xeCJK`]: https://ctan.org/pkg/xecjk
 [`xurl`]: https://ctan.org/pkg/xurl
 [`selnolig`]: https://ctan.org/pkg/selnolig
 
@@ -235,6 +235,7 @@ header when requesting a document from a URL:
     - `docbook` ([DocBook])
     - `docx` ([Word docx])
     - `dokuwiki` ([DokuWiki markup])
+    - `endnotexml` ([EndNote XML bibliography])
     - `epub` ([EPUB])
     - `fb2` ([FictionBook2] e-book)
     - `gfm` ([GitHub-Flavored Markdown]),
@@ -259,6 +260,7 @@ header when requesting a document from a URL:
     - `odt` ([ODT])
     - `opml` ([OPML])
     - `org` ([Emacs Org mode])
+    - `ris` ([RIS] bibliography)
     - `rtf` ([Rich Text Format])
     - `rst` ([reStructuredText])
     - `t2t` ([txt2tags])
@@ -266,6 +268,7 @@ header when requesting a document from a URL:
     - `tikiwiki` ([TikiWiki markup])
     - `twiki` ([TWiki markup])
     - `vimwiki` ([Vimwiki])
+    - the path of a custom Lua reader, see [Custom readers and writers] below
     :::
 
     Extensions can be individually enabled or disabled by
@@ -315,6 +318,7 @@ header when requesting a document from a URL:
     - `markdown_mmd` ([MultiMarkdown])
     - `markdown_phpextra` ([PHP Markdown Extra])
     - `markdown_strict` (original unextended [Markdown])
+    - `markua` ([Markua])
     - `mediawiki` ([MediaWiki markup])
     - `ms` ([roff ms])
     - `muse` ([Muse]),
@@ -338,7 +342,7 @@ header when requesting a document from a URL:
     - `tei` ([TEI Simple])
     - `xwiki` ([XWiki markup])
     - `zimwiki` ([ZimWiki markup])
-    - the path of a custom Lua writer, see [Custom writers] below
+    - the path of a custom Lua writer, see [Custom readers and writers] below
     :::
 
     Note that `odt`, `docx`, `epub`, and `pdf` output will not be directed
@@ -381,7 +385,7 @@ header when requesting a document from a URL:
     be searched for first in the working directory, and then in
     the `defaults` subdirectory of the user data directory
     (see `--data-dir`).  The `.yaml` extension may be omitted.
-    See the section [Default files] for more information on the
+    See the section [Defaults files] for more information on the
     file format.  Settings from the defaults file may be
     overridden or extended by subsequent options on the command
     line.
@@ -484,6 +488,7 @@ header when requesting a document from a URL:
 [roff ms]: https://man.cx/groff_ms(7)
 [Haskell]: https://www.haskell.org
 [GNU Texinfo]: https://www.gnu.org/software/texinfo/
+[RIS]: https://en.wikipedia.org/wiki/RIS_(file_format)
 [Emacs Org mode]: https://orgmode.org
 [AsciiDoc]: https://www.methods.co.nz/asciidoc/
 [AsciiDoctor]: https://asciidoctor.org/
@@ -501,6 +506,8 @@ header when requesting a document from a URL:
 [CSL JSON]: https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html
 [BibTeX]: https://ctan.org/pkg/bibtex
 [BibLaTeX]: https://ctan.org/pkg/biblatex
+[Markua]: https://leanpub.com/markua/read
+[EndNote XML bibliography]: https://support.clarivate.com/Endnote/s/article/EndNote-XML-Document-Type-Definition
 
 ## Reader options {.options}
 
@@ -634,14 +641,18 @@ header when requesting a document from a URL:
 
 :   Read metadata from the supplied YAML (or JSON) file. This
     option can be used with every input format, but string scalars
-    in the YAML file will always be parsed as Markdown. Generally,
-    the input will be handled the same as in [YAML metadata
-    blocks][Extension: `yaml_metadata_block`]. This option can be
-    used repeatedly to include multiple metadata files; values in
+    in the YAML file will always be parsed as Markdown. (If the
+    input format is Markdown or a Markdown variant, then the
+    same variant will be used to parse the metadata file;
+    if it is a non-Markdown format, pandoc's default Markdown
+    extensions will be used.) This option can be used
+    repeatedly to include multiple metadata files; values in
     files specified later on the command line will be preferred
     over those specified in earlier files. Metadata values
     specified inside the document, or by using `-M`, overwrite
-    values specified with this option.
+    values specified with this option. The file will be searched
+    for first in the working directory, and then in the `metadata`
+    subdirectory of the user data directory (see `--data-dir`).
 
 `-p`, `--preserve-tabs`
 
@@ -696,6 +707,12 @@ header when requesting a document from a URL:
     space, and the period will not produce sentence-ending space
     in formats like LaTeX.  The strings may not contain spaces.
 
+`--trace`
+
+:   Print diagnostic output tracing parser progress to stderr.
+    This option is intended for use by developers in diagnosing
+    performance issues.
+
 [`pandocfilters`]: https://github.com/jgm/pandocfilters
 [PHP]: https://github.com/vinai/pandocfilters-php
 [perl]: https://metacpan.org/pod/Pandoc::Filter
@@ -729,6 +746,16 @@ header when requesting a document from a URL:
 :   Set the template variable *KEY* to the value *VAL* when rendering the
     document in standalone mode. If no *VAL* is specified, the
     key will be given the value `true`.
+
+`--sandbox`
+
+:   Run pandoc in a sandbox, limiting IO operations in readers
+    and writers to reading the files specified on the command line.
+    Note that this option does not limit IO operations by
+    filters or in the production of PDF documents.  But it does
+    offer security against, for example, disclosure of files
+    through the use of `include` directives.  Anyone using
+    pandoc on untrusted user input should use this option.
 
 `-D` *FORMAT*, `--print-default-template=`*FORMAT*
 
@@ -777,7 +804,6 @@ header when requesting a document from a URL:
     preserve the wrapping from the source document (that is,
     where there are nonsemantic newlines in the source, there
     will be nonsemantic newlines in the output as well).
-    Automatic wrapping does not currently work in HTML output.
     In `ipynb` output, this option affects wrapping of the
     contents of markdown cells.
 
@@ -930,8 +956,7 @@ header when requesting a document from a URL:
     `data-external="1"` will be left alone; the documents they
     link to will not be incorporated in the document.
     Limitation: resources that are loaded dynamically through
-    JavaScript cannot be incorporated; as a result,
-    `--self-contained` does not work with `--mathjax`, and some
+    JavaScript cannot be incorporated; as a result, some
     advanced features (e.g.  zoom or speaker notes) may not work
     in an offline "self-contained" `reveal.js` slide show.
 
@@ -962,7 +987,9 @@ header when requesting a document from a URL:
 :   Specify whether footnotes (and references, if `reference-links` is
     set) are placed at the end of the current (top-level) block, the
     current section, or the document. The default is
-    `document`. Currently only affects the markdown writer.
+    `document`. Currently this option only affects the
+    `markdown`, `muse`, `html`, `epub`, `slidy`, `s5`, `slideous`,
+    `dzslides`, and `revealjs` writers.
 
 `--markdown-headings=setext`|`atx`
 
@@ -1172,11 +1199,15 @@ header when requesting a document from a URL:
         - Title and Content
         - Section Header
         - Two Content
+        - Comparison
+        - Content with Caption
+        - Blank
 
         For each name, the first layout found with that name will be used.
         If no layout is found with one of the names, pandoc will output a
         warning and use the layout with that name from the default reference
-        doc instead.
+        doc instead. (How these layouts are used is described in [PowerPoint
+        layout choice](#powerpoint-layout-choice).)
 
         All templates included with a recent version of MS PowerPoint
         will fit these criteria. (You can click on `Layout` under the
@@ -1185,8 +1216,8 @@ header when requesting a document from a URL:
         You can also modify the default `reference.pptx`: first run
         `pandoc -o custom-reference.pptx --print-default-data-file
         reference.pptx`, and then modify `custom-reference.pptx`
-        in MS PowerPoint (pandoc will use the first four layout
-        slides, as mentioned above).
+        in MS PowerPoint (pandoc will use the layouts with the names
+        listed above).
 
 `--epub-cover-image=`*FILE*
 
@@ -1281,16 +1312,18 @@ header when requesting a document from a URL:
 
 :   Use the specified engine when producing PDF output.
     Valid values are `pdflatex`, `lualatex`, `xelatex`, `latexmk`,
-    `tectonic`, `wkhtmltopdf`, `weasyprint`, `prince`, `context`,
-    and `pdfroff`. If the engine is not in your PATH, the full
-    path of the engine may be specified here.  If this option
-    is not specified, pandoc uses the following defaults
-    depending on the output format specified using `-t/--to`:
+    `tectonic`, `wkhtmltopdf`, `weasyprint`, `pagedjs-cli`,
+    `prince`, `context`, and `pdfroff`. If the engine is not in
+    your PATH, the full path of the engine may be specified here.
+    If this option is not specified, pandoc uses the following
+    defaults depending on the output format specified using
+    `-t/--to`:
 
     - `-t latex` or none: `pdflatex` (other options: `xelatex`, `lualatex`,
         `tectonic`, `latexmk`)
     - `-t context`: `context`
-    - `-t html`:  `wkhtmltopdf` (other options: `prince`, `weasyprint`;
+    - `-t html`:  `wkhtmltopdf` (other options: `prince`, `weasyprint`,
+        `pagedjs-cli`;
         see [print-css.rocks](https://print-css.rocks) for a good
         introduction to PDF generation from HTML/CSS.)
     - `-t ms`:  `pdfroff`
@@ -1464,6 +1497,7 @@ Nonzero exit codes have the following meanings:
 
  Code Error
 ----- ------------------------------------
+    1 PandocIOError
     3 PandocFailOnWarningError
     4 PandocAppError
     5 PandocTemplateError
@@ -1472,6 +1506,7 @@ Nonzero exit codes have the following meanings:
    22 PandocUnknownWriterError
    23 PandocUnsupportedExtensionError
    24 PandocCiteprocError
+   25 PandocBibliographyError
    31 PandocEpubSubdirectoryError
    43 PandocPDFError
    44 PandocXMLError
@@ -1484,195 +1519,20 @@ Nonzero exit codes have the following meanings:
    66 PandocMakePDFError
    67 PandocSyntaxMapError
    83 PandocFilterError
+   84 PandocLuaError
    91 PandocMacroLoop
    92 PandocUTF8DecodingError
    93 PandocIpynbDecodingError
    94 PandocUnsupportedCharsetError
    97 PandocCouldNotFindDataFileError
+   98 PandocCouldNotFindMetadataFileError
    99 PandocResourceNotFound
 ----- ------------------------------------
 
-# Default files
+# Defaults files
 
 The `--defaults` option may be used to specify a package
-of options.  Here is a sample defaults file demonstrating all of
-the fields that may be used:
-
-``` yaml
-from: markdown+emoji
-# reader: may be used instead of from:
-to: html5
-# writer: may be used instead of to:
-
-# leave blank for output to stdout:
-output-file:
-# leave blank for input from stdin, use [] for no input:
-input-files:
-- preface.md
-- content.md
-# or you may use input-file: with a single value
-
-# Include options from the specified defaults files.
-# The files will be searched for first in the working directory
-# and then in the defaults subdirectory of the user data directory.
-# The files are included in the same order in which they appear in
-# the list. Options specified in this defaults file always have
-# priority over the included ones.
-defaults:
-- defsA
-- defsB
-
-template: letter
-standalone: true
-self-contained: false
-
-# note that structured variables may be specified:
-variables:
-  documentclass: book
-  classoption:
-    - twosides
-    - draft
-
-# metadata values specified here are parsed as literal
-# string text, not markdown:
-metadata:
-  author:
-  - Sam Smith
-  - Julie Liu
-metadata-files:
-- boilerplate.yaml
-# or you may use metadata-file: with a single value
-
-# Note that these take files, not their contents:
-include-before-body: []
-include-after-body: []
-include-in-header: []
-resource-path: ["."]
-
-# turn on built-in citation processing.  Note that if you need
-# control over when the citeproc processing is done relative
-# to other filters, you should instead use `citeproc` in the
-# list of `filters` (see below).
-citeproc: true
-csl: ieee
-bibliography:
-- foobar.bib
-- barbaz.json
-citation-abbreviations: abbrevs.json
-
-# Filters will be assumed to be Lua filters if they have
-# the .lua extension, and json filters otherwise.  But
-# the filter type can also be specified explicitly, as shown.
-# Filters are run in the order specified.
-# To include the built-in citeproc filter, use either `citeproc`
-# or `{type: citeproc}`.
-filters:
-- wordcount.lua
-- type: json
-  path: foo.lua
-
-file-scope: false
-
-data-dir:
-
-# ERROR, WARNING, or INFO
-verbosity: INFO
-log-file: log.json
-
-# citeproc, natbib, or biblatex. This only affects LaTeX
-# output.  If you want to use citeproc to format citations,
-# you should also set 'citeproc: true' (see above).
-cite-method: citeproc
-
-# part, chapter, section, or default:
-top-level-division: chapter
-abbreviations:
-
-pdf-engine: pdflatex
-pdf-engine-opts:
-- "-shell-escape"
-# you may also use pdf-engine-opt: with a single option
-# pdf-engine-opt: "-shell-escape"
-
-# auto, preserve, or none
-wrap: auto
-columns: 78
-dpi: 72
-
-extract-media: mediadir
-
-table-of-contents: true
-toc-depth: 2
-number-sections: false
-# a list of offsets at each heading level
-number-offset: [0,0,0,0,0,0]
-# toc: may also be used instead of table-of-contents:
-shift-heading-level-by: 1
-section-divs: true
-identifier-prefix: foo
-title-prefix: ""
-strip-empty-paragraphs: true
-# lf, crlf, or native
-eol: lf
-strip-comments: false
-indented-code-classes: []
-ascii: true
-default-image-extension: ".jpg"
-
-# either a style name of a style definition file:
-highlight-style: pygments
-syntax-definitions:
-- c.xml
-# or you may use syntax-definition: with a single value
-listings: false
-
-reference-doc: myref.docx
-
-# method is plain, webtex, gladtex, mathml, mathjax, katex
-# you may specify a url with webtex, mathjax, katex
-html-math-method:
-  method: mathjax
-  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-# none, references, or javascript
-email-obfuscation: javascript
-
-tab-stop: 8
-preserve-tabs: true
-
-incremental: false
-slide-level: 2
-
-epub-subdirectory: EPUB
-epub-metadata: meta.xml
-epub-fonts:
-- foobar.otf
-epub-chapter-level: 1
-epub-cover-image: cover.jpg
-
-reference-links: true
-# block, section, or document
-reference-location: block
-markdown-headings: setext
-
-# accept, reject, or all
-track-changes: accept
-
-html-q-tags: false
-css:
-- site.css
-
-# none, all, or best
-ipynb-output: best
-
-# A list of two-element lists
-request-headers:
-- ["User-Agent", "Mozilla/5.0"]
-
-fail-if-warnings: false
-dump-args: false
-ignore-args: false
-trace: false
-```
+of options, in the form of a YAML file.
 
 Fields that are omitted will just have their regular
 default values.  So a defaults file can be as simple as
@@ -1694,7 +1554,7 @@ user data directory that is current when the defaults file is
 parsed, regardless of the setting of the environment
 variable `USERDATA`.
 
-`${.}` will resolve to the directory containing the default
+`${.}` will resolve to the directory containing the defaults
 file itself.  This allows you to refer to resources contained
 in that directory:
 
@@ -1710,7 +1570,7 @@ resource-path:
 This environment variable interpolation syntax *only* works in
 fields that expect file paths.
 
-Default files can be placed in the `defaults` subdirectory of
+Defaults files can be placed in the `defaults` subdirectory of
 the user data directory and used from any directory.  For
 example, one could create a file specifying defaults for writing
 letters, save it as `letter.yaml` in the `defaults` subdirectory
@@ -1726,6 +1586,473 @@ Note that, where command-line arguments may be repeated
 `--metadata`, `--syntax-definition`), the values specified on
 the command line will combine with values specified in the
 defaults file, rather than replacing them.
+
+The following tables show the mapping between the command line and
+defaults file entries.
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| foo.md                           | input-file: foo.md                |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| foo.md bar.md                    | input-files:                      |
+|                                  |   - foo.md                        |
+|                                  |   - bar.md                        |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+
+The value of `input-files` may be left empty to indicate input from
+stdin, and it can be an empty sequence `[]` for no input.
+
+## General options
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --from markdown+emoji            | from: markdown+emoji              |
+| ```                              | ```                               |
+|                                  | ``` yaml                          |
+|                                  | reader: markdown+emoji            |
+|                                  | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --to markdown+hard_line_breaks   | to: markdown+hard_line_breaks     |
+| ```                              | ```                               |
+|                                  | ``` yaml                          |
+|                                  | writer: markdown+hard_line_breaks |
+|                                  | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --output foo.pdf                 | output-file: foo.pdf              |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --output -                       | output-file:                      |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --data-dir dir                   | data-dir: dir                     |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --defaults file                  | defaults:                         |
+| ```                              | - file                            |
+|                                  | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --verbose                        | verbosity: INFO                   |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --quiet                          | verbosity: ERROR                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --fail-if-warnings               | fail-if-warnings: true            |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --sandbox                        | sandbox: true                     |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --log=FILE                       | log-file: FILE                    |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+
+Options specified in a defaults file itself always have priority over
+those in another file included with a `defaults:` entry.
+
+`verbosity` can have the values `ERROR`, `WARNING`, or `INFO`.
+
+## Reader options
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --shift-heading-level-by -1      | shift-heading-level-by: -1        |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --indented-code-classes python   | indented-code-classes:            |
+|                                  |   - python                        |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --default-image-extension ".jpg" | default-image-extension: '.jpg'   |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --file-scope                     | file-scope: true                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --filter pandoc-citeproc \       | filters:                          |
+|  --lua-filter count-words.lua \  |   - pandoc-citeproc               |
+|  --filter special.lua            |   - count-words.lua               |
+|                                  |   - type: json                    |
+|                                  |     path: special.lua             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --metadata key=value \           | metadata:                         |
+|  --metadata key2                 |   key: value                      |
+|                                  |   key2: true                      |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --metadata-file meta.yaml        | metadata-files:                   |
+|                                  |   - meta.yaml                     |
+| ```                              | ```                               |
+|                                  | ``` yaml                          |
+|                                  | metadata-file: meta.yaml          |
+|                                  | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --preserve-tabs                  | preserve-tabs: true               |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --tab-stop 8                     | tab-stop: 8                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --track-changes accept           | track-changes: accept             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --extract-media dir              | extract-media: dir                |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --abbreviations abbrevs.txt      | abbreviations: abbrevs.txt        |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --trace                          | trace: true                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+
+Metadata values specified in a defaults file are parsed as literal
+string text, not Markdown.
+
+Filters will be assumed to be Lua filters if they have the `.lua`
+extension, and JSON filters otherwise.  But the filter type can also be
+specified explicitly, as shown.  Filters are run in the order specified.
+To include the built-in citeproc filter, use either `citeproc` or
+`{type: citeproc}`.
+
+## General writer options
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --standalone                     | standalone: true                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --template letter                | template: letter                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --variable key=val \             | variables:                        |
+|   --variable key2                |   key: val                        |
+|                                  |   key2: true                      |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --eol nl                         | eol: nl                           |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --dpi 300                        | dpi: 300                          |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --wrap 60                        | wrap: 60                          |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --columns 72                     | columns: 72                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --table-of-contents              | table-of-contents: true           |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --toc                            | toc: true                         |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --toc-depth 3                    | toc-depth: 3                      |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --strip-comments                 | strip-comments: true              |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --no-highlight                   | highlight-style: null             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --highlight-style kate           | highlight-style: kate             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --syntax-definition mylang.xml   | syntax-definitions:               |
+|                                  |   - mylang.xml                    |
+| ```                              | ```                               |
+|                                  | ``` yaml                          |
+|                                  | syntax-definition: mylang.xml     |
+|                                  | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --include-in-header inc.tex      | include-in-header:                |
+|                                  |   - inc.tex                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --include-before-body inc.tex    | include-before-body:              |
+|                                  |   - inc.tex                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --include-after-body inc.tex     | include-after-body:               |
+|                                  |   - inc.tex                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --resource-path .:foo            | resource-path: ['.','foo']        |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --request-header foo:bar         | request-headers:                  |
+|                                  |   - ["User-Agent", "Mozilla/5.0"] |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --no-check-certificate           | no-check-certificate: true        |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+
+
+## Options affecting specific writers
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --self-contained                 | self-contained: true              |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --html-q-tags                    | html-q-tags: true                 |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --ascii                          | ascii: true                       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --reference-links                | reference-links: true             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --reference-location block       | reference-location: block         |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --markdown-headings atx          | markdown-headings: atx            |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --top-level-division chapter     | top-level-division: chapter       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --number-sections                | number-sections: true             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --number-offset=1,4              | number-offset: \[1,4\]            |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --listings                       | listings: true                    |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --incremental                    | incremental: true                 |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --slide-level 2                  | slide-level: 2                    |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --section-divs                   | section-divs: true                |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --email-obfuscation references   | email-obfuscation: references     |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --id-prefix ch1                  | identifier-prefix: ch1            |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --title-prefix MySite            | title-prefix: MySite              |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --css styles/screen.css  \       | css:                              |
+|   --css styles/special.css       |   - styles/screen.css             |
+|                                  |   - styles/special.css            |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --reference-doc my.docx          | reference-doc: my.docx            |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --epub-cover-image cover.jpg     | epub-cover-image: cover.jpg       |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --epub-metadata meta.xml         | epub-metadata: meta.xml           |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --epub-embed-font special.otf \  | epub-fonts:                       |
+|   --epub-embed-font headline.otf |   - special.otf                   |
+|                                  |   - headline.otf                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --epub-chapter-level 2           | epub-chapter-level: 2             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --epub-subdirectory=""           | epub-subdirectory: ''             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --ipynb-output best              | ipynb-output: best                |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --pdf-engine xelatex             | pdf-engine: xelatex               |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --pdf-engine-opt=--shell-escape  | pdf-engine-opts:                  |
+|                                  |   - '-shell-escape'               |
+| ```                              | ```                               |
+|                                  | ``` yaml                          |
+|                                  | pdf-engine-opt: '-shell-escape'   |
+|                                  | ```                               |
++----------------------------------+-----------------------------------+
+
+## Citation rendering
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --citeproc                       | citeproc: true                    |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --bibliography logic.bib         | metadata:                         |
+|                                  |   bibliography: logic.bib         |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --csl ieee.csl                   | metadata:                         |
+|                                  |   csl: ieee.csl                   |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --citation-abbreviations ab.json | metadata:                         |
+|                                  |   citation-abbreviations: ab.json |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --natbib                         | cite-method: natbib               |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --biblatex                       | cite-method: biblatex             |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+
+`cite-method` can be `citeproc`, `natbib`, or `biblatex`. This only
+affects LaTeX output.  If you want to use citeproc to format citations,
+you should also set 'citeproc: true'.
+
+If you need control over when the citeproc processing is done relative
+to other filters, you should instead use `citeproc` in the list
+of `filters` (see above).
+
+## Math rendering in HTML
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --mathjax                        | html-math-method:                 |
+|                                  |   method: mathjax                 |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --mathml                         | html-math-method:                 |
+|                                  |   method: mathml                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --webtex                         | html-math-method:                 |
+|                                  |   method: webtex                  |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --katex                          | html-math-method:                 |
+|                                  |   method: katex                   |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --gladtex                        | html-math-method:                 |
+|                                  |   method: gladtex                 |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+
+In addition to the values listed above, `method` can have the
+value `plain`.
+
+If the command line option accepts a URL argument, an `url:` field can
+be added to `html-math-method:`.
+
+## Options for wrapper scripts
+
++----------------------------------+-----------------------------------+
+| command line                     | defaults file                     |
++:=================================+:==================================+
+| ```                              | ``` yaml                          |
+| --dump-args                      | dump-args: true                   |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
+| ```                              | ``` yaml                          |
+| --ignore-args                    | ignore-args: true                 |
+| ```                              | ```                               |
++----------------------------------+-----------------------------------+
 
 # Templates
 
@@ -2167,12 +2494,17 @@ Currently the following pipes are predefined:
 :   document summary, included in LaTeX, ConTeXt, AsciiDoc, and docx
     documents
 
+`abstract-title`
+:   title of abstract, currently used only in HTML and EPUB.
+    This will be set automatically to a localized value,
+    depending on `lang`, but can be manually overridden.
+
 `keywords`
 :   list of keywords to be included in HTML, PDF, ODT, pptx, docx
     and AsciiDoc metadata; repeat as for `author`, above
 
 `subject`
-:   document subject, included in ODT, PDF, docx and pptx metadata
+:   document subject, included in ODT, PDF, docx, EPUB, and pptx metadata
 
 `description`
 :   document description, included in ODT, docx and pptx metadata. Some
@@ -2355,10 +2687,7 @@ These variables change the appearance of PDF slides using [`beamer`].
     `1610` for 16:10, `149` for 14:9, `141` for 1.41:1, `54` for 5:4,
     `32` for 3:2)
 
-`beamerarticle`
-:   produce an article from Beamer slides
-
-`beameroption`
+``beameroption`
 :   add extra beamer option with `\setbeameroption{}`
 
 `institute`
@@ -2480,6 +2809,9 @@ Pandoc uses these variables when [creating a PDF] with a LaTeX engine.
 `secnumdepth`
 :   numbering depth for sections (with `--number-sections` option
     or `numbersections` variable)
+
+`beamerarticle`
+:   produce an article from Beamer slides
 
 #### Fonts
 
@@ -2799,7 +3131,7 @@ on the output format, and include the following:
 
 `toc-title`
 :   title of table of contents (works only with EPUB,
-    HTML, opendocument, odt, docx, pptx, beamer, LaTeX)
+    HTML, revealjs, opendocument, odt, docx, pptx, beamer, LaTeX)
 
 [pandoc-templates]: https://github.com/jgm/pandoc-templates
 
@@ -2835,7 +3167,8 @@ inserted after certain abbreviations, such as "Mr."
 This extension can be enabled/disabled for the following formats:
 
 input formats
-:  `markdown`, `commonmark`, `latex`, `mediawiki`, `org`, `rst`, `twiki`
+:  `markdown`, `commonmark`, `latex`, `mediawiki`, `org`, `rst`, `twiki`,
+   `html`
 
 output formats
 :  `markdown`, `latex`, `context`, `rst`
@@ -3138,8 +3471,26 @@ output format.
 
 #### Extension: `citations` {#org-citations}
 
-Some aspects of [Pandoc's Markdown citation syntax](#citations)
-are also accepted in `org` input.
+When the `citations` extension is enabled in `org`,
+org-cite and org-ref style citations will be parsed as
+native pandoc citations.
+
+  [org-cite]: https://orgmode.org/manual/Citations.html
+  [org-ref]:  https://github.com/jkitchin/org-ref
+
+When `citations` is enabled in `docx`, citations inserted
+by Zotero or Mendeley or EndNote plugins will be parsed as native
+pandoc citations.  (Otherwise, the formatted citations generated
+by the bibliographic software will be parsed as regular text.)
+
+#### Extension: `fancy_lists` {#org-fancy-lists}
+
+Some aspects of [Pandoc's Markdown fancy lists](#extension-fancy_lists) are also
+accepted in `org` input, mimicking the option `org-list-allow-alphabetical` in
+Emacs. As in Org Mode, enabling this extension allows lowercase and uppercase
+alphabetical markers for ordered lists to be parsed in addition to arabic ones.
+Note that for Org, this does not include roman numerals or the `#` placeholder
+that are enabled by the extension in Pandoc's Markdown.
 
 #### Extension: `element_citations` ####
 
@@ -3161,7 +3512,7 @@ at a performance penalty compared to extreme tables.
 
 Pandoc understands an extended and slightly revised version of
 John Gruber's [Markdown] syntax.  This document explains the syntax,
-noting differences from standard Markdown. Except where noted, these
+noting differences from original Markdown. Except where noted, these
 differences can be suppressed by using the `markdown_strict` format instead
 of `markdown`. Extensions can be enabled or disabled to specify the
 behavior more granularly. They are described in the following. See also
@@ -3236,7 +3587,7 @@ As with setext-style headings, the heading text can contain formatting:
 
 #### Extension: `blank_before_header` ####
 
-Standard Markdown syntax does not require a blank line before a heading.
+Original Markdown syntax does not require a blank line before a heading.
 Pandoc does require this (except, of course, at the beginning of the
 document). The reason for the requirement is that it is all too easy for a
 `#` to end up at the beginning of a line by accident (perhaps through line
@@ -3377,7 +3728,7 @@ block in a block quote, you need five spaces after the `>`:
 
 #### Extension: `blank_before_blockquote` ####
 
-Standard Markdown syntax does not require a blank line before a
+Original Markdown syntax does not require a blank line before a
 block quote.  Pandoc does require this (except, of course, at
 the beginning of the document). The reason for the requirement
 is that it is all too easy for a `>` to end up at the beginning
@@ -3624,7 +3975,7 @@ other blocks in a list item, the first line of each must be indented.
 Ordered lists work just like bulleted lists, except that the items
 begin with enumerators rather than bullets.
 
-In standard Markdown, enumerators are decimal numbers followed
+In original Markdown, enumerators are decimal numbers followed
 by a period and a space.  The numbers themselves are ignored, so
 there is no difference between this list:
 
@@ -3640,7 +3991,7 @@ and this one:
 
 #### Extension: `fancy_lists` ####
 
-Unlike standard Markdown, pandoc allows ordered list items to be marked
+Unlike original Markdown, pandoc allows ordered list items to be marked
 with uppercase and lowercase letters and roman numerals, in addition to
 Arabic numerals. List markers may be enclosed in parentheses or followed by a
 single right-parentheses or period. They must be separated from the
@@ -3732,8 +4083,8 @@ or two spaces.
 A term may have multiple definitions, and each definition may
 consist of one or more block elements (paragraph, code block,
 list, etc.), each indented four spaces or one tab stop.  The
-body of the definition (including the first line, aside from the
-colon or tilde) should be indented four spaces. However, as with
+body of the definition (not including the first line)
+should be indented four spaces. However, as with
 other Markdown lists, you can "lazily" omit indentation except
 at the beginning of a paragraph or other block element:
 
@@ -4035,12 +4386,12 @@ legal (though ugly) pipe table:
     orange|3.09
 
 The cells of pipe tables cannot contain block elements like paragraphs
-and lists, and cannot span multiple lines.  If a pipe table contains a
-row whose Markdown content is wider than the column width (see
-`--columns`), then the table will take up the full text width and
-the cell contents will wrap, with the relative cell widths determined
-by the number of dashes in the line separating the table header from
-the table body. (For example `---|-` would make the first column 3/4
+and lists, and cannot span multiple lines.  If any line of the
+markdown source is longer than the column width (see `--columns`),
+then the table will take up the full text width and the cell
+contents will wrap, with the relative cell widths determined by
+the number of dashes in the line separating the table header
+from the table body. (For example `---|-` would make the first column 3/4
 and the second column 1/4 of the full text width.)
 On the other hand, if no lines are wider than column width, then
 cell contents will not be wrapped, and the cells will be sized
@@ -4296,12 +4647,12 @@ instead of
 
     <strong>hello</strong>
 
-This rule is easier to remember than standard Markdown's rule,
+This rule is easier to remember than original Markdown's rule,
 which allows only the following characters to be backslash-escaped:
 
     \`*_{}[]()>#+-.!
 
-(However, if the `markdown_strict` format is used, the standard Markdown rule
+(However, if the `markdown_strict` format is used, the original Markdown rule
 will be used.)
 
 A backslash-escaped space is parsed as a nonbreaking space. In TeX output,
@@ -4448,7 +4799,7 @@ them and they won't be treated as math delimiters.
 
 For display math, use `$$` delimiters.  (In this case, the delimiters
 may be separated from the formula by whitespace.  However, there can be
-no blank lines betwen the opening and closing `$$` delimiters.)
+no blank lines between the opening and closing `$$` delimiters.)
 
 TeX math will be printed in all output formats. How it is rendered
 depends on the output format:
@@ -4538,7 +4889,7 @@ they cannot use pipe syntax.
 
 #### Extension: `markdown_in_html_blocks` ####
 
-Standard Markdown allows you to include HTML "blocks":  blocks
+Original Markdown allows you to include HTML "blocks":  blocks
 of HTML between balanced tags that are separated from the surrounding text
 with blank lines, and start and end at the left margin.  Within
 these blocks, everything is interpreted as HTML, not Markdown;
@@ -4569,7 +4920,7 @@ whereas `Markdown.pl` will preserve it as is.
 There is one exception to this rule:  text between `<script>`,
 `<style>`, and `<textarea>` tags is not interpreted as Markdown.
 
-This departure from standard Markdown should make it easier to mix
+This departure from original Markdown should make it easier to mix
 Markdown with HTML block elements.  For example, one can surround
 a block of Markdown text with `<div>` tags without preventing it
 from being interpreted as Markdown.
@@ -4825,7 +5176,7 @@ nonbreaking space after the image:
     ![This image won't be a figure](/url/of/image.png)\
 
 Note that in reveal.js slide shows, an image in a paragraph
-by itself that has the `stretch` class will fill the screen,
+by itself that has the `r-stretch` class will fill the screen,
 and the caption and figure tags will be omitted.
 
 #### Extension: `link_attributes` ####
@@ -5123,7 +5474,8 @@ or image itself, if these differ.
 #### Extension: `attributes` ####
 
 Allows attributes to be attached to any inline or block-level
-element.  The syntax for the attributes is the same as that
+element when parsing `commonmark`.
+The syntax for the attributes is the same as that
 used in [`header_attributes`][Extension: `header_attributes`].
 
 - Attributes that occur immediately after an inline
@@ -5311,9 +5663,9 @@ for regular emphasis, add extra blank space around headings.
 Include source position attributes when parsing `commonmark`.
 For elements that accept attributes, a `data-pos` attribute
 is added; other elements are placed in a surrounding
-Div or Span elemnet with a `data-pos` attribute.
+Div or Span element with a `data-pos` attribute.
 
-#### Extension: `short_subsuperscript` ####
+#### Extension: `short_subsuperscripts` ####
 
 Parse multimarkdown style subscripts and superscripts, which start with
 a '~' or '^' character, respectively, and include the alphanumeric sequence
@@ -5380,6 +5732,7 @@ to YAML array.  A bibliography may have any of these formats:
   BibTeX            .bibtex
   CSL JSON          .json
   CSL YAML          .yaml
+  RIS               .ris
 
 Note that `.bib` can be used with both BibTeX and BibLaTeX files;
 use the extension `.bibtex` to force interpretation as BibTeX.
@@ -5443,13 +5796,13 @@ If both an external bibliography and inline (YAML metadata)
 references are provided, both will be used. In case of
 conflicting `id`s, the inline references will take precedence.
 
-Note that `pandoc` can be used to produce such a YAML metadata
+Note that pandoc can be used to produce such a YAML metadata
 section from a BibTeX, BibLaTeX, or CSL JSON bibliography:
 
     pandoc chem.bib -s -f biblatex -t markdown
     pandoc chem.json -s -f csljson -t markdown
 
-Indeed, `pandoc` can convert between any of these
+Indeed, pandoc can convert between any of these
 citation formats:
 
     pandoc chem.bib -s -f biblatex -t csljson
@@ -5622,6 +5975,19 @@ The bibliography will be inserted after this heading.  Note that
 the `unnumbered` class will be added to this heading, so that the
 section will not be numbered.
 
+If you want to put the bibliography into a variable in your
+template, one way to do that is to put the div with id `refs`
+into a metadata field, e.g.
+
+    ---
+    refs: |
+       ::: {#refs}
+       :::
+    ...
+
+You can then put the variable `$refs$` into your template where
+you want the bibliography to be placed.
+
 ## Including uncited items in the bibliography
 
 If you want to include items in the bibliography without actually
@@ -5650,7 +6016,7 @@ whether or not they appear in the document, by using a wildcard:
 For LaTeX output, you can also use [`natbib`] or [`biblatex`] to
 render the bibliography. In order to do so, specify bibliography
 files as outlined above, and add `--natbib` or `--biblatex`
-argument to `pandoc` invocation. Bear in mind that bibliography
+argument to pandoc invocation. Bear in mind that bibliography
 files have to be in either BibTeX (for `--natbib`)
 or BibLaTeX (for `--biblatex`) format.
 
@@ -5691,13 +6057,16 @@ A few other metadata fields affect bibliography formatting:
        before lower (default is lower before upper).
 
 `notes-after-punctuation`
-:    If true (the default), pandoc will put footnote citations
+:    If true (the default for note styles), pandoc will put
+     footnote references or superscripted numerical citations
      after following punctuation.  For example, if the source
      contains `blah blah [@jones99].`, the result will look like
      `blah blah.[^1]`, with the note moved after the period and
      the space collapsed.  If false, the space will still be
      collapsed, but the footnote will not be moved after the
-     punctuation.
+     punctuation.  The option may also be used in numerical styles
+     that use superscripts for citation numbers (but for these
+     styles the default is not to move the citation).
 
 
 # Slide shows
@@ -5781,8 +6150,8 @@ By default, the *slide level* is the highest heading level in
 the hierarchy that is followed immediately by content, and not another
 heading, somewhere in the document. In the example above, level-1 headings
 are always followed by level-2 headings, which are followed by content,
-so the slide level is 2.  This default can be overridden using
-the `--slide-level` option.
+so the slide level is 2. This default can be overridden using the
+`--slide-level` option.
 
 The document is carved up into slides according to the following
 rules:
@@ -5806,19 +6175,62 @@ rules:
     subsequent slide with the same title (for beamer).
 
   * A title page is constructed automatically from the document's title
-    block, if present.  (In the case of beamer, this can be disabled
+    block, if present. (In the case of beamer, this can be disabled
     by commenting out some lines in the default template.)
 
 These rules are designed to support many different styles of slide show. If
 you don't care about structuring your slides into sections and subsections,
-you can just use level-1 headings for all each slide. (In that case, level-1
-will be the slide level.) But you can also structure the slide show into
-sections, as in the example above.
+you can either just use level-1 headings for all slides (in that case, level 1
+will be the slide level) or you can set `--slide-level=0`.
 
 Note:  in reveal.js slide shows, if slide level is 2, a two-dimensional
 layout will be produced, with level-1 headings building horizontally
-and level-2 headings building vertically.  It is not recommended that
-you use deeper nesting of section levels with reveal.js.
+and level-2 headings building vertically. It is not recommended that
+you use deeper nesting of section levels with reveal.js unless you set
+`--slide-level=0` (which lets reveal.js produce a one-dimensional layout
+and only interprets horizontal rules as slide boundaries).
+
+### PowerPoint layout choice
+
+When creating slides, the pptx writer chooses from a number of pre-defined
+layouts, based on the content of the slide:
+
+Title Slide
+:   This layout is used for the initial slide, which is generated and
+    filled from the metadata fields `date`, `author`, and `title`, if
+    they are present.
+
+Section Header
+:   This layout is used for what pandoc calls “title slides”, i.e.
+    slides which start with a header which is above the slide level in
+    the hierarchy.
+
+Two Content
+:   This layout is used for two-column slides, i.e. slides containing a
+    div with class `columns` which contains at least two divs with class
+    `column`.
+
+Comparison
+:   This layout is used instead of “Two Content” for any two-column
+    slides in which at least one column contains text followed by
+    non-text (e.g. an image or a table).
+
+Content with Caption
+:   This layout is used for any non-two-column slides which contain text
+    followed by non-text (e.g. an image or a table).
+
+Blank
+:   This layout is used for any slides which only contain blank content,
+    e.g. a slide containing only speaker notes, or a slide containing
+    only a non-breaking space.
+
+Title and Content
+:   This layout is used for all slides which do not match the criteria
+    for another layout.
+
+These layouts are chosen from the default pptx reference doc included with
+pandoc, unless an alternative reference doc is specified using
+`--reference-doc`.
 
 ## Incremental lists
 
@@ -5858,8 +6270,14 @@ option):
 Both methods allow incremental and nonincremental lists to be mixed
 in a single document.
 
-Note: Neither the `-i/--incremental` option nor any of the
-methods described here currently works for PowerPoint output.
+If you want to include a block-quoted list, you can work around
+this behavior by putting the list inside a fenced div, so that
+it is not the direct child of the block quote:
+
+    > ::: wrapper
+    > - a
+    > - list in a quote
+    > :::
 
 ## Inserting pauses
 
@@ -5903,18 +6321,15 @@ To style beamer slides, you can specify a `theme`, `colortheme`,
 
 Note that heading attributes will turn into slide attributes
 (on a `<div>` or `<section>`) in HTML slide formats, allowing you
-to style individual slides.  In beamer, the only heading attribute
-that affects slides is the `allowframebreaks` class, which sets the
-`allowframebreaks` option, causing multiple slides to be created
-if the content overfills the frame.  This is recommended especially for
-bibliographies:
-
-    # References {.allowframebreaks}
+to style individual slides.  In beamer, a number of heading
+classes and attributes are recognized as frame options and
+will be passed through as options to the frame: see
+[Frame attributes in beamer], below.
 
 ## Speaker notes
 
-Speaker notes are supported in reveal.js and PowerPoint (pptx)
-output. You can add notes to your Markdown document thus:
+Speaker notes are supported in reveal.js, PowerPoint (pptx),
+and beamer output. You can add notes to your Markdown document thus:
 
     ::: notes
 
@@ -5993,47 +6408,78 @@ introducing the slide:
 
 All of the other frame attributes described in Section 8.1 of
 the [Beamer User's Guide] may also be used: `allowdisplaybreaks`,
-`allowframebreaks`, `b`, `c`, `t`, `environment`, `label`, `plain`,
-`shrink`, `standout`, `noframenumbering`.
+`allowframebreaks`, `b`, `c`, `s`, `t`, `environment`, `label`, `plain`,
+`shrink`, `standout`, `noframenumbering`, `squeeze`.
+`allowframebreaks` is recommended especially for bibliographies, as
+it allows multiple slides to be created if the content overfills the
+frame:
 
-## Background in reveal.js and beamer
+    # References {.allowframebreaks}
 
-Background images can be added to self-contained reveal.js slideshows and
-to beamer slideshows.
+In addition, the `frameoptions` attribute may be used to
+pass arbitrary frame options to a beamer slide:
 
-For the same image on every slide, use the  configuration
-option `background-image` either in the YAML metadata block
-or as a command-line variable. (There are no other options in
-beamer and the rest of this section concerns reveal.js slideshows.)
+    # Heading {frameoptions="squeeze,shrink,customoption=foobar"}
 
-For reveal.js, you can instead use the reveal.js-native option
-`parallaxBackgroundImage`. You can also set `parallaxBackgroundHorizontal`
-and `parallaxBackgroundVertical` the same way and must also set
-`parallaxBackgroundSize` to have your values take effect.
+## Background in reveal.js, beamer, and pptx
 
-To set an image for a particular reveal.js slide, add
-`{data-background-image="/path/to/image"}`
-to the first slide-level heading on the slide (which may even be empty).
+Background images can be added to self-contained reveal.js slide shows,
+beamer slide shows, and pptx slide shows.
+
+### On all slides (beamer, reveal.js, pptx)
+
+With beamer and reveal.js, the configuration option `background-image` can be
+used either in the YAML metadata block or as a command-line variable to get the
+same image on every slide.
+
+For pptx, you can use a [reference doc](#option--reference-doc) in which
+background images have been set on the [relevant
+layouts](#powerpoint-layout-choice).
+
+#### `parallaxBackgroundImage` (reveal.js)
+
+For reveal.js, there is also the reveal.js-native option
+`parallaxBackgroundImage`, which can be used instead of `background-image` to
+produce a parallax scrolling background. You must also set
+`parallaxBackgroundSize`, and can optionally set `parallaxBackgroundHorizontal`
+and `parallaxBackgroundVertical` to configure the scrolling behaviour. See the
+[reveal.js documentation](https://revealjs.com/backgrounds/#parallax-background)
+for more details about the meaning of these options.
 
 In reveal.js's overview mode, the parallaxBackgroundImage will show up
 only on the first slide.
 
-Other reveal.js background settings also work on individual slides, including
-`data-background-size`, `data-background-repeat`, `data-background-color`,
-`data-transition`, and `data-transition-speed`.
+### On individual slides (reveal.js, pptx)
 
-To add a background image to the automatically generated title slide, use the
-`title-slide-attributes` variable in the YAML metadata block. It must contain
-a map of attribute names and values.
+To set an image for a particular reveal.js or pptx slide, add
+`{background-image="/path/to/image"}` to the first slide-level heading on the
+slide (which may even be empty).
 
-See the [reveal.js documentation](https://revealjs.com/backgrounds/) for more
-details.
+As the [HTML writers pass unknown attributes
+through](#extension-link_attributes), other reveal.js background settings also
+work on individual slides, including `background-size`, `background-repeat`,
+`background-color`, `transition`, and `transition-speed`. (The `data-` prefix
+will automatically be added.)
 
-For example in reveal.js:
+Note: `data-background-image` is also supported in pptx for consistency with
+reveal.js – if `background-image` isn’t found, `data-background-image` will be
+checked.
+
+### On the title slide (reveal.js, pptx)
+
+To add a background image to the automatically generated title slide for
+reveal.js, use the `title-slide-attributes` variable in the YAML metadata block.
+It must contain a map of attribute names and values. (Note that the `data-`
+prefix is required here, as it isn’t added automatically.)
+
+For pptx, pass a [reference doc](#option--reference-doc) with the background
+image set on the “Title Slide” layout.
+
+### Example (reveal.js)
 
 ```
 ---
-title: My Slideshow
+title: My Slide Show
 parallaxBackgroundImage: /path/to/my/background_image.png
 title-slide-attributes:
     data-background-image: /path/to/title_image.png
@@ -6044,7 +6490,7 @@ title-slide-attributes:
 
 Slide 1 has background_image.png as its background.
 
-## {data-background-image="/path/to/special_image.jpg"}
+## {background-image="/path/to/special_image.jpg"}
 
 Slide 2 has a special image for its background, even though the heading has no content.
 ```
@@ -6110,7 +6556,12 @@ The following fields are recognized:
     language if nothing is specified.
 
 `subject`
-  ~ A string value or a list of such values.
+  ~ Either a string value, or an object with fields `text`, `authority`,
+    and `term`, or a list of such objects. Valid values for `authority`
+    are either a [reserved authority value] (currently `AAT`, `BIC`,
+    `BISAC`, `CLC`, `DDC`, `CLIL`, `EuroVoc`, `MEDTOP`, `LCSH`, `NDC`,
+    `Thema`, `UDC`, and `WGS`) or an absolute IRI identifying a custom
+    scheme. Valid values for `term` are defined by the scheme.
 
 `description`
   ~ A string value.
@@ -6160,6 +6611,7 @@ The following fields are recognized:
     - `scroll-axis`: `vertical`|`horizontal`|`default`
 
 [MARC relators]: https://loc.gov/marc/relators/relaterm.html
+[reserved authority value]: https://idpf.github.io/epub-registries/authorities/
 [`spine` element]: http://idpf.org/epub/301/spec/epub-publications.html#sec-spine-elem
 
 ## The `epub:type` attribute
@@ -6199,6 +6651,7 @@ halftitlepage                     frontmatter
 seriespage                        frontmatter
 foreword                          frontmatter
 preface                           frontmatter
+frontispiece                      frontmatter
 appendix                          backmatter
 colophon                          backmatter
 bibliography                      backmatter
@@ -6226,6 +6679,20 @@ as expected for `<img>` elements. Similarly, for Markdown, external
 images can be declared with `![img](url){external=1}`. Note that this
 only works for images; the other media elements have no native
 representation in pandoc's AST and requires the use of raw HTML.
+
+## EPUB styling
+
+By default, pandoc will include some basic styling
+contained in its `epub.css` data file.  (To see this,
+use `pandoc --print-default-data-file epub.css`.)
+To use a different CSS file, just use the `--css` command
+line option.  A few inline styles are defined in addition; these
+are essential for correct formatting of pandoc's HTML output.
+
+The `document-css` variable may be set if the more opinionated
+styling of pandoc's default HTML templates is desired (and
+in that case the variables defined in [Variables for HTML] may
+be used to fine-tune the style).
 
 # Jupyter notebooks
 
@@ -6486,19 +6953,35 @@ With these custom styles, you can use your input document as a
 reference-doc while creating docx output (see below), and maintain the
 same styles in your input and output files.
 
-# Custom writers
+# Custom readers and writers
 
-Pandoc can be extended with custom writers written in [Lua].  (Pandoc
-includes a Lua interpreter, so Lua need not be installed separately.)
+Pandoc can be extended with custom readers and writers written
+in [Lua].  (Pandoc includes a Lua interpreter, so Lua need not
+be installed separately.)
 
-To use a custom writer, simply specify the path to the Lua script
-in place of the output format. For example:
+To use a custom reader or writer, simply specify the path to the
+Lua script in place of the input or output format. For example:
 
     pandoc -t data/sample.lua
+    pandoc -f my_custom_markup_language.lua -t latex -s
 
-Creating a custom writer requires writing a Lua function for each
-possible element in a pandoc document.  To get a documented example
-which you can modify according to your needs, do
+A custom reader is a Lua script that defines one function,
+Reader, which takes a string as input and returns a Pandoc
+AST.  See the [Lua filters documentation] for documentation
+of the functions that are available for creating pandoc
+AST elements.  For parsing, the [lpeg] parsing library
+is available by default. To see a sample custom reader:
+
+    pandoc --print-default-data-file creole.lua
+
+If you want your custom reader to have access to reader options
+(e.g. the tab stop setting), you give your Reader function a
+second `options` parameter.
+
+A custom writer is a Lua script that defines a function
+that specifies how to render each element in a Pandoc AST.
+To see a documented example which you can modify according
+to your needs:
 
     pandoc --print-default-data-file sample.lua
 
@@ -6510,6 +6993,7 @@ default template with the name
 subdirectory of your user data directory (see [Templates]).
 
 [Lua]: https://www.lua.org
+[lpeg]:  http://www.inf.puc-rio.br/~roberto/lpeg/
 
 # Reproducible builds
 
@@ -6528,9 +7012,6 @@ metadata field (see [EPUB Metadata], above).
 
 # A note on security
 
-If you use pandoc to convert user-contributed content in a web
-application, here are some things to keep in mind:
-
 1. Although pandoc itself will not create or modify any files other
    than those you explicitly ask it create (with the exception
    of temporary files used in producing PDFs), a filter or custom
@@ -6540,32 +7021,45 @@ application, here are some things to keep in mind:
 2. Several input formats (including HTML, Org, and RST) support `include`
    directives that allow the contents of a file to be included in the
    output. An untrusted attacker could use these to view the contents of
-   files on the file system.
+   files on the file system.  (Using the `--sandbox` option can
+   protect against this threat.)
 
-3. If your application uses pandoc as a Haskell library (rather than
+3. Several output formats (including RTF, FB2, HTML with
+   `--self-contained`, EPUB, Docx, and ODT) will embed encoded
+   or raw images into the output file.  An untrusted attacker
+   could exploit this to view the contents of non-image files on the
+   file system.  (Using the `--sandbox` option can protect
+   against this threat, but will also prevent including images in
+   these formats.)
+
+4. If your application uses pandoc as a Haskell library (rather than
    shelling out to the executable), it is possible to use it in a mode
    that fully isolates pandoc from your file system, by running the
    pandoc operations in the `PandocPure` monad. See the document
    [Using the pandoc API](https://pandoc.org/using-the-pandoc-api.html)
-   for more details.
+   for more details. (This corresponds to the use of the `--sandbox`
+   option on the command line.) 
 
-4. Pandoc's parsers can exhibit pathological performance on some
+5. Pandoc's parsers can exhibit pathological performance on some
    corner cases.  It is wise to put any pandoc operations under
    a timeout, to avoid DOS attacks that exploit these issues.
    If you are using the pandoc executable, you can add the
    command line options `+RTS -M512M -RTS` (for example) to limit
-   the heap size to 512MB.
+   the heap size to 512MB.  Note that the `commonmark` parser
+   (including `commonmark_x` and `gfm`) is much less vulnerable
+   to pathological performance than the `markdown` parser, so
+   it is a better choice when processing untrusted input.
 
-5. The HTML generated by pandoc is not guaranteed to be safe.
+6. The HTML generated by pandoc is not guaranteed to be safe.
    If `raw_html` is enabled for the Markdown input, users can
    inject arbitrary HTML.  Even if `raw_html` is disabled,
    users can include dangerous content in URLs and attributes.
-   To be safe, you should run all the generated HTML through
-   an HTML sanitizer.
+   To be safe, you should run all HTML generated from untrusted
+   user input through an HTML sanitizer.
 
 # Authors
 
-Copyright 2006--2021 John MacFarlane (jgm@berkeley.edu). Released
+Copyright 2006--2022 John MacFarlane (jgm@berkeley.edu). Released
 under the [GPL], version 2 or greater.  This software carries no
 warranty of any kind.  (See COPYRIGHT for full copyright and
 warranty notices.) For a full list of contributors, see the file

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-23 03:37+0000\n"
+"POT-Creation-Date: 2022-04-29 05:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,11 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../using-the-pandoc-api.rst:19
-msgid "原著バージョン: 2.14.2"
+msgid "原著バージョン: 2.18"
 msgstr ""
 
 #: ../../using-the-pandoc-api.rst:21
-msgid "更新日: 2021/09/23"
+msgid "更新日: 2022/04/29"
 msgstr ""
 
 #: ../../using-the-pandoc-api.rst:23
@@ -225,81 +225,89 @@ msgid "Pandoc has a number of data files, which can be found in the ``data/`` su
 msgstr ""
 
 #: ../../using-the-pandoc-api.rst:345
-msgid "Templates"
+msgid "Metadata files"
 msgstr ""
 
 #: ../../using-the-pandoc-api.rst:347
+msgid "Pandoc can add metadata to documents, as described in the User’s Guide. Similar to data files, metadata YAML files can be retrieved using ``readMetadataFile`` from Text.Pandoc.Class. ``readMetadataFile`` will first look for the file in the working directory, and if it is not found there, it will look for it in the ``metadata`` subdirectory of the user data directory (``setUserDataDir``, ``getUserDataDir``)."
+msgstr ""
+
+#: ../../using-the-pandoc-api.rst:355
+msgid "Templates"
+msgstr ""
+
+#: ../../using-the-pandoc-api.rst:357
 msgid "Pandoc has its own template system, described in the User’s Guide. To retrieve the default template for a system, use ``getDefaultTemplate`` from `Text.Pandoc.Templates`_. Note that this looks first in the ``templates`` subdirectory of the user data directory, allowing users to override the system defaults. If you want to disable this behavior, use ``setUserDataDir Nothing``."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:354
+#: ../../using-the-pandoc-api.rst:364
 msgid "To render a template, use ``renderTemplate'``, which takes two arguments, a template (Text) and a context (any instance of ToJSON). If you want to create a context from the metadata part of a Pandoc document, use ``metaToJSON'`` from `Text.Pandoc.Writers.Shared`_. If you also want to incorporate values from variables, use ``metaToJSON`` instead, and make sure ``writerVariables`` is set in ``WriterOptions``."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:362
+#: ../../using-the-pandoc-api.rst:372
 msgid "Handling errors and warnings"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:364
+#: ../../using-the-pandoc-api.rst:374
 msgid "``runIO`` and ``runPure`` return an ``Either PandocError a``. All errors raised in running a ``PandocMonad`` computation will be trapped and returned as a ``Left`` value, so they can be handled by the calling program. To see the constructors for ``PandocError``, see the documentation for `Text.Pandoc.Error`_."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:370
+#: ../../using-the-pandoc-api.rst:380
 msgid "To raise a ``PandocError`` from inside a ``PandocMonad`` computation, use ``throwError``."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:373
+#: ../../using-the-pandoc-api.rst:383
 msgid "In addition to errors, which stop execution of the conversion pipeline, one can generate informational messages. Use ``report`` from `Text.Pandoc.Class`_ to issue a ``LogMessage``. For a list of constructors for ``LogMessage``, see `Text.Pandoc.Logging`_. Note that each type of log message is associated with a verbosity level. The verbosity level (``setVerbosity``/``getVerbosity``) determines whether the report will be printed to stderr (when running in ``PandocIO``), but regardless of verbosity level, all reported messages are stored internally and may be retrieved using ``getLog``."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:384
+#: ../../using-the-pandoc-api.rst:394
 msgid "Walking the AST"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:386
+#: ../../using-the-pandoc-api.rst:396
 msgid "It is often useful to walk the Pandoc AST either to extract information (e.g., what are all the URLs linked to in this document?, do all the code samples compile?) or to transform a document (e.g., increase the level of every section header, remove emphasis, or replace specially marked code blocks with images). To make this easier and more efficient, ``pandoc-types`` includes a module `Text.Pandoc.Walk`_."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:393
+#: ../../using-the-pandoc-api.rst:403
 msgid "Here’s the essential documentation:"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:408
+#: ../../using-the-pandoc-api.rst:418
 msgid "``Walkable`` instances are defined for most combinations of Pandoc types. For example, the ``Walkable Inline Block`` instance allows you to take a function ``Inline -> Inline`` and apply it over every inline in a ``Block``. And ``Walkable [Inline] Pandoc`` allows you to take a function ``[Inline] -> [Inline]`` and apply it over every maximal list of ``Inline``\\ s in a ``Pandoc``."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:415
+#: ../../using-the-pandoc-api.rst:425
 msgid "Here’s a simple example of a function that promotes the levels of headers:"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:426
+#: ../../using-the-pandoc-api.rst:436
 msgid "``walkM`` is a monadic version of ``walk``; it can be used, for example, when you need your transformations to perform IO operations, use PandocMonad operations, or update internal state. Here’s an example using the State monad to add unique identifiers to each code block:"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:442
+#: ../../using-the-pandoc-api.rst:452
 msgid "``query`` is used to collect information from the AST. Its argument is a query function that produces a result in some monoidal type (e.g. a list). The results are concatenated together. Here’s an example that returns a list of the URLs linked to in a document:"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:455
+#: ../../using-the-pandoc-api.rst:465
 msgid "Creating a front-end"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:457
+#: ../../using-the-pandoc-api.rst:467
 msgid "All of the functionality of the command-line program ``pandoc`` has been abstracted out in ``convertWithOpts`` in the module `Text.Pandoc.App`_. Creating a GUI front-end for pandoc is thus just a matter of populating the ``Opts`` structure and calling this function."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:463
+#: ../../using-the-pandoc-api.rst:473
 msgid "Notes on using pandoc in web applications"
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:465
+#: ../../using-the-pandoc-api.rst:475
 msgid "Pandoc’s parsers can exhibit pathological behavior on some inputs. So it is always a good idea to wrap uses of pandoc in a timeout function (e.g. ``System.Timeout.timeout`` from ``base``) to prevent DoS attacks."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:470
+#: ../../using-the-pandoc-api.rst:480
 msgid "If pandoc generates HTML from untrusted user input, it is always a good idea to filter the generated HTML through a sanitizer (such as ``xss-sanitize``) to avoid security problems."
 msgstr ""
 
-#: ../../using-the-pandoc-api.rst:474
+#: ../../using-the-pandoc-api.rst:484
 msgid "Using ``runPure`` rather than ``runIO`` will ensure that pandoc’s functions perform no IO operations (e.g. writing files). If some resources need to be made available, a “fake environment” is provided inside the state available to ``runPure`` (see ``PureState`` and its associated functions in `Text.Pandoc.Class`_). It is also possible to write a custom instance of ``PandocMonad`` that, for example, makes wiki resources available as files in the fake environment, while isolating pandoc from the rest of the system."
 msgstr ""
