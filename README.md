@@ -299,3 +299,12 @@ Pythonのバージョンについては、Python3系を前提とします。
 ```
 pip3 install -r requirements.txt
 ```
+
+## 原文について
+
+- [Pandoc](https://pandoc.org/index.html)
+- [GitHub - jgm/pandoc: Universal markup converter](https://github.com/jgm/pandoc)
+
+### ライセンス
+
+© 2006-2022 John MacFarlane (jgm@berkeley.edu). Released under the GPL, version 2 or greater. This software carries no warranty of any kind. (See COPYRIGHT for full copyright and warranty notices.)
