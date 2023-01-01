@@ -324,3 +324,6 @@ $ sudo docker push pandocjp/pandoc-doc-ja
 ### ライセンス
 
 © 2006-2022 John MacFarlane (jgm@berkeley.edu). Released under the GPL, version 2 or greater. This software carries no warranty of any kind. (See COPYRIGHT for full copyright and warranty notices.)
+
+- fix-header-inconsistency.lua: MIT License
+    - [sky-y/sky-y-lua-filters: Custom lua filters for Pandoc](https://github.com/sky-y/sky-y-lua-filters)
