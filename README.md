@@ -300,6 +300,21 @@ Pythonのバージョンについては、Python3系を前提とします。
 pip3 install -r requirements.txt
 ```
 
+### Dockerfile・Dockerイメージのアップデート
+
+まず（必要に応じて）Dockerfileを変更する。
+次にイメージをビルドする。
+
+```
+docker build -t pandocjp/pandoc-doc-ja .
+```
+
+最後にイメージをpushする。
+
+```
+$ sudo docker push pandocjp/pandoc-doc-ja
+```
+
 ## 原文について
 
 - [Pandoc](https://pandoc.org/index.html)

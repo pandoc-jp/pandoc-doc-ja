@@ -1,10 +1,10 @@
-FROM sphinxdoc/sphinx
+FROM sphinxdoc/sphinx:5.3.0
 
 # インストール作業用ディレクトリ
 WORKDIR /root
 
 # Pandocのバージョン
-ENV PANDOC_VERSION=2.18
+ENV PANDOC_VERSION=2.19.2
 
 # txコマンド (Transifex Client) のAPIトークン
 # 【注意】ホスト側シェルの環境変数から渡すこと 
@@ -19,7 +19,7 @@ RUN apt-get update && \
     rm -f pandoc.deb
 
 # Transifex Client (new version)
-RUN curl -o- https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash
+RUN curl -o- -L --retry 5 --connect-timeout 15 https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash
 
 # Sphinxドキュメント用ディレクトリ
 WORKDIR /docs
