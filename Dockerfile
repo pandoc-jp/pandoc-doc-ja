@@ -6,6 +6,9 @@ WORKDIR /root
 # Pandocのバージョン
 ENV PANDOC_VERSION=2.19.2
 
+# txのバージョン
+ENV TX_VERSION=v1.6.4
+
 # txコマンド (Transifex Client) のAPIトークン
 # 【注意】ホスト側シェルの環境変数から渡すこと 
 # 例: docker run -e TX_TOKEN ...
@@ -19,7 +22,10 @@ RUN apt-get update && \
     rm -f pandoc.deb
 
 # Transifex Client (new version)
-RUN curl -o- -L --retry 5 --connect-timeout 15 https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash
+RUN curl -sSL -O https://github.com/transifex/cli/releases/download/${TX_VERSION}/tx-linux-amd64.tar.gz && \
+    tar zxf tx-linux-amd64.tar.gz && \
+    mv tx /usr/local/bin && \
+    rm tx-linux-amd64.tar.gz
 
 # Sphinxドキュメント用ディレクトリ
 WORKDIR /docs
