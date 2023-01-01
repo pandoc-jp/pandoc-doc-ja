@@ -18,7 +18,7 @@ Creating an ebook with pandoc 日本語版
 
 原著バージョン: 2.18
 
-更新日: 2022/04/29
+更新日: 2023/01/01
 
 翻訳者（アルファベット順）:
 
@@ -193,9 +193,9 @@ Of course, this isn’t much help if you want EPUB2 output
 (``pandoc -t epub2``) or target readers that don’t support MathML. Then
 you have two options:
 
-1. Use the ```--webtex```_ option, which will use a web service to
+1. Use the |--webtex|_ option, which will use a web service to
    convert the TeX to an image.
-2. Use the ```--gladtex```_ option to convert maths into SVG images on
+2. Use the |--gladtex|_ option to convert maths into SVG images on
    your local machine.
 
 Both GladTeX and WebTeX add the LaTeX source of the formula as
@@ -218,6 +218,8 @@ alternative text of the image, increasing accessibility for blind users.
 .. _github site: https://github.com/progit/progit
 .. _User’s Guide: https://pandoc.org/MANUAL.html#epub-metadata
 .. _on GitHub: https://github.com/jgm/pandoc/blob/master/data/epub.css
-.. _``--webtex``: https://pandoc.org/MANUAL.html#option--webtex
-.. _``--gladtex``: https://pandoc.org/MANUAL.html#option--gladtex
+.. |--webtex| replace:: ``--webtex``
+.. _--webtex: https://pandoc.org/MANUAL.html#option--webtex
+.. |--gladtex| replace:: ``--gladtex``
+.. _--gladtex: https://pandoc.org/MANUAL.html#option--gladtex
 .. _git: https://git-scm.com

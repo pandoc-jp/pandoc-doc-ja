@@ -18,7 +18,7 @@ Pandoc User’s Guide 日本語版
 
 原著バージョン: 2.18
 
-更新日: 2022/04/29
+更新日: 2023/01/01
 
 翻訳者（アルファベット順）:
 
@@ -139,7 +139,7 @@ Character encoding
 
 Pandoc uses the UTF-8 character encoding for both input and output. If
 your local character encoding is not UTF-8, you should pipe input and
-output through ```iconv```_:
+output through |iconv|_:
 
 ::
 
@@ -179,29 +179,29 @@ representation: instead of ``-o test.pdf``, use for example
 with ``pdflatex test.tex``.
 
 When using LaTeX, the following packages need to be available (they are
-included with all recent versions of `TeX Live`_): ```amsfonts```_,
-```amsmath```_, ```lm```_, ```unicode-math```_, ```iftex```_,
-```listings```_ (if the ``--listings`` option is used), ```fancyvrb```_,
-```longtable```_, ```booktabs```_, ```graphicx```_ (if the document
-contains images), ```hyperref```_, ```xcolor```_, ```ulem```_,
-```geometry```_ (with the ``geometry`` variable set), ```setspace```_
-(with ``linestretch``), and ```babel```_ (with ``lang``). If
-``CJKmainfont`` is set, ```xeCJK```_ is needed. The use of ``xelatex``
-or ``lualatex`` as the PDF engine requires ```fontspec```_. ``lualatex``
-uses ```selnolig```_. ``xelatex`` uses ```bidi```_ (with the ``dir``
+included with all recent versions of `TeX Live`_): |amsfonts|_,
+|amsmath|_, |lm|_, |unicode-math|_, |iftex|_,
+|listings|_ (if the ``--listings`` option is used), |fancyvrb|_,
+|longtable|_, |booktabs|_, |graphicx|_ (if the document
+contains images), |hyperref|_, |xcolor|_, |ulem|_,
+|geometry|_ (with the ``geometry`` variable set), |setspace|_
+(with ``linestretch``), and |babel|_ (with ``lang``). If
+``CJKmainfont`` is set, |xeCJK|_ is needed. The use of ``xelatex``
+or ``lualatex`` as the PDF engine requires |fontspec|_. ``lualatex``
+uses |selnolig|_. ``xelatex`` uses |bidi|_ (with the ``dir``
 variable set). If the ``mathspec`` variable is set, ``xelatex`` will use
-```mathspec```_ instead of ```unicode-math```_. The ```upquote```_ and
-```microtype```_ packages are used if available, and ```csquotes```_
+|mathspec|_ instead of |unicode-math|_. The |upquote|_ and
+|microtype|_ packages are used if available, and |csquotes|_
 will be used for `typography`_ if the ``csquotes`` variable or metadata
-field is set to a true value. The ```natbib```_, ```biblatex```_,
-```bibtex```_, and ```biber```_ packages can optionally be used for
+field is set to a true value. The |natbib|_, |biblatex|_,
+|bibtex|_, and |biber|_ packages can optionally be used for
 `citation rendering`_. The following packages will be used to improve
 output quality if present, but pandoc does not require them to be
-present: ```upquote```_ (for straight quotes in verbatim environments),
-```microtype```_ (for better spacing adjustments), ```parskip```_ (for
-better inter-paragraph spaces), ```xurl```_ (for better line breaks in
-URLs), ```bookmark```_ (for better PDF bookmarks), and
-```footnotehyper```_ or ```footnote```_ (to allow footnotes in tables).
+present: |upquote|_ (for straight quotes in verbatim environments),
+|microtype|_ (for better spacing adjustments), |parskip|_ (for
+better inter-paragraph spaces), |xurl|_ (for better line breaks in
+URLs), |bookmark|_ (for better PDF bookmarks), and
+|footnotehyper|_ or |footnote|_ (to allow footnotes in tables).
 
 Reading from the Web
 --------------------
@@ -247,8 +247,8 @@ General options
       -  ``epub`` (`EPUB`_)
       -  ``fb2`` (`FictionBook2`_ e-book)
       -  ``gfm`` (`GitHub-Flavored Markdown`_), or the deprecated and
-         less accurate ``markdown_github``; use ```markdown_github```_
-         only if you need extensions not supported in ```gfm```_.
+         less accurate ``markdown_github``; use |markdown_github|_
+         only if you need extensions not supported in |gfm|_.
       -  ``haddock`` (`Haddock markup`_)
       -  ``html`` (`HTML`_)
       -  ``ipynb`` (`Jupyter notebook`_)
@@ -305,8 +305,8 @@ General options
       -  ``epub2`` (EPUB v2)
       -  ``fb2`` (`FictionBook2`_ e-book)
       -  ``gfm`` (`GitHub-Flavored Markdown`_), or the deprecated and
-         less accurate ``markdown_github``; use ```markdown_github```_
-         only if you need extensions not supported in ```gfm```_.
+         less accurate ``markdown_github``; use |markdown_github|_
+         only if you need extensions not supported in |gfm|_.
       -  ``haddock`` (`Haddock markup`_)
       -  ``html`` or ``html5`` (`HTML`_, i.e. `HTML5`_/XHTML `polyglot
          markup`_)
@@ -508,7 +508,7 @@ Reader options
    Filters may be written in any language. ``Text.Pandoc.JSON`` exports
    ``toJSONFilter`` to facilitate writing filters in Haskell. Those who
    would prefer to write filters in python can use the module
-   ```pandocfilters```_, installable from PyPI. There are also pandoc
+   |pandocfilters|_, installable from PyPI. There are also pandoc
    filter libraries in `PHP`_, `perl`_, and `JavaScript/node.js`_.
 
    In order of preference, pandoc will look for filters in
@@ -902,7 +902,7 @@ Options affecting specific writers
    Implies ``--number-sections``.
 
 ``--listings``
-   Use the ```listings```_ package for LaTeX code blocks. The package
+   Use the |listings|_ package for LaTeX code blocks. The package
    does not support multi-byte encoding for source code. To handle UTF-8
    you would need to use a custom template. This issue is fully
    documented here: `Encoding issue with the listings package`_.
@@ -1223,16 +1223,16 @@ Citation rendering
    subdirectory of the pandoc user data directory.
 
 ``--natbib``
-   Use ```natbib```_ for citations in LaTeX output. This option is not
+   Use |natbib|_ for citations in LaTeX output. This option is not
    for use with the ``--citeproc`` option or with PDF output. It is
    intended for use in producing a LaTeX file that can be processed with
-   ```bibtex```_.
+   |bibtex|_.
 
 ``--biblatex``
-   Use ```biblatex```_ for citations in LaTeX output. This option is not
+   Use |biblatex|_ for citations in LaTeX output. This option is not
    for use with the ``--citeproc`` option or with PDF output. It is
    intended for use in producing a LaTeX file that can be processed with
-   ```bibtex```_ or ```biber```_.
+   |bibtex|_ or |biber|_.
 
 Math rendering in HTML
 ----------------------
@@ -2388,7 +2388,7 @@ Language variables
    (following the `BCP 47`_ standard), such as ``en`` or ``en-GB``. The
    `Language subtag lookup`_ tool can look up or verify these tags. This
    affects most formats, and controls hyphenation in PDF output when
-   using LaTeX (through ```babel```_ and ```polyglossia```_) or ConTeXt.
+   using LaTeX (through |babel|_ and |polyglossia|_) or ConTeXt.
 
    Use native pandoc `Divs and Spans`_ with the ``lang`` attribute to
    switch the language:
@@ -2427,7 +2427,7 @@ Variables for HTML
    Enables inclusion of most of the `CSS`_ in the ``styles.html``
    `partial`_ (have a look with
    ``pandoc --print-default-data-file=templates/styles.html``). Unless
-   you use ```--css```_, this variable is set to ``true`` by default.
+   you use |--css|_, this variable is set to ``true`` by default.
    You can disable it with e.g. ``pandoc -M document-css=false``.
 ``mainfont``
    sets the CSS ``font-family`` property on the ``html`` element.
@@ -2511,7 +2511,7 @@ turn off boolean flags that default to true in reveal.js, use ``0``.
 Variables for Beamer slides
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These variables change the appearance of PDF slides using ```beamer```_.
+These variables change the appearance of PDF slides using |beamer|_.
 
 ``aspectratio``
    slide aspect ratio (``43`` for 4:3 [default], ``169`` for 16:9,
@@ -2590,12 +2590,12 @@ Layout
       ...
 
 ``documentclass``
-   document class: usually one of the standard classes, ```article```_,
-   ```book```_, and ```report```_; the `KOMA-Script`_ equivalents,
+   document class: usually one of the standard classes, |article|_,
+   |book|_, and |report|_; the `KOMA-Script`_ equivalents,
    ``scrartcl``, ``scrbook``, and ``scrreprt``, which default to smaller
-   margins; or ```memoir```_
+   margins; or |memoir|_
 ``geometry``
-   option for ```geometry```_ package, e.g. ``margin=1in``; repeat for
+   option for |geometry|_ package, e.g. ``margin=1in``; repeat for
    multiple options:
 
    ::
@@ -2608,7 +2608,7 @@ Layout
       ...
 
 ``hyperrefoptions``
-   option for ```hyperref```_ package, e.g. ``linktoc=all``; repeat for
+   option for |hyperref|_ package, e.g. ``linktoc=all``; repeat for
    multiple options:
 
    ::
@@ -2625,7 +2625,7 @@ Layout
    default LaTeX template otherwise removes indentation and adds space
    between paragraphs)
 ``linestretch``
-   adjusts line spacing using the ```setspace```_ package,
+   adjusts line spacing using the |setspace|_ package,
    e.g. ``1.25``, ``1.5``
 ``margin-left``, ``margin-right``, ``margin-top``, ``margin-bottom``
    sets margins if ``geometry`` is not used (otherwise ``geometry``
@@ -2656,7 +2656,7 @@ Fonts
 ``fontfamilyoptions``
    options for package used as ``fontfamily``; repeat for multiple
    options. For example, to use the Libertine font with proportional
-   lowercase (old-style) figures through the ```libertinus```_ package:
+   lowercase (old-style) figures through the |libertinus|_ package:
 
    ::
 
@@ -2673,12 +2673,12 @@ Fonts
    `KOMA-Script`_ classes, such as ``scrartcl`` or ``scrbook``.
 ``mainfont``, ``sansfont``, ``monofont``, ``mathfont``, ``CJKmainfont``
    font families for use with ``xelatex`` or ``lualatex``: take the name
-   of any system font, using the ```fontspec```_ package.
-   ``CJKmainfont`` uses the ```xecjk```_ package.
+   of any system font, using the |fontspec|_ package.
+   ``CJKmainfont`` uses the |xecjk|_ package.
 ``mainfontoptions``, ``sansfontoptions``, ``monofontoptions``, ``mathfontoptions``, ``CJKoptions``
    options to use with ``mainfont``, ``sansfont``, ``monofont``,
    ``mathfont``, ``CJKmainfont`` in ``xelatex`` and ``lualatex``. Allow
-   for any choices available through ```fontspec```_; repeat for
+   for any choices available through |fontspec|_; repeat for
    multiple options. For example, to use the `TeX Gyre`_ version of
    Palatino with lowercase figures:
 
@@ -2704,7 +2704,7 @@ Links
 ``linkcolor``, ``filecolor``, ``citecolor``, ``urlcolor``, ``toccolor``
    color for internal links, external links, citation links, linked
    URLs, and links in table of contents, respectively: uses options
-   allowed by ```xcolor```_, including the ``dvipsnames``, ``svgnames``,
+   allowed by |xcolor|_, including the ``dvipsnames``, ``svgnames``,
    and ``x11names`` lists
 ``links-as-notes``
    causes links to be printed as footnotes
@@ -2753,7 +2753,7 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    `ConTeXt Indentation`_); repeat for multiple options
 ``interlinespace``
    adjusts line spacing, e.g. ``4ex`` (using
-   ```setupinterlinespace```_); repeat for multiple options
+   |setupinterlinespace|_); repeat for multiple options
 ``layout``
    options for page margins and text arrangement (see `ConTeXt
    Layout`_); repeat for multiple options
@@ -2772,7 +2772,7 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    sets margins, if ``layout`` is not used (otherwise ``layout``
    overrides these)
 ``pagenumbering``
-   page number style and location (using ```setuppagenumbering```_);
+   page number style and location (using |setuppagenumbering|_);
    repeat for multiple options
 ``papersize``
    paper size, e.g. ``letter``, ``A4``, ``landscape`` (see `ConTeXt
@@ -2804,7 +2804,7 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    ``--toc/--table-of-contents``)
 ``whitespace``
    spacing between paragraphs, e.g. ``none``, ``small`` (using
-   ```setupwhitespace```_)
+   |setupwhitespace|_)
 ``includesource``
    include all source documents as file attachments in the PDF file
 
@@ -2812,7 +2812,7 @@ Variables for ``wkhtmltopdf``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pandoc uses these variables when `creating a PDF`_ with
-```wkhtmltopdf```_. The ``--css`` option also affects the output.
+|wkhtmltopdf|_. The ``--css`` option also affects the output.
 
 ``footer-html``, ``header-html``
    add information to the header and footer
@@ -2935,7 +2935,7 @@ Typography
 ----------
 
 Extension: ``smart``
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 Interpret straight quotes as curly quotes, ``---`` as em-dashes, ``--``
 as en-dashes, and ``...`` as ellipses. Nonbreaking spaces are inserted
@@ -2968,7 +2968,7 @@ Headings and sections
 ---------------------
 
 Extension: ``auto_identifiers``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A heading without an explicitly specified identifier will be
 automatically assigned a unique identifier based on the heading text.
@@ -3038,14 +3038,14 @@ sections to be manipulated using JavaScript or treated differently in
 CSS.
 
 Extension: ``ascii_identifiers``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Causes the identifiers produced by ``auto_identifiers`` to be pure
 ASCII. Accents are stripped off of accented Latin letters, and non-Latin
 letters are omitted.
 
 Extension: ``gfm_auto_identifiers``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Changes the algorithm used by ``auto_identifiers`` to conform to
 GitHub’s method. Spaces are converted to dashes (``-``), uppercase
@@ -3055,8 +3055,8 @@ than ``-`` and ``_`` are removed. Emojis are replaced by their names.
 Math Input
 ----------
 
-The extensions ```tex_math_dollars```_,
-```tex_math_single_backslash```_, and ```tex_math_double_backslash```_
+The extensions |tex_math_dollars|_,
+|tex_math_single_backslash|_, and |tex_math_double_backslash|_
 are described in the section about Pandoc’s Markdown.
 
 However, they can also be used with HTML input. This is handy for
@@ -3068,11 +3068,11 @@ Raw HTML/TeX
 The following extensions are described in more detail in their
 respective sections of `Pandoc’s Markdown`_:
 
--  ```raw_html```_ allows HTML elements which are not representable in
+-  |raw_html|_ allows HTML elements which are not representable in
    pandoc’s AST to be parsed as raw HTML. By default, this is disabled
    for HTML input.
 
--  ```raw_tex```_ allows raw LaTeX, TeX, and ConTeXt to be included in a
+-  |raw_tex|_ allows raw LaTeX, TeX, and ConTeXt to be included in a
    document. This extension can be enabled/disabled for the following
    formats (in addition to ``markdown``):
 
@@ -3090,11 +3090,11 @@ respective sections of `Pandoc’s Markdown`_:
    when converting to formats like ``docx`` which don’t allow raw
    ``html`` or ``tex``.
 
--  ```native_divs```_ causes HTML ``div`` elements to be parsed as
+-  |native_divs|_ causes HTML ``div`` elements to be parsed as
    native pandoc Div blocks. If you want them to be parsed as raw HTML,
    use ``-f html-native_divs+raw_html``.
 
--  ```native_spans```_ causes HTML ``span`` elements to be parsed as
+-  |native_spans|_ causes HTML ``span`` elements to be parsed as
    native pandoc Span inlines. If you want them to be parsed as raw
    HTML, use ``-f html-native_spans+raw_html``. If you want to drop all
    ``div``\ s and ``span``\ s when converting HTML to Markdown, you can
@@ -3104,7 +3104,7 @@ Literate Haskell support
 ------------------------
 
 Extension: ``literate_haskell``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Treat the document as literate Haskell source.
 
@@ -3171,7 +3171,7 @@ Other extensions
 ----------------
 
 Extension: ``empty_paragraphs``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allows empty paragraphs. By default empty paragraphs are omitted.
 
@@ -3183,7 +3183,7 @@ output formats
    ``docx``, ``odt``, ``opendocument``, ``html``
 
 Extension: ``native_numbering``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Enables native numbering of figures and tables. Enumeration starts at 1.
 
@@ -3193,7 +3193,7 @@ output formats
    ``odt``, ``opendocument``, ``docx``
 
 Extension: ``xrefs_name``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Links to headings, figures and tables inside the document are
 substituted with cross-references that will use the name or caption of
@@ -3210,7 +3210,7 @@ output formats
    ``odt``, ``opendocument``
 
 Extension: ``xrefs_number``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Links to headings, figures and tables inside the document are
 substituted with cross-references that will use the number of the
@@ -3233,7 +3233,7 @@ output formats
 .. _ext-styles:
 
 Extension: ``styles``
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 When converting from docx, read all docx styles as divs (for paragraph
 styles) and spans (for character styles) regardless of whether pandoc
@@ -3244,13 +3244,13 @@ input formats
    ``docx``
 
 Extension: ``amuse``
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 In the ``muse`` input format, this enables Text::Amuse extensions to
 Emacs Muse markup.
 
 Extension: ``raw_markdown``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``ipynb`` input format, this causes Markdown cells to be included
 as raw Markdown blocks (allowing lossless round-tripping) rather than
@@ -3260,7 +3260,7 @@ markdown-based output format.
 .. _org-citations:
 
 Extension: ``citations``
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 When the ``citations`` extension is enabled in ``org``, org-cite and
 org-ref style citations will be parsed as native pandoc citations.
@@ -3273,7 +3273,7 @@ bibliographic software will be parsed as regular text.)
 .. _org-fancy-lists:
 
 Extension: ``fancy_lists``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some aspects of `Pandoc’s Markdown fancy lists`_ are also accepted in
 ``org`` input, mimicking the option ``org-list-allow-alphabetical`` in
@@ -3284,7 +3284,7 @@ numerals or the ``#`` placeholder that are enabled by the extension in
 Pandoc’s Markdown.
 
 Extension: ``element_citations``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``jats`` output formats, this causes reference items to be
 replaced with ``<element-citation>`` elements. These elements are not
@@ -3292,7 +3292,7 @@ influenced by CSL styles, but all information on the item is included in
 tags.
 
 Extension: ``ntb``
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 In the ``context`` output format this enables the use of `Natural Tables
 (TABLE)`_ instead of the default `Extreme Tables (xtables)`_. Natural
@@ -3341,7 +3341,7 @@ as you like. If you need a hard line break, put two or more spaces at
 the end of a line.
 
 Extension: ``escaped_line_breaks``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A backslash followed by a newline is also a hard line break. Note: in
 multiline and grid table cells, this is the only way to create a hard
@@ -3567,7 +3567,7 @@ block quote, you need five spaces after the ``>``:
    >     code
 
 Extension: ``blank_before_blockquote``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Original Markdown syntax does not require a blank line before a block
 quote. Pandoc does require this (except, of course, at the beginning of
@@ -3708,7 +3708,7 @@ Line blocks
 -----------
 
 Extension: ``line_blocks``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A line block is a sequence of lines beginning with a vertical bar
 (``|``) followed by a space. The division into lines will be preserved
@@ -4108,7 +4108,7 @@ with proportionally spaced fonts, as it does not require lining up
 columns.
 
 Extension: ``table_captions``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A caption may optionally be provided with all 4 kinds of tables (as
 illustrated in the examples below). A caption is a paragraph beginning
@@ -4116,7 +4116,7 @@ with the string ``Table:`` (or just ``:``), which will be stripped off.
 It may appear either before or after the table.
 
 Extension: ``simple_tables``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Simple tables look like this:
 
@@ -4162,7 +4162,7 @@ basis of the first line of the table body. So, in the tables above, the
 columns would be right, left, center, and right aligned, respectively.
 
 Extension: ``multiline_tables``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Multiline tables allow header and table rows to span multiple lines of
 text (but cells that span multiple columns or rows of the table are not
@@ -4217,7 +4217,7 @@ should be followed by a blank line (and then the row of dashes that ends
 the table), or the table may be interpreted as a simple table.
 
 Extension: ``grid_tables``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Grid tables look like this:
 
@@ -4262,7 +4262,7 @@ For headerless tables, the colons go on the top line instead:
    +---------------+---------------+--------------------+
 
 Grid Table Limitations
-''''''''''''''''''''''
+^^^^^^^^^^^^^^^^^^^^^^
 
 Pandoc does not support grid tables with row spans or column spans. This
 means that neither variable numbers of columns across rows nor variable
@@ -4333,7 +4333,7 @@ Metadata blocks
 ---------------
 
 Extension: ``pandoc_title_block``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the file begins with a title block
 
@@ -4429,7 +4429,7 @@ will also have “Pandoc User Manuals” in the footer.
 will also have “Version 4.0” in the header.
 
 Extension: ``yaml_metadata_block``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A `YAML`_ metadata block is a valid YAML object, delimited by a line of
 three hyphens (``---``) at the top and a line of three hyphens (``---``)
@@ -4568,7 +4568,7 @@ Backslash escapes
 -----------------
 
 Extension: ``all_symbols_escapable``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Except inside a code block or inline code, any punctuation or space
 character preceded by a backslash will be treated literally, even if it
@@ -4772,7 +4772,7 @@ Math
 ----
 
 Extension: ``tex_math_dollars``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Anything between two ``$`` characters will be treated as TeX math. The
 opening ``$`` must have a non-space character immediately to its right,
@@ -4836,7 +4836,7 @@ Raw HTML
 --------
 
 Extension: ``raw_html``
-^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Markdown allows you to insert raw HTML (or DocBook) anywhere in a
 document (except verbatim contexts, where ``<``, ``>``, and ``&`` are
@@ -4858,7 +4858,7 @@ Otherwise, plain-text fallbacks will be used. Note that even if
 they cannot use pipe syntax.
 
 Extension: ``markdown_in_html_blocks``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Original Markdown allows you to include HTML “blocks”: blocks of HTML
 between balanced tags that are separated from the surrounding text with
@@ -4901,7 +4901,7 @@ of Markdown text with ``<div>`` tags without preventing it from being
 interpreted as Markdown.
 
 Extension: ``native_divs``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use native pandoc ``Div`` blocks for content inside ``<div>`` tags. For
 the most part this should give the same output as
@@ -4909,7 +4909,7 @@ the most part this should give the same output as
 filters to manipulate groups of blocks.
 
 Extension: ``native_spans``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use native pandoc ``Span`` blocks for content inside ``<span>`` tags.
 For the most part this should give the same output as ``raw_html``, but
@@ -4917,7 +4917,7 @@ it makes it easier to write pandoc filters to manipulate groups of
 inlines.
 
 Extension: ``raw_tex``
-^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to raw HTML, pandoc allows raw LaTeX, TeX, and ConTeXt to be
 included in a document. Inline TeX commands will be preserved and passed
@@ -5001,7 +5001,7 @@ LaTeX macros
 ------------
 
 Extension: ``latex_macros``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When this extension is enabled, pandoc will parse LaTeX macro
 definitions and apply the resulting macros to all LaTeX math and raw
@@ -5181,7 +5181,7 @@ link text will be used as the image’s alt text:
    [movie reel]: movie.gif
 
 Extension: ``implicit_figures``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An image with nonempty alt text, occurring by itself in a paragraph,
 will be rendered as a figure with a caption. The image’s alt text will
@@ -5208,7 +5208,7 @@ that has the ``r-stretch`` class will fill the screen, and the caption
 and figure tags will be omitted.
 
 Extension: ``link_attributes``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Attributes can be set on links and images:
 
@@ -5270,7 +5270,7 @@ Using the ``native_divs`` and ``native_spans`` extensions (see
 HTML). However, there is also nicer syntax available:
 
 Extension: ``fenced_divs``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allow special fenced syntax for native ``Div`` blocks. A Div starts with
 a fence containing at least three consecutive colons plus some
@@ -5313,7 +5313,7 @@ clarity to use fences of different lengths to distinguish nested divs
 from their parents.
 
 Extension: ``bracketed_spans``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A bracketed sequence of inlines, as one would use to begin a link, will
 be treated as a ``Span`` with attributes if it is followed immediately
@@ -5327,7 +5327,7 @@ Footnotes
 ---------
 
 Extension: ``footnotes``
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pandoc’s Markdown allows footnotes, using the following syntax:
 
@@ -5362,7 +5362,7 @@ block quotes, tables, etc.). Each footnote should be separated from
 surrounding content (including other footnotes) by blank lines.
 
 Extension: ``inline_notes``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Inline footnotes are also allowed (though, unlike regular notes, they
 cannot contain multiple paragraphs). The syntax is as follows:
@@ -5379,7 +5379,7 @@ Citation syntax
 ---------------
 
 Extension: ``citations``
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To cite a bibliographic item with an identifier foo, use the syntax
 ``@foo``. Normal citations should be included in square brackets, with
@@ -5492,7 +5492,7 @@ where ``EXTENSION`` is the name of the extension. Thus, for example,
 ``markdown+hard_line_breaks`` is Markdown with hard line breaks.
 
 Extension: ``rebase_relative_paths``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Rewrite relative paths for Markdown links and images, depending on the
 path of the file containing the link or image link. For each link or
@@ -5525,11 +5525,11 @@ relative to the file containing the link reference definition, not the
 file containing the reference link or image itself, if these differ.
 
 Extension: ``attributes``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allows attributes to be attached to any inline or block-level element
 when parsing ``commonmark``. The syntax for the attributes is the same
-as that used in ```header_attributes```_.
+as that used in |header_attributes|_.
 
 -  Attributes that occur immediately after an inline element affect that
    element. If they follow a space, then they belong to the space.
@@ -5553,7 +5553,7 @@ attached to arbitrary elements. Hence a Span or Div container will be
 added if needed.
 
 Extension: ``old_dashes``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Selects the pandoc <= 1.8.2.1 behavior for parsing smart dashes: ``-``
 before a numeral is an en-dash, and ``--`` is an em-dash. This option
@@ -5561,26 +5561,26 @@ only has an effect if ``smart`` is enabled. It is selected automatically
 for ``textile`` input.
 
 Extension: ``angle_brackets_escapable``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allow ``<`` and ``>`` to be backslash-escaped, as they can be in GitHub
 flavored Markdown but not original Markdown. This is implied by pandoc’s
 default ``all_symbols_escapable``.
 
 Extension: ``lists_without_preceding_blankline``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allow a list to occur right after a paragraph, with no intervening blank
 space.
 
 Extension: ``four_space_rule``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Selects the pandoc <= 2.0 behavior for parsing lists, so that four
 spaces indent are needed for list item continuation paragraphs.
 
 Extension: ``spaced_reference_links``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Allow whitespace between the two components of a reference link, for
 example,
@@ -5590,13 +5590,13 @@ example,
    [foo] [bar].
 
 Extension: ``hard_line_breaks``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Causes all newlines within a paragraph to be interpreted as hard line
 breaks instead of spaces.
 
 Extension: ``ignore_line_breaks``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Causes newlines within a paragraph to be ignored, rather than being
 treated as spaces or as hard line breaks. This option is intended for
@@ -5604,7 +5604,7 @@ use with East Asian languages where spaces are not used between words,
 but text is divided into lines for readability.
 
 Extension: ``east_asian_line_breaks``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Causes newlines within a paragraph to be ignored, rather than being
 treated as spaces or as hard line breaks, when they occur between two
@@ -5613,12 +5613,12 @@ East Asian wide characters. This is a better choice than
 characters and other characters.
 
 Extension: ``emoji``
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 Parses textual emojis like ``:smile:`` as Unicode emoticons.
 
 Extension: ``tex_math_single_backslash``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Causes anything between ``\(`` and ``\)`` to be interpreted as inline
 TeX math, and anything between ``\[`` and ``\]`` to be interpreted as
@@ -5626,14 +5626,14 @@ display TeX math. Note: a drawback of this extension is that it
 precludes escaping ``(`` and ``[``.
 
 Extension: ``tex_math_double_backslash``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Causes anything between ``\\(`` and ``\\)`` to be interpreted as inline
 TeX math, and anything between ``\\[`` and ``\\]`` to be interpreted as
 display TeX math.
 
 Extension: ``markdown_attribute``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, pandoc interprets material inside block-level tags as
 Markdown. This extension changes the behavior so that Markdown is only
@@ -5641,7 +5641,7 @@ parsed inside block-level tags if the tags have the attribute
 ``markdown=1``.
 
 Extension: ``mmd_title_block``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Enables a `MultiMarkdown`_ style title block at the top of the document,
 for example:
@@ -5659,7 +5659,7 @@ See the MultiMarkdown documentation for details. If
 take precedence over ``mmd_title_block``.
 
 Extension: ``abbreviations``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parses PHP Markdown Extra abbreviation keys, like
 
@@ -5672,17 +5672,17 @@ if this extension is enabled, abbreviation keys are simply skipped (as
 opposed to being parsed as paragraphs).
 
 Extension: ``autolink_bare_uris``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Makes all absolute URIs into links, even when not surrounded by pointy
 braces ``<...>``.
 
 Extension: ``mmd_link_attributes``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parses multimarkdown style key-value attributes on link and image
 references. This extension should not be confused with the
-```link_attributes```_ extension.
+|link_attributes|_ extension.
 
 ::
 
@@ -5692,13 +5692,13 @@ references. This extension should not be confused with the
           id=myId class="myClass1 myClass2"
 
 Extension: ``mmd_header_identifiers``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parses multimarkdown style heading identifiers (in square brackets,
 after the heading but before any trailing ``#``\ s in an ATX heading).
 
 Extension: ``compact_definition_lists``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Activates the definition list syntax of pandoc 1.12.x and earlier. This
 syntax differs from the one described above under `Definition lists`_ in
@@ -5713,14 +5713,14 @@ several respects:
    must be indented four spaces. [4]_
 
 Extension: ``gutenberg``
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use `Project Gutenberg`_ conventions for ``plain`` output: all-caps for
 strong emphasis, surround by underscores for regular emphasis, add extra
 blank space around headings.
 
 Extension: ``sourcepos``
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Include source position attributes when parsing ``commonmark``. For
 elements that accept attributes, a ``data-pos`` attribute is added;
@@ -5728,7 +5728,7 @@ other elements are placed in a surrounding Div or Span element with a
 ``data-pos`` attribute.
 
 Extension: ``short_subsuperscripts``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parse multimarkdown style subscripts and superscripts, which start with
 a ‘~’ or ‘^’ character, respectively, and include the alphanumeric
@@ -6109,7 +6109,7 @@ or not they appear in the document, by using a wildcard:
      @*
    ...
 
-For LaTeX output, you can also use ```natbib```_ or ```biblatex```_ to
+For LaTeX output, you can also use |natbib|_ or |biblatex|_ to
 render the bibliography. In order to do so, specify bibliography files
 as outlined above, and add ``--natbib`` or ``--biblatex`` argument to
 pandoc invocation. Bear in mind that bibliography files have to be in
@@ -6168,7 +6168,7 @@ Slide shows
 You can use pandoc to produce an HTML + JavaScript slide presentation
 that can be viewed via a web browser. There are five ways to do this,
 using `S5`_, `DZSlides`_, `Slidy`_, `Slideous`_, or `reveal.js`_. You
-can also produce a PDF slide show using LaTeX ```beamer```_, or slides
+can also produce a PDF slide show using LaTeX |beamer|_, or slides
 shows in Microsoft `PowerPoint`_ format.
 
 Here’s the Markdown source for a simple slide show, ``habits.txt``:
@@ -7273,47 +7273,81 @@ code.
 .. _pandoc filters: https://pandoc.org/filters.html
 .. _Templates: #templates
 .. _Options: #options
-.. _``iconv``: https://www.gnu.org/software/libiconv/
+.. |iconv| replace:: ``iconv``
+.. _iconv: https://www.gnu.org/software/libiconv/
 .. _variables for LaTeX: #variables-for-latex
 .. _variables for ConTeXt: #variables-for-context
 .. _variables for ``wkhtmltopdf``: #variables-for-wkhtmltopdf
 .. _variables for ms: #variables-for-ms
 .. _TeX Live: https://www.tug.org/texlive/
-.. _``amsfonts``: https://ctan.org/pkg/amsfonts
-.. _``amsmath``: https://ctan.org/pkg/amsmath
-.. _``lm``: https://ctan.org/pkg/lm
-.. _``unicode-math``: https://ctan.org/pkg/unicode-math
-.. _``iftex``: https://ctan.org/pkg/iftex
-.. _``listings``: https://ctan.org/pkg/listings
-.. _``fancyvrb``: https://ctan.org/pkg/fancyvrb
-.. _``longtable``: https://ctan.org/pkg/longtable
-.. _``booktabs``: https://ctan.org/pkg/booktabs
-.. _``graphicx``: https://ctan.org/pkg/graphicx
-.. _``hyperref``: https://ctan.org/pkg/hyperref
-.. _``xcolor``: https://ctan.org/pkg/xcolor
-.. _``ulem``: https://ctan.org/pkg/ulem
-.. _``geometry``: https://ctan.org/pkg/geometry
-.. _``setspace``: https://ctan.org/pkg/setspace
-.. _``babel``: https://ctan.org/pkg/babel
-.. _``xeCJK``: https://ctan.org/pkg/xecjk
-.. _``fontspec``: https://ctan.org/pkg/fontspec
-.. _``selnolig``: https://ctan.org/pkg/selnolig
-.. _``bidi``: https://ctan.org/pkg/bidi
-.. _``mathspec``: https://ctan.org/pkg/mathspec
-.. _``upquote``: https://ctan.org/pkg/upquote
-.. _``microtype``: https://ctan.org/pkg/microtype
-.. _``csquotes``: https://ctan.org/pkg/csquotes
+.. |amsfonts| replace:: ``amsfonts``
+.. _amsfonts: https://ctan.org/pkg/amsfonts
+.. |amsmath| replace:: ``amsmath``
+.. _amsmath: https://ctan.org/pkg/amsmath
+.. |lm| replace:: ``lm``
+.. _lm: https://ctan.org/pkg/lm
+.. |unicode-math| replace:: ``unicode-math``
+.. _unicode-math: https://ctan.org/pkg/unicode-math
+.. |iftex| replace:: ``iftex``
+.. _iftex: https://ctan.org/pkg/iftex
+.. |listings| replace:: ``listings``
+.. _listings: https://ctan.org/pkg/listings
+.. |fancyvrb| replace:: ``fancyvrb``
+.. _fancyvrb: https://ctan.org/pkg/fancyvrb
+.. |longtable| replace:: ``longtable``
+.. _longtable: https://ctan.org/pkg/longtable
+.. |booktabs| replace:: ``booktabs``
+.. _booktabs: https://ctan.org/pkg/booktabs
+.. |graphicx| replace:: ``graphicx``
+.. _graphicx: https://ctan.org/pkg/graphicx
+.. |hyperref| replace:: ``hyperref``
+.. _hyperref: https://ctan.org/pkg/hyperref
+.. |xcolor| replace:: ``xcolor``
+.. _xcolor: https://ctan.org/pkg/xcolor
+.. |ulem| replace:: ``ulem``
+.. _ulem: https://ctan.org/pkg/ulem
+.. |geometry| replace:: ``geometry``
+.. _geometry: https://ctan.org/pkg/geometry
+.. |setspace| replace:: ``setspace``
+.. _setspace: https://ctan.org/pkg/setspace
+.. |babel| replace:: ``babel``
+.. _babel: https://ctan.org/pkg/babel
+.. |xeCJK| replace:: ``xeCJK``
+.. _xeCJK: https://ctan.org/pkg/xecjk
+.. |fontspec| replace:: ``fontspec``
+.. _fontspec: https://ctan.org/pkg/fontspec
+.. |selnolig| replace:: ``selnolig``
+.. _selnolig: https://ctan.org/pkg/selnolig
+.. |bidi| replace:: ``bidi``
+.. _bidi: https://ctan.org/pkg/bidi
+.. |mathspec| replace:: ``mathspec``
+.. _mathspec: https://ctan.org/pkg/mathspec
+.. |upquote| replace:: ``upquote``
+.. _upquote: https://ctan.org/pkg/upquote
+.. |microtype| replace:: ``microtype``
+.. _microtype: https://ctan.org/pkg/microtype
+.. |csquotes| replace:: ``csquotes``
+.. _csquotes: https://ctan.org/pkg/csquotes
 .. _typography: #typography
-.. _``natbib``: https://ctan.org/pkg/natbib
-.. _``biblatex``: https://ctan.org/pkg/biblatex
-.. _``bibtex``: https://ctan.org/pkg/bibtex
-.. _``biber``: https://ctan.org/pkg/biber
+.. |natbib| replace:: ``natbib``
+.. _natbib: https://ctan.org/pkg/natbib
+.. |biblatex| replace:: ``biblatex``
+.. _biblatex: https://ctan.org/pkg/biblatex
+.. |bibtex| replace:: ``bibtex``
+.. _bibtex: https://ctan.org/pkg/bibtex
+.. |biber| replace:: ``biber``
+.. _biber: https://ctan.org/pkg/biber
 .. _citation rendering: #citation-rendering-1
-.. _``parskip``: https://ctan.org/pkg/parskip
-.. _``xurl``: https://ctan.org/pkg/xurl
-.. _``bookmark``: https://ctan.org/pkg/bookmark
-.. _``footnotehyper``: https://ctan.org/pkg/footnotehyper
-.. _``footnote``: https://ctan.org/pkg/footnote
+.. |parskip| replace:: ``parskip``
+.. _parskip: https://ctan.org/pkg/parskip
+.. |xurl| replace:: ``xurl``
+.. _xurl: https://ctan.org/pkg/xurl
+.. |bookmark| replace:: ``bookmark``
+.. _bookmark: https://ctan.org/pkg/bookmark
+.. |footnotehyper| replace:: ``footnotehyper``
+.. _footnotehyper: https://ctan.org/pkg/footnotehyper
+.. |footnote| replace:: ``footnote``
+.. _footnote: https://ctan.org/pkg/footnote
 .. _BibTeX: https://ctan.org/pkg/bibtex
 .. _BibLaTeX: https://ctan.org/pkg/biblatex
 .. _CommonMark: https://commonmark.org
@@ -7326,8 +7360,10 @@ code.
 .. _EPUB: http://idpf.org/epub
 .. _FictionBook2: http://www.fictionbook.org/index.php/Eng:XML_Schema_Fictionbook_2.1
 .. _GitHub-Flavored Markdown: https://help.github.com/articles/github-flavored-markdown/
-.. _``markdown_github``: #markdown-variants
-.. _``gfm``: #markdown-variants
+.. |markdown_github| replace:: ``markdown_github``
+.. _markdown_github: #markdown-variants
+.. |gfm| replace:: ``gfm``
+.. _gfm: #markdown-variants
 .. _Haddock markup: https://www.haskell.org/haddock/doc/html/ch03s08.html
 .. _Jupyter notebook: https://nbformat.readthedocs.io/en/latest/
 .. _JATS: https://jats.nlm.nih.gov
@@ -7373,7 +7409,8 @@ code.
 .. _XWiki markup: https://www.xwiki.org/xwiki/bin/view/Documentation/UserGuide/Features/XWikiSyntax/
 .. _ZimWiki markup: https://zim-wiki.org/manual/Help/Wiki_Syntax.html
 .. _Defaults files: #defaults-files
-.. _``pandocfilters``: https://github.com/jgm/pandocfilters
+.. |pandocfilters| replace:: ``pandocfilters``
+.. _pandocfilters: https://github.com/jgm/pandocfilters
 .. _PHP: https://github.com/vinai/pandocfilters-php
 .. _perl: https://metacpan.org/pod/Pandoc::Filter
 .. _JavaScript/node.js: https://github.com/mvhenderson/pandoc-filter-node
@@ -7402,48 +7439,68 @@ code.
 .. _YAML: https://yaml.org/spec/1.2/spec.html
 .. _BCP 47: https://tools.ietf.org/html/bcp47
 .. _Language subtag lookup: https://r12a.github.io/app-subtags/
-.. _``polyglossia``: https://ctan.org/pkg/polyglossia
+.. |polyglossia| replace:: ``polyglossia``
+.. _polyglossia: https://ctan.org/pkg/polyglossia
 .. _Divs and Spans: #divs-and-spans
 .. _Unicode Bidirectional Algorithm: https://www.w3.org/International/articles/inline-bidi-markup/uba-basics
 .. _CSS: https://developer.mozilla.org/en-US/docs/Learn/CSS
 .. _partial: #partials
-.. _``--css``: #option--css
+.. |--css| replace:: ``--css``
+.. _--css: #option--css
 .. _YAML metadata: #layout
 .. _reveal.js configuration options: https://revealjs.com/config/
-.. _``beamer``: https://ctan.org/pkg/beamer
+.. |beamer| replace:: ``beamer``
+.. _beamer: https://ctan.org/pkg/beamer
 .. _KOMA-Script: https://ctan.org/pkg/koma-script
-.. _``article``: https://ctan.org/pkg/article
-.. _``book``: https://ctan.org/pkg/book
-.. _``report``: https://ctan.org/pkg/report
-.. _``memoir``: https://ctan.org/pkg/memoir
+.. |article| replace:: ``article``
+.. _article: https://ctan.org/pkg/article
+.. |book| replace:: ``book``
+.. _book: https://ctan.org/pkg/book
+.. |report| replace:: ``report``
+.. _report: https://ctan.org/pkg/report
+.. |memoir| replace:: ``memoir``
+.. _memoir: https://ctan.org/pkg/memoir
 .. _LaTeX font encodings guide: https://ctan.org/pkg/encguide
 .. _LaTeX Font Catalogue: https://tug.org/FontCatalogue/
 .. _Latin Modern: https://ctan.org/pkg/lm
-.. _``libertinus``: https://ctan.org/pkg/libertinus
-.. _``xecjk``: https://ctan.org/pkg/xecjk
+.. |libertinus| replace:: ``libertinus``
+.. _libertinus: https://ctan.org/pkg/libertinus
+.. |xecjk| replace:: ``xecjk``
+.. _xecjk: https://ctan.org/pkg/xecjk
 .. _TeX Gyre: http://www.gust.org.pl/projects/e-foundry/tex-gyre
 .. _citation rendering: #citation-rendering-1
 .. _ConTeXt Headers and Footers: https://wiki.contextgarden.net/Headers_and_Footers
 .. _ConTeXt Indentation: https://wiki.contextgarden.net/Indentation
-.. _``setupinterlinespace``: https://wiki.contextgarden.net/Command/setupinterlinespace
+.. |setupinterlinespace| replace:: ``setupinterlinespace``
+.. _setupinterlinespace: https://wiki.contextgarden.net/Command/setupinterlinespace
 .. _ConTeXt Layout: https://wiki.contextgarden.net/Layout
 .. _ConTeXt Color: https://wiki.contextgarden.net/Color
 .. _ConTeXt Font Switching: https://wiki.contextgarden.net/Font_Switching
-.. _``setuppagenumbering``: https://wiki.contextgarden.net/Command/setuppagenumbering
+.. |setuppagenumbering| replace:: ``setuppagenumbering``
+.. _setuppagenumbering: https://wiki.contextgarden.net/Command/setuppagenumbering
 .. _ConTeXt Paper Setup: https://wiki.contextgarden.net/PaperSetup
 .. _ConTeXt PDFA: https://wiki.contextgarden.net/PDF/A
 .. _ConTeXt ICC Profiles: https://wiki.contextgarden.net/PDFX#ICC_profiles
-.. _``setupwhitespace``: https://wiki.contextgarden.net/Command/setupwhitespace
-.. _``wkhtmltopdf``: https://wkhtmltopdf.org
+.. |setupwhitespace| replace:: ``setupwhitespace``
+.. _setupwhitespace: https://wiki.contextgarden.net/Command/setupwhitespace
+.. |wkhtmltopdf| replace:: ``wkhtmltopdf``
+.. _wkhtmltopdf: https://wkhtmltopdf.org
 .. _options: #options
 .. _Markdown variants: #markdown-variants
-.. _``tex_math_dollars``: #extension-tex_math_dollars
-.. _``tex_math_single_backslash``: #extension-tex_math_single_backslash
-.. _``tex_math_double_backslash``: #extension-tex_math_double_backslash
-.. _``raw_html``: #extension-raw_html
-.. _``raw_tex``: #extension-raw_tex
-.. _``native_divs``: #extension-native_divs
-.. _``native_spans``: #extension-native_spans
+.. |tex_math_dollars| replace:: ``tex_math_dollars``
+.. _tex_math_dollars: #extension-tex_math_dollars
+.. |tex_math_single_backslash| replace:: ``tex_math_single_backslash``
+.. _tex_math_single_backslash: #extension-tex_math_single_backslash
+.. |tex_math_double_backslash| replace:: ``tex_math_double_backslash``
+.. _tex_math_double_backslash: #extension-tex_math_double_backslash
+.. |raw_html| replace:: ``raw_html``
+.. _raw_html: #extension-raw_html
+.. |raw_tex| replace:: ``raw_tex``
+.. _raw_tex: #extension-raw_tex
+.. |native_divs| replace:: ``native_divs``
+.. _native_divs: #extension-native_divs
+.. |native_spans| replace:: ``native_spans``
+.. _native_spans: #extension-native_spans
 .. _docx custom styles: #custom-styles
 .. _Pandoc’s Markdown fancy lists: #extension-fancy_lists
 .. _Natural Tables (TABLE): https://wiki.contextgarden.net/TABLE
@@ -7465,8 +7522,10 @@ code.
 .. _`Extension: ``fenced_code_attributes```: #extension-fenced_code_attributes
 .. _CSL user documentation: https://citationstyles.org/authors/
 .. _CSL locale files: https://github.com/citation-style-language/locales
-.. _``header_attributes``: #extension-header_attributes
-.. _``link_attributes``: #extension-link_attributes
+.. |header_attributes| replace:: ``header_attributes``
+.. _header_attributes: #extension-header_attributes
+.. |link_attributes| replace:: ``link_attributes``
+.. _link_attributes: #extension-link_attributes
 .. _Definition lists: #definition-lists
 .. _Project Gutenberg: https://www.gutenberg.org
 .. _`Extension: ``citations```: #extension-citations

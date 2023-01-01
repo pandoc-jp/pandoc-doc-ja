@@ -19,7 +19,7 @@ Pandoc Lua Filters 日本語版
 
 原著バージョン: 2.18
 
-更新日: 2022/04/29
+更新日: 2023/01/01
 
 翻訳者（アルファベット順）:
 
@@ -223,11 +223,11 @@ Element filter functions within a filter set are called in a fixed
 order, skipping any which are not present:
 
 1. functions for `Inline elements`_,
-2. the ```Inlines```_ filter function,
+2. the |Inlines|_ filter function,
 3. functions for `Block elements`_ ,
-4. the ```Blocks```_ filter function,
-5. the ```Meta```_ filter function, and last
-6. the ```Pandoc```_ filter function.
+4. the |Blocks|_ filter function,
+5. the |Meta|_ filter function, and last
+6. the |Pandoc|_ filter function.
 
 It is still possible to force a different order by explicitly returning
 multiple filter sets. For example, if the filter for *Meta* is to be run
@@ -367,15 +367,15 @@ Exposed pandoc functionality
 
 Some pandoc functions have been made available in Lua:
 
--  ```walk_block```_ and ```walk_inline```_ allow filters to be applied
+-  |walk_block|_ and |walk_inline|_ allow filters to be applied
    inside specific block or inline elements;
--  ```read```_ allows filters to parse strings into pandoc documents;
--  ```pipe```_ runs an external command with input from and output to
+-  |read|_ allows filters to parse strings into pandoc documents;
+-  |pipe|_ runs an external command with input from and output to
    strings;
--  the ```pandoc.mediabag```_ module allows access to the “mediabag,”
+-  the |pandoc.mediabag|_ module allows access to the “mediabag,”
    which stores binary content such as images that may be included in
    the final document;
--  the ```pandoc.utils```_ module contains various utility functions.
+-  the |pandoc.utils|_ module contains various utility functions.
 
 Lua interpreter initialization
 ==============================
@@ -404,14 +404,14 @@ Debugging Lua filters
 It is possible to use a debugging interface to halt execution and step
 through a Lua filter line by line as it is run inside Pandoc. This is
 accomplished using the remote-debugging interface of the package
-```mobdebug```_. Although mobdebug can be run from the terminal, it is
+|mobdebug|_. Although mobdebug can be run from the terminal, it is
 more useful run within the donation-ware Lua editor and IDE,
 `ZeroBrane`_. ZeroBrane offers a REPL console and UI to step-through and
 view all variables and state.
 
 If you already have Lua 5.3 installed, you can add
 ```mobdebug`` <https://luarocks.org/modules/paulclinger/mobdebug>`__ and
-its dependency ```luasocket```_ using ```luarocks```_, which should then
+its dependency |luasocket|_ using |luarocks|_, which should then
 be available on the path. ZeroBrane also includes both of these in its
 package, so if you don’t want to install Lua separately, you should
 add/modify your ``LUA_PATH`` and ``LUA_CPATH`` to include the correct
@@ -586,7 +586,7 @@ Modifying pandoc’s ``MANUAL.txt`` for man pages
 -----------------------------------------------
 
 This is the filter we use when converting ``MANUAL.txt`` to man pages.
-It converts level-1 headers to uppercase (using ```walk```_ to transform
+It converts level-1 headers to uppercase (using |walk|_ to transform
 inline elements inside headers), removes footnotes, and replaces links
 with regular text.
 
@@ -731,7 +731,7 @@ Building images with Ti\ *k*\ Z
 This filter converts raw LaTeX Ti\ *k*\ Z environments into images. It
 works with both PDF and HTML output. The Ti\ *k*\ Z code is compiled to
 an image using ``pdflatex``, and the image is converted from pdf to svg
-format using ```pdf2svg```_, so both of these must be in the system
+format using |pdf2svg|_, so both of these must be in the system
 path. Converted images are cached in the working directory and given
 filenames based on a hash of the source, so that they need not be
 regenerated each time the document is built. (A more sophisticated
@@ -856,7 +856,7 @@ Pandoc
 
 Pandoc document
 
-Values of this type can be created with the ```pandoc.Pandoc```_
+Values of this type can be created with the |pandoc.Pandoc|_
 constructor. Pandoc values are equal in Lua if and only if they are
 equal in Haskell.
 
@@ -905,7 +905,7 @@ Meta
 Meta information on a document; string-indexed collection of
 `MetaValues`_.
 
-Values of this type can be created with the ```pandoc.Meta```_
+Values of this type can be created with the |pandoc.Meta|_
 constructor. Meta values are equal in Lua if and only if they are equal
 in Haskell.
 
@@ -926,17 +926,17 @@ constructors:
 -  List/integer indexed table → MetaList
 -  string-indexed table → MetaMap
 
-The corresponding constructors ```pandoc.MetaBool```_,
-```pandoc.MetaString```_, ```pandoc.MetaInlines```_,
-```pandoc.MetaBlocks```_, ```pandoc.MetaList```_, and
-```pandoc.MetaMap```_ can be used to ensure that a value is treated in
+The corresponding constructors |pandoc.MetaBool|_,
+|pandoc.MetaString|_, |pandoc.MetaInlines|_,
+|pandoc.MetaBlocks|_, |pandoc.MetaList|_, and
+|pandoc.MetaMap|_ can be used to ensure that a value is treated in
 the intended way. E.g., an empty table is normally treated as a
 ``MetaMap``, but can be made into an empty ``MetaList`` by calling
 ``pandoc.MetaList{}``. However, the same can be accomplished by using
 the generic functions like ``pandoc.List``, ``pandoc.Inlines``, or
 ``pandoc.Blocks``.
 
-Use the function ```pandoc.utils.type```_ to get the type of a metadata
+Use the function |pandoc.utils.type|_ to get the type of a metadata
 value.
 
 .. _type-block:
@@ -993,7 +993,7 @@ BlockQuote
 
 A block quote element.
 
-Values of this type can be created with the ```pandoc.BlockQuote```_
+Values of this type can be created with the |pandoc.BlockQuote|_
 constructor.
 
 Fields:
@@ -1010,7 +1010,7 @@ BulletList
 
 A bullet list.
 
-Values of this type can be created with the ```pandoc.BulletList```_
+Values of this type can be created with the |pandoc.BulletList|_
 constructor.
 
 Fields:
@@ -1027,7 +1027,7 @@ CodeBlock
 
 Block of code.
 
-Values of this type can be created with the ```pandoc.CodeBlock```_
+Values of this type can be created with the |pandoc.CodeBlock|_
 constructor.
 
 Fields:
@@ -1052,7 +1052,7 @@ DefinitionList
 
 Definition list, containing terms and their explanation.
 
-Values of this type can be created with the ```pandoc.DefinitionList```_
+Values of this type can be created with the |pandoc.DefinitionList|_
 constructor.
 
 Fields:
@@ -1069,7 +1069,7 @@ Div
 
 Generic block container with attributes.
 
-Values of this type can be created with the ```pandoc.Div```_
+Values of this type can be created with the |pandoc.Div|_
 constructor.
 
 Fields:
@@ -1094,7 +1094,7 @@ Header
 
 Creates a header element.
 
-Values of this type can be created with the ```pandoc.Header```_
+Values of this type can be created with the |pandoc.Header|_
 constructor.
 
 Fields:
@@ -1121,7 +1121,7 @@ HorizontalRule
 
 A horizontal rule.
 
-Values of this type can be created with the ```pandoc.HorizontalRule```_
+Values of this type can be created with the |pandoc.HorizontalRule|_
 constructor.
 
 Fields:
@@ -1137,7 +1137,7 @@ LineBlock
 A line block, i.e. a list of lines, each separated from the next by a
 newline.
 
-Values of this type can be created with the ```pandoc.LineBlock```_
+Values of this type can be created with the |pandoc.LineBlock|_
 constructor.
 
 Fields:
@@ -1155,7 +1155,7 @@ Null
 A null element; this element never produces any output in the target
 format.
 
-Values of this type can be created with the ```pandoc.Null```_
+Values of this type can be created with the |pandoc.Null|_
 constructor.
 
 ``tag``, ``t``
@@ -1168,7 +1168,7 @@ OrderedList
 
 An ordered list.
 
-Values of this type can be created with the ```pandoc.OrderedList```_
+Values of this type can be created with the |pandoc.OrderedList|_
 constructor.
 
 Fields:
@@ -1193,7 +1193,7 @@ Para
 
 A paragraph.
 
-Values of this type can be created with the ```pandoc.Para```_
+Values of this type can be created with the |pandoc.Para|_
 constructor.
 
 Fields:
@@ -1210,7 +1210,7 @@ Plain
 
 Plain text, not a paragraph.
 
-Values of this type can be created with the ```pandoc.Plain```_
+Values of this type can be created with the |pandoc.Plain|_
 constructor.
 
 Fields:
@@ -1227,7 +1227,7 @@ RawBlock
 
 Raw content of a specified format.
 
-Values of this type can be created with the ```pandoc.RawBlock```_
+Values of this type can be created with the |pandoc.RawBlock|_
 constructor.
 
 Fields:
@@ -1246,7 +1246,7 @@ Table
 
 A table.
 
-Values of this type can be created with the ```pandoc.Table```_
+Values of this type can be created with the |pandoc.Table|_
 constructor.
 
 Fields:
@@ -1393,7 +1393,7 @@ Cite
 
 Citation.
 
-Values of this type can be created with the ```pandoc.Cite```_
+Values of this type can be created with the |pandoc.Cite|_
 constructor.
 
 Fields:
@@ -1412,7 +1412,7 @@ Code
 
 Inline code
 
-Values of this type can be created with the ```pandoc.Code```_
+Values of this type can be created with the |pandoc.Code|_
 constructor.
 
 Fields:
@@ -1437,7 +1437,7 @@ Emph
 
 Emphasized text
 
-Values of this type can be created with the ```pandoc.Emph```_
+Values of this type can be created with the |pandoc.Emph|_
 constructor.
 
 Fields:
@@ -1454,7 +1454,7 @@ Image
 
 Image: alt text (list of inlines), target
 
-Values of this type can be created with the ```pandoc.Image```_
+Values of this type can be created with the |pandoc.Image|_
 constructor.
 
 Fields:
@@ -1483,7 +1483,7 @@ LineBreak
 
 Hard line break
 
-Values of this type can be created with the ```pandoc.LineBreak```_
+Values of this type can be created with the |pandoc.LineBreak|_
 constructor.
 
 Fields:
@@ -1498,7 +1498,7 @@ Link
 
 Hyperlink: alt text (list of inlines), target
 
-Values of this type can be created with the ```pandoc.Link```_
+Values of this type can be created with the |pandoc.Link|_
 constructor.
 
 Fields:
@@ -1527,7 +1527,7 @@ Math
 
 TeX math (literal)
 
-Values of this type can be created with the ```pandoc.Math```_
+Values of this type can be created with the |pandoc.Math|_
 constructor.
 
 Fields:
@@ -1547,7 +1547,7 @@ Note
 
 Footnote or endnote
 
-Values of this type can be created with the ```pandoc.Note```_
+Values of this type can be created with the |pandoc.Note|_
 constructor.
 
 Fields:
@@ -1564,7 +1564,7 @@ Quoted
 
 Quoted text
 
-Values of this type can be created with the ```pandoc.Quoted```_
+Values of this type can be created with the |pandoc.Quoted|_
 constructor.
 
 Fields:
@@ -1584,7 +1584,7 @@ RawInline
 
 Raw inline
 
-Values of this type can be created with the ```pandoc.RawInline```_
+Values of this type can be created with the |pandoc.RawInline|_
 constructor.
 
 Fields:
@@ -1603,7 +1603,7 @@ SmallCaps
 
 Small caps text
 
-Values of this type can be created with the ```pandoc.SmallCaps```_
+Values of this type can be created with the |pandoc.SmallCaps|_
 constructor.
 
 Fields:
@@ -1620,7 +1620,7 @@ SoftBreak
 
 Soft line break
 
-Values of this type can be created with the ```pandoc.SoftBreak```_
+Values of this type can be created with the |pandoc.SoftBreak|_
 constructor.
 
 Fields:
@@ -1635,7 +1635,7 @@ Space
 
 Inter-word space
 
-Values of this type can be created with the ```pandoc.Space```_
+Values of this type can be created with the |pandoc.Space|_
 constructor.
 
 Fields:
@@ -1650,7 +1650,7 @@ Span
 
 Generic inline container with attributes
 
-Values of this type can be created with the ```pandoc.Span```_
+Values of this type can be created with the |pandoc.Span|_
 constructor.
 
 Fields:
@@ -1675,7 +1675,7 @@ Str
 
 Text
 
-Values of this type can be created with the ```pandoc.Str```_
+Values of this type can be created with the |pandoc.Str|_
 constructor.
 
 Fields:
@@ -1692,7 +1692,7 @@ Strikeout
 
 Strikeout text
 
-Values of this type can be created with the ```pandoc.Strikeout```_
+Values of this type can be created with the |pandoc.Strikeout|_
 constructor.
 
 Fields:
@@ -1709,7 +1709,7 @@ Strong
 
 Strongly emphasized text
 
-Values of this type can be created with the ```pandoc.Strong```_
+Values of this type can be created with the |pandoc.Strong|_
 constructor.
 
 Fields:
@@ -1726,7 +1726,7 @@ Subscript
 
 Subscripted text
 
-Values of this type can be created with the ```pandoc.Subscript```_
+Values of this type can be created with the |pandoc.Subscript|_
 constructor.
 
 Fields:
@@ -1743,7 +1743,7 @@ Superscript
 
 Superscripted text
 
-Values of this type can be created with the ```pandoc.Superscript```_
+Values of this type can be created with the |pandoc.Superscript|_
 constructor.
 
 Fields:
@@ -1760,7 +1760,7 @@ Underline
 
 Underlined text
 
-Values of this type can be created with the ```pandoc.Underline```_
+Values of this type can be created with the |pandoc.Underline|_
 constructor.
 
 Fields:
@@ -1839,7 +1839,7 @@ Attr
 ~~~~
 
 A set of element attributes. Values of this type can be created with the
-```pandoc.Attr```_ constructor. For convenience, it is usually not
+|pandoc.Attr|_ constructor. For convenience, it is usually not
 necessary to construct the value directly if it is part of an element,
 and it is sufficient to pass an HTML-like table. E.g., to create a span
 with identifier “text” and classes “a” and “b”, one can write:
@@ -1926,7 +1926,7 @@ Citation
 
 Single citation entry
 
-Values of this type can be created with the ```pandoc.Citation```_
+Values of this type can be created with the |pandoc.Citation|_
 constructor.
 
 Citation values are equal in Lua if and only if they are equal in
@@ -1967,7 +1967,7 @@ ListAttributes
 
 List attributes
 
-Values of this type can be created with the ```pandoc.ListAttributes```_
+Values of this type can be created with the |pandoc.ListAttributes|_
 constructor.
 
 Fields:
@@ -2211,7 +2211,7 @@ Doc
 Reflowable plain-text document. A Doc value can be rendered and reflown
 to fit a given column width.
 
-The ```pandoc.layout```_ module can be used to create and modify Doc
+The |pandoc.layout|_ module can be used to create and modify Doc
 values. All functions in that module that take a Doc value as their
 first argument are also available as Doc methods. E.g.,
 ``(pandoc.layout.literal 'text'):render()``.
@@ -2238,7 +2238,7 @@ made instances of the ``pandoc.List`` type for convenience. The
 ``pandoc.List`` type is defined in the `pandoc.List`_ module. See there
 for available methods.
 
-Values of this type can be created with the ```pandoc.List```_
+Values of this type can be created with the |pandoc.List|_
 constructor, turning a normal Lua table into a List.
 
 .. _type-logmessage:
@@ -2256,10 +2256,10 @@ SimpleTable
 
 A simple table is a table structure which resembles the old (pre pandoc
 2.10) Table type. Bi-directional conversion from and to `Tables`_ is
-possible with the ```pandoc.utils.to_simple_table```_ and
-```pandoc.utils.from_simple_table```_ function, respectively. Instances
+possible with the |pandoc.utils.to_simple_table|_ and
+|pandoc.utils.from_simple_table|_ function, respectively. Instances
 of this type can also be created directly with the
-```pandoc.SimpleTable```_ constructor.
+|pandoc.SimpleTable|_ constructor.
 
 Fields:
 
@@ -2305,7 +2305,7 @@ Comparisons are performed element-wise, i.e.
 
    Version '1.12' > Version '1.9'
 
-Values of this type can be created with the ```pandoc.types.Version```_
+Values of this type can be created with the |pandoc.types.Version|_
 constructor.
 
 ``must_be_at_least``
@@ -2357,7 +2357,7 @@ module is made available as part of the ``pandoc`` module via
 .. _text.lower:
 
 lower
-~~~~~
+-----
 
 ``lower (s)``
 
@@ -2366,7 +2366,7 @@ Returns a copy of a UTF-8 string, converted to lowercase.
 .. _text.upper:
 
 upper
-~~~~~
+-----
 
 ``upper (s)``
 
@@ -2375,7 +2375,7 @@ Returns a copy of a UTF-8 string, converted to uppercase.
 .. _text.reverse:
 
 reverse
-~~~~~~~
+-------
 
 ``reverse (s)``
 
@@ -2384,7 +2384,7 @@ Returns a copy of a UTF-8 string, with characters reversed.
 .. _text.len:
 
 len
-~~~
+---
 
 ``len (s)``
 
@@ -2393,7 +2393,7 @@ Returns the length of a UTF-8 string.
 .. _text.sub:
 
 sub
-~~~
+---
 
 ``sub (s)``
 
@@ -3412,7 +3412,7 @@ Constants
    See also: `ListAttributes`_
 
 ``sha1``
-   Alias for ```pandoc.utils.sha1```_ (DEPRECATED, use
+   Alias for |pandoc.utils.sha1|_ (DEPRECATED, use
    ``pandoc.utils.sha1`` instead).
 
 Other constructors
@@ -3632,7 +3632,7 @@ Use the above for backwards compatibility.
 .. _pandoc.utils.blocks_to_inlines:
 
 ``blocks_to_inlines (blocks[, sep])``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 Squash a list of blocks into a list of inlines.
 
@@ -3667,7 +3667,7 @@ Usage:
 .. _pandoc.utils.equals:
 
 ``equals (element1, element2)``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 Test equality of AST elements. Elements in Lua are considered equal if
 and only if the objects obtained by unmarshaling are equal.
@@ -3687,7 +3687,7 @@ Returns:
 .. _pandoc.utils.from_simple_table:
 
 ``from_simple_table (table)``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Creates a `Table`_ block element from a `SimpleTable`_. This is useful
 for dealing with legacy code which was written for pandoc versions older
@@ -3710,7 +3710,7 @@ Usage:
 .. _pandoc.utils.make_sections:
 
 ``make_sections (number_sections, base_level, blocks)``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------------------
 
 Converts list of `Block`_ elements into sections. ``Div``\ s will be
 created beginning at each ``Header`` and containing following content
@@ -3747,7 +3747,7 @@ Usage:
 .. _pandoc.references:
 
 references
-~~~~~~~~~~
+----------
 
 ``references (doc)``
 
@@ -3784,7 +3784,7 @@ Usage:
 .. _pandoc.utils.run_json_filter:
 
 run_json_filter
-~~~~~~~~~~~~~~~
+---------------
 
 ``run_json_filter (doc, filter[, args])``
 
@@ -3819,7 +3819,7 @@ Usage:
 .. _pandoc.utils.normalize_date:
 
 normalize_date
-~~~~~~~~~~~~~~
+--------------
 
 ``normalize_date (date_string)``
 
@@ -3834,7 +3834,7 @@ Returns:
 .. _pandoc.utils.sha1:
 
 sha1
-~~~~
+----
 
 ``sha1 (contents)``
 
@@ -3853,7 +3853,7 @@ Usage:
 .. _pandoc.utils.stringify:
 
 stringify
-~~~~~~~~~
+---------
 
 ``stringify (element)``
 
@@ -3875,7 +3875,7 @@ Usage:
 .. _pandoc.utils.to_roman_numeral:
 
 to_roman_numeral
-~~~~~~~~~~~~~~~~
+----------------
 
 ``to_roman_numeral (integer)``
 
@@ -3896,7 +3896,7 @@ Usage:
 .. _pandoc.utils.to_simple_table:
 
 to_simple_table
-~~~~~~~~~~~~~~~
+---------------
 
 ``to_simple_table (table)``
 
@@ -3919,7 +3919,7 @@ Usage:
 .. _pandoc.utils.type:
 
 type
-~~~~
+----
 
 ``type (value)``
 
@@ -3970,7 +3970,7 @@ e.g.:
 .. _pandoc.mediabag.delete:
 
 delete
-~~~~~~
+------
 
 ``delete (filepath)``
 
@@ -3985,7 +3985,7 @@ Parameters:
 .. _pandoc.mediabag.empty:
 
 empty
-~~~~~
+-----
 
 ``empty ()``
 
@@ -3994,7 +3994,7 @@ Clear-out the media bag, deleting all items.
 .. _pandoc.mediabag.insert:
 
 insert
-~~~~~~
+------
 
 ``insert (filepath, mime_type, contents)``
 
@@ -4022,7 +4022,7 @@ Usage:
 .. _pandoc.mediabag.items:
 
 items
-~~~~~
+-----
 
 ``items ()``
 
@@ -4032,7 +4032,7 @@ a media bag item on each invocation. Items are processed one-by-one to
 avoid excessive memory use.
 
 This function should be used only when full access to all items,
-including their contents, is required. For all other cases, ```list```_
+including their contents, is required. For all other cases, |list|_
 should be preferred.
 
 Returns:
@@ -4054,7 +4054,7 @@ Usage:
 .. _pandoc.mediabag.list:
 
 list
-~~~~
+----
 
 ``list ()``
 
@@ -4080,7 +4080,7 @@ Usage:
 .. _pandoc.mediabag.lookup:
 
 lookup
-~~~~~~
+------
 
 ``lookup (filepath)``
 
@@ -4107,7 +4107,7 @@ Usage:
 .. _pandoc.mediabag.fetch:
 
 fetch
-~~~~~
+-----
 
 ``fetch (source)``
 
@@ -4147,7 +4147,7 @@ Constructor
 ``pandoc.List([table])``
    Create a new List. If the optional argument ``table`` is given, set
    the metatable of that value to ``pandoc.List``. This is an alias for
-   ```pandoc.List:new([table])```_.
+   |pandoc.List:new([table])|_.
 
 Metamethods
 -----------
@@ -4280,7 +4280,7 @@ Returns: true if a list item is equal to the needle, false otherwise
 Inserts element ``value`` at position ``pos`` in list, shifting elements
 to the next-greater index if necessary.
 
-This function is identical to ```table.insert```_.
+This function is identical to |table.insert|_.
 
 Parameters:
 
@@ -4325,7 +4325,7 @@ Returns: the updated input value
 Removes the element at position ``pos``, returning the value of the
 removed element.
 
-This function is identical to ```table.remove```_.
+This function is identical to |table.remove|_.
 
 Parameters:
 
@@ -4354,7 +4354,7 @@ Otherwise, no valid sort may be possible.
 The sort algorithm is not stable: elements considered equal by the given
 order may have their relative positions changed by the sort.
 
-This function is identical to ```table.sort```_.
+This function is identical to |table.sort|_.
 
 Parameters:
 
@@ -5328,7 +5328,7 @@ Handle pandoc templates.
 .. _pandoc.template.compile:
 
 compile
-~~~~~~~
+-------
 
 ``compile (template[, templates_path])``
 
@@ -5356,7 +5356,7 @@ Returns:
 .. _pandoc.template.default:
 
 default
-~~~~~~~
+-------
 
 ``default ([writer])``
 
@@ -5381,7 +5381,7 @@ Constructors for types which are not part of the pandoc AST.
 .. _pandoc.types.version:
 
 Version
-~~~~~~~
+-------
 
 ``Version (version_specifier)``
 
@@ -5409,63 +5409,101 @@ Returns:
 .. _Block: #type-block
 .. _“Remove spaces before normal citations”: #remove-spaces-before-citations
 .. _Inline elements: #type-inline
-.. _``Inlines``: #inlines-filter
+.. |Inlines| replace:: ``Inlines``
+.. _Inlines: #inlines-filter
 .. _Block elements: #type-block
-.. _``Blocks``: #inlines-filter
-.. _``Meta``: #type-meta
-.. _``Pandoc``: #type-pandoc
+.. |Blocks| replace:: ``Blocks``
+.. _Blocks: #inlines-filter
+.. |Meta| replace:: ``Meta``
+.. _Meta: #type-meta
+.. |Pandoc| replace:: ``Pandoc``
+.. _Pandoc: #type-pandoc
 .. _ReaderOptions: #type-readeroptions
 .. _WriterOptions: #type-writeroptions
 .. _Version: #type-version
 .. _CommonState: #type-commonstate
 .. _LPeg homepage: http://www.inf.puc-rio.br/~roberto/lpeg/
 .. _regex engine: http://www.inf.puc-rio.br/~roberto/lpeg/re.html
-.. _``walk_block``: #pandoc.walk_block
-.. _``walk_inline``: #pandoc.walk_inline
-.. _``read``: #pandoc.read
-.. _``pipe``: #pandoc.pipe
-.. _``pandoc.mediabag``: #module-pandoc.mediabag
-.. _``pandoc.utils``: #module-pandoc.utils
+.. |walk_block| replace:: ``walk_block``
+.. _walk_block: #pandoc.walk_block
+.. |walk_inline| replace:: ``walk_inline``
+.. _walk_inline: #pandoc.walk_inline
+.. |read| replace:: ``read``
+.. _read: #pandoc.read
+.. |pipe| replace:: ``pipe``
+.. _pipe: #pandoc.pipe
+.. |pandoc.mediabag| replace:: ``pandoc.mediabag``
+.. _pandoc.mediabag: #module-pandoc.mediabag
+.. |pandoc.utils| replace:: ``pandoc.utils``
+.. _pandoc.utils: #module-pandoc.utils
 .. _``text`` module: #module-text
-.. _``mobdebug``: https://github.com/pkulchenko/MobDebug
+.. |mobdebug| replace:: ``mobdebug``
+.. _mobdebug: https://github.com/pkulchenko/MobDebug
 .. _ZeroBrane: https://studio.zerobrane.com/
-.. _``luasocket``: https://luarocks.org/modules/luasocket/luasocket
-.. _``luarocks``: https://luarocks.org
+.. |luasocket| replace:: ``luasocket``
+.. _luasocket: https://luarocks.org/modules/luasocket/luasocket
+.. |luarocks| replace:: ``luarocks``
+.. _luarocks: https://luarocks.org
 .. _see detailed instructions here: https://studio.zerobrane.com/doc-remote-debugging
-.. _``walk``: #type-block:walk
-.. _``pdf2svg``: https://github.com/dawbarton/pdf2svg
+.. |walk| replace:: ``walk``
+.. _walk: #type-block:walk
+.. |pdf2svg| replace:: ``pdf2svg``
+.. _pdf2svg: https://github.com/dawbarton/pdf2svg
 .. _pandoc module: #module-pandoc
-.. _``pandoc.Pandoc``: #pandoc.pandoc
+.. |pandoc.Pandoc| replace:: ``pandoc.Pandoc``
+.. _pandoc.Pandoc: #pandoc.pandoc
 .. _Blocks: #type-blocks
 .. _Meta: #type-meta
 .. _traversal order: #traversal-order
 .. _MetaValues: #type-metavalue
-.. _``pandoc.Meta``: #pandoc.meta
-.. _``pandoc.MetaBool``: #pandoc.metabool
-.. _``pandoc.MetaString``: #pandoc.metastring
-.. _``pandoc.MetaInlines``: #pandoc.metainlines
-.. _``pandoc.MetaBlocks``: #pandoc.metablocks
-.. _``pandoc.MetaList``: #pandoc.metalist
-.. _``pandoc.MetaMap``: #pandoc.metamap
-.. _``pandoc.utils.type``: #pandoc.utils.type
-.. _``pandoc.BlockQuote``: #pandoc.blockquote
-.. _``pandoc.BulletList``: #pandoc.bulletlist
-.. _``pandoc.CodeBlock``: #pandoc.codeblock
+.. |pandoc.Meta| replace:: ``pandoc.Meta``
+.. _pandoc.Meta: #pandoc.meta
+.. |pandoc.MetaBool| replace:: ``pandoc.MetaBool``
+.. _pandoc.MetaBool: #pandoc.metabool
+.. |pandoc.MetaString| replace:: ``pandoc.MetaString``
+.. _pandoc.MetaString: #pandoc.metastring
+.. |pandoc.MetaInlines| replace:: ``pandoc.MetaInlines``
+.. _pandoc.MetaInlines: #pandoc.metainlines
+.. |pandoc.MetaBlocks| replace:: ``pandoc.MetaBlocks``
+.. _pandoc.MetaBlocks: #pandoc.metablocks
+.. |pandoc.MetaList| replace:: ``pandoc.MetaList``
+.. _pandoc.MetaList: #pandoc.metalist
+.. |pandoc.MetaMap| replace:: ``pandoc.MetaMap``
+.. _pandoc.MetaMap: #pandoc.metamap
+.. |pandoc.utils.type| replace:: ``pandoc.utils.type``
+.. _pandoc.utils.type: #pandoc.utils.type
+.. |pandoc.BlockQuote| replace:: ``pandoc.BlockQuote``
+.. _pandoc.BlockQuote: #pandoc.blockquote
+.. |pandoc.BulletList| replace:: ``pandoc.BulletList``
+.. _pandoc.BulletList: #pandoc.bulletlist
+.. |pandoc.CodeBlock| replace:: ``pandoc.CodeBlock``
+.. _pandoc.CodeBlock: #pandoc.codeblock
 .. _Attr: #type-attr
 .. _Attributes: #type-attributes
-.. _``pandoc.DefinitionList``: #pandoc.definitionlist
-.. _``pandoc.Div``: #pandoc.div
-.. _``pandoc.Header``: #pandoc.header
+.. |pandoc.DefinitionList| replace:: ``pandoc.DefinitionList``
+.. _pandoc.DefinitionList: #pandoc.definitionlist
+.. |pandoc.Div| replace:: ``pandoc.Div``
+.. _pandoc.Div: #pandoc.div
+.. |pandoc.Header| replace:: ``pandoc.Header``
+.. _pandoc.Header: #pandoc.header
 .. _Inlines: #type-inlines
-.. _``pandoc.HorizontalRule``: #pandoc.horizontalrule
-.. _``pandoc.LineBlock``: #pandoc.lineblock
-.. _``pandoc.Null``: #pandoc.null
-.. _``pandoc.OrderedList``: #pandoc.orderedlist
+.. |pandoc.HorizontalRule| replace:: ``pandoc.HorizontalRule``
+.. _pandoc.HorizontalRule: #pandoc.horizontalrule
+.. |pandoc.LineBlock| replace:: ``pandoc.LineBlock``
+.. _pandoc.LineBlock: #pandoc.lineblock
+.. |pandoc.Null| replace:: ``pandoc.Null``
+.. _pandoc.Null: #pandoc.null
+.. |pandoc.OrderedList| replace:: ``pandoc.OrderedList``
+.. _pandoc.OrderedList: #pandoc.orderedlist
 .. _ListAttributes: #type-listattributes
-.. _``pandoc.Para``: #pandoc.para
-.. _``pandoc.Plain``: #pandoc.plain
-.. _``pandoc.RawBlock``: #pandoc.rawblock
-.. _``pandoc.Table``: #pandoc.table
+.. |pandoc.Para| replace:: ``pandoc.Para``
+.. _pandoc.Para: #pandoc.para
+.. |pandoc.Plain| replace:: ``pandoc.Plain``
+.. _pandoc.Plain: #pandoc.plain
+.. |pandoc.RawBlock| replace:: ``pandoc.RawBlock``
+.. _pandoc.RawBlock: #pandoc.rawblock
+.. |pandoc.Table| replace:: ``pandoc.Table``
+.. _pandoc.Table: #pandoc.table
 .. _Caption: #type-caption
 .. _ColSpec: #type-colspec
 .. _TableHead: #type-tablehead
@@ -5473,46 +5511,75 @@ Returns:
 .. _TableFoot: #type-tablefoot
 .. _Plain: #type-plain
 .. _``pandoc.List`` module: #module-pandoc.list
-.. _``pandoc.Cite``: #pandoc.cite
+.. |pandoc.Cite| replace:: ``pandoc.Cite``
+.. _pandoc.Cite: #pandoc.cite
 .. _Citations: #type-citation
-.. _``pandoc.Code``: #pandoc.code
-.. _``pandoc.Emph``: #pandoc.emph
-.. _``pandoc.Image``: #pandoc.image
-.. _``pandoc.LineBreak``: #pandoc.linebreak
-.. _``pandoc.Link``: #pandoc.link
-.. _``pandoc.Math``: #pandoc.math
-.. _``pandoc.Note``: #pandoc.note
-.. _``pandoc.Quoted``: #pandoc.quoted
-.. _``pandoc.RawInline``: #pandoc.rawinline
-.. _``pandoc.SmallCaps``: #pandoc.smallcaps
-.. _``pandoc.SoftBreak``: #pandoc.softbreak
-.. _``pandoc.Space``: #pandoc.space
-.. _``pandoc.Span``: #pandoc.span
-.. _``pandoc.Str``: #pandoc.str
-.. _``pandoc.Strikeout``: #pandoc.strikeout
-.. _``pandoc.Strong``: #pandoc.strong
-.. _``pandoc.Subscript``: #pandoc.subscript
-.. _``pandoc.Superscript``: #pandoc.superscript
-.. _``pandoc.Underline``: #pandoc.underline
+.. |pandoc.Code| replace:: ``pandoc.Code``
+.. _pandoc.Code: #pandoc.code
+.. |pandoc.Emph| replace:: ``pandoc.Emph``
+.. _pandoc.Emph: #pandoc.emph
+.. |pandoc.Image| replace:: ``pandoc.Image``
+.. _pandoc.Image: #pandoc.image
+.. |pandoc.LineBreak| replace:: ``pandoc.LineBreak``
+.. _pandoc.LineBreak: #pandoc.linebreak
+.. |pandoc.Link| replace:: ``pandoc.Link``
+.. _pandoc.Link: #pandoc.link
+.. |pandoc.Math| replace:: ``pandoc.Math``
+.. _pandoc.Math: #pandoc.math
+.. |pandoc.Note| replace:: ``pandoc.Note``
+.. _pandoc.Note: #pandoc.note
+.. |pandoc.Quoted| replace:: ``pandoc.Quoted``
+.. _pandoc.Quoted: #pandoc.quoted
+.. |pandoc.RawInline| replace:: ``pandoc.RawInline``
+.. _pandoc.RawInline: #pandoc.rawinline
+.. |pandoc.SmallCaps| replace:: ``pandoc.SmallCaps``
+.. _pandoc.SmallCaps: #pandoc.smallcaps
+.. |pandoc.SoftBreak| replace:: ``pandoc.SoftBreak``
+.. _pandoc.SoftBreak: #pandoc.softbreak
+.. |pandoc.Space| replace:: ``pandoc.Space``
+.. _pandoc.Space: #pandoc.space
+.. |pandoc.Span| replace:: ``pandoc.Span``
+.. _pandoc.Span: #pandoc.span
+.. |pandoc.Str| replace:: ``pandoc.Str``
+.. _pandoc.Str: #pandoc.str
+.. |pandoc.Strikeout| replace:: ``pandoc.Strikeout``
+.. _pandoc.Strikeout: #pandoc.strikeout
+.. |pandoc.Strong| replace:: ``pandoc.Strong``
+.. _pandoc.Strong: #pandoc.strong
+.. |pandoc.Subscript| replace:: ``pandoc.Subscript``
+.. _pandoc.Subscript: #pandoc.subscript
+.. |pandoc.Superscript| replace:: ``pandoc.Superscript``
+.. _pandoc.Superscript: #pandoc.superscript
+.. |pandoc.Underline| replace:: ``pandoc.Underline``
+.. _pandoc.Underline: #pandoc.underline
 .. _SoftBreak: #type-softbreak
 .. _Spaces: #type-space
-.. _``pandoc.Attr``: #pandoc.attr
+.. |pandoc.Attr| replace:: ``pandoc.Attr``
+.. _pandoc.Attr: #pandoc.attr
 .. _Alignment: #type-alignment
-.. _``pandoc.Citation``: #pandoc.citation
-.. _``pandoc.ListAttributes``: #pandoc.listattributes
+.. |pandoc.Citation| replace:: ``pandoc.Citation``
+.. _pandoc.Citation: #pandoc.citation
+.. |pandoc.ListAttributes| replace:: ``pandoc.ListAttributes``
+.. _pandoc.ListAttributes: #pandoc.listattributes
 .. _Cell: #type-cell
 .. _Row: #type-row
 .. _Template: #type-template
 .. _LogMessage: #type-logmessage
-.. _``pandoc.layout``: #module-pandoc.layout
+.. |pandoc.layout| replace:: ``pandoc.layout``
+.. _pandoc.layout: #module-pandoc.layout
 .. _pandoc.List: #module-pandoc.list
-.. _``pandoc.List``: #pandoc.list
+.. |pandoc.List| replace:: ``pandoc.List``
+.. _pandoc.List: #pandoc.list
 .. _Tables: #type-table
-.. _``pandoc.utils.to_simple_table``: #pandoc.utils.to_simple_table
-.. _``pandoc.utils.from_simple_table``: #pandoc.utils.from_simple_table
-.. _``pandoc.SimpleTable``: #pandoc.simpletable
+.. |pandoc.utils.to_simple_table| replace:: ``pandoc.utils.to_simple_table``
+.. _pandoc.utils.to_simple_table: #pandoc.utils.to_simple_table
+.. |pandoc.utils.from_simple_table| replace:: ``pandoc.utils.from_simple_table``
+.. _pandoc.utils.from_simple_table: #pandoc.utils.from_simple_table
+.. |pandoc.SimpleTable| replace:: ``pandoc.SimpleTable``
+.. _pandoc.SimpleTable: #pandoc.simpletable
 .. _Alignments: #type-alignment
-.. _``pandoc.types.Version``: #pandoc.types.version
+.. |pandoc.types.Version| replace:: ``pandoc.types.Version``
+.. _pandoc.types.Version: #pandoc.types.version
 .. _BlockQuote: #type-blockquote
 .. _BulletList: #type-bulletlist
 .. _CodeBlock: #type-codeblock
@@ -5549,12 +5616,18 @@ Returns:
 .. _Underline: #type-underline
 .. _Citation: #type-citation
 .. _SimpleTable: #type-simpletable
-.. _``pandoc.utils.sha1``: #pandoc.utils.sha1
+.. |pandoc.utils.sha1| replace:: ``pandoc.utils.sha1``
+.. _pandoc.utils.sha1: #pandoc.utils.sha1
 .. _Lua type reference: #lua-type-reference
-.. _``list``: #pandoc.mediabag.list
-.. _```pandoc.List:new([table])```: #pandoc.list:new
-.. _``table.insert``: https://www.lua.org/manual/5.3/manual.html#6.6
-.. _``table.remove``: https://www.lua.org/manual/5.3/manual.html#6.6
-.. _``table.sort``: https://www.lua.org/manual/5.3/manual.html#6.6
+.. |list| replace:: ``list``
+.. _list: #pandoc.mediabag.list
+.. |`pandoc.List:new([table])`| replace:: ```pandoc.List:new([table])```
+.. _`pandoc.List:new([table])`: #pandoc.list:new
+.. |table.insert| replace:: ``table.insert``
+.. _table.insert: https://www.lua.org/manual/5.3/manual.html#6.6
+.. |table.remove| replace:: ``table.remove``
+.. _table.remove: https://www.lua.org/manual/5.3/manual.html#6.6
+.. |table.sort| replace:: ``table.sort``
+.. _table.sort: https://www.lua.org/manual/5.3/manual.html#6.6
 .. _this blog post: https://neilmitchell.blogspot.co.uk/2015/10/filepaths-are-subtle-symlinks-are-hard.html
 .. _Doc: #type-doc
