@@ -156,7 +156,7 @@ $ make ja-html
 ### ターゲット：まとめて実行
 
 ```
-$ make jgm-pandoc-checkout PANDOC=バージョン番号
+$ make jgm-pandoc-checkout PANDOC_VER=バージョン番号
 jgm/pandocを特定バージョンでチェックアウトし、独自のヘッダを付与する
 
 $ make ja-update-src
@@ -177,6 +177,10 @@ $ make ja-build-local
 ### ターゲット：Pandocバージョン関連
 
 ```
+$ make ja-init
+git submodule を初期化する
+(下記コマンドを実行する前に、あらかじめ実行しておくこと)
+
 $ make jgm-pandoc-version
 元リポジトリPandocバージョンを表示する (pandoc/pandoc.cabalのversionを参照)
 
@@ -192,9 +196,6 @@ $ make ja-pandoc-version-lock
 (jgm/pandoc: MANUAL.txt のアップデートと翻訳ファイルの更新)
 
 ```
-$ make ja-init
-git submodule を初期化する
-
 $ make users-guide-rst
 Pandoc: jgm/pandocの MANUAL.txt (Markdown) をrstに変換する
 ```
