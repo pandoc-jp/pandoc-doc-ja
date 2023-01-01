@@ -41,9 +41,14 @@ doc_rst=./${doc_md_base%.md}.rst
 thedate=$(date "+%Y/%m/%d")
 
 # 出力用の一時ファイル（rst）
-tmp_header_rst=$(mktemp)  # ヘッダ
-tmp_doc_rst=$(mktemp)       # body
+tmp_header_rst=$(mktemp)             # ヘッダ
+tmp_doc_rst=$(mktemp)                # body
+tmp_doc_rst_fixed_verbatim=$(mktemp) # fix: Verbatim in reference link in RST by Sphinx
 
+# フィルタ
+# fix-header-inconsistency.lua: ヘッダのレベルスキップ（例：2→4）をなくす（例：2→3）
+# (Sphinxで CRITICAL: Title level inconsistent エラーをなくすため)
+filter_fix_header_inconsistency=./scripts/fix-header-inconsistency.lua
 
 ################################################################
 # 処理
@@ -60,6 +65,8 @@ pandoc "${doc_md}" -s -f markdown -t rst \
   -o "${tmp_header_rst}"
 
 # bodyを変換する
+pandoc -f markdown -t rst -L "${filter_fix_header_inconsistency}" --reference-links "${doc_md}" -o "${tmp_doc_rst}"
+
 pandoc -f markdown -t rst --reference-links "${doc_md}" -o "${tmp_doc_rst}"
 
 # ヘッダとbodyを結合する
