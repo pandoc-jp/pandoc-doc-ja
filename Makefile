@@ -36,7 +36,7 @@ SRC_MD_ALL := src-md/*.md
 
 # make ja-update-src
 # アップデート作業をまとめてする
-# (pandoc -> intl-update -> tx-push-pot)
+# (users-guide-rst -> intl-update -> tx-push-pot)
 # 要環境変数
 .PHONY: ja-update-src
 ja-update-src: users-guide-rst intl-update tx-push-pot
@@ -49,7 +49,7 @@ ja-build: tx-pull ja-html
 
 # make ja-build-local
 # ローカル環境のみ：アップデート・ビルド作業をまとめてする
-# (pandoc -> intl-update -> ja-html)
+# (users-guide-rst -> intl-update -> ja-html)
 .PHONY: ja-build-local
 ja-build-local: users-guide-rst intl-update ja-html
 
