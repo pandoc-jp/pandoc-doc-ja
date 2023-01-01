@@ -161,16 +161,17 @@ jgm/pandocを特定バージョンでチェックアウトし、独自のヘッ�
 
 $ make ja-update-src
 アップデート作業をまとめてする
-(pandoc -> intl-update -> tx-push-pot)
+(users-guide-rst -> intl-update -> tx-push-pot)
 要環境変数
 
 $ make ja-build
 Transifex: 翻訳ファイル(po)をpullし、そのままビルドする
+(tx-pull -> ja-html)
 要環境変数
 
 $ make ja-build-local
 ローカル環境のみ：アップデート・ビルド作業をまとめてする
-(ja-pandoc -> intl-update -> ja-html)
+(users-guide-rst -> intl-update -> ja-html)
 ```
 
 ### ターゲット：Pandocバージョン関連
