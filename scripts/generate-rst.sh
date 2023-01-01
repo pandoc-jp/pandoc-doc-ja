@@ -67,11 +67,16 @@ pandoc "${doc_md}" -s -f markdown -t rst \
 # bodyを変換する
 pandoc -f markdown -t rst -L "${filter_fix_header_inconsistency}" --reference-links "${doc_md}" -o "${tmp_doc_rst}"
 
-pandoc -f markdown -t rst --reference-links "${doc_md}" -o "${tmp_doc_rst}"
+# fix: Verbatim in reference link in RST by Sphinx
+# - Before: ```amsfonts```_
+# - After:  |amsfonts|_
+# (see: https://github.com/jgm/pandoc/issues/6793)
+cat "${tmp_doc_rst}" | perl -pe 's/```(.+?)```_/|$1|_/g' | perl -pe 's/^.. _``(.+?)``: (.+?)/.. |$1| replace:: ``$1``\n.. _$1: $2/g' > "${tmp_doc_rst_fixed_verbatim}"
 
 # ヘッダとbodyを結合する
-awk 'FNR==1{print ""}{print}' "${tmp_header_rst}" "${tmp_doc_rst}" > "${doc_rst}"
+awk 'FNR==1{print ""}{print}' "${tmp_header_rst}" "${tmp_doc_rst_fixed_verbatim}" > "${doc_rst}"
 
 # 一時ファイルを削除
 rm -f "${tmp_doc_rst}"
 rm -f "${tmp_header_rst}"
+rm -f "${tmp_doc_rst_fixed_verbatim}"
