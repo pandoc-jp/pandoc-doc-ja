@@ -16,7 +16,7 @@ Pandoc User’s Guide 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.18
+原著バージョン: 2.19.2
 
 更新日: 2023/01/01
 
@@ -240,6 +240,7 @@ General options
       -  ``creole`` (`Creole 1.0`_)
       -  ``csljson`` (`CSL JSON`_ bibliography)
       -  ``csv`` (`CSV`_ table)
+      -  ``tsv`` (`TSV`_ table)
       -  ``docbook`` (`DocBook`_)
       -  ``docx`` (`Word docx`_)
       -  ``dokuwiki`` (`DokuWiki markup`_)
@@ -330,14 +331,14 @@ General options
       -  ``markua`` (`Markua`_)
       -  ``mediawiki`` (`MediaWiki markup`_)
       -  ``ms`` (`roff ms`_)
-      -  ``muse`` (`Muse`_),
-      -  ``native`` (native Haskell),
+      -  ``muse`` (`Muse`_)
+      -  ``native`` (native Haskell)
       -  ``odt`` (`OpenOffice text document`_)
       -  ``opml`` (`OPML`_)
       -  ``opendocument`` (`OpenDocument`_)
       -  ``org`` (`Emacs Org mode`_)
       -  ``pdf`` (`PDF`_)
-      -  ``plain`` (plain text),
+      -  ``plain`` (plain text)
       -  ``pptx`` (`PowerPoint`_ slide show)
       -  ``rst`` (`reStructuredText`_)
       -  ``rtf`` (`Rich Text Format`_)
@@ -345,7 +346,7 @@ General options
       -  ``textile`` (`Textile`_)
       -  ``slideous`` (`Slideous`_ HTML and JavaScript slide show)
       -  ``slidy`` (`Slidy`_ HTML and JavaScript slide show)
-      -  ``dzslides`` (`DZSlides`_ HTML5 + JavaScript slide show),
+      -  ``dzslides`` (`DZSlides`_ HTML5 + JavaScript slide show)
       -  ``revealjs`` (`reveal.js`_ HTML5 + JavaScript slide show)
       -  ``s5`` (`S5`_ HTML and JavaScript slide show)
       -  ``tei`` (`TEI Simple`_)
@@ -513,13 +514,13 @@ Reader options
 
    In order of preference, pandoc will look for filters in
 
-   1. a specified full or relative path (executable or non-executable)
+   1. a specified full or relative path (executable or non-executable),
 
    2. ``$DATADIR/filters`` (executable or non-executable) where
       ``$DATADIR`` is the user data directory (see ``--data-dir``,
-      above).
+      above),
 
-   3. ``$PATH`` (executable only)
+   3. ``$PATH`` (executable only).
 
    Filters, Lua-filters, and citeproc processing are applied in the
    order specified on the command line.
@@ -539,7 +540,7 @@ Reader options
 
    In order of preference, pandoc will look for Lua filters in
 
-   1. a specified full or relative path
+   1. a specified full or relative path,
 
    2. ``$DATADIR/filters`` where ``$DATADIR`` is the user data directory
       (see ``--data-dir``, above).
@@ -659,6 +660,14 @@ General writer options
    example, disclosure of files through the use of ``include``
    directives. Anyone using pandoc on untrusted user input should use
    this option.
+
+   Note: some readers and writers (e.g., ``docx``) need access to data
+   files. If these are stored on the file system, then pandoc will not
+   be able to find them when run in ``--sandbox`` mode and will raise an
+   error. For these applications, we recommend using a pandoc binary
+   compiled with the ``embed_data_files`` option, which causes the data
+   files to be baked into the binary instead of being stored on the file
+   system.
 
 ``-D`` *FORMAT*, ``--print-default-template=``\ *FORMAT*
    Print the system default template for an output *FORMAT*. (See ``-t``
@@ -817,23 +826,26 @@ Options affecting specific writers
 ----------------------------------
 
 ``--self-contained``
+   *Deprecated synonym for ``--embed-resources --standalone``.*
+
+``--embed-resources``
    Produce a standalone HTML file with no external dependencies, using
    ``data:`` URIs to incorporate the contents of linked scripts,
-   stylesheets, images, and videos. Implies ``--standalone``. The
-   resulting file should be “self-contained,” in the sense that it needs
-   no external files and no net access to be displayed properly by a
-   browser. This option works only with HTML output formats, including
-   ``html4``, ``html5``, ``html+lhs``, ``html5+lhs``, ``s5``, ``slidy``,
-   ``slideous``, ``dzslides``, and ``revealjs``. Scripts, images, and
-   stylesheets at absolute URLs will be downloaded; those at relative
-   URLs will be sought relative to the working directory (if the first
-   source file is local) or relative to the base URL (if the first
-   source file is remote). Elements with the attribute
-   ``data-external="1"`` will be left alone; the documents they link to
-   will not be incorporated in the document. Limitation: resources that
-   are loaded dynamically through JavaScript cannot be incorporated; as
-   a result, some advanced features (e.g. zoom or speaker notes) may not
-   work in an offline “self-contained” ``reveal.js`` slide show.
+   stylesheets, images, and videos. The resulting file should be
+   “self-contained,” in the sense that it needs no external files and no
+   net access to be displayed properly by a browser. This option works
+   only with HTML output formats, including ``html4``, ``html5``,
+   ``html+lhs``, ``html5+lhs``, ``s5``, ``slidy``, ``slideous``,
+   ``dzslides``, and ``revealjs``. Scripts, images, and stylesheets at
+   absolute URLs will be downloaded; those at relative URLs will be
+   sought relative to the working directory (if the first source file is
+   local) or relative to the base URL (if the first source file is
+   remote). Elements with the attribute ``data-external="1"`` will be
+   left alone; the documents they link to will not be incorporated in
+   the document. Limitation: resources that are loaded dynamically
+   through JavaScript cannot be incorporated; as a result, some advanced
+   features (e.g. zoom or speaker notes) may not work in an offline
+   “self-contained” ``reveal.js`` slide show.
 
 ``--html-q-tags``
    Use ``<q>`` tags for quotes in HTML. (This option only has an effect
@@ -1000,6 +1012,7 @@ Options affecting specific writers
       -  Heading 8
       -  Heading 9
       -  Block Text
+      -  Source Code
       -  Footnote Text
       -  Definition Term
       -  Definition
@@ -1167,7 +1180,7 @@ Options affecting specific writers
    -  ``-t context``: ``context``
    -  ``-t html``: ``wkhtmltopdf`` (other options: ``prince``,
       ``weasyprint``, ``pagedjs-cli``; see `print-css.rocks`_ for a good
-      introduction to PDF generation from HTML/CSS.)
+      introduction to PDF generation from HTML/CSS)
    -  ``-t ms``: ``pdfroff``
 
 ``--pdf-engine-opt=``\ *STRING*
@@ -1997,7 +2010,7 @@ values. So, for example, ``employee.salary`` will return the value of
 the ``salary`` field of the object that is the value of the ``employee``
 field.
 
--  If the value of the variable is simple value, it will be rendered
+-  If the value of the variable is a simple value, it will be rendered
    verbatim. (Note that no escaping is done; the assumption is that the
    calling program will escape the strings appropriately for the output
    format.)
@@ -2057,7 +2070,7 @@ For loops
 ~~~~~~~~~
 
 A for loop begins with ``for(variable)`` (enclosed in matched
-delimiters) and ends with ``endfor`` (enclosed in matched delimiters.
+delimiters) and ends with ``endfor`` (enclosed in matched delimiters).
 
 -  If ``variable`` is an array, the material inside the loop will be
    evaluated repeatedly, with ``variable`` being set to each value of
@@ -2290,7 +2303,7 @@ Currently the following pipes are predefined:
    letters, chain with ``uppercase``.
 
 -  ``roman``: Converts textual values that can be read as an integer
-   into lowercase roman numerials. This can be used to get lettered
+   into lowercase roman numerals. This can be used to get lettered
    enumeration from array indices. To get uppercase roman, chain with
    ``uppercase``.
 
@@ -2340,8 +2353,8 @@ Metadata variables
    document subtitle, included in HTML, EPUB, LaTeX, ConTeXt, and docx
    documents
 ``abstract``
-   document summary, included in LaTeX, ConTeXt, AsciiDoc, and docx
-   documents
+   document summary, included in HTML, LaTeX, ConTeXt, AsciiDoc, and
+   docx documents
 ``abstract-title``
    title of abstract, currently used only in HTML and EPUB. This will be
    set automatically to a localized value, depending on ``lang``, but
@@ -2487,7 +2500,7 @@ Variables for HTML math
 Variables for HTML slides
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These affect HTML output when [producing slide shows with pandoc].
+These affect HTML output when `producing slide shows with pandoc`_.
 
 ``institute``
    author affiliations: can be a list when there are multiple authors
@@ -2503,7 +2516,7 @@ These affect HTML output when [producing slide shows with pandoc].
    base URL for Slideous documents (defaults to ``slideous``)
 ``title-slide-attributes``
    additional attributes for the title slide of reveal.js slide shows.
-   See [background in reveal.js and beamer] for an example.
+   See `background in reveal.js, beamer, and pptx`_ for an example.
 
 All `reveal.js configuration options`_ are available as variables. To
 turn off boolean flags that default to true in reveal.js, use ``0``.
@@ -2517,7 +2530,7 @@ These variables change the appearance of PDF slides using |beamer|_.
    slide aspect ratio (``43`` for 4:3 [default], ``169`` for 16:9,
    ``1610`` for 16:10, ``149`` for 14:9, ``141`` for 1.41:1, ``54`` for
    5:4, ``32`` for 3:2)
-\`\ ``beameroption``
+``beameroption``
    add extra beamer option with ``\setbeameroption{}``
 ``institute``
    author affiliations: can be a list when there are multiple authors
@@ -2701,6 +2714,8 @@ Links
    add color to link text; automatically enabled if any of
    ``linkcolor``, ``filecolor``, ``citecolor``, ``urlcolor``, or
    ``toccolor`` are set
+``boxlinks``
+   add visible box around links (has no effect if ``colorlinks`` is set)
 ``linkcolor``, ``filecolor``, ``citecolor``, ``urlcolor``, ``toccolor``
    color for internal links, external links, citation links, linked
    URLs, and links in table of contents, respectively: uses options
@@ -2730,9 +2745,9 @@ These variables function when using BibLaTeX for `citation rendering`_.
 ``biblatexoptions``
    list of options for biblatex
 ``biblio-style``
-   bibliography style, when used with ``--natbib`` and ``--biblatex``.
+   bibliography style, when used with ``--natbib`` and ``--biblatex``
 ``biblio-title``
-   bibliography title, when used with ``--natbib`` and ``--biblatex``.
+   bibliography title, when used with ``--natbib`` and ``--biblatex``
 ``bibliography``
    bibliography to use for resolving references
 ``natbiboptions``
@@ -2786,7 +2801,7 @@ Pandoc uses these variables when `creating a PDF`_ with ConTeXt.
    ``--variable=pdfa`` without specified value is not supported. To
    successfully generate PDF/A the required ICC color profiles have to
    be available and the content and all included files (such as images)
-   have to be standard conforming. The ICC profiles and output intent
+   have to be standard-conforming. The ICC profiles and output intent
    may be specified using the variables ``pdfaiccprofile`` and
    ``pdfaintent``. See also `ConTeXt PDFA`_ for more details.
 ``pdfaiccprofile``
@@ -2864,7 +2879,7 @@ the output format, and include the following:
    ``mm/dd/yyyy``, ``mm/dd/yy``, ``yyyy-mm-dd`` (ISO 8601),
    ``dd MM yyyy`` (e.g. either ``02 Apr 2018`` or ``02 April 2018``),
    ``MM dd, yyyy`` (e.g. ``Apr. 02, 2018`` or
-   ``April 02, 2018),``\ yyyy[mm[dd]]]\ ``(e.g.``\ 20180402, ``201804``
+   ``April 02, 2018),``\ yyyy[mm[dd]]\ ``(e.g.``\ 20180402, ``201804``
    or ``2018``).
 ``header-includes``
    contents specified by ``-H/--include-in-header`` (may have multiple
@@ -2923,8 +2938,8 @@ Markdown without footnotes or pipe tables.
 
 The markdown reader and writer make by far the most use of extensions.
 Extensions only used by them are therefore covered in the section
-`Pandoc’s Markdown`_ below (See `Markdown variants`_ for ``commonmark``
-and ``gfm``.) In the following, extensions that also work for other
+`Pandoc’s Markdown`_ below (see `Markdown variants`_ for ``commonmark``
+and ``gfm``). In the following, extensions that also work for other
 formats are covered.
 
 Note that markdown extensions added to the ``ipynb`` format affect
@@ -3659,7 +3674,7 @@ using this syntax:
 Here ``mycode`` is an identifier, ``haskell`` and ``numberLines`` are
 classes, and ``startFrom`` is an attribute with value ``100``. Some
 output formats can use this information to do syntax highlighting.
-Currently, the only output formats that uses this information are HTML,
+Currently, the only output formats that use this information are HTML,
 LaTeX, Docx, Ms, and PowerPoint. If highlighting is supported for your
 output format and language, then the code block above will appear
 highlighted, with numbered lines. (To see which languages are supported,
@@ -3880,7 +3895,7 @@ Extension: ``fancy_lists``
 Unlike original Markdown, pandoc allows ordered list items to be marked
 with uppercase and lowercase letters and roman numerals, in addition to
 Arabic numerals. List markers may be enclosed in parentheses or followed
-by a single right-parentheses or period. They must be separated from the
+by a single right-parenthesis or period. They must be separated from the
 text that follows by at least one space, and, if the list marker is a
 capital letter with a period, by at least two spaces. [1]_
 
@@ -4098,6 +4113,11 @@ characters (optionally separated by spaces) produces a horizontal rule:
    *  *  *  *
 
    ---------------
+
+We strongly recommend that horizontal rules be separated from
+surrounding text by blank lines. If a horizontal rule is not followed by
+a blank line, pandoc may try to interpret the lines that follow as a
+YAML metadata block or a table.
 
 Tables
 ------
@@ -4433,19 +4453,22 @@ Extension: ``yaml_metadata_block``
 
 A `YAML`_ metadata block is a valid YAML object, delimited by a line of
 three hyphens (``---``) at the top and a line of three hyphens (``---``)
-or three dots (``...``) at the bottom. A YAML metadata block may occur
-anywhere in the document, but if it is not at the beginning, it must be
-preceded by a blank line. (Note that, because of the way pandoc
-concatenates input files when several are provided, you may also keep
-the metadata in a separate YAML file and pass it to pandoc as an
-argument, along with your Markdown files:
+or three dots (``...``) at the bottom. The initial line ``---`` must not
+be followed by a blank line. A YAML metadata block may occur anywhere in
+the document, but if it is not at the beginning, it must be preceded by
+a blank line.
+
+Note that, because of the way pandoc concatenates input files when
+several are provided, you may also keep the metadata in a separate YAML
+file and pass it to pandoc as an argument, along with your Markdown
+files:
 
 ::
 
    pandoc chap1.md chap2.md chap3.md metadata.yaml -s -o book.html
 
 Just be sure that the YAML file begins with ``---`` and ends with
-``---`` or ``...``.) Alternatively, you can use the ``--metadata-file``
+``---`` or ``...``. Alternatively, you can use the ``--metadata-file``
 option. Using that approach however, you cannot reference content (like
 footnotes) from the main markdown input document.
 
@@ -4539,7 +4562,7 @@ custom template:
 Raw content to include in the document’s header may be specified using
 ``header-includes``; however, it is important to mark up this content as
 raw code for a particular output format, using the ```raw_attribute``
-extension`_), or it will be interpreted as markdown. For example:
+extension`_, or it will be interpreted as markdown. For example:
 
 ::
 
@@ -4653,13 +4676,31 @@ emphasis marker. If you want to emphasize just part of a word, use
 
    feas*ible*, not feas*able*.
 
+Highlighting
+~~~~~~~~~~~~
+
+To highlight text, use the ``mark`` class:
+
+::
+
+   [Mark]{.mark}
+
+Or, without the ``bracketed_spans`` extension (but with
+``native_spans``):
+
+::
+
+   <span class="mark">Mark</span>
+
+This will work in html output.
+
 Strikeout
 ~~~~~~~~~
 
 Extension: ``strikeout``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-To strikeout a section of text with a horizontal line, begin and end it
+To strike out a section of text with a horizontal line, begin and end it
 with ``~~``. Thus, for example,
 
 ::
@@ -4803,7 +4844,7 @@ AsciiDoc
    For AsciiDoc output format (``-t asciidoc``) it will appear verbatim
    surrounded by ``latexmath:[$...$]`` (for inline math) or
    ``[latexmath]++++\[...\]+++`` (for display math). For AsciiDoctor
-   output format (``-t asciidoctor``) the LaTex delimiters (``$..$`` and
+   output format (``-t asciidoctor``) the LaTeX delimiters (``$..$`` and
    ``\[..\]``) are omitted.
 Texinfo
    It will be rendered inside a ``@math`` command.
@@ -4822,7 +4863,7 @@ DocBook
    If the ``--mathml`` flag is used, it will be rendered using MathML in
    an ``inlineequation`` or ``informalequation`` tag. Otherwise it will
    be rendered, if possible, using Unicode characters.
-Docx
+Docx and PowerPoint
    It will be rendered using OMML math markup.
 FictionBook2
    If the ``--webtex`` option is used, formulas are rendered as images
@@ -5089,7 +5130,7 @@ Here are some examples:
 
    [my label 1]: /foo/bar.html  "My title, optional"
    [my label 2]: /foo
-   [my label 3]: https://fsf.org (The free software foundation)
+   [my label 3]: https://fsf.org (The Free Software Foundation)
    [my label 4]: /bar#special  'A title in single quotes'
 
 The URL may optionally be surrounded by angle brackets:
@@ -5103,7 +5144,7 @@ The title may go on the next line:
 ::
 
    [my label 3]: https://fsf.org
-     "The free software foundation"
+     "The Free Software Foundation"
 
 Note that link labels are not case sensitive. So, this will work:
 
@@ -5123,7 +5164,7 @@ In an *implicit* reference link, the second pair of brackets is empty:
 
 Note: In ``Markdown.pl`` and most other Markdown implementations,
 reference link definitions cannot occur in nested constructions such as
-list items or block quotes. Pandoc lifts this arbitrary seeming
+list items or block quotes. Pandoc lifts this arbitrary-seeming
 restriction. So the following is fine in pandoc, though not in most
 other implementations:
 
@@ -5369,7 +5410,7 @@ cannot contain multiple paragraphs). The syntax is as follows:
 
 ::
 
-   Here is an inline note.^[Inlines notes are easier to write, since
+   Here is an inline note.^[Inline notes are easier to write, since
    you don't have to pick an identifier and move down to type the
    note.]
 
@@ -5409,8 +5450,8 @@ In a footnote style, it might render as
 See the `CSL user documentation`_ for more information about CSL styles
 and how they affect rendering.
 
-Unless a citation key start with a letter, digit, or ``_``, and contains
-only alphanumerics and single internal punctuation characters
+Unless a citation key starts with a letter, digit, or ``_``, and
+contains only alphanumerics and single internal punctuation characters
 (``:.#$%&-+?<>~/``), it must be surrounded by curly braces, which are
 not considered part of the key. In ``@Foo_bar.baz.``, the key is
 ``Foo_bar.baz`` because the final period is not *internal* punctuation,
@@ -5427,7 +5468,7 @@ In
 
    Blah blah [see @doe99, pp. 33-35 and *passim*; @smith04, chap. 1].
 
-The first item (``doe99``) has prefix ``see``, locator ``pp.  33-35``,
+the first item (``doe99``) has prefix ``see``, locator ``pp.  33-35``,
 and suffix ``and *passim*``. The second item (``smith04``) has locator
 ``chap. 1`` and no prefix or suffix.
 
@@ -5501,7 +5542,7 @@ relative to the working directory, and prepend the resulting path to the
 link or image path.
 
 The use of this extension is best understood by example. Suppose you
-have a a subdirectory for each chapter of a book, ``chap1``, ``chap2``,
+have a subdirectory for each chapter of a book, ``chap1``, ``chap2``,
 ``chap3``. Each contains a file ``text.md`` and a number of images used
 in the chapter. You would like to have ``![image](spider.jpg)`` in
 ``chap1/text.md`` refer to ``chap1/spider.jpg`` and
@@ -5787,7 +5828,7 @@ To use this feature, you will need to have
 
 -  a document containing citations (see `Extension: ``citations```_);
 -  a source of bibliographic data: either an external bibliography file
-   or a list of ``references`` in the document’s YAML metadata
+   or a list of ``references`` in the document’s YAML metadata;
 -  optionally, a `CSL`_ citation style.
 
 Specifying bibliographic data
@@ -6168,7 +6209,7 @@ Slide shows
 You can use pandoc to produce an HTML + JavaScript slide presentation
 that can be viewed via a web browser. There are five ways to do this,
 using `S5`_, `DZSlides`_, `Slidy`_, `Slideous`_, or `reveal.js`_. You
-can also produce a PDF slide show using LaTeX |beamer|_, or slides
+can also produce a PDF slide show using LaTeX |beamer|_, or slide
 shows in Microsoft `PowerPoint`_ format.
 
 Here’s the Markdown source for a simple slide show, ``habits.txt``:
@@ -6240,7 +6281,7 @@ To produce a PDF slide show using beamer, type
 Note that a reveal.js slide show can also be converted to a PDF by
 printing it to a file from the browser.
 
-To produce a Powerpoint slide show, type
+To produce a PowerPoint slide show, type
 
 ::
 
@@ -6358,7 +6399,7 @@ or
 
    :::
 
-While using ``incremental`` and ``nonincremental`` divs are the
+While using ``incremental`` and ``nonincremental`` divs is the
 recommended method of setting incremental lists on a per-case basis, an
 older method is also supported: putting lists inside a blockquote will
 depart from the document default (that is, it will display incrementally
@@ -6712,7 +6753,7 @@ The following fields are recognized:
 ``rights``
    A string value.
 ``belongs-to-collection``
-   A string value. identifies the name of a collection to which the EPUB
+   A string value. Identifies the name of a collection to which the EPUB
    Publication belongs.
 ``group-position``
    The ``group-position`` field indicates the numeric position in which
@@ -6811,7 +6852,7 @@ If the input format already is HTML then ``data-external="1"`` will work
 as expected for ``<img>`` elements. Similarly, for Markdown, external
 images can be declared with ``![img](url){external=1}``. Note that this
 only works for images; the other media elements have no native
-representation in pandoc’s AST and requires the use of raw HTML.
+representation in pandoc’s AST and require the use of raw HTML.
 
 EPUB styling
 ------------
@@ -6981,7 +7022,7 @@ Then edit ``my.theme`` and use it like this:
 
    pandoc --highlight-style my.theme
 
-If you are not satisfied with the built-in highlighting, or you want
+If you are not satisfied with the built-in highlighting, or you want to
 highlight a language that isn’t supported, you can use the
 ``--syntax-definition`` option to load a `KDE-style XML syntax
 definition file`_. Before writing your own, have a look at KDE’s
@@ -7111,6 +7152,10 @@ script in place of the input or output format. For example:
    pandoc -t data/sample.lua
    pandoc -f my_custom_markup_language.lua -t latex -s
 
+If the script is not found relative to the working directory, it will be
+sought in the ``readers`` or ``writers`` subdirectory of the user data
+directory (see ``--data-dir``).
+
 A custom reader is a Lua script that defines one function, Reader, which
 takes a string as input and returns a Pandoc AST. See the `Lua filters
 documentation`_ for documentation of the functions that are available
@@ -7148,11 +7193,27 @@ the files generated on successive builds will differ, even if the source
 does not. To avoid this, set the ``SOURCE_DATE_EPOCH`` environment
 variable, and the timestamp will be taken from it instead of the current
 time. ``SOURCE_DATE_EPOCH`` should contain an integer unix timestamp
-(specifying the number of second since midnight UTC January 1, 1970).
+(specifying the number of seconds since midnight UTC January 1, 1970).
 
 Some document formats also include a unique identifier. For EPUB, this
 can be set explicitly by setting the ``identifier`` metadata field (see
 `EPUB Metadata`_, above).
+
+Running pandoc as a web server
+==============================
+
+If you rename (or symlink) the pandoc executable to ``pandoc-server``,
+it will start up a web server with a JSON API. This server exposes most
+of the conversion functionality of pandoc. For full documentation, see
+the `pandoc-server`_ man page.
+
+If you rename (or symlink) the pandoc executable to
+``pandoc-server.cgi``, it will function as a CGI program exposing the
+same API as ``pandoc-server``.
+
+``pandoc-server`` is designed to be maximally secure; it uses Haskell’s
+type system to provide strong guarantees that no I/O will be performed
+on the server during pandoc conversions.
 
 A note on security
 ==================
@@ -7354,6 +7415,7 @@ code.
 .. _Creole 1.0: http://www.wikicreole.org/wiki/Creole1.0
 .. _CSL JSON: https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html
 .. _CSV: https://tools.ietf.org/html/rfc4180
+.. _TSV: https://www.iana.org/assignments/media-types/text/tab-separated-values
 .. _DocBook: https://docbook.org
 .. _DokuWiki markup: https://www.dokuwiki.org/dokuwiki
 .. _EndNote XML bibliography: https://support.clarivate.com/Endnote/s/article/EndNote-XML-Document-Type-Definition
@@ -7448,6 +7510,8 @@ code.
 .. |--css| replace:: ``--css``
 .. _--css: #option--css
 .. _YAML metadata: #layout
+.. _producing slide shows with pandoc: #slide-shows
+.. _background in reveal.js, beamer, and pptx: #background-in-reveal.js-beamer-and-pptx
 .. _reveal.js configuration options: https://revealjs.com/config/
 .. |beamer| replace:: ``beamer``
 .. _beamer: https://ctan.org/pkg/beamer
@@ -7512,7 +7576,7 @@ code.
 .. _sample grid tables: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#grid-tables
 .. _PHP Markdown Extra tables: https://michelf.ca/projects/php-markdown/extra/#table
 .. _YAML escape sequence: https://yaml.org/spec/1.2/spec.html#id2776092
-.. _Wikipedia entry on YAML syntax: https://en.m.wikipedia.org/wiki/YAML#Syntax
+.. _Wikipedia entry on YAML syntax: https://en.wikipedia.org/wiki/YAML#Syntax
 .. _``raw_attribute`` extension: #extension-raw_attribute
 .. _fenced code blocks: #fenced-code-blocks
 .. _`interpreted text role ``:math:```: https://docutils.sourceforge.io/docs/ref/rst/roles.html#math
@@ -7556,6 +7620,7 @@ code.
 .. _``styles`` extension: #ext-styles
 .. _Lua: https://www.lua.org
 .. _lpeg: http://www.inf.puc-rio.br/~roberto/lpeg/
+.. _pandoc-server: https://github.com/jgm/pandoc/blob/master/doc/pandoc-server.md
 .. _Using the pandoc API: https://pandoc.org/using-the-pandoc-api.html
 .. _GPL: https://www.gnu.org/copyleft/gpl.html
 .. _David Wheeler: https://justatheory.com/2009/02/modest-markdown-proposal/

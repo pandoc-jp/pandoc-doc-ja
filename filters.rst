@@ -16,7 +16,7 @@ Pandoc filters 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.18
+原著バージョン: 2.19.2
 
 更新日: 2023/01/01
 
@@ -334,7 +334,7 @@ the file given?
 
    doInclude :: Block -> IO Block
    doInclude cb@(CodeBlock (id, classes, namevals) contents) =
-     case lookup "include" namevals of
+     case lookup (T.pack "include") namevals of
           Just f     -> CodeBlock (id, classes, namevals) <$>
                          TIO.readFile (T.unpack f)
           Nothing    -> return cb
@@ -471,8 +471,8 @@ Then run it:
 
 Note: to use this to generate PDFs via LaTeX, you’ll need to use
 ``--pdf-engine=xelatex``, specify a ``mainfont`` that has the Japanese
-characters (e.g. “Noto Sans CJK TC”), and add ``\usepackage{ruby}`` to
-your template or header-includes.
+characters (e.g. “`Noto Sans CJK JP`_”), and add ``\usepackage{ruby}``
+to your template or header-includes.
 
 Exercises
 =========
@@ -578,3 +578,4 @@ file extension interpreter
 .. _Ruby: https://heerdebeer.org/Software/markdown/paru/
 .. _documentation on lua filters: https://pandoc.org/lua-filters.html
 .. _pandoc-discuss: https://groups.google.com/group/pandoc-discuss/browse_thread/thread/7baea325565878c8
+.. _Noto Sans CJK JP: https://fonts.google.com/noto/specimen/Noto+Sans+JP

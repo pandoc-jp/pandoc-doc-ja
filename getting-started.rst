@@ -16,7 +16,7 @@ Getting started with pandoc 日本語版
 
    * John MacFarlane
 
-原著バージョン: 2.18
+原著バージョン: 2.19.2
 
 更新日: 2023/01/01
 

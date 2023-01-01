@@ -17,7 +17,7 @@ Pandoc Lua Filters 日本語版
    * Albert Krewinkel
    * John MacFarlane
 
-原著バージョン: 2.18
+原著バージョン: 2.19.2
 
 更新日: 2023/01/01
 
@@ -401,6 +401,11 @@ syntax (``mystring:uc_upper()``).
 Debugging Lua filters
 =====================
 
+William Lupton has written a Lua module with some handy functions for
+debugging Lua filters, including functions that can pretty-print the
+Pandoc AST elements manipulated by the filters: it is available at
+https://github.com/wlupton/pandoc-lua-logging.
+
 It is possible to use a debugging interface to halt execution and step
 through a Lua filter line by line as it is run inside Pandoc. This is
 accomplished using the remote-debugging interface of the package
@@ -416,6 +421,49 @@ be available on the path. ZeroBrane also includes both of these in its
 package, so if you don’t want to install Lua separately, you should
 add/modify your ``LUA_PATH`` and ``LUA_CPATH`` to include the correct
 locations; `see detailed instructions here`_.
+
+Common pitfalls
+---------------
+
+AST elements not updated
+   A filtered element will only be updated if the filter function
+   returns a new element to replace it. A function like the below has no
+   effect, as the function returns no value:
+
+   .. code:: lua
+
+      function Str (str)
+        str.text = string.upper(str.text)
+      end
+
+   The correct version would be
+
+   .. code:: lua
+
+      function Str (str)
+        str.text = string.upper(str.text)
+        return str
+      end
+
+Pattern behavior is locate dependent
+   The character classes in Lua’s pattern library depend on the current
+   locale: E.g., the character ``©`` will be treated as punctuation, and
+   matched by the pattern ``%p``, on CP-1252 locales, but not on systems
+   using a UTF-8 locale.
+
+   A reliable way to ensure unified handling of patterns and character
+   classes is to use the “C” locale by adding ``os.setlocale 'C'`` to
+   the top of the Lua script.
+
+String library is not Unicode aware
+   Lua’s ``string`` library treats each byte as a single character. A
+   function like ``string.upper`` will not have the intended effect when
+   applied to words with non-ASCII characters. Similarly, a pattern like
+   ``[☃]`` will match *any* of the bytes ``\240``, ``\159``, ``\154``,
+   and ``\178``, but **won’t** match the “snowman” Unicode character.
+
+   Use the `pandoc.text`_ module for Unicode-aware transformation, and
+   consider using using the lpeg or re library for pattern matching.
 
 Examples
 ========
@@ -693,7 +741,7 @@ by running their contents through ``abcm2ps`` and ImageMagick’s
 Images are added to the mediabag. For output to binary formats, pandoc
 will use images in the mediabag. For textual formats, use
 ``--extract-media`` to specify a directory where the files in the
-mediabag will be written, or (for HTML only) use ``--self-contained``.
+mediabag will be written, or (for HTML only) use ``--embed-resources``.
 
 .. code:: lua
 
@@ -702,7 +750,7 @@ mediabag will be written, or (for HTML only) use ``--self-contained``.
    --
    -- * Assumes that abcm2ps and ImageMagick's convert are in the path.
    -- * For textual output formats, use --extract-media=abc-images
-   -- * For HTML formats, you may alternatively use --self-contained
+   -- * For HTML formats, you may alternatively use --embed-resources
 
    local filetypes = { html = {"png", "image/png"}
                      , latex = {"pdf", "application/pdf"}
@@ -875,7 +923,8 @@ walk
 Applies a Lua filter to the Pandoc element. Just as for full-document
 filters, the order in which elements are traversed can be controlled by
 setting the ``traverse`` field of the filter; see the section on
-`traversal order`_.
+`traversal order`_. Returns a (deep) copy on which the filter has been
+applied: the original element is left untouched.
 
 Parameters:
 
@@ -959,7 +1008,8 @@ walk
 Applies a Lua filter to the block element. Just as for full-document
 filters, the order in which elements are traversed can be controlled by
 setting the ``traverse`` field of the filter; see the section on
-`traversal order`_.
+`traversal order`_. Returns a (deep) copy on which the filter has been
+applied: the original element is left untouched.
 
 Note that the filter is applied to the subtree, but not to the ``self``
 block element. The rationale is that otherwise the element could be
@@ -1315,7 +1365,8 @@ walk
 Applies a Lua filter to the Blocks list. Just as for full-document
 filters, the order in which elements are traversed can be controlled by
 setting the ``traverse`` field of the filter; see the section on
-`traversal order`_.
+`traversal order`_. Returns a (deep) copy on which the filter has been
+applied: the original list is left untouched.
 
 Parameters:
 
@@ -1359,7 +1410,8 @@ walk
 Applies a Lua filter to the Inline element. Just as for full-document
 filters, the order in which elements are traversed can be controlled by
 setting the ``traverse`` field of the filter; see the section on
-`traversal order`_.
+`traversal order`_. Returns a (deep) copy on which the filter has been
+applied: the original element is left untouched.
 
 Note that the filter is applied to the subtree, but not to the ``self``
 inline element. The rationale is that otherwise the element could be
@@ -1807,7 +1859,8 @@ walk
 Applies a Lua filter to the Inlines list. Just as for full-document
 filters, the order in which elements are handled are are Inline →
 Inlines → Block → Blocks. The filter is applied to all list items *and*
-to the list itself.
+to the list itself. Returns a (deep) copy on which the filter has been
+applied: the original list is left untouched.
 
 Parameters:
 
@@ -2403,9 +2456,30 @@ rules.
 Module pandoc
 =============
 
-Lua functions for pandoc scripts; includes constructors for document
-tree elements, functions to parse text in a given format, and functions
-to filter and modify a subtree.
+Fields and functions for pandoc scripts; includes constructors for
+document tree elements, functions to parse text in a given format, and
+functions to filter and modify a subtree.
+
+.. _pandoc.fields:
+
+Static Fields
+-------------
+
+.. _pandoc.readers:
+
+readers
+~~~~~~~
+
+Set of formats that pandoc can parse. All keys in this table can be used
+as the ``format`` value in ``pandoc.read``.
+
+.. _pandoc.writers:
+
+writers
+~~~~~~~
+
+Set of formats that pandoc can generate. All keys in this table can be
+used as the ``format`` value in ``pandoc.write``.
 
 Pandoc
 ------
@@ -3515,7 +3589,9 @@ Usage:
 ``walk_block (element, filter)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Apply a filter inside a block element, walking its contents.
+Apply a filter inside a block element, walking its contents. Returns a
+(deep) copy on which the filter has been applied: the original element
+is left untouched.
 
 Parameters:
 
@@ -3532,7 +3608,9 @@ Returns: the transformed block element
 ``walk_inline (element, filter)``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Apply a filter inside an inline element, walking its contents.
+Apply a filter inside an inline element, walking its contents. Returns a
+(deep) copy on which the filter has been applied: the original element
+is left untouched.
 
 Parameters:
 
@@ -3663,6 +3741,33 @@ Usage:
    --   pandoc.Space(), pandoc.Str'¶', pandoc.Space(),
    --   pandoc.Emph{ pandoc.Str 'Paragraph2' }
    -- }
+
+.. _pandoc.utils.citeproc:
+
+``citeproc (doc)``
+------------------
+
+Process the citations in the file, replacing them with rendered
+citations and adding a bibliography. See the manual section on citation
+rendering for details.
+
+Parameters:
+
+``doc``
+   document (`Pandoc`_)
+
+Returns:
+
+-  processed document (`Pandoc`_)
+
+Usage:
+
+::
+
+   -- Lua filter that behaves like `--citeproc`
+   function Pandoc (doc)
+     return pandoc.utils.citeproc(doc)
+   end
 
 .. _pandoc.utils.equals:
 
@@ -3957,7 +4062,7 @@ Module pandoc.mediabag
 
 The ``pandoc.mediabag`` module allows accessing pandoc’s media storage.
 The “media bag” is used when pandoc is called with the
-``--extract-media`` or (for HTML only) ``--self-contained`` option.
+``--extract-media`` or (for HTML only) ``--embed-resources`` option.
 
 The module is loaded as part of module ``pandoc`` and can either be
 accessed via the ``pandoc.mediabag`` field, or explicitly required,
@@ -3990,6 +4095,29 @@ empty
 ``empty ()``
 
 Clear-out the media bag, deleting all items.
+
+.. _pandoc.mediabag.fill:
+
+fill
+----
+
+``fill (doc)``
+
+Fills the mediabag with the images in the given document. An image that
+cannot be retrieved will be replaced with a Span of class “image” that
+contains the image description.
+
+Images for which the mediabag already contains an item will not be
+processed again.
+
+Parameters:
+
+``doc``
+   document from which to fill the mediabag (`Pandoc`_)
+
+Returns:
+
+-  modified document (`Pandoc`_)
 
 .. _pandoc.mediabag.insert:
 
@@ -4194,7 +4322,8 @@ Methods
 ``pandoc.List:clone ()``
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Returns a (shallow) copy of the list.
+Returns a (shallow) copy of the list. (To get a deep copy of the list,
+use ``walk`` with an empty filter.)
 
 .. _`pandoc.list:extend`:
 
@@ -4628,6 +4757,65 @@ Returns:
 
 -  The current working directory (string).
 
+.. _pandoc.system.list_directory:
+
+list_directory
+~~~~~~~~~~~~~~
+
+``list_directory ([directory])``
+
+List the contents of a directory.
+
+Parameters:
+
+``directory``
+   Path of the directory whose contents should be listed (string).
+   Defaults to ``.``.
+
+Returns:
+
+-  A table of all entries in ``directory`` without the special entries
+   ``.`` and ``..``. (list of strings)
+
+.. _pandoc.system.make_directory:
+
+make_directory
+~~~~~~~~~~~~~~
+
+``make_directory (dirname [, create_parent])``
+
+Create a new directory which is initially empty, or as near to empty as
+the operating system allows. The function throws an error if the
+directory cannot be created, e.g., if the parent directory does not
+exist or if a directory of the same name is already present.
+
+If the optional second parameter is provided and truthy, then all
+directories, including parent directories, are created as necessary.
+
+Parameters:
+
+``dirname``
+   name of the new directory (string)
+``create_parent``
+   create parent directories if necessary (boolean)
+
+.. _pandoc.system.remove_directory:
+
+remove_directory
+~~~~~~~~~~~~~~~~
+
+``remove_directory (dirname [, recursive])``
+
+Remove an existing, empty directory. If ``recursive`` is given, then
+delete the directory and its contents recursively.
+
+Parameters:
+
+``dirname``
+   name of the directory to delete (string)
+``recursive``
+   delete content recursively (boolean)
+
 .. _pandoc.system.with_environment:
 
 with_environment
@@ -5023,7 +5211,7 @@ Parameters
 
 Returns
 
--  doc contatining just the literal string (`Doc`_)
+-  doc containing just the literal string (`Doc`_)
 
 .. _pandoc.layout.nest:
 
@@ -5445,6 +5633,7 @@ Returns:
 .. |luarocks| replace:: ``luarocks``
 .. _luarocks: https://luarocks.org
 .. _see detailed instructions here: https://studio.zerobrane.com/doc-remote-debugging
+.. _pandoc.text: #module-text
 .. |walk| replace:: ``walk``
 .. _walk: #type-block:walk
 .. |pdf2svg| replace:: ``pdf2svg``

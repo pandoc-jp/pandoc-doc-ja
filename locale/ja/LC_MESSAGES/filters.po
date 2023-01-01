@@ -1,26 +1,28 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2020, 日本Pandocユーザ会
-# This file is distributed under the same license as the 日本Pandocユーザ会 package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+# This file is distributed under the same license as the 日本Pandocユーザ会
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
 # Translators:
 # 石橋 朋樹 <iroirotomoki@gmail.com>, 2020
 # niszet <niszet0016@gmail.com>, 2022
-# 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 日本Pandocユーザ会\n"
+"Project-Id-Version:  日本Pandocユーザ会\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-01 08:31+0000\n"
+"POT-Creation-Date: 2023-01-01 10:15+0000\n"
 "PO-Revision-Date: 2020-10-17 13:32+0000\n"
 "Last-Translator: niszet <niszet0016@gmail.com>, 2022\n"
-"Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
+"Language-Team: Japanese (https://www.transifex.com/jpang/teams/72012/ja/)"
+"\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: ../../filters.rst:4
 msgid "Pandoc filters 日本語版"
@@ -35,18 +37,16 @@ msgstr ""
 "（ユーザーズガイド以外のページについてはほぼ翻訳されていません。現在翻訳を進めています）"
 
 #: ../../filters.rst:11
-msgid ""
-"正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
-msgstr ""
-"正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgid "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
+msgstr "正確な情報については英語の公式 `User's Guide <https://pandoc.org/MANUAL.html>`_ を参照してください"
 
 #: ../../filters.rst:12
 msgid ""
-"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-"
-"doc-ja/issues>`_ に投稿してください"
+"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp"
+"/pandoc-doc-ja/issues>`_ に投稿してください"
 msgstr ""
-"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp/pandoc-"
-"doc-ja/issues>`_ に投稿してください"
+"この翻訳に対する問題・改善案については `GitHubリポジトリのIssue <https://github.com/pandoc-jp"
+"/pandoc-doc-ja/issues>`_ に投稿してください"
 
 #: ../../filters.rst:13
 msgid "翻訳のレビュー作業や翻訳作業へのご協力を希望の方は :doc:`trans-intro` をご覧ください"
@@ -61,7 +61,8 @@ msgid "John MacFarlane"
 msgstr "John MacFarlane"
 
 #: ../../filters.rst:19
-msgid "原著バージョン: 2.18"
+#, fuzzy
+msgid "原著バージョン: 2.19.2"
 msgstr "原著バージョン: 2.18"
 
 #: ../../filters.rst:21
@@ -106,28 +107,28 @@ msgstr ""
 
 #: ../../filters.rst:38
 msgid ""
-"Pandoc provides an interface for users to write programs (known as filters) "
-"which act on pandoc’s AST."
+"Pandoc provides an interface for users to write programs (known as "
+"filters) which act on pandoc’s AST."
 msgstr "Pandocは、ユーザがPandoc ASTを変換する(フィルタと呼ばれる)プログラムを書くためのインターフェースを提供しています。"
 
 #: ../../filters.rst:41
 msgid ""
-"Pandoc consists of a set of readers and writers. When converting a document "
-"from one format to another, text is parsed by a reader into pandoc’s "
-"intermediate representation of the document—an “abstract syntax tree” or "
-"AST—which is then converted by the writer into the target format. The pandoc"
-" AST format is defined in the module ```Text.Pandoc.Definition`` in the "
-"``pandoc-types`` package`_."
+"Pandoc consists of a set of readers and writers. When converting a "
+"document from one format to another, text is parsed by a reader into "
+"pandoc’s intermediate representation of the document—an “abstract syntax "
+"tree” or AST—which is then converted by the writer into the target "
+"format. The pandoc AST format is defined in the module "
+"```Text.Pandoc.Definition`` in the ``pandoc-types`` package`_."
 msgstr ""
 "Pandocは、ReaderとWriterのセットで構成されています。ドキュメントをあるフォーマットから別のフォーマットへと変換するとき、Readerがテキストを解析し、Pandocにおける書類の中間表現である"
-" \"abstract syntax tree\", ASTに変換され、WriterがさらにASTを目的とするフォーマットへと変換します。Pandoc "
-"ASTフォーマットは、モジュール ```Text.Pandoc.Definition`` in the ``pandoc-types`` "
-"package`_ に定義されています．"
+" \"abstract syntax tree\", "
+"ASTに変換され、WriterがさらにASTを目的とするフォーマットへと変換します。Pandoc ASTフォーマットは、モジュール "
+"```Text.Pandoc.Definition`` in the ``pandoc-types`` package`_ に定義されています．"
 
 #: ../../filters.rst:48
 msgid ""
-"A “filter” is a program that modifies the AST, between the reader and the "
-"writer."
+"A “filter” is a program that modifies the AST, between the reader and the"
+" writer."
 msgstr "\"フィルタ\"とは、ReaderとWriterとの間でASTを編集するプログラムのことです。"
 
 #: ../../filters.rst:55
@@ -136,26 +137,26 @@ msgstr "Pandocは、以下の2種類のフィルタをサポートしていま�
 
 #: ../../filters.rst:57
 msgid ""
-"**Lua filters** use the Lua language to define transformations on the pandoc"
-" AST. They are described in a `separate document`_."
+"**Lua filters** use the Lua language to define transformations on the "
+"pandoc AST. They are described in a `separate document`_."
 msgstr ""
 "**Lua フィルタ** は、Lua言語を用いて、Pandoc ASTの変換を定義します。詳細は `separate document`_ "
 "を参照ください。"
 
 #: ../../filters.rst:60
 msgid ""
-"**JSON filters**, described here, are pipes that read from standard input "
-"and write to standard output, consuming and producing a JSON representation "
-"of the pandoc AST:"
+"**JSON filters**, described here, are pipes that read from standard input"
+" and write to standard output, consuming and producing a JSON "
+"representation of the pandoc AST:"
 msgstr ""
 
 #: ../../filters.rst:80
 msgid ""
-"Lua filters have a couple of advantages. They use a Lua interpreter that is "
-"embedded in pandoc, so you don’t need to have any external software "
-"installed. And they are usually faster than JSON filters. But if you wish to"
-" write your filter in a language other than Lua, you may prefer to use a "
-"JSON filter. JSON filters may be written in any programming language."
+"Lua filters have a couple of advantages. They use a Lua interpreter that "
+"is embedded in pandoc, so you don’t need to have any external software "
+"installed. And they are usually faster than JSON filters. But if you wish"
+" to write your filter in a language other than Lua, you may prefer to use"
+" a JSON filter. JSON filters may be written in any programming language."
 msgstr ""
 
 #: ../../filters.rst:87
@@ -164,8 +165,8 @@ msgstr ""
 
 #: ../../filters.rst:95
 msgid ""
-"But it is more convenient to use the ``--filter`` option, which handles the "
-"plumbing automatically:"
+"But it is more convenient to use the ``--filter`` option, which handles "
+"the plumbing automatically:"
 msgstr ""
 
 #: ../../filters.rst:102
@@ -180,26 +181,26 @@ msgstr ""
 
 #: ../../filters.rst:108
 msgid ""
-"Suppose you wanted to replace all level 2+ headings in a markdown document "
-"with regular paragraphs, with text in italics. How would you go about doing "
-"this?"
+"Suppose you wanted to replace all level 2+ headings in a markdown "
+"document with regular paragraphs, with text in italics. How would you go "
+"about doing this?"
 msgstr ""
 
 #: ../../filters.rst:112
-msgid ""
-"A first thought would be to use regular expressions. Something like this:"
+msgid "A first thought would be to use regular expressions. Something like this:"
 msgstr ""
 
 #: ../../filters.rst:119
 msgid ""
-"This should work most of the time. But don’t forget that ATX style headings "
-"can end with a sequence of ``#``\\ s that is not part of the heading text:"
+"This should work most of the time. But don’t forget that ATX style "
+"headings can end with a sequence of ``#``\\ s that is not part of the "
+"heading text:"
 msgstr ""
 
 #: ../../filters.rst:127
 msgid ""
-"And what if your document contains a line starting with ``##`` in an HTML "
-"comment or delimited code block?"
+"And what if your document contains a line starting with ``##`` in an HTML"
+" comment or delimited code block?"
 msgstr ""
 
 #: ../../filters.rst:140
@@ -210,38 +211,39 @@ msgstr ""
 
 #: ../../filters.rst:148
 msgid ""
-"We need to handle those too. Finally, can we be sure that adding asterisks "
-"to each side of our string will put it in italics? What if the string "
-"already contains asterisks around it? Then we’ll end up with bold text, "
-"which is not what we want. And what if it contains a regular unescaped "
-"asterisk?"
+"We need to handle those too. Finally, can we be sure that adding "
+"asterisks to each side of our string will put it in italics? What if the "
+"string already contains asterisks around it? Then we’ll end up with bold "
+"text, which is not what we want. And what if it contains a regular "
+"unescaped asterisk?"
 msgstr ""
 
 #: ../../filters.rst:154
 msgid ""
-"How would you modify your regular expression to handle these cases? It would"
-" be hairy, to say the least."
+"How would you modify your regular expression to handle these cases? It "
+"would be hairy, to say the least."
 msgstr ""
 
 #: ../../filters.rst:157
 msgid ""
-"A better approach is to let pandoc handle the parsing, and then modify the "
-"AST before the document is written. For this, we can use a filter."
+"A better approach is to let pandoc handle the parsing, and then modify "
+"the AST before the document is written. For this, we can use a filter."
 msgstr ""
 
 #: ../../filters.rst:160
 msgid ""
-"To see what sort of AST is produced when pandoc parses our text, we can use "
-"pandoc’s ``native`` output format:"
+"To see what sort of AST is produced when pandoc parses our text, we can "
+"use pandoc’s ``native`` output format:"
 msgstr ""
 
 #: ../../filters.rst:174
 msgid ""
-"A ``Pandoc`` document consists of a ``Meta`` block (containing metadata like"
-" title, authors, and date) and a list of ``Block`` elements. In this case, "
-"we have two ``Block``\\ s, a ``Header`` and a ``Para``. Each has as its "
-"content a list of ``Inline`` elements. For more details on the pandoc AST, "
-"see the `haddock documentation for ``Text.Pandoc.Definition```_."
+"A ``Pandoc`` document consists of a ``Meta`` block (containing metadata "
+"like title, authors, and date) and a list of ``Block`` elements. In this "
+"case, we have two ``Block``\\ s, a ``Header`` and a ``Para``. Each has as"
+" its content a list of ``Inline`` elements. For more details on the "
+"pandoc AST, see the `haddock documentation for "
+"``Text.Pandoc.Definition```_."
 msgstr ""
 
 #: ../../filters.rst:181
@@ -254,11 +256,11 @@ msgstr ""
 #: ../../filters.rst:198
 msgid ""
 "The ``toJSONFilter`` function does two things. First, it lifts the "
-"``behead`` function (which maps ``Block -> Block``) onto a transformation of"
-" the entire ``Pandoc`` AST, walking the AST and transforming each block. "
-"Second, it wraps this ``Pandoc -> Pandoc`` transformation with the necessary"
-" JSON serialization and deserialization, producing an executable that "
-"consumes JSON from stdin and produces JSON to stdout."
+"``behead`` function (which maps ``Block -> Block``) onto a transformation"
+" of the entire ``Pandoc`` AST, walking the AST and transforming each "
+"block. Second, it wraps this ``Pandoc -> Pandoc`` transformation with the"
+" necessary JSON serialization and deserialization, producing an "
+"executable that consumes JSON from stdin and produces JSON to stdout."
 msgstr ""
 
 #: ../../filters.rst:206
@@ -283,8 +285,9 @@ msgstr ""
 #: ../../filters.rst:229
 msgid ""
 "Note that if the filter is placed in the system PATH, then the initial "
-"``./`` is not needed. Note also that the command line can include multiple "
-"instances of ``--filter``: the filters will be applied in sequence."
+"``./`` is not needed. Note also that the command line can include "
+"multiple instances of ``--filter``: the filters will be applied in "
+"sequence."
 msgstr ""
 
 #: ../../filters.rst:235
@@ -300,10 +303,10 @@ msgstr ""
 
 #: ../../filters.rst:241
 msgid ""
-"Again, it’s difficult to do the job reliably with regexes. A ``$`` might be "
-"a regular currency indicator, or it might occur in a comment or code block "
-"or inline code span. We just want to find the ``$``\\ s that begin LaTeX "
-"math. If only we had a parser…"
+"Again, it’s difficult to do the job reliably with regexes. A ``$`` might "
+"be a regular currency indicator, or it might occur in a comment or code "
+"block or inline code span. We just want to find the ``$``\\ s that begin "
+"LaTeX math. If only we had a parser…"
 msgstr ""
 
 #: ../../filters.rst:246
@@ -312,8 +315,8 @@ msgstr ""
 
 #: ../../filters.rst:258
 msgid ""
-"Mission accomplished. (I’ve omitted type signatures here, just to show it "
-"can be done.)"
+"Mission accomplished. (I’ve omitted type signatures here, just to show it"
+" can be done.)"
 msgstr ""
 
 #: ../../filters.rst:262
@@ -322,9 +325,9 @@ msgstr ""
 
 #: ../../filters.rst:264
 msgid ""
-"While it’s easiest to write pandoc filters in Haskell, it is fairly easy to "
-"write them in python using the ``pandocfilters`` package. The package is in "
-"PyPI and can be installed using ``pip install pandocfilters`` or "
+"While it’s easiest to write pandoc filters in Haskell, it is fairly easy "
+"to write them in python using the ``pandocfilters`` package. The package "
+"is in PyPI and can be installed using ``pip install pandocfilters`` or "
 "``easy_install pandocfilters``."
 msgstr ""
 
@@ -334,10 +337,10 @@ msgstr ""
 
 #: ../../filters.rst:289
 msgid ""
-"``toJSONFilter(behead)`` walks the AST and applies the ``behead`` action to "
-"each element. If ``behead`` returns nothing, the node is unchanged; if it "
-"returns an object, the node is replaced; if it returns a list, the new list "
-"is spliced in."
+"``toJSONFilter(behead)`` walks the AST and applies the ``behead`` action "
+"to each element. If ``behead`` returns nothing, the node is unchanged; if"
+" it returns an object, the node is replaced; if it returns a list, the "
+"new list is spliced in."
 msgstr ""
 
 #: ../../filters.rst:294
@@ -390,9 +393,9 @@ msgstr ""
 #: ../../filters.rst:314
 msgid ""
 "Starting with pandoc 2.0, pandoc includes built-in support for writing "
-"filters in lua. The lua interpreter is built in to pandoc, so a lua filter "
-"does not require any additional software to run. See the `documentation on "
-"lua filters`_."
+"filters in lua. The lua interpreter is built in to pandoc, so a lua "
+"filter does not require any additional software to run. See the "
+"`documentation on lua filters`_."
 msgstr ""
 
 #: ../../filters.rst:320
@@ -401,8 +404,8 @@ msgstr ""
 
 #: ../../filters.rst:322
 msgid ""
-"So none of our transforms have involved IO. How about a script that reads a "
-"markdown document, finds all the inline code blocks with attribute "
+"So none of our transforms have involved IO. How about a script that reads"
+" a markdown document, finds all the inline code blocks with attribute "
 "``include``, and replaces their contents with the contents of the file "
 "given?"
 msgstr ""
@@ -417,8 +420,8 @@ msgstr ""
 
 #: ../../filters.rst:359
 msgid ""
-"What if we want to remove every link from a document, retaining the link’s "
-"text?"
+"What if we want to remove every link from a document, retaining the "
+"link’s text?"
 msgstr ""
 
 #: ../../filters.rst:374
@@ -427,8 +430,8 @@ msgid ""
 "because the thing we want to replace the link with is not a single "
 "``Inline`` element, but a list of them. So we make ``delink`` a function "
 "from an ``Inline`` element to a list of ``Inline`` elements. "
-"``toJSONFilter`` can still lift this function to a transformation of type "
-"``Pandoc -> Pandoc``."
+"``toJSONFilter`` can still lift this function to a transformation of type"
+" ``Pandoc -> Pandoc``."
 msgstr ""
 
 #: ../../filters.rst:382
@@ -443,28 +446,29 @@ msgstr ""
 
 #: ../../filters.rst:387
 msgid ""
-"I’m interested in using pandoc to turn my markdown notes on Japanese into "
-"nicely set HTML and (Xe)LaTeX. With HTML5, ruby (typically used to "
-"phonetically read chinese characters by placing text above or to the side) "
-"is standard, and support from browsers is emerging (Webkit based browsers "
-"appear to fully support it). For those browsers that don’t support it yet "
-"(notably Firefox) the feature falls back in a nice way by placing the "
-"phonetic reading inside brackets to the side of each Chinese character, "
-"which is suitable for other output formats too. As for (Xe)LaTeX, ruby is "
-"not an issue."
+"I’m interested in using pandoc to turn my markdown notes on Japanese into"
+" nicely set HTML and (Xe)LaTeX. With HTML5, ruby (typically used to "
+"phonetically read chinese characters by placing text above or to the "
+"side) is standard, and support from browsers is emerging (Webkit based "
+"browsers appear to fully support it). For those browsers that don’t "
+"support it yet (notably Firefox) the feature falls back in a nice way by "
+"placing the phonetic reading inside brackets to the side of each Chinese "
+"character, which is suitable for other output formats too. As for "
+"(Xe)LaTeX, ruby is not an issue."
 msgstr ""
 
 #: ../../filters.rst:397
 msgid ""
-"At the moment, I use inline HTML to achieve the result when the conversion "
-"is to HTML, but it’s ugly and uses a lot of keystrokes, for example"
+"At the moment, I use inline HTML to achieve the result when the "
+"conversion is to HTML, but it’s ugly and uses a lot of keystrokes, for "
+"example"
 msgstr ""
 
 #: ../../filters.rst:405
 msgid ""
-"sets ご飯 “gohan” with “han” spelt phonetically above the second character, or"
-" to the right of it in brackets if the browser does not support ruby. I’d "
-"like to have something more like"
+"sets ご飯 “gohan” with “han” spelt phonetically above the second character,"
+" or to the right of it in brackets if the browser does not support ruby. "
+"I’d like to have something more like"
 msgstr ""
 
 #: ../../filters.rst:413
@@ -479,10 +483,10 @@ msgstr ""
 
 #: ../../filters.rst:446
 msgid ""
-"Note that, when a script is called using ``--filter``, pandoc passes it the "
-"target format as the first argument. When a function’s first argument is of "
-"type ``Maybe Format``, ``toJSONFilter`` will automatically assign it "
-"``Just`` the target format or ``Nothing``."
+"Note that, when a script is called using ``--filter``, pandoc passes it "
+"the target format as the first argument. When a function’s first argument"
+" is of type ``Maybe Format``, ``toJSONFilter`` will automatically assign "
+"it ``Just`` the target format or ``Nothing``."
 msgstr ""
 
 #: ../../filters.rst:451
@@ -496,9 +500,9 @@ msgstr ""
 #: ../../filters.rst:472
 msgid ""
 "Note: to use this to generate PDFs via LaTeX, you’ll need to use ``--pdf-"
-"engine=xelatex``, specify a ``mainfont`` that has the Japanese characters "
-"(e.g. “Noto Sans CJK TC”), and add ``\\usepackage{ruby}`` to your template "
-"or header-includes."
+"engine=xelatex``, specify a ``mainfont`` that has the Japanese characters"
+" (e.g. “`Noto Sans CJK JP`_”), and add ``\\usepackage{ruby}`` to your "
+"template or header-includes."
 msgstr ""
 
 #: ../../filters.rst:478
@@ -521,8 +525,9 @@ msgstr ""
 
 #: ../../filters.rst:487
 msgid ""
-"Replace each delimited code block with class ``dot`` with an image generated"
-" by running ``dot -Tpng`` (from graphviz) on the contents of the code block."
+"Replace each delimited code block with class ``dot`` with an image "
+"generated by running ``dot -Tpng`` (from graphviz) on the contents of the"
+" code block."
 msgstr ""
 
 #: ../../filters.rst:491
@@ -537,9 +542,9 @@ msgstr ""
 
 #: ../../filters.rst:497
 msgid ""
-"A JSON filter is any program which can consume and produce a valid pandoc "
-"JSON document representation. This section describes the technical details "
-"surrounding the invocation of filters."
+"A JSON filter is any program which can consume and produce a valid pandoc"
+" JSON document representation. This section describes the technical "
+"details surrounding the invocation of filters."
 msgstr ""
 
 #: ../../filters.rst:502
@@ -632,8 +637,8 @@ msgstr ""
 
 #: ../../filters.rst:537
 msgid ""
-"whether the input was a standalone document with header; either ``true`` or "
-"``false``."
+"whether the input was a standalone document with header; either ``true`` "
+"or ``false``."
 msgstr ""
 
 #: ../../filters.rst:540
@@ -642,8 +647,8 @@ msgstr ""
 
 #: ../../filters.rst:540
 msgid ""
-"HTML comments are stripped instead of parsed as raw HTML; either ``true`` or"
-" ``false``."
+"HTML comments are stripped instead of parsed as raw HTML; either ``true``"
+" or ``false``."
 msgstr ""
 
 #: ../../filters.rst:542
@@ -660,8 +665,8 @@ msgstr ""
 
 #: ../../filters.rst:545
 msgid ""
-"track changes setting for docx; one of ``\"accept-changes\"``, ``\"reject-"
-"changes\"``, and ``\"all-changes\"``."
+"track changes setting for docx; one of ``\"accept-changes\"``, "
+"``\"reject-changes\"``, and ``\"all-changes\"``."
 msgstr ""
 
 #: ../../filters.rst:549
@@ -671,8 +676,8 @@ msgstr ""
 #: ../../filters.rst:551
 msgid ""
 "Files passed to the ``--filter``/``-F`` parameter are expected to be "
-"executable. However, if the executable bit is not set, then pandoc tries to "
-"guess a suitable interpreter from the file extension."
+"executable. However, if the executable bit is not set, then pandoc tries "
+"to guess a suitable interpreter from the file extension."
 msgstr ""
 
 #: ../../filters.rst:556
@@ -738,3 +743,14 @@ msgstr ""
 #: ../../filters.rst:564
 msgid "``Rscript``"
 msgstr ""
+
+#~ msgid ""
+#~ "Note: to use this to generate PDFs"
+#~ " via LaTeX, you’ll need to use "
+#~ "``--pdf-engine=xelatex``, specify a ``mainfont``"
+#~ " that has the Japanese characters "
+#~ "(e.g. “Noto Sans CJK TC”), and add"
+#~ " ``\\usepackage{ruby}`` to your template or"
+#~ " header-includes."
+#~ msgstr ""
+

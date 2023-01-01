@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-01 08:31+0000\n"
+"POT-Creation-Date: 2023-01-01 10:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../getting-started.rst:19
-msgid "原著バージョン: 2.18"
+msgid "原著バージョン: 2.19.2"
 msgstr ""
 
 #: ../../getting-started.rst:21

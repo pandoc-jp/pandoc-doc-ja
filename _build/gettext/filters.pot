@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 日本Pandocユーザ会 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-01 08:31+0000\n"
+"POT-Creation-Date: 2023-01-01 10:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgid "John MacFarlane"
 msgstr ""
 
 #: ../../filters.rst:19
-msgid "原著バージョン: 2.18"
+msgid "原著バージョン: 2.19.2"
 msgstr ""
 
 #: ../../filters.rst:21
@@ -345,7 +345,7 @@ msgid "Then run it:"
 msgstr ""
 
 #: ../../filters.rst:472
-msgid "Note: to use this to generate PDFs via LaTeX, you’ll need to use ``--pdf-engine=xelatex``, specify a ``mainfont`` that has the Japanese characters (e.g. “Noto Sans CJK TC”), and add ``\\usepackage{ruby}`` to your template or header-includes."
+msgid "Note: to use this to generate PDFs via LaTeX, you’ll need to use ``--pdf-engine=xelatex``, specify a ``mainfont`` that has the Japanese characters (e.g. “`Noto Sans CJK JP`_”), and add ``\\usepackage{ruby}`` to your template or header-includes."
 msgstr ""
 
 #: ../../filters.rst:478
